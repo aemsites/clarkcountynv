@@ -1,5 +1,9 @@
-*, ::after, ::before {
+/* *, ::after, ::before {
     box-sizing: border-box;
+} */
+
+.accordion-ml.block ul {
+    margin-left: -1.8em;
 }
 
 .accordion-ml details ul {
