@@ -2,6 +2,35 @@ details > summary {
     list-style: none;
 }
 
-details > summary::-webkit-details-marker {
+details>summary::-webkit-details-marker {
     display: none;
+}
+
+details > summary:has(+ ul) > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+details > summary:has(+ ul) div.markerdiv {
+    position: relative;
+    width: 45px;
+    margin-left: auto
+}
+
+details > summary:has(+ ul) div.markerdiv::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 17px;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 7px solid black;
+    transition: transform .3s;
+}
+
+details[open] > summary:has(+ ul) div.markerdiv::after {
+    transform: translateY(-50%) rotate(-180deg);
 }

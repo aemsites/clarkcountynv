@@ -16,7 +16,13 @@ function multilevelAccordion(mainUL) {
 
       const summary = document.createElement('summary');
       summary.className = 'accordion-item-label';
-      summary.append(mainA);
+      const labelLeft = document.createElement('p');
+      labelLeft.innerHTML = mainA.innerHTML;
+      const labelRight = document.createElement('div');
+      labelRight.classList.add('markerdiv');
+      const lablDiv = document.createElement('div');
+      lablDiv.append(labelLeft, labelRight);
+      summary.append(lablDiv);
 
       const childUL = mainLI.querySelector('ul');
 
