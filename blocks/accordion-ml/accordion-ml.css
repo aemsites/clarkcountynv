@@ -1,8 +1,26 @@
-details > summary {
-    list-style: none;
+*, ::after, ::before {
+    box-sizing: border-box;
 }
 
-details>summary::-webkit-details-marker {
+.accordion-ml details ul {
+    margin: 0;
+}
+
+.accordion-ml details a {
+    font-size: 14px;
+    font-family: 'Neue Montreal', sans-serif;
+    padding: 15px 60px 15px 15px !important;
+}
+
+details > summary {
+    position: relative;
+    cursor: pointer;
+    list-style: none;
+    overflow: auto;
+    transition: background-color 0.3s;
+}
+
+details > summary::-webkit-details-marker {
     display: none;
 }
 
@@ -31,6 +49,21 @@ details > summary:has(+ ul) div.markerdiv::after {
     transition: transform .3s;
 }
 
+details[open] > ul {
+    margin-left: -1.8em;
+}
+
 details[open] > summary:has(+ ul) div.markerdiv::after {
     transform: translateY(-50%) rotate(-180deg);
 }
+
+/* @keyframes details-show {
+    from {
+      opacity:0;
+      transform: var(--details-translate, translateY(-0.5em));
+    }
+  }
+
+  details[open] > *:not(summary) {
+    animation: details-show 300ms ease-in-out;
+  } */
