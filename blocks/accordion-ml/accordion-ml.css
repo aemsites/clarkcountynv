@@ -1,7 +1,3 @@
-/* *, ::after, ::before {
-    box-sizing: border-box;
-} */
-
 .accordion-ml.block ul {
     margin-left: -1.8em;
 }
@@ -13,7 +9,11 @@
 .accordion-ml details a {
     font-size: 14px;
     font-family: 'Neue Montreal', sans-serif;
-    padding: 15px 60px 15px 15px !important;
+    padding: 15px 60px 15px 15px;
+}
+
+.accordion-ml details:not(:has(ul)) summary > div {
+    padding: 7px 60px 15px 0;
 }
 
 details > summary {
@@ -22,6 +22,7 @@ details > summary {
     list-style: none;
     overflow: auto;
     transition: background-color 0.3s;
+    line-height: 1 !important;
 }
 
 details > summary::-webkit-details-marker {
