@@ -1,9 +1,31 @@
-.accordion-ml.block ul {
+/* .accordion-ml.block ul {
     margin-left: -1.8em;
+} */
+
+.itemcolor1 {
+    background: #B54425;
+    border-bottom: 1px solid rgba(0, 0, 0, .15);
+    /* filter: contrast(5.49); */
+}
+
+.itemcolor2 {
+    background: blue;
+    border-bottom: 1px solid rgba(0, 0, 0, .15);
+    /* filter: contrast(7.04); */
+}
+
+.itemcolor3 {
+    background: yellow;
+    border-bottom: 1px solid rgba(0, 0, 0, .15);
+    /* filter: contrast(8.73); */
 }
 
 .accordion-ml details ul {
     margin: 0;
+}
+
+.accordion-ml details a:any-link {
+    color: white;
 }
 
 .accordion-ml details a {
@@ -12,11 +34,11 @@
     padding: 15px 60px 15px 15px;
 }
 
-.accordion-ml details:not(:has(ul)) summary > div {
+.accordion-ml details:not(:has(ul)) summary>div {
     padding: 7px 60px 15px 0;
 }
 
-details > summary {
+.accordion-ml details>summary {
     position: relative;
     cursor: pointer;
     list-style: none;
@@ -25,23 +47,23 @@ details > summary {
     line-height: 1 !important;
 }
 
-details > summary::-webkit-details-marker {
+.accordion-ml details>summary::-webkit-details-marker {
     display: none;
 }
 
-details > summary:has(+ ul) > div {
+.accordion-ml details>summary:has(+ ul)>div {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
 }
 
-details > summary:has(+ ul) div.markerdiv {
+.accordion-ml details>summary:has(+ ul) div.markerdiv {
     position: relative;
     width: 45px;
     margin-left: auto
 }
 
-details > summary:has(+ ul) div.markerdiv::after {
+.accordion-ml details>summary:has(+ ul) div.markerdiv::after {
     content: "";
     position: absolute;
     top: 50%;
@@ -50,15 +72,15 @@ details > summary:has(+ ul) div.markerdiv::after {
     height: 0;
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
-    border-top: 7px solid black;
+    border-top: 7px solid white;
     transition: transform .3s;
 }
 
-details[open] > ul {
+/* details[open] > ul {
     margin-left: -1.8em;
-}
+} */
 
-details[open] > summary:has(+ ul) div.markerdiv::after {
+.accordion-ml details[open]>summary:has(+ ul) div.markerdiv::after {
     transform: translateY(-50%) rotate(-180deg);
 }
 
