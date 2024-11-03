@@ -4,7 +4,7 @@
  * https://www.hlx.live/developer/block-collection/accordion
  */
 
-function multilevelAccordion(mainUL, itemClass, labelClass, level, itemcolor) {
+function multilevelAccordion(mainUL) {
     let counter = 0;
     const mainLIs = mainUL.children;
     for (let i = 0; i < mainLIs.length; i++) {
@@ -12,11 +12,10 @@ function multilevelAccordion(mainUL, itemClass, labelClass, level, itemcolor) {
         const mainA = mainLI.querySelector('a');
 
         const details = document.createElement('details');
-        details.classList.add(`${itemClass}`);
+        details.className = 'accordion-item';
 
         const summary = document.createElement('summary');
-        summary.classList.add(`${labelClass}`);
-        summary.classList.add(`${itemcolor}`);
+        summary.className = 'accordion-item-label';
         const labelRight = document.createElement('div');
         labelRight.classList.add('markerdiv');
         const lablDiv = document.createElement('div');
@@ -27,13 +26,9 @@ function multilevelAccordion(mainUL, itemClass, labelClass, level, itemcolor) {
 
         if (childUL) {
             details.append(summary, childUL);
-            mainLI.replaceWith(details);
-            const newitemClass = `accordion-item-level${level}`;
-            const newlabelClass = `accordion-item-label-level${level}`;
-            const newitemcolor = `itemcolor${level}`;   
-            multilevelAccordion(childUL, newitemClass, newlabelClass, level, newitemcolor);
+            mainLI.replaceWith(details);  
+            multilevelAccordion(childUL);
         } else {
-            console.log(level);
             details.append(summary);
             mainLI.replaceWith(details)
         }
@@ -54,7 +49,7 @@ function findLevel(element) {
 export default function decorate(block) {
     const mainUL = document.querySelector('ul');
     const level = 1;
-    multilevelAccordion(mainUL, 'accordion-item-level1', 'accordion-item-label-level1', level, 'itemcolor1');
+    multilevelAccordion(mainUL);
     [...block.children].forEach((row) => {
         console.log(row);
     });

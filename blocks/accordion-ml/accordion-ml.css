@@ -1,23 +1,25 @@
-/* .accordion-ml.block ul {
+.accordion-ml.block {
+    background: #c54b2a;
+}
+
+
+.accordion-ml.block ul {
     margin-left: -1.8em;
-} */
+}
 
 .itemcolor1 {
-    background: #B54425;
+    background: #c54b2a;
     border-bottom: 1px solid rgba(0, 0, 0, .15);
-    /* filter: contrast(5.49); */
 }
 
 .itemcolor2 {
-    background: blue;
+    background: #a7381a;
     border-bottom: 1px solid rgba(0, 0, 0, .15);
-    /* filter: contrast(7.04); */
 }
 
 .itemcolor3 {
-    background: yellow;
+    background: #8c280e;
     border-bottom: 1px solid rgba(0, 0, 0, .15);
-    /* filter: contrast(8.73); */
 }
 
 .accordion-ml details ul {
@@ -60,7 +62,8 @@
 .accordion-ml details>summary:has(+ ul) div.markerdiv {
     position: relative;
     width: 45px;
-    margin-left: auto
+    margin-left: auto;
+    background-color: #8c280e;
 }
 
 .accordion-ml details>summary:has(+ ul) div.markerdiv::after {
@@ -70,15 +73,15 @@
     right: 17px;
     width: 0;
     height: 0;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    border-top: 7px solid white;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid white;
     transition: transform .3s;
 }
 
-/* details[open] > ul {
+details[open] > ul {
     margin-left: -1.8em;
-} */
+}
 
 .accordion-ml details[open]>summary:has(+ ul) div.markerdiv::after {
     transform: translateY(-50%) rotate(-180deg);
