@@ -129,6 +129,11 @@ header nav[aria-expanded="false"] .nav-hamburger-icon::after {
   top: 6px;
 }
 
+header nav[aria-expanded="false"] .nav-search,
+header nav[aria-expanded="false"] .nav-language {
+  display: none;
+}
+
 header nav[aria-expanded="true"] .nav-hamburger-icon {
   height: 22px;
 }
