@@ -2,6 +2,13 @@
     background: #c54b2a;
 }
 
+details[open] > ul {
+    margin-left: -1.8em;
+}
+
+.accordion-ml details ul {
+    margin: 0;
+}
 
 .accordion-ml.block ul {
     margin-left: -1.8em;
@@ -9,22 +16,12 @@
 
 .itemcolor2 {
     background: #a7381a;
-    border-bottom: 1px solid rgba(0, 0, 0, .15);
     font-family: 'Neue Montreal', sans-serif;
 }
 
 .itemcolor3 {
     background: #8c280e;
     font-family: 'Open Sans', sans-serif;
-    border-bottom: 1px solid rgba(0, 0, 0, .15);
-}
-
-.accordion-ml details ul {
-    margin: 0;
-}
-
-.accordion-ml details a:any-link {
-    color: white;
 }
 
 .accordion-ml details a {
@@ -33,22 +30,26 @@
     padding: 15px 60px 15px 15px;
 }
 
-.accordion-ml details:not(:has(ul)) summary>div {
+.accordion-ml details > summary a {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.accordion-ml details a:any-link {
+    color: white;
+}
+
+.accordion-ml details:not(:has(ul)) summary > div {
     padding: 7px 60px 15px 0;
 }
 
-.accordion-ml details>summary {
+.accordion-ml details > summary {
     position: relative;
     cursor: pointer;
     list-style: none;
     overflow: auto;
     transition: background-color 0.3s;
     line-height: 1 !important;
-    border-bottom: 1px solid rgba(0, 0, 0, .15);
-}
-
-.accordion-ml details > summary a {
-    font-family: 'Open Sans', sans-serif;
+    border-bottom: 1px solid rgba(0, 0, 0, 15%);
 }
 
 .accordion-ml details > summary.itemcolor2 a {
@@ -59,7 +60,7 @@
     display: none;
 }
 
-.accordion-ml details>summary:has(+ ul)>div {
+.accordion-ml details>summary:has(+ ul) > div {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -89,21 +90,6 @@
     display: none;
 }
 
-details[open] > ul {
-    margin-left: -1.8em;
-}
-
-.accordion-ml details[open]>summary:has(+ ul) div.markerdiv::after {
+.accordion-ml details[open] > summary:has(+ ul) div.markerdiv::after {
     transform: translateY(-50%) rotate(-180deg);
 }
-
-/* @keyframes details-show {
-    from {
-      opacity:0;
-      transform: var(--details-translate, translateY(-0.5em));
-    }
-  }
-
-  details[open] > *:not(summary) {
-    animation: details-show 300ms ease-in-out;
-  } */
