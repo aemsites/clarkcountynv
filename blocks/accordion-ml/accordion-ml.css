@@ -49,7 +49,7 @@ details[open] > ul {
     overflow: auto;
     transition: background-color 0.3s;
     line-height: 1 !important;
-    border-bottom: 1px solid rgba(0, 0, 0, 15%);
+    border-bottom: 1px solid rgba(0 0 0 / 15%);
 }
 
 .accordion-ml details > summary.itemcolor2 a {
