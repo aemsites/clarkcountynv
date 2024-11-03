@@ -8,7 +8,6 @@ header {
   z-index: 999;
   border-bottom: 1px solid #fff;
   transition: all .3s;
-  top: 0;
 }
 
 /* header and nav layout */
@@ -70,6 +69,7 @@ header .nav-in-menu-wrap a {
   font: 400 20px Oswald, serif;
   color: #000;
 }
+
 
 header nav a:any-link {
   color: currentcolor;
@@ -217,6 +217,10 @@ header nav .nav-sections ul > li > ul > li {
     display: block;
     visibility: visible;
     white-space: nowrap;
+  }
+
+  header nav[aria-expanded="true"] .nav-sections {
+    align-self: unset;
   }
 
   header nav .nav-sections .nav-drop {
@@ -410,14 +414,14 @@ header .nav-page-title {
   font: 400 16px 'Open Sans', sans-serif;
   margin: 0;
   line-height: 1;
-  color: #B54425;
+  color:#B54425;
 }
 
 header .nav-close {
   font: 400 16px 'Open Sans', sans-serif !important;
   text-transform: capitalize !important;
   cursor: pointer;
-  color: #B54425!important;
+  color:#B54425!important;
 }
 
 header .nav-in-menu-wrap {
@@ -473,6 +477,8 @@ header .nav-in-menu-wrap .tabs-list button {
 header .nav-in-menu-wrap .tabs-list button[aria-selected="true"] {
   background-color: var(--light-color);
   border-bottom: 1px solid var(--background-color);
+
+  /* background-color: var(--background-color); */
   cursor: pointer;
   color: #C54B2A;
   text-decoration: underline;
@@ -490,8 +496,8 @@ header .nav-in-menu-wrap .tabs-list button::after {
   border-style: solid;
   border-width: 9px 0 9px 9px;
   border-color: transparent;
-  opacity: 0;
   border-left-color: #B54425;
+  opacity: 0;
 }
 
 header .nav-in-menu-wrap .tabs-list button[aria-selected="true"]::after {

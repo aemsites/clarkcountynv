@@ -1,7 +1,7 @@
 import { getMetadata, toClassName } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 import {
-  div, img, span, h2,
+  div, img, span,
 } from '../../scripts/dom-helpers.js';
 
 // media query match that indicates mobile/tablet width
@@ -159,13 +159,19 @@ function findLevel(element) {
 }
 
 function decorateNavItem(parent, navSectionSearchItem) {
-  const menuUl = div({ class: 'menuul' });
-  const navIn = div({ class: 'nav-in' });
-  const navContent = div({ class: 'nav-content' });
-  const navContentIn = div({ class: 'nav-content-in' });
-  const navPageTitle = h2({ class: 'nav-page-title' });
+  const menuUl = document.createElement('div');
+  menuUl.className = 'menuul';
+  const navIn = document.createElement('div');
+  navIn.className = 'nav-in';
+  const navContent = document.createElement('div');
+  navContent.className = 'nav-content';
+  const navContentIn = document.createElement('div');
+  navContentIn.className = 'nav-content-in';
+  const navPageTitle = document.createElement('h2');
+  navPageTitle.className = 'nav-page-title';
   navPageTitle.textContent = parent.querySelector('strong').textContent;
-  const closeSpan = span({ class: 'nav-close' });
+  const closeSpan = document.createElement('span');
+  closeSpan.className = 'nav-close';
   closeSpan.innerText = 'close';
   closeSpan.addEventListener('click', () => {
     parent.setAttribute('aria-expanded', 'false');
@@ -177,10 +183,12 @@ function decorateNavItem(parent, navSectionSearchItem) {
   menuUl.append(navIn);
   parent.append(menuUl);
 
-  const navInMenuWrap = div({ class: 'nav-in-menu-wrap' });
+  const navInMenuWrap = document.createElement('div');
+  navInMenuWrap.className = 'nav-in-menu-wrap';
   navIn.append(navInMenuWrap);
 
-  const tablist = div({ class: 'tabs-list' });
+  const tablist = document.createElement('div');
+  tablist.className = 'tabs-list';
   tablist.setAttribute('role', 'tablist');
 
   navInMenuWrap.append(tablist);
