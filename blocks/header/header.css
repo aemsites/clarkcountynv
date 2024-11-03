@@ -219,10 +219,6 @@ header nav .nav-sections ul > li > ul > li {
     white-space: nowrap;
   }
 
-  header nav[aria-expanded="true"] .nav-sections {
-    align-self: unset;
-  }
-
   header nav .nav-sections .nav-drop {
     position: relative;
     padding-right: 16px;
