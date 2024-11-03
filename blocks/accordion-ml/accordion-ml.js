@@ -12,10 +12,10 @@ function multilevelAccordion(mainUL) {
         const mainA = mainLI.querySelector('a');
 
         const details = document.createElement('details');
-        details.className = 'accordion-item';
+        details.classList.add('accordion-item');
 
         const summary = document.createElement('summary');
-        summary.className = 'accordion-item-label';
+        summary.classList.add('accordion-item-label');
         const labelRight = document.createElement('div');
         labelRight.classList.add('markerdiv');
         const lablDiv = document.createElement('div');

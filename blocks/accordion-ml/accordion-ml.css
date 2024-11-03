@@ -7,18 +7,15 @@
     margin-left: -1.8em;
 }
 
-.itemcolor1 {
-    background: #c54b2a;
-    border-bottom: 1px solid rgba(0, 0, 0, .15);
-}
-
 .itemcolor2 {
     background: #a7381a;
     border-bottom: 1px solid rgba(0, 0, 0, .15);
+    font-family: 'Neue Montreal', sans-serif;
 }
 
 .itemcolor3 {
     background: #8c280e;
+    font-family: 'Open Sans', sans-serif;
     border-bottom: 1px solid rgba(0, 0, 0, .15);
 }
 
@@ -47,6 +44,15 @@
     overflow: auto;
     transition: background-color 0.3s;
     line-height: 1 !important;
+    border-bottom: 1px solid rgba(0, 0, 0, .15);
+}
+
+.accordion-ml details > summary a {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.accordion-ml details > summary.itemcolor2 a {
+    font-family: 'Neue Montreal', sans-serif;
 }
 
 .accordion-ml details>summary::-webkit-details-marker {
@@ -77,6 +83,10 @@
     border-right: 5px solid transparent;
     border-top: 6px solid white;
     transition: transform .3s;
+}
+
+.accordion-ml details>summary:not(:has(+ ul)) div.markerdiv {
+    display: none;
 }
 
 details[open] > ul {
