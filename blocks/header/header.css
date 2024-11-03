@@ -129,6 +129,15 @@ header nav[aria-expanded="false"] .nav-hamburger-icon::after {
   top: 6px;
 }
 
+header .nav-search {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  color: white;
+  font: 600 18px 'open sans',sans-serif;
+  margin-right: 4vw;
+}
+
 header nav[aria-expanded="false"] .nav-search,
 header nav[aria-expanded="false"] .nav-language {
   display: none;
@@ -184,6 +193,11 @@ header nav .nav-sections {
   display: none;
   visibility: hidden;
   background-color: var(--overlay-color);
+}
+
+header nav .nav-sections:has(details) .default-content-wrapper {
+  width: 100%;
+  background-color: #C54B2A;
 }
 
 header nav[aria-expanded="true"] .nav-sections {
@@ -345,25 +359,8 @@ header .nav-sections strong > a:any-link:hover {
   color: white;
 }
 
-header .nav-search {
-  display: inline-flex;
-  align-items: center;
-  cursor: pointer;
-  color: white;
-  font: 600 18px 'open sans',sans-serif;
-  margin-right: 4vw;
-}
-
 header .nav-search-icon {
   margin-right: 20px;
-}
-
-header .nav-language {
-  display: inline-flex;
-  align-items: center;
-  cursor: pointer;
-  color: white;
-  font: 400 18px 'open sans',sans-serif;
 }
 
 header .nav-language-icon {
@@ -576,7 +573,7 @@ header .nav-bottom {
   margin-right: 50px;
 }
 
-#nav > div.section.nav-sections {
+#nav > div.section.nav-sections:not(:has(details)) {
   padding-left: 25px;
   padding-right: 15px;
 }
