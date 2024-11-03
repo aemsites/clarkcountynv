@@ -1,8 +1,38 @@
-import { getMetadata } from '../../scripts/aem.js';
+import { getMetadata, toClassName } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
+import {
+  div, img, span, h2,
+} from '../../scripts/dom-helpers.js';
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
+
+function handleNavTools(navWrapper) {
+  const tools = navWrapper.querySelectorAll('.nav-tools .default-content-wrapper p');
+  if (tools && tools.length === 2) {
+    const searchTool = tools[0];
+    const languageTool = tools[1];
+    const nav = document.querySelector('.nav-wrapper nav');
+    const searchDiv = div({ class: 'nav-search' });
+    const searchIcon = img({ class: 'nav-search-icon' });
+    searchIcon.src = '/icons/search.svg';
+    searchIcon.alt = 'Search Icon';
+    searchDiv.appendChild(searchIcon);
+    const searchText = span();
+    searchText.textContent = searchTool.innerText;
+    searchDiv.appendChild(searchText);
+    const languageDiv = div({ class: 'nav-language' });
+    const languageText = span();
+    languageText.textContent = languageTool.innerText;
+    const picture = languageTool.querySelector('picture');
+    picture.classList.add('nav-language-icon');
+    languageDiv.appendChild(languageText);
+    languageDiv.appendChild(picture);
+    nav.appendChild(searchDiv);
+    nav.appendChild(languageDiv);
+    navWrapper.querySelector('nav .nav-tools').remove();
+  }
+}
 
 function closeOnEscape(e) {
   if (e.code === 'Escape') {
@@ -17,21 +47,6 @@ function closeOnEscape(e) {
       // eslint-disable-next-line no-use-before-define
       toggleMenu(nav, navSections);
       nav.querySelector('button').focus();
-    }
-  }
-}
-
-function closeOnFocusLost(e) {
-  const nav = e.currentTarget;
-  if (!nav.contains(e.relatedTarget)) {
-    const navSections = nav.querySelector('.nav-sections');
-    const navSectionExpanded = navSections.querySelector('[aria-expanded="true"]');
-    if (navSectionExpanded && isDesktop.matches) {
-      // eslint-disable-next-line no-use-before-define
-      toggleAllNavSections(navSections, false);
-    } else if (!isDesktop.matches) {
-      // eslint-disable-next-line no-use-before-define
-      toggleMenu(nav, navSections, false);
     }
   }
 }
@@ -80,28 +95,106 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
   if (isDesktop.matches) {
     navDrops.forEach((drop) => {
       if (!drop.hasAttribute('tabindex')) {
+        drop.setAttribute('role', 'button');
         drop.setAttribute('tabindex', 0);
         drop.addEventListener('focus', focusNavSection);
       }
     });
   } else {
     navDrops.forEach((drop) => {
+      drop.removeAttribute('role');
       drop.removeAttribute('tabindex');
       drop.removeEventListener('focus', focusNavSection);
     });
   }
-
   // enable menu collapse on escape keypress
   if (!expanded || isDesktop.matches) {
     // collapse menu on escape press
     window.addEventListener('keydown', closeOnEscape);
-    // collapse menu on focus lost
-    nav.addEventListener('focusout', closeOnFocusLost);
   } else {
     window.removeEventListener('keydown', closeOnEscape);
-    nav.removeEventListener('focusout', closeOnFocusLost);
   }
 }
+
+function decorateNavItem(parent, navSectionSearchItem) {
+  const menuUl = div({ class: 'menuUL' });
+  const navIn = div({ class: 'nav-in' });
+  const navContent = div({ class: 'nav-content' });
+  const navContentIn = div({ class: 'nav-content-in' });
+  const navPageTitle = h2({ class: 'nav-page-title' });
+  navPageTitle.textContent = parent.querySelector('strong').textContent;
+  const closeSpan = span({ class: 'nav-close' });
+  closeSpan.innerText = 'close';
+  closeSpan.addEventListener('click', () => {
+    parent.setAttribute('aria-expanded', 'false');
+  });
+  navContentIn.append(navPageTitle);
+  navContentIn.append(closeSpan);
+  navContent.append(navContentIn);
+  navIn.append(navContent);
+  menuUl.append(navIn);
+  parent.append(menuUl);
+
+  const navInMenuWrap = div({ class: 'nav-in-menu-wrap' });
+  navIn.append(navInMenuWrap);
+
+  const tablist = div({ class: 'tabs-list' });
+  tablist.setAttribute('role', 'tablist');
+
+  navInMenuWrap.append(tablist);
+
+  const list = parent.children[1].nodeName === 'UL' ? parent.children[1].children : null;
+  const listLen = list !== null ? list.length : 0;
+  let i = 0;
+  while (i < listLen) {
+    const tabInfo = list.item(i);
+    const id = toClassName(tabInfo.querySelector('a').textContent);
+
+    const tabpanel = document.createElement('div');
+    navInMenuWrap.append(tabpanel);
+    // decorate tabpanel
+    tabpanel.className = 'tabs-panel';
+    tabpanel.id = `tabpanel-${id}`;
+    tabpanel.setAttribute('aria-hidden', !!i);
+    tabpanel.setAttribute('aria-labelledby', `tab-${id}`);
+    tabpanel.setAttribute('role', 'tabpanel');
+    const tabpanelItems = tabInfo.querySelector('ul');
+    if (tabpanelItems !== null) {
+      tabpanel.append(tabpanelItems);
+    }
+    i += 1;
+
+    // build tab button
+    const button = document.createElement('button');
+    button.className = 'tabs-tab';
+    button.id = `tab-${id}`;
+    button.innerHTML = tabInfo.innerHTML;
+    button.setAttribute('aria-controls', `tabpanel-${id}`);
+    button.setAttribute('aria-selected', !i);
+    button.setAttribute('role', 'tab');
+    button.setAttribute('type', 'button');
+    button.addEventListener('mouseover', () => {
+      parent.querySelectorAll('[role=tabpanel]').forEach((panel) => {
+        panel.setAttribute('aria-hidden', true);
+      });
+      tablist.querySelectorAll('button').forEach((btn) => {
+        btn.setAttribute('aria-selected', false);
+      });
+      tabpanel.setAttribute('aria-hidden', false);
+      button.setAttribute('aria-selected', true);
+    });
+    tablist.append(button);
+  }
+
+  const navBottom = document.createElement('div');
+  navBottom.className = 'nav-bottom';
+  navBottom.append(navSectionSearchItem.cloneNode(true));
+  navIn.append(navBottom);
+
+  parent.children[1].remove();
+}
+
+
 
 /**
  * loads and decorates the header, mainly the nav
@@ -134,16 +227,25 @@ export default async function decorate(block) {
 
   const navSections = nav.querySelector('.nav-sections');
   if (navSections) {
+    const navSectionSearchItem = navSections.children[0]?.children[1];
     navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
       if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
-      navSection.addEventListener('click', () => {
+      console.log(navSection);
+      decorateNavItem(navSection, navSectionSearchItem);
+      navSection.addEventListener('mouseover', () => {
         if (isDesktop.matches) {
-          const expanded = navSection.getAttribute('aria-expanded') === 'true';
           toggleAllNavSections(navSections);
-          navSection.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+          navSection.setAttribute('aria-expanded', 'true');
+        }
+      });
+      navSection.addEventListener('mouseout', () => {
+        if (isDesktop.matches) {
+          toggleAllNavSections(navSections);
+          navSection.setAttribute('aria-expanded', 'false');
         }
       });
     });
+    navSectionSearchItem.remove();
   }
 
   // hamburger for mobile
@@ -163,4 +265,20 @@ export default async function decorate(block) {
   navWrapper.className = 'nav-wrapper';
   navWrapper.append(nav);
   block.append(navWrapper);
+
+  window.addEventListener('scroll', () => {
+    const header = document.querySelector('header');
+    // eslint-disable-next-line max-len
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop; // For broader compatibility
+    if (scrollTop > 0) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+  handleNavTools(navWrapper);
+  // improve accessibility
+  document.querySelectorAll('#nav > div.section.nav-sections > div > ul > li').forEach((li) => {
+    li.removeAttribute('role');
+  });
 }
