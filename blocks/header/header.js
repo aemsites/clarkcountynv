@@ -247,33 +247,34 @@ function decorateNavItem(parent, navSectionSearchItem) {
 }
 
 function resizeNavSections(navSec, navSectionsBackUp, navBrand) {
-  console.log(navSec);
   if (navSectionsBackUp) {
     const navSectionSearchItem = navSectionsBackUp.children[0]?.children[1];
-    if (isDesktop.matches) {
-      if (navSec.querySelector('details')) {
-        navSections.remove();
-        navSections = navSectionsBackUp.cloneNode(true);
-        navSections.querySelector('p').remove();
-        navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
-          if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
-          decorateNavItem(navSection, navSectionSearchItem);
-          navSection.addEventListener('mouseover', () => {
-            if (isDesktop.matches) {
-              toggleAllNavSections(navSections);
-              navSection.setAttribute('aria-expanded', 'true');
-            }
-          });
-          navSection.addEventListener('mouseout', () => {
-            if (isDesktop.matches) {
-              toggleAllNavSections(navSections);
-              navSection.setAttribute('aria-expanded', 'false');
-            }
-          });
+    if (isDesktop.matches && navSec.querySelector('details')) {
+      navSections.remove();
+      navSections = navSectionsBackUp.cloneNode(true);
+      navSections.querySelector('p').remove();
+      navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
+        if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
+        decorateNavItem(navSection, navSectionSearchItem);
+        navSection.addEventListener('mouseover', () => {
+          if (isDesktop.matches) {
+            toggleAllNavSections(navSections);
+            navSection.setAttribute('aria-expanded', 'true');
+          }
         });
-        navBrand.after(navSections);
-      }
-    } else {
+        navSection.addEventListener('mouseout', () => {
+          if (isDesktop.matches) {
+            toggleAllNavSections(navSections);
+            navSection.setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
+      navBrand.after(navSections);
+    }
+    if (!isDesktop.matches && navSec.querySelector('li').classList.contains('nav-drop')) {
+      navSections.remove();
+      navSections = navSectionsBackUp.cloneNode(true);
+      navSections.querySelector('p').remove();
       const mainUL = navSections.querySelector(':scope .default-content-wrapper > ul');
       decorateNavItemMobile(mainUL);
       mainUL.querySelectorAll('details').forEach((details) => {
@@ -291,20 +292,7 @@ function resizeNavSections(navSec, navSectionsBackUp, navBrand) {
           }
         });
       });
-      mainUL.querySelectorAll(':scope > li').forEach((navSection) => {
-        navSection.addEventListener('mouseover', () => {
-          if (isDesktop.matches) {
-            toggleAllNavSections(navSections);
-            navSection.setAttribute('aria-expanded', 'true');
-          }
-        });
-        navSection.addEventListener('mouseout', () => {
-          if (isDesktop.matches) {
-            toggleAllNavSections(navSections);
-            navSection.setAttribute('aria-expanded', 'false');
-          }
-        });
-      });
+      navBrand.after(navSections);
     }
     if (navSectionSearchItem) {
       navSectionSearchItem.remove();
@@ -347,20 +335,6 @@ function buildNavSections(navSections) {
                 ele.removeAttribute('open');
               }
             });
-          }
-        });
-      });
-      mainUL.querySelectorAll(':scope > li').forEach((navSection) => {
-        navSection.addEventListener('mouseover', () => {
-          if (isDesktop.matches) {
-            toggleAllNavSections(navSections);
-            navSection.setAttribute('aria-expanded', 'true');
-          }
-        });
-        navSection.addEventListener('mouseout', () => {
-          if (isDesktop.matches) {
-            toggleAllNavSections(navSections);
-            navSection.setAttribute('aria-expanded', 'false');
           }
         });
       });
