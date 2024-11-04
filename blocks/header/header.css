@@ -195,11 +195,6 @@ header nav .nav-sections {
   background-color: var(--overlay-color);
 }
 
-header nav .nav-sections:has(details) .default-content-wrapper {
-  width: 100%;
-  background-color: #C54B2A;
-}
-
 header nav[aria-expanded="true"] .nav-sections {
   display: flex;
   visibility: visible;
@@ -226,6 +221,99 @@ header nav .nav-sections > div > ul > li {
 header nav .nav-sections ul > li > ul {
   margin-top: 0;
 }
+
+/* Mobile View Nav sections Start */
+
+header nav .nav-sections:has(details) .default-content-wrapper {
+  width: 100%;
+  background-color: #C54B2A;
+}
+
+header nav .nav-sections:has(details) .default-content-wrapper details ul {
+  margin: 0;
+}
+
+header nav .nav-sections:has(details) .default-content-wrapper .itemcolor2 {
+  background: #a7381a;
+  font-family: 'Neue Montreal', sans-serif;
+}
+
+header nav .nav-sections:has(details) .default-content-wrapper .itemcolor3 {
+  background: #8c280e;
+  font-family: 'Open Sans', sans-serif;
+}
+
+header nav .nav-sections:has(details) .default-content-wrapper details a {
+  font-size: 14px;
+  font-family: 'Neue Montreal', sans-serif;
+  padding: 15px 60px 15px 15px;
+}
+
+header nav .nav-sections:has(details) .default-content-wrapper details > summary {
+  position: relative;
+  cursor: pointer;
+  list-style: none;
+  overflow: auto;
+  transition: background-color 0.3s;
+  border-bottom: 1px solid rgba(0 0 0 / 15%);
+}
+
+header nav .nav-sections:has(details) .default-content-wrapper details > summary a {
+  font-family: 'Open Sans', sans-serif;
+}
+
+header nav .nav-sections:has(details) .default-content-wrapper details a:any-link {
+  color: white;
+}
+
+header nav .nav-sections:has(details) .default-content-wrapper details:not(:has(ul)) summary > div {
+  padding: 7px 60px 15px 0;
+}
+
+header nav .nav-sections:has(details) .default-content-wrapper details > summary.itemcolor2 a {
+  font-family: 'Neue Montreal', sans-serif;
+}
+
+header nav .nav-sections:has(details) .default-content-wrapper details > summary::-webkit-details-marker {
+  display: none;
+}
+
+header nav .nav-sections:has(details) .default-content-wrapper details > summary:has(+ ul) > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+header nav .nav-sections:has(details) .default-content-wrapper details > summary:has(+ ul) div.markerdiv {
+  position: relative;
+  width: 45px;
+  margin-left: auto;
+  background-color: #8c280e;
+}
+
+
+header nav .nav-sections:has(details) .default-content-wrapper details > summary:has(+ ul) div.markerdiv::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 17px;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid white;
+  transition: transform .3s;
+}
+
+header nav .nav-sections:has(details) .default-content-wrapper details > summary:not(:has(+ ul)) div.markerdiv {
+  display: none;
+}
+
+header nav .nav-sections:has(details) .default-content-wrapper details[open] > summary:has(+ ul) div.markerdiv::after {
+  transform: translateY(-50%) rotate(-180deg);
+}
+
+/* Mobile View Nav sections End */
 
 header nav .nav-sections ul > li > ul > li {
   font-weight: 500;
