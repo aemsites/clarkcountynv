@@ -6,6 +6,7 @@ import {
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
+let navSections = null;
 
 function handleNavTools(navWrapper) {
   const tools = navWrapper.querySelectorAll('.nav-tools .default-content-wrapper p');
@@ -239,12 +240,79 @@ function decorateNavItem(parent, navSectionSearchItem) {
   const navBottom = document.createElement('div');
   navBottom.className = 'nav-bottom';
   navBottom.append(navSectionSearchItem.cloneNode(true));
+
   navIn.append(navBottom);
 
   parent.children[1].remove();
 }
 
-function resizeNavSections(navSections) {
+function resizeNavSections(navSec, navSectionsBackUp, navBrand) {
+  console.log(navSec);
+  if (navSectionsBackUp) {
+    const navSectionSearchItem = navSectionsBackUp.children[0]?.children[1];
+    if (isDesktop.matches) {
+      if (navSec.querySelector('details')) {
+        navSections.remove();
+        navSections = navSectionsBackUp.cloneNode(true);
+        navSections.querySelector('p').remove();
+        navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
+          if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
+          decorateNavItem(navSection, navSectionSearchItem);
+          navSection.addEventListener('mouseover', () => {
+            if (isDesktop.matches) {
+              toggleAllNavSections(navSections);
+              navSection.setAttribute('aria-expanded', 'true');
+            }
+          });
+          navSection.addEventListener('mouseout', () => {
+            if (isDesktop.matches) {
+              toggleAllNavSections(navSections);
+              navSection.setAttribute('aria-expanded', 'false');
+            }
+          });
+        });
+        navBrand.after(navSections);
+      }
+    } else {
+      const mainUL = navSections.querySelector(':scope .default-content-wrapper > ul');
+      decorateNavItemMobile(mainUL);
+      mainUL.querySelectorAll('details').forEach((details) => {
+        details.addEventListener('toggle', (event) => {
+          if (event.target.open) {
+            const value = findLevel(event.target);
+            event.target.querySelector('ul').querySelectorAll(':scope > details').forEach((ele) => {
+              ele.querySelector('summary').classList.add(`itemcolor${value + 1}`);
+            });
+            details.parentElement.querySelectorAll('details').forEach((ele) => {
+              if (ele !== event.target) {
+                ele.removeAttribute('open');
+              }
+            });
+          }
+        });
+      });
+      mainUL.querySelectorAll(':scope > li').forEach((navSection) => {
+        navSection.addEventListener('mouseover', () => {
+          if (isDesktop.matches) {
+            toggleAllNavSections(navSections);
+            navSection.setAttribute('aria-expanded', 'true');
+          }
+        });
+        navSection.addEventListener('mouseout', () => {
+          if (isDesktop.matches) {
+            toggleAllNavSections(navSections);
+            navSection.setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
+    }
+    if (navSectionSearchItem) {
+      navSectionSearchItem.remove();
+    }
+  }
+}
+
+function buildNavSections(navSections) {
   if (navSections) {
     const navSectionSearchItem = navSections.children[0]?.children[1];
     if (isDesktop.matches) {
@@ -297,7 +365,9 @@ function resizeNavSections(navSections) {
         });
       });
     }
-    navSectionSearchItem.remove();
+    if (navSectionSearchItem) {
+      navSectionSearchItem.remove();
+    }
   }
 }
 
@@ -330,8 +400,17 @@ export default async function decorate(block) {
     brandLink.closest('.button-container').className = '';
   }
 
-  const navSections = nav.querySelector('.nav-sections');
-  resizeNavSections(navSections);
+  navSections = nav.querySelector('.nav-sections');
+  const navSectionsBackUp = navSections.cloneNode(true);
+  console.log(navSectionsBackUp);
+
+  buildNavSections(navSections);
+
+  function resizeFunction() {
+    resizeNavSections(navSections, navSectionsBackUp.cloneNode(true), navBrand);
+  }
+
+  window.addEventListener('resize', resizeFunction);
 
   // hamburger for mobile
   const hamburger = document.createElement('div');
