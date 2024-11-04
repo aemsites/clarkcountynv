@@ -243,10 +243,34 @@ header nav .nav-sections:has(details) .default-content-wrapper .itemcolor3 {
   font-family: 'Open Sans', sans-serif;
 }
 
+header .tabs-panel ul > li > a {
+  text-wrap: wrap;
+}
+
+header .tabs-panel a:any-link {
+  padding: 0;
+  margin-bottom: 24px;
+  font: normal 16px 'Open Sans',sans-serif;
+  color: #000;
+  text-decoration: underline;
+}
+
+header .nav-in-menu-wrap .tabs-tab a {
+  font-weight: 400;
+}
+
 header nav .nav-sections:has(details) .default-content-wrapper details a {
   font-size: 14px;
   font-family: 'Neue Montreal', sans-serif;
   padding: 15px 60px 15px 15px;
+}
+
+header nav .nav-sections:has(details) .default-content-wrapper details > summary a {
+  font-family: 'Open Sans', sans-serif;
+}
+
+header .nav-sections strong > a:any-link:hover {
+  text-decoration: none;
 }
 
 header nav .nav-sections:has(details) .default-content-wrapper details > summary {
@@ -256,10 +280,6 @@ header nav .nav-sections:has(details) .default-content-wrapper details > summary
   overflow: auto;
   transition: background-color 0.3s;
   border-bottom: 1px solid rgba(0 0 0 / 15%);
-}
-
-header nav .nav-sections:has(details) .default-content-wrapper details > summary a {
-  font-family: 'Open Sans', sans-serif;
 }
 
 header nav .nav-sections:has(details) .default-content-wrapper details a:any-link {
@@ -420,26 +440,6 @@ header nav .nav-tools {
 
 .scrolled {
   background: rgb(181 68 37); /* Orange background when scrolled */
-}
-
-header .tabs-panel ul > li > a {
-  text-wrap: wrap;
-}
-
-header .tabs-panel a:any-link {
-  padding: 0;
-  margin-bottom: 24px;
-  font: normal 16px 'Open Sans',sans-serif;
-  color: #000;
-  text-decoration: underline;
-}
-
-header .nav-in-menu-wrap .tabs-tab a {
-  font-weight: 400;
-}
-
-header .nav-sections strong > a:any-link:hover {
-  text-decoration: none;
 }
 
 #nav > div.section.nav-tools > div > p.button-container > a {
