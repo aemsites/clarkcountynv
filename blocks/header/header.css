@@ -6,7 +6,7 @@ header {
   left: 0;
   right: 0;
   z-index: 999;
-  border-bottom: 1px solid #fff;
+  /* border-bottom: 1px solid #fff; */
   transition: all .3s;
 }
 
@@ -39,7 +39,7 @@ header nav[aria-expanded="true"] {
   min-height: 100vh;
 }
 
-@media (width >= 600px) {
+@media (width >=600px) {
   header nav {
     margin: 0;
     padding: 0 1rem;
@@ -94,6 +94,10 @@ header nav .nav-hamburger button {
   overflow: initial;
   text-overflow: initial;
   white-space: initial;
+}
+
+header:has(nav .nav-hamburger):has(button[aria-label="Open navigation"])  {
+  border-bottom: 1px solid #fff;
 }
 
 header nav .nav-hamburger-icon,
