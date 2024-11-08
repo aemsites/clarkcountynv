@@ -15,7 +15,7 @@ function handleNavTools(navWrapper) {
     const nav = document.querySelector('.nav-wrapper nav');
     const searchDiv = div({ class: 'nav-search' });
     const searchIcon = img({ class: 'nav-search-icon' });
-    searchIcon.src = '/icons/search.svg';
+    searchIcon.src = '/icons/searchv1.svg';
     searchIcon.alt = 'Search Icon';
     searchDiv.appendChild(searchIcon);
     const searchText = span();
@@ -28,8 +28,10 @@ function handleNavTools(navWrapper) {
     picture.classList.add('nav-language-icon');
     languageDiv.appendChild(languageText);
     languageDiv.appendChild(picture);
-    nav.appendChild(searchDiv);
-    nav.appendChild(languageDiv);
+    const navToolsDiv = div({ class: 'nav-tools' });
+    navToolsDiv.appendChild(searchDiv);
+    navToolsDiv.appendChild(languageDiv);
+    nav.appendChild(navToolsDiv);
     navWrapper.querySelector('nav .nav-tools').remove();
   }
 }

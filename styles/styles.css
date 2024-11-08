@@ -18,6 +18,9 @@
   --light-color: #eee;
   --dark-color: #ccc;
   --text-color: black;
+  --white: #fff;
+  --orange: #C54B2A;
+  --dark-orange: #B54425;
 
   /* fonts */
   --body-font-family: 'Oswald', serif;
@@ -192,18 +195,18 @@ main .hero-text {
   background: url('../images/section-top-bg.png') left bottom/cover no-repeat;
   padding: 1px 0 4px 15px;
   margin-top: -0.7%;
-  color: #fff;
+  color: var(--white);
   position: relative;
 }
 
 main .hero-text p {
   font: 385 48px oswald,serif;
-  color: #fff;
+  color: var(--white);
   line-height: 1;
 }
 
 main .section-top {
-  color: #fff;
+  color: var(--white);
 }
 
 .section-top-wrapper > div {
@@ -235,7 +238,7 @@ main .section-top > div {
 }
 
 body > main > div:nth-child(1) > div {
-  background-color: black;
+  background-color: var(--text-color);
   overflow: hidden;
 }
 
@@ -312,12 +315,12 @@ body > main > div.section.updates.section-top-container.column-container.cards-c
 
 .newsletter {
   position: relative;
-  background: #B54425;
+  background: var(--dark-orange);
 }
 
 .newsletter h2 {
   font: 400 24px 'open sans',sans-serif;
-  color: #C54B2A;
+  color: var(--orange);
   margin-bottom: 8px;
 }
 
@@ -367,7 +370,7 @@ body > main > div.section.newsletter > div > p {
 
 body > main > div.section.newsletter > div h2 {
   font: 350 25px 'open sans', sans-serif;
-  color: #C54B2A;
+  color: var(--orange);
   margin-top: 1.5%;
   margin-bottom: 8px;
 }
