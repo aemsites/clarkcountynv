@@ -271,6 +271,7 @@ header nav .nav-sections:has(details) .default-content-wrapper details a {
 
 header nav .nav-sections:has(details) .default-content-wrapper details > summary a {
   font-family: 'Open Sans', sans-serif;
+  font-weight: normal;
 }
 
 header .nav-sections strong > a:any-link:hover {
@@ -296,6 +297,7 @@ header nav .nav-sections:has(details) .default-content-wrapper details:not(:has(
 
 header nav .nav-sections:has(details) .default-content-wrapper details > summary.itemcolor2 a {
   font-family: 'Neue Montreal', sans-serif;
+  font-weight: normal;
 }
 
 header nav .nav-sections:has(details) .default-content-wrapper details > summary::-webkit-details-marker {

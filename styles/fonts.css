@@ -36,7 +36,7 @@
 }
 
 @font-face {
-  font-family: oswald;
+  font-family: Oswald;
   src: url("../fonts/Oswald-VariableFont_wght.ttf");
   font-display: swap;
 }
@@ -48,8 +48,11 @@
 }
 
 @font-face {
-  font-family: 'open sans';
-  src: url("../fonts/OpenSans-Italic-VariableFont_wdth,wght.ttf");
+  font-family: 'Neue Montreal';
+  src: url('../fonts/NeueMontreal-Bold.woff2') format('woff2'),
+       url('../fonts/NeueMontreal-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
   font-display: swap;
 }
 
@@ -58,15 +61,6 @@
   src: url('../fonts/NeueMontreal-Regular.woff2') format('woff2'),
        url('../fonts/NeueMontreal-Regular.woff') format('woff');
   font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Neue Montreal';
-  src: url('../fonts/NeueMontreal-Bold.woff2') format('woff2'),
-       url('../fonts/NeueMontreal-Bold.woff') format('woff');
-  font-weight: bold;
   font-style: normal;
   font-display: swap;
 }
