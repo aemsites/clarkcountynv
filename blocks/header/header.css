@@ -6,7 +6,6 @@ header {
   left: 0;
   right: 0;
   z-index: 999;
-  /* border-bottom: 1px solid #fff; */
   transition: all .3s;
 }
 
@@ -138,6 +137,18 @@ header .nav-search span {
 header nav[aria-expanded="false"] .nav-search,
 header nav[aria-expanded="false"] .nav-language {
   display: none;
+}
+
+header nav[aria-expanded="true"] .nav-language {
+  display: flex;
+  justify-content: flex-end;
+  color: var(--white);
+  align-items: center;
+  margin: 15px;
+}
+
+header nav[aria-expanded="true"] .nav-language picture {
+  display: flex;
 }
 
 header nav[aria-expanded="true"] .nav-hamburger-icon {
