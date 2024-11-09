@@ -15,7 +15,7 @@ function handleNavTools(navWrapper) {
     const nav = document.querySelector('.nav-wrapper nav');
     const searchDiv = div({ class: 'nav-search' });
     const searchIcon = img({ class: 'nav-search-icon' });
-    searchIcon.src = '/icons/searchv1.svg';
+    searchIcon.src = '/icons/search-white.svg';
     searchIcon.alt = 'Search Icon';
     searchDiv.appendChild(searchIcon);
     const searchText = span();
