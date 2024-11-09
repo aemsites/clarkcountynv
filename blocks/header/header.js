@@ -353,7 +353,7 @@ export default async function decorate(block) {
         });
         navBrand.after(navSections);
       }
-      if (!isDesktop.matches && navSec.querySelector('li').classList.contains('nav-drop')) {
+      if (!isDesktop.matches && navSec.querySelector('li') && navSec.querySelector('li').classList.contains('nav-drop')) {
         navSections.remove();
         navSections = navSecBackUp.cloneNode(true);
         navSections.querySelector('p').remove();
