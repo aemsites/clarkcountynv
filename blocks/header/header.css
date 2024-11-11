@@ -24,11 +24,6 @@ header nav .nav-brand img {
   transform: scale(0.9);
 }
 
-header.mobile + main > div img {
-  object-fit: cover;
-  height: 700px;
-}
-
 /* header and nav layout */
 header .nav-wrapper {
   width: 100%;
