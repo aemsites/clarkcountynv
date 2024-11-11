@@ -9,6 +9,15 @@ header {
   transition: all .3s;
 }
 
+header.mobile {
+  position: relative;
+}
+
+header.mobile + main {
+  position: absolute;
+  top: 0;
+}
+
 /* header and nav layout */
 header .nav-wrapper {
   width: 100%;
