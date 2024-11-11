@@ -88,7 +88,7 @@ function toggleAllNavSections(sections, expanded = false) {
 function toggleMenu(nav, navSections, forceExpanded = null) {
   const expanded = forceExpanded !== null ? !forceExpanded : nav.getAttribute('aria-expanded') === 'true';
   const button = nav.querySelector('.nav-hamburger button');
-  document.body.style.overflowY = (expanded || isDesktop.matches) ? '' : 'hidden';
+  // document.body.style.overflowY = (expanded || isDesktop.matches) ? '' : 'hidden';
   nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
   toggleAllNavSections(navSections, expanded || isDesktop.matches ? 'false' : 'true');
   button.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
@@ -119,6 +119,8 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
 }
 
 function decorateNavItemMobile(mainUL) {
+  const header = document.querySelector('header');
+  header.classList.add('mobile');
   const mainLIs = mainUL.children;
   for (let i = 0; i < mainLIs.length; i += 1) {
     const mainLI = mainLIs[i];
@@ -332,6 +334,10 @@ export default async function decorate(block) {
     if (navSecBackUp) {
       const navSectionSearchItem = navSecBackUp.children[0]?.children[1];
       if (isDesktop.matches && navSec.querySelector('details')) {
+        const header = document.querySelector('header');
+        if (header.classList.contains('mobile')) {
+          header.classList.remove('mobile');
+        }
         navSections.remove();
         navSections = navSecBackUp.cloneNode(true);
         navSections.querySelector('p').remove();
@@ -354,6 +360,10 @@ export default async function decorate(block) {
         navBrand.after(navSections);
       }
       if (!isDesktop.matches && navSec.querySelector('li') && navSec.querySelector('li').classList.contains('nav-drop')) {
+        const header = document.querySelector('header');
+        if (!header.classList.contains('mobile')) {
+          header.classList.add('mobile');
+        }
         navSections.remove();
         navSections = navSecBackUp.cloneNode(true);
         navSections.querySelector('p').remove();

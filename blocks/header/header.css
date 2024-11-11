@@ -297,6 +297,10 @@ header nav .nav-sections:has(details) .default-content-wrapper details > summary
   font-weight: normal;
 }
 
+header nav .nav-sections:has(details) .default-content-wrapper details summary.itemcolor3 a {
+  font-size: 12px;
+}
+
 header nav .nav-sections:has(details) .default-content-wrapper details > summary::-webkit-details-marker {
   display: none;
 }
@@ -358,7 +362,7 @@ header nav .nav-tools {
   /* padding: 1rem; */
 }
 
-.scrolled {
+.scrolled:not(.mobile) {
   background: var(--dark-orange); /* Orange background when scrolled */
 }
 
