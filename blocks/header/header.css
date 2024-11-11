@@ -18,6 +18,11 @@ header.mobile + main {
   top: 0;
 }
 
+header.mobile + main > div img {
+  object-fit: cover;
+  height: 700px;
+}
+
 /* header and nav layout */
 header .nav-wrapper {
   width: 100%;
