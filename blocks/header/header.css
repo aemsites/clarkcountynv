@@ -18,6 +18,12 @@ header.mobile + main {
   top: 0;
 }
 
+header nav .nav-brand img {
+  width: 128px;
+  height: auto;
+  transform: scale(0.9);
+}
+
 header.mobile + main > div img {
   object-fit: cover;
   height: 700px;
@@ -190,12 +196,6 @@ header .nav-brand {
   font-weight: 700;
   line-height: 1;
   width: 100%;
-}
-
-header nav .nav-brand img {
-  width: 128px;
-  height: auto;
-  transform: scale(0.9);
 }
 
 /* sections */
