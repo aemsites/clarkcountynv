@@ -21,6 +21,7 @@
   --white: #fff;
   --orange: #C54B2A;
   --dark-orange: #B54425;
+  --mainColorRgbValues: 0, 148, 195 !important;
 
   /* fonts */
   --body-font-family: 'Oswald', serif;
@@ -393,4 +394,19 @@ body > main > div:nth-child(1) > div picture > img {
 
 body > main .uwaw {
   right: unset;
+}
+
+body > div.uwy.userway_p1.utb > div {
+  top: 88%;
+  left: 5%;
+  bottom: unset;
+}
+
+.uwaw-initial .uwaw-btn_reset-widget {
+  background: rgba(var(--mainColorRgbValues), 1);
+  border-color: rgba(var(--mainColorRgbValues), 1);
+}
+
+#userwayAccessibilityIcon {
+  background: rgb(0, 148, 195) !important;
 }
