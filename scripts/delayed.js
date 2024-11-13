@@ -1,5 +1,5 @@
 // add delayed functionality here
-import { loadScript, loadCSS, sampleRUM } from './aem.js';
+import { loadScript, sampleRUM } from './aem.js';
 
 // Core Web Vitals RUM collection
 sampleRUM('cwv');
@@ -15,13 +15,13 @@ if (isDesktop.matches) {
 }
 
 function resizeAction() {
-    if (!isDesktop.matches) {
-      const div = document.querySelector('.userway_buttons_wrapper .uai.userway_dark');
-      div.style.setProperty('display', 'none');
-    } else {
-      const div = document.querySelector('.userway_buttons_wrapper .uai.userway_dark');
-      div.style.setProperty('display', 'block');
-    }
+  if (!isDesktop.matches) {
+    const div = document.querySelector('.userway_buttons_wrapper .uai.userway_dark');
+    div.style.setProperty('display', 'none');
+  } else {
+    const div = document.querySelector('.userway_buttons_wrapper .uai.userway_dark');
+    div.style.setProperty('display', 'block');
+  }
 }
 
 window.addEventListener('resize', resizeAction);
