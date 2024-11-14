@@ -135,7 +135,7 @@ header .nav-search {
   align-items: center;
   cursor: pointer;
   color: var(--white);
-  font: 600 18px 'open sans',sans-serif;
+  font: 600 18px var(--body-font-family);
   padding-right: 4vw;
   justify-content: flex-end;
   background-color: var(--dark-orange);
@@ -664,22 +664,20 @@ header .nav-bottom {
   }
 
   header nav .nav-sections .nav-drop::after {
-    content: '';
-    display: inline-block;
+    content: "";
     position: absolute;
-    top: 52px;
-    right: 1.3vw;
-    transform: rotate(135deg);
-    width: 6px;
-    height: 6px;
-    border: 2px solid currentcolor;
-    border-radius: 0 1px 0 0;
-    border-width: 2px 2px 0 0;
+    top: 50%;
+    right: 17px;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid var(--white);
+    transition: transform .3s;
   }
 
   header nav .nav-sections .nav-drop[aria-expanded="true"]::after {
-    bottom: .5em;
-    transform: rotate(315deg);
+    transform: translateY(-50%) rotate(-180deg);
   }
 
   header nav .nav-sections > div > ul {
