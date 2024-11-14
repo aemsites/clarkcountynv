@@ -600,6 +600,10 @@ header .nav-bottom {
     border-bottom: 1px solid #fff;
   }
 
+  header .menuul {
+    width: 800px;
+  }
+
   header nav {
     display: flex;
     justify-content: space-between;
@@ -691,7 +695,7 @@ header .nav-bottom {
     position: relative;
 
     /* font-weight: 500; */
-    font: 700 16px 'Open Sans',sans-serif;
+    font: 700 14px 'Open Sans',sans-serif;
     color: #fff;
     padding-right: 2vw;
     min-width: 140px;
@@ -744,6 +748,11 @@ header .nav-bottom {
 @media (width >= 1200px) {
   header nav .nav-sections .default-content-wrapper > ul > li {
     padding-right: 3vw;
+    font: 700 16px 'Open Sans',sans-serif;
+  }
+
+  header .menuul {
+    width: 1134.66px;
   }
 }
 
