@@ -250,12 +250,12 @@ header nav .nav-sections:has(details) .default-content-wrapper details ul {
 
 header nav .nav-sections:has(details) .default-content-wrapper .itemcolor2 {
   background-color: rgba(0 0 0 / 15%);
-  font-family: 'Neue Montreal', sans-serif;
+  font-family: var(--heading-font-family);
 }
 
 header nav .nav-sections:has(details) .default-content-wrapper .itemcolor3 {
   background-color: rgba(0 0 0 / 30%);
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--body-font-family);
 }
 
 header .tabs-panel ul > li > a {
@@ -276,12 +276,12 @@ header .nav-in-menu-wrap .tabs-tab a {
 
 header nav .nav-sections:has(details) .default-content-wrapper details a {
   font-size: 14px;
-  font-family: 'Neue Montreal', sans-serif;
+  font-family: var(--heading-font-family);
   padding: 15px 60px 15px 15px;
 }
 
 header nav .nav-sections:has(details) .default-content-wrapper details > summary a {
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--body-font-family);
   font-weight: normal;
 }
 
@@ -307,7 +307,7 @@ header nav .nav-sections:has(details) .default-content-wrapper details:not(:has(
 }
 
 header nav .nav-sections:has(details) .default-content-wrapper details > summary.itemcolor2 a {
-  font-family: 'Neue Montreal', sans-serif;
+  font-family: var(--heading-font-family);
   font-weight: normal;
 }
 
