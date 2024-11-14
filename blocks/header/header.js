@@ -386,7 +386,8 @@ export default async function decorate(block) {
             }
           });
         });
-        navBrand.after(navSections);
+        expandElement.prepend(navSections);
+        navBrand.after(expandElement);
       }
       if (navSectionSearchItem) {
         navSectionSearchItem.remove();
