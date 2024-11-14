@@ -289,7 +289,7 @@ main > div::before {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 700px;
     z-index: 0;
     background: #000;
     opacity: 0.1;
@@ -405,5 +405,9 @@ main .section.highlight {
 
   main > div img {
     height: auto;
+  }
+
+  main > div::before {
+      height: 667px;
   }
 }
