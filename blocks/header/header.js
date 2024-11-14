@@ -7,7 +7,7 @@ import {
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
 
-function handleNavTools(navWrapper) {
+function handleNavTools(navWrapper, expandElement) {
   const tools = navWrapper.querySelectorAll('.nav-tools .default-content-wrapper p');
   if (tools && tools.length === 2) {
     const searchTool = tools[0];
@@ -31,7 +31,8 @@ function handleNavTools(navWrapper) {
     const navToolsDiv = div({ class: 'nav-tools' });
     navToolsDiv.appendChild(searchDiv);
     navToolsDiv.appendChild(languageDiv);
-    nav.appendChild(navToolsDiv);
+    expandElement.appendChild(navToolsDiv);
+    nav.appendChild(expandElement);
     navWrapper.querySelector('nav .nav-tools').remove();
   }
 }
@@ -322,7 +323,7 @@ export default async function decorate(block) {
     brandLink.className = '';
     brandLink.closest('.button-container').className = '';
   }
-
+  console.log(nav);
   let navSections = nav.querySelector('.nav-sections');
   const navSectionsBackUp = navSections.cloneNode(true);
 
@@ -330,7 +331,7 @@ export default async function decorate(block) {
 
   // Logic for resizing nav sections
 
-  function resizeNavSections(navSec, navSecBackUp) {
+  function resizeNavSections(navSec, navSecBackUp, expandElement) {
     if (navSecBackUp) {
       const navSectionSearchItem = navSecBackUp.children[0]?.children[1];
       if (isDesktop.matches && navSec.querySelector('details')) {
@@ -357,7 +358,8 @@ export default async function decorate(block) {
             }
           });
         });
-        navBrand.after(navSections);
+        expandElement.prepend(navSections);
+        navBrand.after(expandElement);
       }
       if (!isDesktop.matches && navSec.querySelector('li') && navSec.querySelector('li').classList.contains('nav-drop')) {
         const header = document.querySelector('header');
@@ -391,12 +393,18 @@ export default async function decorate(block) {
       }
     }
   }
+  
+  // expand element for nav-sections & nav-tools
+  const expandElement = div({ class: 'expanddiv' });
+  expandElement.appendChild(navSections);
+  nav.appendChild(expandElement);
 
   function resizeFunction() {
-    resizeNavSections(navSections, navSectionsBackUp.cloneNode(true));
+    resizeNavSections(navSections, navSectionsBackUp.cloneNode(true), expandElement);
   }
 
   window.addEventListener('resize', resizeFunction);
+
 
   // hamburger for mobile
   const hamburger = document.createElement('div');
@@ -426,7 +434,7 @@ export default async function decorate(block) {
       header.classList.remove('scrolled');
     }
   });
-  handleNavTools(navWrapper);
+  handleNavTools(navWrapper, expandElement);
   // improve accessibility
   document.querySelectorAll('#nav > div.section.nav-sections > div > ul > li').forEach((li) => {
     li.removeAttribute('role');

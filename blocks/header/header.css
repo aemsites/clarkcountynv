@@ -239,6 +239,12 @@ header nav .nav-sections ul > li > ul {
 
 /* Mobile View Nav sections Start */
 
+header nav .expanddiv {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 header nav .nav-sections:has(details) .default-content-wrapper {
   width: 100%;
   background-color: var(--dark-orange);
@@ -246,12 +252,6 @@ header nav .nav-sections:has(details) .default-content-wrapper {
 
 header nav .nav-sections:has(details) .default-content-wrapper details ul {
   margin: 0;
-  height: 0;
-  transition: height 1s ease-in;
-}
-
-header nav .nav-sections:has(details[open]) .default-content-wrapper details ul {
-  height: auto;
 }
 
 header nav .nav-sections:has(details) .default-content-wrapper .itemcolor2 {
@@ -615,6 +615,10 @@ header .nav-bottom {
     justify-content: space-between;
     flex-direction: row;
     height: var(--nav-height);
+  }
+
+  header nav .expanddiv {
+    flex-direction: row;
   }
 
   header nav[aria-expanded="true"] {
