@@ -145,10 +145,11 @@ header .nav-search span {
   padding: 15px;
 }
 
-/* header nav[aria-expanded="false"] .nav-search,
-header nav[aria-expanded="false"] .nav-language {
-  display: none;
-} */
+header nav .expanddiv {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
 
 header nav[aria-expanded="false"] .expanddiv {
   transition: height 0.5s ease-in-out;
@@ -240,12 +241,6 @@ header nav .nav-sections ul > li > ul {
 }
 
 /* Mobile View Nav sections Start */
-
-header nav .expanddiv {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
 
 header nav .nav-sections:has(details) .default-content-wrapper {
   width: 100%;

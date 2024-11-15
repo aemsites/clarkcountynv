@@ -45,30 +45,27 @@ class Accordion {
   shrink() {
     // Set the element as "being closed"
     this.isClosing = true;
-    
     // Store the current height of the element
     const startHeight = `${this.el.offsetHeight}px`;
     // Calculate the height of the summary
     const endHeight = `${this.summary.offsetHeight}px`;
-    
     // If there is already an animation running
     if (this.animation) {
       // Cancel the current animation
       this.animation.cancel();
     }
-    
     // Start a WAAPI animation
     this.animation = this.el.animate({
       // Set the keyframes from the startHeight to endHeight
-      height: [startHeight, endHeight]
+      height: [startHeight, endHeight],
     }, {
       duration: 500,
-      easing: 'ease-out'
+      easing: 'ease-out',
     });
-    
     // When the animation is complete, call onAnimationFinish()
     this.animation.onfinish = () => this.onAnimationFinish(false);
     // If the animation is cancelled, isClosing variable is set to false
+    // eslint-disable-next-line no-return-assign
     this.animation.oncancel = () => this.isClosing = false;
   }
 
@@ -88,24 +85,25 @@ class Accordion {
     const startHeight = `${this.el.offsetHeight}px`;
     // Calculate the open height of the element (summary height + content height)
     const endHeight = `${this.summary.offsetHeight + this.content.offsetHeight}px`;
-    
+
     // If there is already an animation running
     if (this.animation) {
       // Cancel the current animation
       this.animation.cancel();
     }
-    
+
     // Start a WAAPI animation
     this.animation = this.el.animate({
       // Set the keyframes from the startHeight to endHeight
-      height: [startHeight, endHeight]
+      height: [startHeight, endHeight],
     }, {
       duration: 500,
-      easing: 'ease-out'
+      easing: 'ease-out',
     });
     // When the animation is complete, call onAnimationFinish()
     this.animation.onfinish = () => this.onAnimationFinish(true);
     // If the animation is cancelled, isExpanding variable is set to false
+    // eslint-disable-next-line no-return-assign
     this.animation.oncancel = () => this.isExpanding = false;
   }
 
@@ -118,7 +116,8 @@ class Accordion {
     this.isClosing = false;
     this.isExpanding = false;
     // Remove the overflow hidden and the fixed height
-    this.el.style.height = this.el.style.overflow = '';
+    this.el.style.height = '';
+    this.el.style.overflow = '';
   }
 }
 
@@ -441,7 +440,6 @@ export default async function decorate(block) {
     brandLink.className = '';
     brandLink.closest('.button-container').className = '';
   }
-  console.log(nav);
   let navSections = nav.querySelector('.nav-sections');
   const navSectionsBackUp = navSections.cloneNode(true);
 
@@ -536,7 +534,6 @@ export default async function decorate(block) {
   }
 
   window.addEventListener('resize', resizeFunction);
-
 
   // hamburger for mobile
   const hamburger = document.createElement('div');
