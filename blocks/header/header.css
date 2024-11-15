@@ -104,7 +104,7 @@ header nav .nav-hamburger-icon::after {
   box-sizing: border-box;
   display: block;
   position: relative;
-  width: 20px;
+  width: 35px;
 }
 
 header nav .nav-hamburger-icon::before,
@@ -117,17 +117,17 @@ header nav .nav-hamburger-icon::after {
 header nav[aria-expanded="false"] .nav-hamburger-icon,
 header nav[aria-expanded="false"] .nav-hamburger-icon::before,
 header nav[aria-expanded="false"] .nav-hamburger-icon::after {
-  height: 2px;
+  height: 4px;
   border-radius: 2px;
   background: var(--white);
 }
 
 header nav[aria-expanded="false"] .nav-hamburger-icon::before {
-  top: -6px;
+  top: -8px;
 }
 
 header nav[aria-expanded="false"] .nav-hamburger-icon::after {
-  top: 6px;
+  top: 8px;
 }
 
 header .nav-search {
