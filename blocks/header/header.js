@@ -6,12 +6,15 @@ import {
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
+const tracker = [];
 class Accordion {
   constructor(el) {
     // Store the <details> element
     this.el = el;
     // Store the <summary> element
     this.summary = el.querySelector('summary');
+    // Store the parent <details> element
+    this.parent = el.parentElement.parentElement;
     // Store the <div class="content"> element
     this.content = el.querySelector('.content');
 
@@ -389,9 +392,21 @@ function buildNavSections(navSections) {
       mainUL.querySelectorAll('details').forEach((details) => {
         details.addEventListener('toggle', (event) => {
           if (event.target.open) {
+            event.target.parentElement.querySelectorAll(':scope > details').forEach((ele) => {
+              if (!/parent/.test(ele.className)) {
+                ele.classList.add('parent1');
+                ele.querySelectorAll(':scope > summary').forEach((sum) => {
+                  if (!/parent/.test(sum.className)) {
+                    sum.classList.add('child1');
+                   }
+                });
+              }
+            });
             const value = findLevel(event.target);
             event.target.querySelector('ul').querySelectorAll(':scope > details').forEach((ele) => {
               ele.querySelector('summary').classList.add(`itemcolor${value + 1}`);
+              ele.querySelector('summary').classList.add(`child${value + 1}`);
+              ele.classList.add(`parent${value + 1}`);
             });
             details.parentElement.querySelectorAll('details').forEach((ele) => {
               if (ele !== event.target) {
@@ -501,11 +516,6 @@ export default async function decorate(block) {
         });
         expandElement.prepend(navSections);
         navBrand.after(expandElement);
-        const tracker = [];
-        document.querySelectorAll('details').forEach((el) => {
-          const detailObject = new Accordion(el);
-          tracker.push(detailObject);
-        });
       }
       if (navSectionSearchItem) {
         navSectionSearchItem.remove();
@@ -559,19 +569,29 @@ export default async function decorate(block) {
     li.removeAttribute('role');
   });
 
-  const tracker = [];
   document.querySelectorAll('details').forEach((el) => {
     const detailObject = new Accordion(el);
     tracker.push(detailObject);
   });
-  // tracker.forEach((t) => {
-  //   t.el.addEventListener('toggle', () => {
-  //     tracker.forEach((t2) => {
-  //       if (t2 !== t) {
-  //         console.log(t2);
-  //         t2.shrink();
-  //       }
-  //     });
-  //   });
-  // });
+  tracker.forEach((t) => {
+    t.el.addEventListener('click', () => {
+      tracker.forEach((t2) => {
+        // if (t2 !== t && t.parent !== t2.el) {
+        //   console.log(t2.el);
+        //   t2.shrink();
+        // }
+        // if (t.parent === t2.el) {
+        //   console.log(t.parent, t2.el); 
+        // }
+        // console.log(t.parent);
+        // if (t.parent.isEqualNode(t2.el)) {
+        //   console.log(t2.el);
+        // }
+        if (t2 !== t && !t.parent.isEqualNode(t2.el)) {
+          console.log(t2.el);
+          t2.shrink();
+        }
+      });
+    });
+  });
 }
