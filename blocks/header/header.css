@@ -175,7 +175,7 @@ header nav .nav-language picture {
 }
 
 header nav[aria-expanded="true"] .nav-hamburger-icon {
-  height: 40px;
+  height: 35px;
 }
 
 header nav[aria-expanded="true"] .nav-hamburger-icon::before,
@@ -184,7 +184,7 @@ header nav[aria-expanded="true"] .nav-hamburger-icon::after {
   left: 1px;
   transform: rotate(45deg);
   transform-origin: 3px;
-  width: 40px;
+  width: 35px;
   height: 6px;
   border-radius: 2px;
 }
