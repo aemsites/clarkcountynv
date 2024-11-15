@@ -501,6 +501,11 @@ export default async function decorate(block) {
         });
         expandElement.prepend(navSections);
         navBrand.after(expandElement);
+        const tracker = [];
+        document.querySelectorAll('details').forEach((el) => {
+          const detailObject = new Accordion(el);
+          tracker.push(detailObject);
+        });
       }
       if (navSectionSearchItem) {
         navSectionSearchItem.remove();
@@ -554,8 +559,19 @@ export default async function decorate(block) {
     li.removeAttribute('role');
   });
 
+  const tracker = [];
   document.querySelectorAll('details').forEach((el) => {
-    new Accordion(el);
+    const detailObject = new Accordion(el);
+    tracker.push(detailObject);
   });
+  // tracker.forEach((t) => {
+  //   t.el.addEventListener('toggle', () => {
+  //     tracker.forEach((t2) => {
+  //       if (t2 !== t) {
+  //         console.log(t2);
+  //         t2.shrink();
+  //       }
+  //     });
+  //   });
+  // });
 }
-
