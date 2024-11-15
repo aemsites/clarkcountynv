@@ -516,13 +516,27 @@ export default async function decorate(block) {
         });
         expandElement.prepend(navSections);
         navBrand.after(expandElement);
+        document.querySelectorAll('details').forEach((el) => {
+          const detailObject = new Accordion(el);
+          tracker.push(detailObject);
+        });
+        tracker.forEach((t) => {
+          t.el.addEventListener('click', () => {
+            tracker.forEach((t2) => {
+              if (t2 !== t && !t.parent.isEqualNode(t2.el)) {
+                console.log(t2.el);
+                t2.shrink();
+              }
+            });
+          });
+        });
       }
       if (navSectionSearchItem) {
         navSectionSearchItem.remove();
       }
     }
   }
-  
+
   // expand element for nav-sections & nav-tools
   const expandElement = div({ class: 'expanddiv' });
   expandElement.appendChild(navSections);
@@ -576,17 +590,6 @@ export default async function decorate(block) {
   tracker.forEach((t) => {
     t.el.addEventListener('click', () => {
       tracker.forEach((t2) => {
-        // if (t2 !== t && t.parent !== t2.el) {
-        //   console.log(t2.el);
-        //   t2.shrink();
-        // }
-        // if (t.parent === t2.el) {
-        //   console.log(t.parent, t2.el); 
-        // }
-        // console.log(t.parent);
-        // if (t.parent.isEqualNode(t2.el)) {
-        //   console.log(t2.el);
-        // }
         if (t2 !== t && !t.parent.isEqualNode(t2.el)) {
           console.log(t2.el);
           t2.shrink();
