@@ -392,16 +392,6 @@ function buildNavSections(navSections) {
       mainUL.querySelectorAll('details').forEach((details) => {
         details.addEventListener('toggle', (event) => {
           if (event.target.open) {
-            event.target.parentElement.querySelectorAll(':scope > details').forEach((ele) => {
-              if (!/parent/.test(ele.className)) {
-                ele.classList.add('parent1');
-                ele.querySelectorAll(':scope > summary').forEach((sum) => {
-                  if (!/parent/.test(sum.className)) {
-                    sum.classList.add('child1');
-                   }
-                });
-              }
-            });
             const value = findLevel(event.target);
             event.target.querySelector('ul').querySelectorAll(':scope > details').forEach((ele) => {
               ele.querySelector('summary').classList.add(`itemcolor${value + 1}`);
@@ -524,7 +514,6 @@ export default async function decorate(block) {
           t.el.addEventListener('click', () => {
             tracker.forEach((t2) => {
               if (t2 !== t && !t.parent.isEqualNode(t2.el)) {
-                console.log(t2.el);
                 t2.shrink();
               }
             });
@@ -591,7 +580,6 @@ export default async function decorate(block) {
     t.el.addEventListener('click', () => {
       tracker.forEach((t2) => {
         if (t2 !== t && !t.parent.isEqualNode(t2.el)) {
-          console.log(t2.el);
           t2.shrink();
         }
       });
