@@ -390,8 +390,4 @@ main .section.highlight {
   main > div::before {
       height: 667px;
   }
-
-  main > div.desktop.with-background-image {
-    background-color: black;
-  }
 }
