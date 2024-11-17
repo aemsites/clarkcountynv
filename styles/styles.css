@@ -174,11 +174,6 @@ main img {
   -webkit-font-smoothing: antialiased;
 }
 
-main > div img {
-  object-fit: cover;
-  height: 700px;
-}
-
 .icon {
   display: inline-block;
   height: 24px;
@@ -188,6 +183,11 @@ main > div img {
 .icon img {
   height: 100%;
   width: 100%;
+}
+
+main > div.section.mobile.with-background-image img {
+  object-fit: cover;
+  height: 700px;
 }
 
 .hero {
