@@ -47,9 +47,11 @@ export default async function decorate(block) {
       tabpanel.setAttribute('aria-hidden', false);
       button.setAttribute('aria-selected', true);
       const viewPort = getViewPort();
-      console.log(viewPort);
       if (viewPort === 'mobile') {
         button.parentNode.insertBefore(tabpanel, button.nextSibling);
+        button.addEventListener('click', () => {
+          button.parentNode.insertBefore(tabpanel, button.nextSibling);
+        });
       } else {
         block.append(tabpanel);
       }
