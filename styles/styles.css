@@ -185,11 +185,6 @@ main img {
   width: 100%;
 }
 
-main > div.section.mobile.with-background-image img {
-  object-fit: cover;
-  height: 700px;
-}
-
 .hero {
   position: relative;
   padding: 32px;
@@ -261,6 +256,11 @@ main > div.section.desktop img {
   height: 667px;
   transform-origin: bottom center;
   transform: scale(1.18);
+}
+
+main > div.section.mobile.with-background-image img {
+  object-fit: cover;
+  height: 700px;
 }
 
 main > div::before {
