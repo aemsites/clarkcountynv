@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-unresolved
 import { toClassName } from '../../scripts/aem.js';
+import { getViewPort } from '../../scripts/utils.js';
 
 function hasWrapper(el) {
   return !!el.firstElementChild && window.getComputedStyle(el.firstElementChild).display === 'block';
@@ -45,6 +46,13 @@ export default async function decorate(block) {
       });
       tabpanel.setAttribute('aria-hidden', false);
       button.setAttribute('aria-selected', true);
+      const viewPort = getViewPort();
+      console.log(viewPort);
+      if (viewPort === 'mobile') {
+        button.parentNode.insertBefore(tabpanel, button.nextSibling);
+      } else {
+        block.append(tabpanel);
+      }
     });
     tablist.append(button);
     tab.remove();

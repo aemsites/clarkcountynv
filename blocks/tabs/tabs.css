@@ -1,6 +1,7 @@
 .tabs {
     width: 100%;
     display: flex;
+    flex-direction: column;
 }
 
 .tabs .tabs-list {
@@ -10,7 +11,7 @@
     overflow-x: auto;
     cursor: pointer;
     font: 400 32px var(--heading-font-family);
-    width: 40%;
+    width: 100%;
     background-color: var(--light-color);
     padding: 0 0 33px;
 }
@@ -133,4 +134,14 @@
     width: 40%;
     font: 650 34px var(--body-font-family);
     padding-bottom: 30px;
+}
+
+@media (width >= 900px) {
+    .tabs {
+        flex-direction: row;
+    } 
+
+    .tabs .tabs-list {
+        width: 40%;
+    }
 }
