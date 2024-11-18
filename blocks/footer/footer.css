@@ -1,6 +1,6 @@
 footer {
     position: relative;
-    background: #b54425 url(../../icons/footer-bg.png) left bottom/cover repeat-x;
+    background: #b54425 url("../../icons/footer-bg.png") left bottom/cover repeat-x;
     font-size: var(--body-font-size-xs);
 
     .footer {
@@ -65,7 +65,7 @@ footer {
         p {
             font: 350 24px 'Open Sans',sans-serif;
             color: #fff;
-            margin: 2% 0% 2% 0%;
+            margin: 2% 0%;
         }
     }
 
@@ -106,7 +106,6 @@ footer .footer > div {
     display: flex;
     width: 100%;
     max-width: 100%;
-    /*padding: 0 15px;*/
     flex-wrap: wrap;
     justify-content: space-between;
 }

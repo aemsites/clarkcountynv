@@ -18,8 +18,10 @@ export default async function decorate(block) {
 
   // add class to footer-contact
   const contactPara = Array.from(footer.querySelectorAll('.footer-middle p'))
-    .find(p => p.textContent.startsWith('Phone'));
-  contactPara && contactPara.classList.add('contact-data');
+    .find((p) => p.textContent.startsWith('Phone'));
+  if (contactPara) {
+    contactPara.classList.add('contact-data');
+  }
 
   block.append(footer);
 }
