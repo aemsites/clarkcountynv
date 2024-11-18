@@ -141,18 +141,36 @@
 
 .section.tabs-container div.default-content-wrapper:last-child {
     display: flex;
+    justify-content: flex-start;
     background-color: white;
     width: 100%;
-    margin-left: 0;
-    padding: 14px;
     align-items: center;
-    border-top: 2.5px solid #000;
-    height: 15vh;
     font: 400 18px var(--body-font-family);
+    border-top: 2.5px solid #000;
 }
 
 .section.tabs-container div.default-content-wrapper:last-child img {
     height: auto;
+}
+
+.section.tabs-container div.default-content-wrapper:last-child p {
+    padding-top : 6vh;
+    padding-left: 2vw;
+    padding-bottom: 4vh;
+}
+
+.section.tabs-container div.default-content-wrapper:last-child p:last-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5vw;
+    flex-direction: row;
+}
+
+.section.tabs-container div.default-content-wrapper:last-child p:last-child picture {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 @media (width >= 900px) {
@@ -203,13 +221,32 @@
 
     .section.tabs-container div.default-content-wrapper:last-child {
         display: flex;
+        justify-content: flex-start;
         background-color: var(--light-color);
         width: 40%;
-        margin-left: 0;
-        padding: 14px;
         align-items: center;
-        border-top: 2.5px solid #000;
-        height: 15vh;
         font: 400 18px var(--body-font-family);
+        border-top: 2.5px solid #000;
+        margin-left: 0;
+    }
+
+    .section.tabs-container div.default-content-wrapper:last-child p {
+        padding-top : 6vh;
+        padding-left: 1vw;
+        padding-bottom: 4vh;
+    }
+
+    .section.tabs-container div.default-content-wrapper:last-child p:last-child {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: .5vw;
+        flex-direction: row;
+    }
+
+    .section.tabs-container div.default-content-wrapper:last-child p:last-child picture {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
