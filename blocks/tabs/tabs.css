@@ -38,7 +38,7 @@
     color: #000;
     position: relative;
     background-color: white;
-    padding-left: 5vw;
+    padding-left: 1vw;
 }
 
 .tabs .tabs-list button::after {
@@ -133,7 +133,7 @@
     background-color: white;
     margin: 0;
     color: var(--orange);
-    padding: 38px 0 0 5vw;
+    padding: 38px 0 0 3vw;
     width: 40%;
     font: 650 34px var(--body-font-family);
     padding-bottom: 30px;
@@ -153,14 +153,16 @@
 }
 
 .section.tabs-container div.default-content-wrapper:last-child p {
-    padding-top : 6vh;
-    padding-left: 2vw;
-    padding-bottom: 4vh;display: flex;
+    padding-top : 5vh;
+    padding-bottom: 8vh;
+    display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1vw;
+    gap: 2.5vw;
     flex-direction: row;
     border-top: 2.5px solid #000;
+    padding-left: 0;
+    margin-left: 3vw;
 }
 
 .section.tabs-container div.default-content-wrapper:last-child p:last-child picture {
@@ -181,6 +183,7 @@
 
     .tabs .tabs-list button {
         background-color: var(--light-color);
+        padding-left: 3vw
     }
 
     .tabs-container h2 {
@@ -226,15 +229,16 @@
     }
 
     .section.tabs-container div.default-content-wrapper:last-child p {
-        padding-top : 6vh;
-        padding-left: 1vw;
-        padding-bottom: 4vh;
+        padding-top : 5vh;
+        padding-bottom: 8vh;
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: .5vw;
+        gap: 2.5vw;
         flex-direction: row;
         border-top: 2.5px solid #000;
+        padding-left: 0;
+        margin-left: 3vw;
     }
 
     .section.tabs-container div.default-content-wrapper:last-child p:last-child picture {
