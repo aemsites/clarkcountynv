@@ -76,7 +76,6 @@
 .tabs .tabs-panel[aria-hidden="false"] {
     margin-top: -1px;
     padding: 0 16px;
-    max-width: 100%;
     overflow: auto;
 }
 
@@ -112,12 +111,13 @@
     display: block;
     font: 350 32px var(--heading-font-family);
     color: #000;
-    padding-right: 50px;
+    padding-right: 20px;
     cursor: pointer;
     transition: all 300ms;
     position: relative;
     margin-bottom: 20px;
     margin-top: 0;
+    padding-left: 10vw;
 }
 
 .tabs-tab[aria-selected="true"] > p {
@@ -134,7 +134,7 @@
     margin: 0;
     color: var(--orange);
     padding: 38px 0 0 3vw;
-    width: 40%;
+    width: 100%;
     font: 650 34px var(--body-font-family);
     padding-bottom: 30px;
 }
@@ -178,6 +178,7 @@
 
     .tabs p {
         padding-right: 160px;
+        padding-left: 0;
     }
 
     .tabs .tabs-list {
@@ -192,6 +193,7 @@
 
     .tabs-container h2 {
         background-color: rgb(238 238 238);
+        width: 40%;
     }
 
     .tabs .tabs-panel {
