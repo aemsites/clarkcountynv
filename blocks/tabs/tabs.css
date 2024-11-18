@@ -73,7 +73,7 @@
     background-color: var(--dark-color);
 }
 
-.tabs .tabs-panel {
+.tabs .tabs-panel[aria-hidden="false"] {
     margin-top: -1px;
     padding: 0 16px;
     max-width: 100%;
@@ -112,7 +112,7 @@
     display: block;
     font: 350 32px var(--heading-font-family);
     color: #000;
-    padding-right: 160px;
+    padding-right: 50px;
     cursor: pointer;
     transition: all 300ms;
     position: relative;
@@ -176,6 +176,10 @@
         flex-direction: row;
     } 
 
+    .tabs p {
+        padding-right: 160px;
+    }
+
     .tabs .tabs-list {
         width: 40%;
         background-color: var(--light-color);
@@ -202,7 +206,7 @@
         content: '';
         position: absolute;
         right: 86px;
-        top: 50%;
+        top: 40%;
         transform: translateY(-50%);
         width: 0;
         height: 0;
