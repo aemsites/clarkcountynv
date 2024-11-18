@@ -1,21 +1,112 @@
 footer {
-  background-color: var(--light-color);
-  font-size: var(--body-font-size-xs);
-  display: none;
+    position: relative;
+    background: #b54425 url(../../icons/footer-bg.png) left bottom/cover repeat-x;
+    font-size: var(--body-font-size-xs);
+
+    .footer {
+        max-width: 100%;
+        margin: 0 auto;
+        display: flex;
+        padding: 40px 0 17px;
+
+        a {
+            color: white;
+            text-decoration: underline;
+        }
+    }
+
+    .footer-left {
+        width: 28%;
+        padding-left: 45px;
+        padding-right: 20px;
+
+        img {
+            height: 116px;
+            width: 116px;
+            border: none;
+            margin-top: 4%;
+        }
+    }
+
+    .footer-middle {
+        width: 46.5%;
+        padding-right: 20px;
+
+        h3 {
+            font: 400 32px 'open sans',sans-serif;
+            color: #fff;
+            margin: 18px 0;
+        }
+
+        p {
+            font: 400 18px 'Open Sans',sans-serif;
+            color: #fff;
+            margin-bottom: 4%;
+        }
+
+        .contact-data {
+            margin-top: 12%;
+        }
+    }
+
+    .footer-right {
+        width: 25.5%;
+        margin-top: 1%;
+        padding-left: 0;
+        padding-right: 15px;
+
+        ul {
+            list-style: none;
+            display: inline-flex;
+            gap: 20px;
+            padding: unset;
+        }
+
+        p {
+            font: 350 24px 'Open Sans',sans-serif;
+            color: #fff;
+            margin: 2% 0% 2% 0%;
+        }
+    }
+
+    .footer-top {
+        border-bottom: 2px solid #FFF;
+
+        .footer-top-box {
+            width: 28%;
+        }
+    }
+
+    .footer-bottom {
+        border-top: 2px solid #FFF;
+        width: 100%;
+        padding: 15px 10px 10px 80px;
+        font: 400 18px 'Open Sans',sans-serif;
+        color: #fff;
+
+        ul {
+            list-style: none;
+            display: inline-flex;
+            gap: 1000px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    }
+
+}
+
+.footer.block {
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 footer .footer > div {
-  margin: auto;
-  max-width: 1200px;
-  padding: 40px 24px 24px;
-}
-
-footer .footer p {
-  margin: 0;
-}
-
-@media (width >= 900px) {
-  footer .footer > div {
-    padding: 40px 32px 24px;
-  }
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    /*padding: 0 15px;*/
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
