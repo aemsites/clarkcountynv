@@ -136,6 +136,10 @@ function handleNavTools(navWrapper, expandElement) {
     searchText.textContent = searchTool.innerText;
     searchDiv.appendChild(searchText);
     const languageDiv = div({ class: 'nav-language' });
+    languageDiv.setAttribute('id', 'google-translate-wrap');
+    const languageDiv1 = div({ class: 'google-translate' });
+    languageDiv1.setAttribute('id', 'google_translate_element');
+    languageDiv.appendChild(languageDiv1);
     const languageText = span();
     languageText.textContent = languageTool.innerText;
     const picture = languageTool.querySelector('picture');
