@@ -61,4 +61,13 @@ export default async function decorate(block) {
   });
 
   block.prepend(tablist);
+  function resizeAction() {
+    const viewPort = getViewPort();
+    if (viewPort === 'desktop') {
+      block.querySelectorAll('[role=tabpanel]').forEach((tabpanel) => {
+        block.append(tabpanel);
+      });
+    }
+  }
+  window.addEventListener('resize', resizeAction);
 }
