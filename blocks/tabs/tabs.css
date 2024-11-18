@@ -146,7 +146,6 @@
     width: 100%;
     align-items: center;
     font: 400 18px var(--body-font-family);
-    border-top: 2.5px solid #000;
 }
 
 .section.tabs-container div.default-content-wrapper:last-child img {
@@ -156,15 +155,12 @@
 .section.tabs-container div.default-content-wrapper:last-child p {
     padding-top : 6vh;
     padding-left: 2vw;
-    padding-bottom: 4vh;
-}
-
-.section.tabs-container div.default-content-wrapper:last-child p:last-child {
-    display: flex;
+    padding-bottom: 4vh;display: flex;
     justify-content: center;
     align-items: center;
-    gap: .5vw;
+    gap: 1vw;
     flex-direction: row;
+    border-top: 2.5px solid #000;
 }
 
 .section.tabs-container div.default-content-wrapper:last-child p:last-child picture {
@@ -226,7 +222,6 @@
         width: 40%;
         align-items: center;
         font: 400 18px var(--body-font-family);
-        border-top: 2.5px solid #000;
         margin-left: 0;
     }
 
@@ -234,14 +229,12 @@
         padding-top : 6vh;
         padding-left: 1vw;
         padding-bottom: 4vh;
-    }
-
-    .section.tabs-container div.default-content-wrapper:last-child p:last-child {
         display: flex;
         justify-content: center;
         align-items: center;
         gap: .5vw;
         flex-direction: row;
+        border-top: 2.5px solid #000;
     }
 
     .section.tabs-container div.default-content-wrapper:last-child p:last-child picture {
