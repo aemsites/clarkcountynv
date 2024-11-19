@@ -122,7 +122,9 @@ class Accordion {
 }
 
 function handleNavTools(navWrapper, expandElement) {
-  const tools = navWrapper.querySelectorAll('.nav-tools .default-content-wrapper p');
+  const tools = [];
+  tools[0] = navWrapper.querySelector('.nav-tools .default-content-wrapper p');
+  tools[1] = navWrapper.querySelector('.nav-tools .default-content-wrapper ul');
   if (tools && tools.length === 2) {
     const searchTool = tools[0];
     const languageTool = tools[1];
@@ -140,12 +142,13 @@ function handleNavTools(navWrapper, expandElement) {
     const languageDiv1 = div({ class: 'google-translate' });
     languageDiv1.setAttribute('id', 'google_translate_element');
     languageDiv.appendChild(languageDiv1);
-    const languageText = span();
-    languageText.textContent = languageTool.innerText;
-    const picture = languageTool.querySelector('picture');
-    picture.classList.add('nav-language-icon');
-    languageDiv.appendChild(languageText);
-    languageDiv.appendChild(picture);
+    languageDiv.appendChild(languageTool);
+    // const languageText = span();
+    // languageText.textContent = languageTool.innerText;
+    // const picture = languageTool.querySelector('picture');
+    // if (picture) picture.classList.add('nav-language-icon');
+    // languageDiv.appendChild(languageText);
+    // languageDiv.appendChild(picture);
     const navToolsDiv = div({ class: 'nav-tools' });
     navToolsDiv.appendChild(searchDiv);
     navToolsDiv.appendChild(languageDiv);
@@ -426,7 +429,7 @@ function buildNavSections(navSections) {
 export default async function decorate(block) {
   // load nav as fragment
   const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
+  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/drafts/meet/nav1';
   const fragment = await loadFragment(navPath);
 
   // decorate nav DOM
