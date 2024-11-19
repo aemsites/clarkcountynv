@@ -393,9 +393,25 @@ header nav .nav-tools {
   background: var(--dark-orange); /* Orange background when scrolled */
 }
 
-#nav > div.section.nav-tools > div > p.button-container > a {
+/* #nav > div.section.nav-tools > div > p.button-container > a {
   background-color: transparent;
   color: var(--white);
+} */
+
+header .nav-tools button.translate-button {
+  background-color: transparent;
+  color: var(--white);
+  border: 0;
+  cursor: pointer;
+  font: 400 16px var(--body-font-family);
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+header .nav-tools .nav-language {
+  position: relative;
 }
 
 header .nav-search-icon {
@@ -695,6 +711,22 @@ header .nav-bottom {
     display: flex;
     margin: 0;
     font-size: var(--body-font-size-xs);
+  }
+
+  header .nav-tools .nav-language ul {
+    padding: 15px;
+    margin: 0;
+    position: absolute !important;
+    left: auto !important;
+    right: 0 !important;
+    top: 6vh !important;
+    width: 200px;
+    height: 314px;
+    background: #fff;
+    z-index: 9999999;
+    overflow: auto;
+    box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.2);
+    color: black;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li {
