@@ -1,8 +1,9 @@
 import { getMetadata, toClassName } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 import {
-  div, img, span,
+  div, img, span, a, button,
 } from '../../scripts/dom-helpers.js';
+import { capitalize } from '../../scripts/utils.js';
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
@@ -121,7 +122,23 @@ class Accordion {
   }
 }
 
+function decorateGoogleTranslator(languageTool) {
+  languageTool.querySelectorAll('li').forEach((li, i) => {
+    const dataCode = li.textContent.split(' ')[0];
+    const dataLang = capitalize(li.textContent.split(' ')[1]);
+    const aTag = a({ class: `${dataLang}` }, dataLang);
+    aTag.setAttribute('data-code', dataCode);
+    aTag.setAttribute('data-lang', dataLang);
+    li.innerHTML = '';
+    li.appendChild(aTag);
+    if (i === 0) {
+      li.classList.add('selected');
+    }
+  });
+}
+
 function handleNavTools(navWrapper, expandElement) {
+  let buttonInnerText = 'English';
   const tools = [];
   tools[0] = navWrapper.querySelector('.nav-tools .default-content-wrapper p');
   tools[1] = navWrapper.querySelector('.nav-tools .default-content-wrapper ul');
@@ -142,13 +159,20 @@ function handleNavTools(navWrapper, expandElement) {
     const languageDiv1 = div({ class: 'google-translate' });
     languageDiv1.setAttribute('id', 'google_translate_element');
     languageDiv.appendChild(languageDiv1);
+    decorateGoogleTranslator(languageTool);
+    const languageButton = button({ class: 'translate-button' }, span('US'), img());
+    languageDiv.appendChild(languageButton);
     languageDiv.appendChild(languageTool);
-    // const languageText = span();
-    // languageText.textContent = languageTool.innerText;
-    // const picture = languageTool.querySelector('picture');
-    // if (picture) picture.classList.add('nav-language-icon');
-    // languageDiv.appendChild(languageText);
-    // languageDiv.appendChild(picture);
+    languageTool.querySelectorAll('li').forEach((ele, _, lis) => {
+      ele.addEventListener('click', () => {
+        buttonInnerText = ele.querySelector('a').getAttribute('data-code');
+        console.log(buttonInnerText);
+        languageButton.querySelector('span').textContent = buttonInnerText;
+        lis.forEach((li) => {
+          li.classList.toggle('selected', li === ele);
+        });
+      });
+    });
     const navToolsDiv = div({ class: 'nav-tools' });
     navToolsDiv.appendChild(searchDiv);
     navToolsDiv.appendChild(languageDiv);
