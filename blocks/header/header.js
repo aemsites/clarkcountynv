@@ -1,9 +1,14 @@
-import { getMetadata, toClassName } from '../../scripts/aem.js';
+import { getMetadata, toClassName, createOptimizedPicture } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 import {
   div, img, span, a, button,
 } from '../../scripts/dom-helpers.js';
 import { capitalize } from '../../scripts/utils.js';
+
+function normalizeImage(str) {
+  const imagePath = '/products/assets/';
+  return imagePath + str.toLowerCase().replace(/_/g, '-');
+}
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
