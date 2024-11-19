@@ -6,8 +6,8 @@ import {
 import { capitalize } from '../../scripts/utils.js';
 
 function normalizeImage(str) {
-  const imagePath = '/products/assets/';
-  return imagePath + str.toLowerCase().replace(/_/g, '-');
+  const imagePath = '/assets/images/google-translations/';
+  return `${imagePath + str}.png`;
 }
 
 // media query match that indicates mobile/tablet width
@@ -166,6 +166,7 @@ function handleNavTools(navWrapper, expandElement) {
     languageDiv.appendChild(languageDiv1);
     decorateGoogleTranslator(languageTool);
     const languageButton = button({ class: 'translate-button' }, span('US'), img());
+    languageButton.querySelector('img').src = normalizeImage('english');
     languageDiv.appendChild(languageButton);
     languageDiv.appendChild(languageTool);
     languageTool.querySelectorAll('li').forEach((ele, _, lis) => {
