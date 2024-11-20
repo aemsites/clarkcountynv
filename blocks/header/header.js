@@ -181,6 +181,9 @@ function handleNavTools(navWrapper, expandElement) {
         });
       });
     });
+    languageButton.addEventListener('click', () => {
+      languageTool.classList.toggle('show');
+    });
     const navToolsDiv = div({ class: 'nav-tools' });
     navToolsDiv.appendChild(searchDiv);
     navToolsDiv.appendChild(languageDiv);

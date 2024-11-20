@@ -266,6 +266,12 @@ header .nav-tools .nav-language ul {
   font-size: 18px;
   font-family: var(--body-font-family);
   list-style-type: none;
+  opacity: 0;
+  transition: opacity .5s ease-out;
+}
+
+header .nav-tools .nav-language ul.show {
+  opacity: 1;
 }
 
 header nav .nav-sections:has(details) .default-content-wrapper details ul {
@@ -775,6 +781,12 @@ header .nav-bottom {
     overflow: auto;
     box-shadow: 0 2px 15px 0 rgba(0 0 0 / 20%);
     color: black;
+    opacity: 0;
+    transition: opacity .5s ease-out;
+  }
+
+  header .nav-tools .nav-language ul.show {
+    opacity: 1;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li {
