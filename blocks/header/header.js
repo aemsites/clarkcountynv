@@ -1,13 +1,13 @@
-import { getMetadata, toClassName, createOptimizedPicture } from '../../scripts/aem.js';
+import { getMetadata, toClassName } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 import {
   div, img, span, a, button,
 } from '../../scripts/dom-helpers.js';
-import { capitalize } from '../../scripts/utils.js';
+// import { capitalize } from '../../scripts/utils.js';
 
 function normalizeImage(str) {
   const imagePath = '/assets/images/google-translations/';
-  return `${imagePath + str}.png`;
+  return `${imagePath + str.replace(/[()]/g, '').replace(/[ ]/g, '-').toLowerCase()}.png`;
 }
 
 // media query match that indicates mobile/tablet width
@@ -130,7 +130,7 @@ class Accordion {
 function decorateGoogleTranslator(languageTool) {
   languageTool.querySelectorAll('li').forEach((li, i) => {
     const dataCode = li.textContent.split(' ')[0];
-    const dataLang = capitalize(li.textContent.split(' ')[1]);
+    const dataLang = li.textContent.substring(li.textContent.indexOf(' ') + 1);
     const aTag = a({ class: `${dataLang}` }, dataLang);
     aTag.setAttribute('data-code', dataCode);
     aTag.setAttribute('data-lang', dataLang);
@@ -144,6 +144,7 @@ function decorateGoogleTranslator(languageTool) {
 
 function handleNavTools(navWrapper, expandElement) {
   let buttonInnerText = 'English';
+  let imgSrc = normalizeImage('english');
   const tools = [];
   tools[0] = navWrapper.querySelector('.nav-tools .default-content-wrapper p');
   tools[1] = navWrapper.querySelector('.nav-tools .default-content-wrapper ul');
@@ -173,7 +174,9 @@ function handleNavTools(navWrapper, expandElement) {
       ele.addEventListener('click', () => {
         buttonInnerText = ele.querySelector('a').getAttribute('data-code');
         console.log(buttonInnerText);
+        imgSrc = ele.querySelector('a').getAttribute('data-lang');
         languageButton.querySelector('span').textContent = buttonInnerText;
+        languageButton.querySelector('img').src = normalizeImage(imgSrc);
         lis.forEach((li) => {
           li.classList.toggle('selected', li === ele);
         });
