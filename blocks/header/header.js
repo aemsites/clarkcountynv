@@ -173,7 +173,6 @@ function handleNavTools(navWrapper, expandElement) {
     languageTool.querySelectorAll('li').forEach((ele, _, lis) => {
       ele.addEventListener('click', () => {
         buttonInnerText = ele.querySelector('a').getAttribute('data-code');
-        console.log(buttonInnerText);
         imgSrc = ele.querySelector('a').getAttribute('data-lang');
         languageButton.querySelector('span').textContent = buttonInnerText;
         languageButton.querySelector('img').src = normalizeImage(imgSrc);

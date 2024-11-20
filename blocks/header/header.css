@@ -264,11 +264,6 @@ header .nav-tools .nav-language ul {
   list-style-type: none;
 }
 
-header .nav-tools .nav-language ul li.selected {
-  font-weight: 700 !important;
-  color: var(--dark-orange) !important;
-}
-
 header nav .nav-sections:has(details) .default-content-wrapper details ul {
   margin: 0;
 }
@@ -311,6 +306,12 @@ header nav .nav-sections:has(details) .default-content-wrapper details > summary
 }
 
 header .nav-sections strong > a:any-link:hover {
+  text-decoration: none;
+}
+
+header .nav-tools .nav-language ul li.selected a {
+  font-weight: 700 !important;
+  color: var(--dark-orange) !important;
   text-decoration: none;
 }
 
