@@ -167,6 +167,10 @@ header nav .nav-language {
   flex-direction: column;
 }
 
+header nav .nav-language .google-translate {
+  display: none;
+}
+
 header nav .nav-language picture {
   display: flex;
 }
@@ -432,6 +436,22 @@ header .nav-tools button.translate-button {
   flex-direction: row;
   align-items: center;
   align-self: flex-end;
+  margin-left: 53px;
+}
+
+header .nav-tools button.translate-button span {
+  margin: 0 16px 0 0 !important;
+  text-decoration: none !important;
+  font-size: 18px;
+  font-family: var(--heading-font-family);
+}
+
+header .nav-tools button.translate-button img {
+  width: 31px;
+  height: 31px;
+  border-radius: 50%;
+  box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.2);
+  object-fit: cover;
 }
 
 header .nav-tools .nav-language {
@@ -747,7 +767,7 @@ header .nav-bottom {
     position: absolute !important;
     left: auto !important;
     right: 0 !important;
-    top: 7vh !important;
+    top: 8vh !important;
     width: 200px;
     height: 314px;
     background: #fff;
