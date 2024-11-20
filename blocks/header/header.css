@@ -167,9 +167,9 @@ header nav .nav-language {
   flex-direction: column;
 }
 
-/* header nav .nav-language .google-translate {
+header nav .nav-language .google-translate {
   display: none;
-} */
+}
 
 header nav .nav-language picture {
   display: flex;

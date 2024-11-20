@@ -10,6 +10,13 @@ function normalizeImage(str) {
   return `${imagePath + str.replace(/[()]/g, '').replace(/[ ]/g, '-').toLowerCase()}.png`;
 }
 
+function hideGoogleTranslateBar() {
+  const element = document.querySelector('#\\:1\\.container');
+  if (element) {
+    element.style.visibility = 'hidden';
+  }
+}
+
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
 const tracker = [];
@@ -145,6 +152,13 @@ function decorateGoogleTranslator(languageTool) {
   });
 }
 
+function letsTranslate(ele) {
+  const selectField = document.querySelector('select.goog-te-combo');
+  selectField.value = ele.querySelector('a').getAttribute('data-lang');
+  selectField.dispatchEvent(new Event('change'));
+  setTimeout(hideGoogleTranslateBar, 100);
+}
+
 function handleNavTools(navWrapper, expandElement) {
   let buttonInnerText = 'English';
   let imgSrc = normalizeImage('english');
@@ -182,6 +196,7 @@ function handleNavTools(navWrapper, expandElement) {
         lis.forEach((li) => {
           li.classList.toggle('selected', li === ele);
         });
+        letsTranslate(ele);
       });
     });
     languageButton.addEventListener('click', () => {
