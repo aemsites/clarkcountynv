@@ -129,9 +129,14 @@ class Accordion {
 
 function decorateGoogleTranslator(languageTool) {
   languageTool.querySelectorAll('li').forEach((li, i) => {
-    const dataCode = li.textContent.split(' ')[0];
-    const dataLang = li.textContent.substring(li.textContent.indexOf(' ') + 1);
-    const aTag = a({ class: `${dataLang}` }, dataLang);
+    const textArray = li.textContent.split(' ');
+    const dataCode = textArray[0];
+    const dataLang = textArray[1];
+    textArray.splice(0, 2);
+    console.log(textArray);
+    const dataText = textArray.join(' ');
+    // const dataLang = li.textContent.substring(li.textContent.indexOf(' ') + 1);
+    const aTag = a({ class: `${dataLang}` }, dataText);
     aTag.setAttribute('data-code', dataCode);
     aTag.setAttribute('data-lang', dataLang);
     li.innerHTML = '';
@@ -173,7 +178,7 @@ function handleNavTools(navWrapper, expandElement) {
     languageTool.querySelectorAll('li').forEach((ele, _, lis) => {
       ele.addEventListener('click', () => {
         buttonInnerText = ele.querySelector('a').getAttribute('data-code');
-        imgSrc = ele.querySelector('a').getAttribute('data-lang');
+        imgSrc = ele.querySelector('a').textContent;
         languageButton.querySelector('span').textContent = buttonInnerText;
         languageButton.querySelector('img').src = normalizeImage(imgSrc);
         lis.forEach((li) => {
