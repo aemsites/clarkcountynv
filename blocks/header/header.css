@@ -42,10 +42,6 @@ header nav {
   padding: 0;
 }
 
-header nav[aria-expanded="true"] {
-  overflow-y: auto;
-}
-
 @media (width >=600px) {
   header nav {
     margin: 0;
@@ -168,6 +164,7 @@ header nav .nav-language {
   color: var(--white);
   align-items: center;
   margin: 15px;
+  flex-direction: column;
 }
 
 header nav .nav-language picture {
@@ -245,6 +242,23 @@ header nav .nav-sections ul > li > ul {
 header nav .nav-sections:has(details) .default-content-wrapper {
   width: 100%;
   background-color: var(--dark-orange);
+}
+
+header .nav-tools .nav-language ul {
+  padding: 15px;
+  margin: 0;
+  position: absolute !important;
+  left: auto !important;
+  right: 0 !important;
+  top: 6vh !important;
+  width: 200px;
+  height: 314px;
+  background: #fff;
+  z-index: 9999999;
+  overflow: auto;
+  box-shadow: 0 2px 15px 0 rgba(0 0 0 / 20%);
+  color: black;
+  align-self: flex-end;
 }
 
 header nav .nav-sections:has(details) .default-content-wrapper details ul {
@@ -408,6 +422,7 @@ header .nav-tools button.translate-button {
   display: flex;
   flex-direction: row;
   align-items: center;
+  align-self: flex-end;
 }
 
 header .nav-tools .nav-language {
@@ -630,6 +645,10 @@ header .nav-bottom {
     height: var(--nav-height);
   }
 
+  header nav .nav-language {
+    flex-direction: row;
+  }
+
   header nav .expanddiv {
     flex-direction: row;
   }
@@ -719,13 +738,13 @@ header .nav-bottom {
     position: absolute !important;
     left: auto !important;
     right: 0 !important;
-    top: 6vh !important;
+    top: 7vh !important;
     width: 200px;
     height: 314px;
     background: #fff;
     z-index: 9999999;
     overflow: auto;
-    box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 15px 0 rgba(0 0 0 / 20%);
     color: black;
   }
 
