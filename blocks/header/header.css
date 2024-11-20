@@ -259,6 +259,14 @@ header .nav-tools .nav-language ul {
   box-shadow: 0 2px 15px 0 rgba(0 0 0 / 20%);
   color: black;
   align-self: flex-end;
+  font-size: 18px;
+  font-family: var(--body-font-family);
+  list-style-type: none;
+}
+
+header .nav-tools .nav-language ul li.selected {
+  font-weight: 700 !important;
+  color: var(--dark-orange) !important;
 }
 
 header nav .nav-sections:has(details) .default-content-wrapper details ul {
