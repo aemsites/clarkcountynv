@@ -12,7 +12,6 @@ function widget() {
   a.append(img);
   txt.innerHTML = 'Share';
   a.append(txt);
-  console.log(window.location.href);
   (document.body || document.head).appendChild(a);
 }
 
