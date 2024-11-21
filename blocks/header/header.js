@@ -3,7 +3,6 @@ import { loadFragment } from '../fragment/fragment.js';
 import {
   div, img, span, a, button,
 } from '../../scripts/dom-helpers.js';
-// import { capitalize } from '../../scripts/utils.js';
 
 function normalizeImage(str) {
   const imagePath = '/assets/images/google-translations/';
@@ -158,7 +157,6 @@ function letsTranslate(ele) {
   selectField.value = ele.querySelector('a').getAttribute('data-lang');
   selectField.dispatchEvent(new Event('change'));
   hideGoogleTranslateBar();
-  // setTimeout(hideGoogleTranslateBar, 100);
 }
 
 function handleNavTools(navWrapper, expandElement) {
@@ -267,17 +265,17 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
     detail.removeAttribute('open');
   });
   const expanded = forceExpanded !== null ? !forceExpanded : nav.getAttribute('aria-expanded') === 'true';
-  const button = nav.querySelector('.nav-hamburger button');
+  const $button = nav.querySelector('.nav-hamburger button');
   // document.body.style.overflowY = (expanded || isDesktop.matches) ? '' : 'hidden';
   nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
   toggleAllNavSections(navSections, expanded || isDesktop.matches ? 'false' : 'true');
-  button.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
+  $button.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
   // enable nav dropdown keyboard accessibility
   const navDrops = navSections.querySelectorAll('.nav-drop');
   if (isDesktop.matches) {
     navDrops.forEach((drop) => {
       if (!drop.hasAttribute('tabindex')) {
-        drop.setAttribute('role', 'button');
+        drop.setAttribute('role', '$button');
         drop.setAttribute('tabindex', 0);
         drop.addEventListener('focus', focusNavSection);
       }
@@ -400,15 +398,15 @@ function decorateNavItem(parent, navSectionSearchItem) {
     i += 1;
 
     // build tab button
-    const button = document.createElement('button');
-    button.className = 'tabs-tab';
-    button.id = `tab-${id}`;
-    button.innerHTML = tabInfo.innerHTML;
-    button.setAttribute('aria-controls', `tabpanel-${id}`);
-    button.setAttribute('aria-selected', !i);
-    button.setAttribute('role', 'tab');
-    button.setAttribute('type', 'button');
-    button.addEventListener('mouseover', () => {
+    const $button = document.createElement('button');
+    $button.className = 'tabs-tab';
+    $button.id = `tab-${id}`;
+    $button.innerHTML = tabInfo.innerHTML;
+    $button.setAttribute('aria-controls', `tabpanel-${id}`);
+    $button.setAttribute('aria-selected', !i);
+    $button.setAttribute('role', 'tab');
+    $button.setAttribute('type', 'button');
+    $button.addEventListener('mouseover', () => {
       parent.querySelectorAll('[role=tabpanel]').forEach((panel) => {
         panel.setAttribute('aria-hidden', true);
       });
@@ -416,9 +414,9 @@ function decorateNavItem(parent, navSectionSearchItem) {
         btn.setAttribute('aria-selected', false);
       });
       tabpanel.setAttribute('aria-hidden', false);
-      button.setAttribute('aria-selected', true);
+      $button.setAttribute('aria-selected', true);
     });
-    tablist.append(button);
+    tablist.append($button);
   }
 
   const navBottom = document.createElement('div');

@@ -468,7 +468,7 @@ header .nav-tools button.translate-button img {
   width: 31px;
   height: 31px;
   border-radius: 50%;
-  box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 15px 0 rgba(0 0 0 / 20%);
   object-fit: cover;
 }
 
