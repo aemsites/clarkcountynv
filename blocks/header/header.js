@@ -11,9 +11,10 @@ function normalizeImage(str) {
 }
 
 function hideGoogleTranslateBar() {
+  document.body.style.top = 0;
   const element = document.querySelector('#\\:1\\.container');
   if (element) {
-    element.style.visibility = 'hidden';
+    element.classList.add('hidden');
   }
 }
 
@@ -156,7 +157,8 @@ function letsTranslate(ele) {
   const selectField = document.querySelector('select.goog-te-combo');
   selectField.value = ele.querySelector('a').getAttribute('data-lang');
   selectField.dispatchEvent(new Event('change'));
-  setTimeout(hideGoogleTranslateBar, 100);
+  hideGoogleTranslateBar();
+  // setTimeout(hideGoogleTranslateBar, 100);
 }
 
 function handleNavTools(navWrapper, expandElement) {

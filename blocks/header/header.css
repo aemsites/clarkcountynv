@@ -9,8 +9,20 @@ header {
   transition: all .3s;
 }
 
+iframe.skiptranslate {
+  visibility: hidden !important;
+}
+
+.hidden {
+  visibility: hidden !important;
+}
+
 header.mobile {
   position: absolute;
+}
+
+.top {
+  top: 0 !important
 }
 
 header.mobile + main {
