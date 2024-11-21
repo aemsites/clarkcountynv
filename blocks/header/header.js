@@ -1,7 +1,7 @@
 import { getMetadata, toClassName } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 import {
-  div, img, span, a, button,
+  div, img, span, a, button, details, summary, h2,
 } from '../../scripts/dom-helpers.js';
 
 function normalizeImage(str) {
@@ -305,26 +305,23 @@ function decorateNavItemMobile(mainUL) {
     const mainLI = mainLIs[i];
     const mainA = mainLI.querySelector('a');
 
-    const details = document.createElement('details');
-    details.classList.add('accordion-item');
+    const $details = details({ class: 'accordion-item' });
 
-    const summary = document.createElement('summary');
-    summary.classList.add('accordion-item-label');
-    const labelRight = document.createElement('div');
-    labelRight.classList.add('markerdiv');
-    const lablDiv = document.createElement('div');
+    const $summary = summary({ class: 'accordion-item-label' });
+    const labelRight = div({ class: 'markerdiv' });
+    const lablDiv = div();
     lablDiv.append(mainA, labelRight);
-    summary.append(lablDiv);
+    $summary.append(lablDiv);
 
     const childUL = mainLI.querySelector('ul');
 
     if (childUL) {
-      details.append(summary, childUL);
-      mainLI.replaceWith(details);
+      $details.append($summary, childUL);
+      mainLI.replaceWith($details);
       decorateNavItemMobile(childUL);
     } else {
-      details.append(summary);
-      mainLI.replaceWith(details);
+      $details.append($summary);
+      mainLI.replaceWith($details);
     }
   }
 }
@@ -342,18 +339,14 @@ function findLevel(element) {
 }
 
 function decorateNavItem(parent, navSectionSearchItem) {
-  const menuUl = document.createElement('div');
-  menuUl.className = 'menuul';
-  const navIn = document.createElement('div');
-  navIn.className = 'nav-in';
-  const navContent = document.createElement('div');
-  navContent.className = 'nav-content';
-  const navContentIn = document.createElement('div');
-  navContentIn.className = 'nav-content-in';
-  const navPageTitle = document.createElement('h2');
+  const menuUl = div({ class: 'menuul' });
+  const navIn = div({ class: 'nav-in' });
+  const navContent = div({ class: 'nav-content' });
+  const navContentIn = div({ class: 'nav-content-in' });
+  const navPageTitle = h2();
   navPageTitle.className = 'nav-page-title';
   navPageTitle.textContent = parent.querySelector('strong').textContent;
-  const closeSpan = document.createElement('span');
+  const closeSpan = span();
   closeSpan.className = 'nav-close';
   closeSpan.innerText = 'close';
   closeSpan.addEventListener('click', () => {
@@ -366,12 +359,10 @@ function decorateNavItem(parent, navSectionSearchItem) {
   menuUl.append(navIn);
   parent.append(menuUl);
 
-  const navInMenuWrap = document.createElement('div');
-  navInMenuWrap.className = 'nav-in-menu-wrap';
+  const navInMenuWrap = div({ class: 'nav-in-menu-wrap' });
   navIn.append(navInMenuWrap);
 
-  const tablist = document.createElement('div');
-  tablist.className = 'tabs-list';
+  const tablist = div({ class: 'tabs-list' });
   tablist.setAttribute('role', 'tablist');
 
   navInMenuWrap.append(tablist);
@@ -383,7 +374,7 @@ function decorateNavItem(parent, navSectionSearchItem) {
     const tabInfo = list.item(i);
     const id = toClassName(tabInfo.querySelector('a').textContent);
 
-    const tabpanel = document.createElement('div');
+    const tabpanel = div();
     navInMenuWrap.append(tabpanel);
     // decorate tabpanel
     tabpanel.className = 'tabs-panel';
@@ -398,8 +389,7 @@ function decorateNavItem(parent, navSectionSearchItem) {
     i += 1;
 
     // build tab button
-    const $button = document.createElement('button');
-    $button.className = 'tabs-tab';
+    const $button = button({ class: 'tabs-tab' });
     $button.id = `tab-${id}`;
     $button.innerHTML = tabInfo.innerHTML;
     $button.setAttribute('aria-controls', `tabpanel-${id}`);
@@ -419,8 +409,7 @@ function decorateNavItem(parent, navSectionSearchItem) {
     tablist.append($button);
   }
 
-  const navBottom = document.createElement('div');
-  navBottom.className = 'nav-bottom';
+  const navBottom = div({ class: 'nav-bottom' });
   navBottom.append(navSectionSearchItem.cloneNode(true));
 
   navIn.append(navBottom);
@@ -451,8 +440,8 @@ function buildNavSections(navSections) {
     } else {
       const mainUL = navSections.querySelector(':scope .default-content-wrapper > ul');
       decorateNavItemMobile(mainUL);
-      mainUL.querySelectorAll('details').forEach((details) => {
-        details.addEventListener('toggle', (event) => {
+      mainUL.querySelectorAll('details').forEach((detail) => {
+        detail.addEventListener('toggle', (event) => {
           if (event.target.open) {
             const value = findLevel(event.target);
             event.target.querySelector('ul').querySelectorAll(':scope > details').forEach((ele) => {
@@ -460,7 +449,7 @@ function buildNavSections(navSections) {
               ele.querySelector('summary').classList.add(`child${value + 1}`);
               ele.classList.add(`parent${value + 1}`);
             });
-            details.parentElement.querySelectorAll('details').forEach((ele) => {
+            detail.parentElement.querySelectorAll('details').forEach((ele) => {
               if (ele !== event.target) {
                 ele.removeAttribute('open');
               }
@@ -550,14 +539,14 @@ export default async function decorate(block) {
         navSections.querySelector('p').remove();
         const mainUL = navSections.querySelector(':scope .default-content-wrapper > ul');
         decorateNavItemMobile(mainUL);
-        mainUL.querySelectorAll('details').forEach((details) => {
-          details.addEventListener('toggle', (event) => {
+        mainUL.querySelectorAll('details').forEach((detail) => {
+          detail.addEventListener('toggle', (event) => {
             if (event.target.open) {
               const value = findLevel(event.target);
               event.target.querySelector('ul').querySelectorAll(':scope > details').forEach((ele) => {
                 ele.querySelector('summary').classList.add(`itemcolor${value + 1}`);
               });
-              details.parentElement.querySelectorAll('details').forEach((ele) => {
+              detail.parentElement.querySelectorAll('details').forEach((ele) => {
                 if (ele !== event.target) {
                   ele.removeAttribute('open');
                 }
@@ -599,8 +588,7 @@ export default async function decorate(block) {
   window.addEventListener('resize', resizeFunction);
 
   // hamburger for mobile
-  const hamburger = document.createElement('div');
-  hamburger.classList.add('nav-hamburger');
+  const hamburger = div({ class: 'nav-hamburger' });
   hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="Open navigation">
       <span class="nav-hamburger-icon"></span>
     </button>`;
@@ -611,8 +599,7 @@ export default async function decorate(block) {
   toggleMenu(nav, navSections, isDesktop.matches);
   isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
 
-  const navWrapper = document.createElement('div');
-  navWrapper.className = 'nav-wrapper';
+  const navWrapper = div({ class: 'nav-wrapper' });
   navWrapper.append(nav);
   block.append(navWrapper);
 
