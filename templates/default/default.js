@@ -4,8 +4,6 @@ import {
 } from '../../scripts/dom-helpers.js';
 
 export default async function decorate(doc) {
-  const height = document.querySelector(':root');
-  const originalHeight = height.style.getPropertyValue('--original-height');
   const $main = doc.querySelector('main');
   const $leftsection = document.querySelector('.leftsection');
   const $clickElement = $leftsection.querySelector('.default-content-wrapper > p');
@@ -14,6 +12,8 @@ export default async function decorate(doc) {
   $clickElement.addEventListener('click', () => {
     $clickElement.classList.toggle('active');
     $activeElement.classList.toggle('active');
+    const height = document.querySelector(':root');
+    const originalHeight = height.style.getPropertyValue('--original-height');
     height.style.setProperty('--height', `${originalHeight}`);
     if (!$clickElement.classList.contains('active')) {
       $activeElement.querySelectorAll('details[open]').forEach((detail) => {
