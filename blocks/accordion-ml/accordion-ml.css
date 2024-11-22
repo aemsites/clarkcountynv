@@ -19,23 +19,29 @@ details[open] > ul {
 }
 
 .itemcolor2 {
-    background: #a7381a;
-    font-family: 'Neue Montreal', sans-serif;
+    background-color: rgba(0 0 0 / 15%);
+    font-family: var(--heading-font-family);
 }
 
 .itemcolor3 {
-    background: #8c280e;
-    font-family: 'Open Sans', sans-serif;
+    background-color: rgba(0 0 0 / 30%);
+    font-family: var(--heading-font-family);
+    border-bottom: 1px solid rgba(0 0 0 / 15%);
 }
 
 .accordion-ml details a {
     font-size: 14px;
-    font-family: 'Neue Montreal', sans-serif;
+    font-family: var(--heading-font-family);
     padding: 15px 60px 15px 15px;
 }
 
 .accordion-ml details > summary a {
-    font-family: 'Open Sans', sans-serif;
+    font-family: var(--heading-font-family);
+}
+
+.accordion-ml details summary:not(.itemcolor3):has(+ ul) a:any-link {
+    border-bottom: 1px solid rgba(0 0 0 / 15%);
+    flex-grow: 1;
 }
 
 .accordion-ml details a:any-link {
@@ -53,11 +59,13 @@ details[open] > ul {
     overflow: auto;
     transition: background-color 0.3s;
     line-height: 1 !important;
-    border-bottom: 1px solid rgba(0 0 0 / 15%);
+    /* border-bottom: 1px solid rgba(0 0 0 / 15%); */
 }
 
 .accordion-ml details > summary.itemcolor2 a {
-    font-family: 'Neue Montreal', sans-serif;
+    font-family: var(--heading-font-family);
+    border-bottom: 1px solid rgba(0 0 0 / 15%);
+    flex-grow: 1;
 }
 
 .accordion-ml details>summary::-webkit-details-marker {
@@ -74,7 +82,8 @@ details[open] > ul {
     position: relative;
     width: 45px;
     margin-left: auto;
-    background-color: #8c280e;
+    background-color: rgba(0 0 0 / 15%);
+    border-bottom: 1px solid rgba(0 0 0 / 30%);
 }
 
 .accordion-ml details>summary:has(+ ul) div.markerdiv::after {
