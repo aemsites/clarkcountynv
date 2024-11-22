@@ -40,14 +40,13 @@ function findLevel(element) {
   return level;
 }
 
-export default function decorate(block) {
-  console.log(block);
+export default function decorate() {
+  const height = document.querySelector(':root');
   const mainUL = document.querySelector('ul');
 
   // Get the height of the overall UL for the Mobile view and pass it to the CSS variable
 
   const divHeight = mainUL.children.length * 46;
-  var height = document.querySelector(':root');
   height.style.setProperty('--height', `${divHeight}px`);
   height.style.setProperty('--original-height', `${divHeight}px`);
   multilevelAccordion(mainUL);
