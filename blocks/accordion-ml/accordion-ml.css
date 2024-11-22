@@ -1,5 +1,7 @@
 .accordion-ml.block {
     background: #c54b2a;
+    display: none;
+    height: 0;
 }
 
 details[open] > ul {
@@ -93,4 +95,12 @@ details[open] > ul {
 
 .accordion-ml details[open] > summary:has(+ ul) div.markerdiv::after {
     transform: translateY(-50%) rotate(-180deg);
+}
+
+@media (width >= 900px) {
+    .accordion-ml.block {
+        background: #c54b2a;
+        display: block;
+        height: auto;
+    }
 }
