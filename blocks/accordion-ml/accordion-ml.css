@@ -12,6 +12,7 @@ details[open] > ul {
 
 .accordion-ml.block ul {
     margin-left: -1.8em;
+    margin-top: 0;
 }
 
 .itemcolor2 {
