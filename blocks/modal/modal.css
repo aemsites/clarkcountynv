@@ -101,3 +101,15 @@ body.modal-open {
   height: 64px;
   position: relative;
 }
+
+.social-nav-item {
+  width: 204px;
+  height: 170px;
+  font-size: 60px;
+}
+
+.share-close {
+  border-radius: 0;
+  background-color: black;
+  color:blueviolet;
+}
