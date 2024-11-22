@@ -1,7 +1,8 @@
 .accordion-ml.block {
     background: #c54b2a;
-    display: none;
     height: 0;
+    transition: height .25s ease-in;
+    overflow: hidden;
 }
 
 details[open] > ul {
@@ -102,5 +103,6 @@ details[open] > ul {
         background: #c54b2a;
         display: block;
         height: auto;
+        opacity: 1;
     }
 }

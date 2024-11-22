@@ -7,8 +7,11 @@ export default async function decorate(doc) {
   const $main = doc.querySelector('main');
   const $leftsection = document.querySelector('.leftsection');
   const $clickElement = $leftsection.querySelector('.default-content-wrapper > p');
+  const $activeElement = $leftsection.querySelector('.accordion-ml.block');
+
   $clickElement.addEventListener('click', () => {
     $clickElement.classList.toggle('active');
+    $activeElement.classList.toggle('active');
   });
 
   const $rightsection = document.querySelector('.rightsection');

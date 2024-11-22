@@ -28,9 +28,9 @@ main .mainmenu .leftsection>.default-content-wrapper>p {
     cursor: pointer;
 }
 
-main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordion-ml-wrapper > .block.accordion-ml {
-    display: block;
-    height: auto;
+main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordion-ml-wrapper > .block.accordion-ml.active {
+    height: var(--height);
+    transition: height .5s ease-in;
 }
 
 @media (width >=900px) {
