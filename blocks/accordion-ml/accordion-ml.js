@@ -49,10 +49,12 @@ export default function decorate(block) {
   const divHeight = mainUL.children.length * 46;
   var height = document.querySelector(':root');
   height.style.setProperty('--height', `${divHeight}px`);
+  height.style.setProperty('--original-height', `${divHeight}px`);
   multilevelAccordion(mainUL);
   mainUL.querySelectorAll('details').forEach((details) => {
     details.addEventListener('toggle', (event) => {
       if (event.target.open) {
+        height.style.setProperty('--height', 'auto');
         const value = findLevel(event.target);
         event.target.querySelector('ul').querySelectorAll(':scope > details').forEach((ele) => {
           ele.querySelector('summary').classList.add(`itemcolor${value + 1}`);
