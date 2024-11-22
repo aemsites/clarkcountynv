@@ -25,6 +25,9 @@ export async function createModal(contentNodes) {
   closeButton.addEventListener('click', () => dialog.close());
   dialog.prepend(closeButton);
 
+  console.log('createModal w.loc.href ', window.location.href);
+  console.log('createModal w.loc.href ', this.URL);
+
   const block = buildBlock('modal', '');
   document.querySelector('main').append(block);
   decorateBlock(block);
@@ -98,6 +101,7 @@ export async function openModal(fragmentUrl) {
     ? new URL(fragmentUrl, window.location).pathname
     : fragmentUrl;
   const fragment = await loadFragment(path);
+  console.log('openModal ', fragmentUrl);
   const { showModal } = await createModal(fragment.childNodes);
   showModal();
 }
