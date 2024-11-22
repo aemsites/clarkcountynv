@@ -102,8 +102,6 @@ export async function openModal(fragmentUrl) {
     ? new URL(fragmentUrl, window.location).pathname
     : fragmentUrl;
   const fragment = await loadFragment(path);
-  console.log('openModal ', fragmentUrl);
-  console.log('w.loc.href', window.location.href);
   const { showModal } = await createModal(fragment.childNodes);
   showModal();
 }
