@@ -39,7 +39,6 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
         flex-direction: row;
         justify-content: space-between;
         position: relative;
-        top: -1.02vh;
     }
 
     main .mainmenu .leftsection {

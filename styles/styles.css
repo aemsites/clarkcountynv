@@ -342,6 +342,10 @@ main .section.highlight {
   background-color: var(--light-color);
 }
 
+main > div.mobile.with-background-image {
+  height: 700px;
+}
+
 @media only screen and (width <= 991px) {
   body > main > div.section.updates.section-top-container.column-container.cards-container > div.section-top-wrapper > div > div > div:nth-child(1) > p {
     margin: 0;
@@ -391,5 +395,9 @@ main .section.highlight {
 
   main > div::before {
       height: 667px;
+  }
+
+  main > div.section.desktop.with-background-image {
+    height: 667px;
   }
 }
