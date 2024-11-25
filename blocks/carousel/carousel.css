@@ -207,9 +207,13 @@
               
     }
 
-    .carousel-slide-content-1:empty {
+  
+
+    /* .carousel-slide-content-1:empty {
         content: "<p>&nbsp;</p>";
-    }
+    } */
+
+
 
     
     .slide-content-2 p {
@@ -244,3 +248,10 @@
         
     }
 }   
+.slide-content-1 ::before {
+    background: url(../../assets/images/leaf-left.png) center/cover no-repeat;
+}
+
+.slide-content-1::after {
+    background: url(../../assets/images/leaf-right.png) center/cover no-repeat;
+}
