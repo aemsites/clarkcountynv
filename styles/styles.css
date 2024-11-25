@@ -265,7 +265,7 @@ main > div.section.mobile.with-background-image img {
   height: 700px;
 }
 
-/* main > div::before {
+main > div::before {
   content: '';
     position: absolute;
     top: 0;
@@ -275,7 +275,7 @@ main > div.section.mobile.with-background-image img {
     z-index: 0;
     background: #000;
     opacity: 0.1;
-} */
+}
 
 .section-top-wrapper {
   background: url('../images/section-top-bg.png') left bottom/cover no-repeat;
