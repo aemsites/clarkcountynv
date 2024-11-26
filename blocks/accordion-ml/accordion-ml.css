@@ -112,6 +112,7 @@ details[open] > ul {
         display: block;
         height: auto;
         opacity: 1;
+        overflow: visible;
     }
 
     .accordion-ml.block > div > div {
@@ -121,7 +122,6 @@ details[open] > ul {
     .accordion-ml.block > div > div > ul {
         margin-right: -15px;
         list-style-type: none;
-        position: relative;
     }
 
     .accordion-ml.block > div > div > li {
@@ -132,17 +132,32 @@ details[open] > ul {
 
     .accordion-ml.block > div > div > ul li {
         list-style-type: none;
+        position: relative;
     }
 
-    .accordion-ml.block > div > div > ul a {
+    .accordion-ml.block > div > div > ul li ul {
+        position: absolute;
+        display: none;
+        left: 100%;
+        z-index: 999;
+        background-color: var(--dark-orange);
+        top: 0;
+    }
+
+    .accordion-ml.block > div > div > ul li:hover ul {
+        display: block;
+    }
+
+    .accordion-ml.block > div > div > ul li a {
         font: 700 16px var(--body-font-family);
         text-decoration: none;
         color: #fff;
         line-height: 1.5;
         padding: 15.5px 35px 15.5px 0;
+        display: block;
     }
 
-    .accordion-ml.block > div > div > ul li:hover {
+    .accordion-ml.block > div > div > ul li a:hover {
         background: var(--dark-orange);
     }
 }
