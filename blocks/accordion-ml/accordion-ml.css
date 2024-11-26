@@ -29,6 +29,12 @@ details[open] > ul {
     border-bottom: 1px solid rgba(0 0 0 / 15%);
 }
 
+.itemcolor4 {
+    background-color: rgba(0 0 0 / 40%);
+    font-family: var(--heading-font-family);
+    border-bottom: 1px solid rgba(0 0 0 / 30%);
+}
+
 .accordion-ml details a {
     font-size: 14px;
     font-family: var(--heading-font-family);

@@ -12,6 +12,8 @@ class Accordion {
     this.summary = el.querySelector('summary');
     // Store the parent <details> element
     this.parent = el.parentElement.parentElement;
+    // Store the grand parent <details> element
+    this.grandParent = el.parentElement.parentElement.parentElement.parentElement;
     // Store the <div class="content"> element
     this.content = el.querySelector('.content');
 
@@ -184,14 +186,16 @@ function decorateMobileView(mainUL) {
       }
     });
   });
-  mainUL.querySelectorAll('details').forEach((el) => {
+  mainUL.querySelectorAll('details').forEach((el, i) => {
+    el.classList.add(`rollno${i + 1}`);
     const detailObject = new Accordion(el);
     tracker.push(detailObject);
   });
+
   tracker.forEach((t) => {
-    t.el.addEventListener('click', () => {
+    t.summary.addEventListener('click', () => {
       tracker.forEach((t2) => {
-        if (t2 !== t && !t.parent.isEqualNode(t2.el)) {
+        if (t !== t2 && !t.parent.isEqualNode(t2.el) && !t.grandParent.isEqualNode(t2.el)) {
           t2.shrink();
         }
       });
