@@ -412,6 +412,7 @@
         text-align: center;
         position: relative;
         top: -115%;
+        text-shadow: black 3px 3px 2px;
                 
     }
 
@@ -423,6 +424,7 @@
         text-align: center;
         position: relative;
         top: -250%;
+        text-shadow: black 2px 2px 2px;
                 
     }
     
@@ -434,6 +436,7 @@
         color: #fff;
         position: relative;
         top: -50%;
+        text-shadow: black 3px 3px 2px;
                 
     }
 
@@ -445,13 +448,14 @@
         line-height: 95%;
         margin: 0 3%;
         top: -30%;
+        text-shadow: black 3px 3px 2px;
     }
 
     .slide-content-4 {
         display: flex;
         position: relative;
         align-items: center;
-        
+        filter: drop-shadow(3px 3px 5px #000005);
     }
 
     .slide-content-4 .button-container a.button{
@@ -473,6 +477,7 @@
         height: 51px;
         background: url('../../assets/images/leaf-left.png') center/cover no-repeat;
         margin:0 12px 0 0;
+        filter: drop-shadow(3px 1px 4px #000005);
     }
 
     .slide-content-1 p::after {
@@ -482,6 +487,7 @@
         height: 51px;
         background: url('../../assets/images/leaf-right.png') center/cover no-repeat;
         margin:12 12px 0 0;
+        filter: drop-shadow(3px 1px 4px #000005);
     }
 
 }
