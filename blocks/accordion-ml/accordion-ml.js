@@ -205,5 +205,23 @@ export default function decorate() {
     decorateMobileView(mainUL);
   }
 
+  const level = 0;
+  // Allotting levels to UL based on the depth of the UL
+  mainUL.classList.add('level0');
+  mainUL.querySelectorAll(':scope > li').forEach((lilevel1) => {
+    if (lilevel1.querySelector(':scope > ul')) {
+      lilevel1.querySelector(':scope > ul').classList.add(`level${level + 1}`);
+      lilevel1.querySelector(':scope > ul').querySelectorAll(':scope > li').forEach((lilevel2) => {
+        if (lilevel2.querySelector(':scope > ul')) {
+          lilevel2.querySelector(':scope > ul').classList.add(`level${level + 2}`);
+          lilevel2.querySelector(':scope > ul').querySelectorAll(':scope > li').forEach((lilevel3) => {
+            if (lilevel3.querySelector(':scope > ul')) {
+              lilevel3.querySelector(':scope > ul').classList.add(`level${level + 3}`);
+            }
+          });
+        }
+      });
+    }
+  });
   console.log(mainUL);
 }

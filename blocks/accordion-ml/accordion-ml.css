@@ -115,11 +115,11 @@ details[open] > ul {
         overflow: visible;
     }
 
-    .accordion-ml.block > div > div {
-        padding: 0 15px;
+    .accordion-ml.block ul {
+        margin-left: 0;
     }
 
-    .accordion-ml.block > div > div > ul {
+    .accordion-ml.block > div > div > ul.level0 {
         margin-right: -15px;
         list-style-type: none;
     }
@@ -142,9 +142,10 @@ details[open] > ul {
         z-index: 999;
         background-color: var(--dark-orange);
         top: 0;
+        width: 200px;
     }
 
-    .accordion-ml.block > div > div > ul li:hover ul {
+    .accordion-ml.block > div > div > ul li:hover > ul {
         display: block;
     }
 
@@ -155,6 +156,11 @@ details[open] > ul {
         line-height: 1.5;
         padding: 15.5px 35px 15.5px 0;
         display: block;
+    }
+
+    .accordion-ml.block > div > div > ul li ul a {
+        font-size: 14px;
+        padding: 10px 15px;
     }
 
     .accordion-ml.block > div > div > ul li a:hover {
