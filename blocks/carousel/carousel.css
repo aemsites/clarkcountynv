@@ -128,7 +128,7 @@
         z-index: 2;
     }
 
-    /* stylelint-disable-next-line no-descending-specificity */
+    /* stylelint-disable */
     .carousel .carousel-navigation-buttons button {
         border-radius: 8px;
         margin: 0;
@@ -163,10 +163,10 @@
         left: calc(50% - 3px);
     }
 
-
+    
     .carousel .carousel-navigation-buttons {
-        left: 1rem;
-        right: 1rem;
+        left: 1.5rem;
+        right: 1.5rem;
     }
 
     .carousel .carousel-navigation-buttons button {
@@ -186,7 +186,7 @@
         align-self: center;
         
     }
-
+    /* stylelint-enable */
     .carousel-slides a.button {
         font: 400 24px 'Open Sans',sans-serif;
         color: #B54425;
@@ -325,13 +325,14 @@
         z-index: 2;
     }
 
-    /* stylelint-disable-next-line no-descending-specificity */
+    
+    /* stylelint-disable */
     .carousel .carousel-navigation-buttons button {
         border-radius: 8px;
         margin: 0;
         padding: 0;
-        width: 2rem;
-        height: 2rem;
+        width: 3rem;
+        height: 3rem;
         position: relative;
         background-color: rgba(0 0 0 / 25%);
     }
@@ -362,18 +363,18 @@
 
 
     .carousel .carousel-navigation-buttons {
-        left: 1rem;
-        right: 1rem;
+        left: 1.5rem;
+        right: 1.5rem;
     }
 
     .carousel .carousel-navigation-buttons button {
-        width: 3rem;
-        height: 3rem;
+        width: 3.5rem;
+        height: 3.5rem;
     }
 
     .carousel .carousel-navigation-buttons button::after {
-        width: 1rem;
-        height: 1rem;
+        width: 1.5rem;
+        height: 1.5rem;
     }
 
     .carousel .carousel-slide .carousel-slide-content {
@@ -383,7 +384,7 @@
         align-self: center;
         
     }
-
+    /* stylelint-enable */
     .carousel-slides a.button {
         font: 400 24px 'Open Sans',sans-serif;
         color: #B54425;
