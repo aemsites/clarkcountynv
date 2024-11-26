@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/no-unresolved
+import { getViewPort } from '../../scripts/utils.js';
+
 const tracker = [];
 
 // Using the Web Animations API to animate the accordion
@@ -158,11 +161,8 @@ function findLevel(element) {
   return level;
 }
 
-export default function decorate() {
-  const mainUL = document.querySelector('ul');
-
+function decorateMobileView(mainUL) {
   // Get the height of the overall UL for the Mobile view and pass it to the CSS variable
-
   const divHeight = mainUL.children.length * 46;
   const height = document.querySelector(':root');
   height.style.setProperty('--height', `${divHeight}px`);
@@ -197,4 +197,13 @@ export default function decorate() {
       });
     });
   });
+}
+
+export default function decorate() {
+  const mainUL = document.querySelector('ul');
+  if (getViewPort() === 'mobile') {
+    decorateMobileView(mainUL);
+  }
+
+  console.log(mainUL);
 }

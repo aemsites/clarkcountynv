@@ -1,5 +1,5 @@
 .accordion-ml.block {
-    background: #c54b2a;
+    background: var(--orange);
     height: 0;
     transition: height .25s ease-in;
     overflow: hidden;
@@ -112,5 +112,33 @@ details[open] > ul {
         display: block;
         height: auto;
         opacity: 1;
+    }
+
+    .accordion-ml.block > div > div {
+        padding: 0 15px;
+    }
+
+    .accordion-ml.block > div > div > ul {
+        margin-right: -15px;
+        list-style-type: none;
+    }
+
+    .accordion-ml.block > div > div > ul a {
+        font: 700 16px var(--body-font-family);
+        text-decoration: none;
+        color: #fff;
+        line-height: 1.5;
+        padding: 15.5px 35px 15.5px 0;
+    }
+
+    .accordion-ml.block > div > div > li {
+        position: relative;
+        margin: 0;
+        list-style: none;
+        line-height: 1.3;
+    }
+
+    .accordion-ml.block > div > div > ul > li:hover {
+        background: var(--dark-orange);
     }
 }
