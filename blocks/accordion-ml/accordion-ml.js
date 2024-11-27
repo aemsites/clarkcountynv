@@ -245,8 +245,9 @@ export default function decorate(block) {
 
   function resizeFunction() {
     const currentUL = block.querySelector('div > div > ul');
+    console.log(currentUL);
     if (getViewPort() === 'mobile' && currentUL.classList.contains('level0')) {
-      mainUL.parentElement.parentElement.remove();
+      currentUL.parentElement.parentElement.remove();
       const modifiedUL = decorateMobileView(mainULBackUp.cloneNode(true).querySelector('div > div > ul'));
       const divElement = div(div(modifiedUL));
       block.append(divElement);
