@@ -65,4 +65,8 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
         width: 100%;
         flex: 100%;
     }
+
+    main .mainmenu .rightsection .default-content-wrapper {
+        padding: 50px 50px 60px;
+    }
 }
