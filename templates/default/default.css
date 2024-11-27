@@ -8,7 +8,7 @@ main .mainmenu {
 }
 
 main .mainmenu .leftsection {
-    padding: 33px 15px 15px;
+    /* padding: 33px 15px 15px; */
     color: white;
 }
 
@@ -42,7 +42,7 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
     }
 
     main .mainmenu .leftsection {
-        padding: 33px 15px 15px;
+        /* padding: 33px 15px 15px; */
         flex: 0 0 22%;
         max-width: 400px;
         background-color: var(--orange);
@@ -57,7 +57,7 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
         font: 700 24px var(--heading-font-family);
         color: #fff;
         text-transform: uppercase;
-        padding: 75px 10px 11px 0;
+        padding: 75px 10px 11px 15px;
         margin-bottom: 8px;
     }
 
