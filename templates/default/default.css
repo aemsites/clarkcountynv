@@ -5,6 +5,7 @@
 main .mainmenu {
     display: flex; 
     flex-direction: column; 
+    padding: 34px;
 }
 
 main .mainmenu .leftsection {
@@ -39,6 +40,8 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
         flex-direction: row;
         justify-content: space-between;
         position: relative;
+        margin: 0 auto;
+        padding: 0;
     }
 
     main .mainmenu .leftsection {
