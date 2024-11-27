@@ -168,7 +168,6 @@ function findLevel(element) {
 
 function decorateMobileView(mainUL) {
   // Get the height of the overall UL for the Mobile view and pass it to the CSS variable
-  console.log(mainUL);
   const divHeight = mainUL.children.length * 46;
   const height = document.querySelector(':root');
   height.style.setProperty('--height', `${divHeight}px`);
@@ -232,27 +231,29 @@ function decorateDesktopView(mainUL) {
       });
     }
   });
+  return mainUL;
 }
 
 export default function decorate(block) {
   const mainUL = document.querySelector('ul');
   const mainULBackUp = mainUL.parentElement.parentElement.cloneNode(true);
-  console.log(mainULBackUp);
   if (getViewPort() === 'mobile') {
     decorateMobileView(mainUL);
   } else {
     decorateDesktopView(mainUL);
   }
 
-  // function resizeFunction() {
-  //   resizeNavSections(navSections, mainULBackUp.cloneNode(true), expandElement);
-  // }
-
   function resizeFunction() {
     const currentUL = block.querySelector('div > div > ul');
     if (getViewPort() === 'mobile' && currentUL.classList.contains('level0')) {
       mainUL.parentElement.parentElement.remove();
       const modifiedUL = decorateMobileView(mainULBackUp.cloneNode(true).querySelector('div > div > ul'));
+      const divElement = div(div(modifiedUL));
+      block.append(divElement);
+    }
+    if (getViewPort() === 'desktop' && currentUL.classList.contains('content')) {
+      currentUL.parentElement.parentElement.remove();
+      const modifiedUL = decorateDesktopView(mainULBackUp.cloneNode(true).querySelector('div > div > ul'));
       const divElement = div(div(modifiedUL));
       block.append(divElement);
     }
