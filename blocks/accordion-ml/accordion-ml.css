@@ -145,7 +145,7 @@ details[open] > ul {
     .accordion-ml.block > div > div > ul li ul {
         position: absolute;
         display: none;
-        left: 100%;
+        left: 100.3%;
         z-index: 999;
         background-color: var(--orange);
         top: 0;
