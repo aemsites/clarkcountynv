@@ -147,9 +147,10 @@ details[open] > ul {
         display: none;
         left: 100%;
         z-index: 999;
-        background-color: var(--dark-orange);
+        background-color: var(--orange);
         top: 0;
         width: 200px;
+        padding: 0;
     }
 
     .accordion-ml.block > div > div > ul li:hover > ul {
@@ -171,6 +172,10 @@ details[open] > ul {
     }
 
     .accordion-ml.block > div > div > ul li a:hover {
+        background: var(--dark-orange);
+    }
+
+    .accordion-ml.block > div > div li:has(li:hover) {
         background: var(--dark-orange);
     }
 }

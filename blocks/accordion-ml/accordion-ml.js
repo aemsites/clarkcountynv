@@ -186,8 +186,7 @@ function decorateMobileView(mainUL) {
       }
     });
   });
-  mainUL.querySelectorAll('details').forEach((el, i) => {
-    el.classList.add(`rollno${i + 1}`);
+  mainUL.querySelectorAll('details').forEach((el) => {
     const detailObject = new Accordion(el);
     tracker.push(detailObject);
   });
