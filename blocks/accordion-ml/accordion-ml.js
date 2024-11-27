@@ -1,5 +1,8 @@
 // eslint-disable-next-line import/no-unresolved
 import { getViewPort } from '../../scripts/utils.js';
+import {
+  div,
+} from '../../scripts/dom-helpers.js';
 
 const tracker = [];
 
@@ -165,6 +168,7 @@ function findLevel(element) {
 
 function decorateMobileView(mainUL) {
   // Get the height of the overall UL for the Mobile view and pass it to the CSS variable
+  console.log(mainUL);
   const divHeight = mainUL.children.length * 46;
   const height = document.querySelector(':root');
   height.style.setProperty('--height', `${divHeight}px`);
@@ -194,20 +198,22 @@ function decorateMobileView(mainUL) {
   tracker.forEach((t) => {
     t.summary.addEventListener('click', () => {
       tracker.forEach((t2) => {
-        if (t !== t2 && !t.parent.isEqualNode(t2.el) && !t.grandParent.isEqualNode(t2.el)) {
-          t2.shrink();
+        if (!t.grandParent) {
+          if (t !== t2 && !t.parent.isEqualNode(t2.el)) {
+            t2.shrink();
+          }
+        } else if (!t.grandParent.isEqualNode(t2.el)) {
+          if (t !== t2 && !t.parent.isEqualNode(t2.el)) {
+            t2.shrink();
+          }
         }
       });
     });
   });
+  return mainUL;
 }
 
-export default function decorate() {
-  const mainUL = document.querySelector('ul');
-  if (getViewPort() === 'mobile') {
-    decorateMobileView(mainUL);
-  }
-
+function decorateDesktopView(mainUL) {
   const level = 0;
   // Allotting levels to UL based on the depth of the UL
   mainUL.classList.add('level0');
@@ -226,5 +232,31 @@ export default function decorate() {
       });
     }
   });
-  console.log(mainUL);
+}
+
+export default function decorate(block) {
+  const mainUL = document.querySelector('ul');
+  const mainULBackUp = mainUL.parentElement.parentElement.cloneNode(true);
+  console.log(mainULBackUp);
+  if (getViewPort() === 'mobile') {
+    decorateMobileView(mainUL);
+  } else {
+    decorateDesktopView(mainUL);
+  }
+
+  // function resizeFunction() {
+  //   resizeNavSections(navSections, mainULBackUp.cloneNode(true), expandElement);
+  // }
+
+  function resizeFunction() {
+    const currentUL = block.querySelector('div > div > ul');
+    if (getViewPort() === 'mobile' && currentUL.classList.contains('level0')) {
+      mainUL.parentElement.parentElement.remove();
+      const modifiedUL = decorateMobileView(mainULBackUp.cloneNode(true).querySelector('div > div > ul'));
+      const divElement = div(div(modifiedUL));
+      block.append(divElement);
+    }
+  }
+
+  window.addEventListener('resize', resizeFunction);
 }
