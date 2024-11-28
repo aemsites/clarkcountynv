@@ -49,16 +49,16 @@ export default async function decorate(block) {
       const viewPort = getViewPort();
       if (viewPort === 'mobile') {
         button.parentNode.insertBefore(tabpanel, button.nextSibling);
-        button.addEventListener('click', () => {
-          const tabLength = (tabpanel.querySelectorAll('li').length);
+        const tabLength = (tabpanel.querySelectorAll('li').length);
           const height = document.querySelector(':root');
           if (tabLength < 5) {
             height.style.setProperty('--tab-height', '200px');
-          } else if (tabLength < 6) {
+          } else if (tabLength < 8) {
             height.style.setProperty('--tab-height', '300px');
-          } else if (tabLength < 7) {
+          } else if (tabLength > 7) {
             height.style.setProperty('--tab-height', '400px');
           }
+        button.addEventListener('click', () => {
           button.parentNode.insertBefore(tabpanel, button.nextSibling);
         });
       } else {
