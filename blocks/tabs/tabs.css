@@ -119,7 +119,7 @@
     position: relative;
     margin-bottom: 20px;
     margin-top: 0;
-    padding-left: 10vw;
+    padding-left: 6vw;
 }
 
 .tabs-tab[aria-selected="true"] > p {
