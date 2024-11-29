@@ -147,3 +147,4 @@ export function tr(...items) { return domEl('tr', ...items); }
 export function th(...items) { return domEl('th', ...items); }
 export function td(...items) { return domEl('td', ...items); }
 export function iframe(...items) { return domEl('iframe', ...items); }
+export function pre(...items) { return domEl('pre', ...items); }
