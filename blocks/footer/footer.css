@@ -225,6 +225,7 @@ footer .footer > div {
         width: 665px;
     }
 }
+
 @media only screen and (width <= 900px) {
     /* widget for share */
     .floating-share-btn {
@@ -254,14 +255,9 @@ footer .footer > div {
       .share-float{
         margin-top:12px;
       }
-  }
+  
 
-  .share-btn {
-        top: auto;
-        left: auto;
-        bottom: 5px;
-        right: 5px;
-    }
+  
 
     
 }
