@@ -1,3 +1,27 @@
+.newsletter {
+    position: relative;
+    background: var(--dark-orange);
+    border-top: 35px solid rgb(179 70 40);
+    border-bottom: 55px solid rgb(179 70 40);
+
+    .default-content-wrapper {
+        border: none;
+        padding: 52px 59px 49px 40px;
+    }
+
+    h2 {
+        font: 400 15px var(--body-font-family);
+        color: var(--orange);
+        margin: unset;
+    }
+
+    a {
+        color: #000;
+        text-decoration: underline;
+    }
+    
+}
+
 footer {
     position: relative;
     background: #b54425 url("../../icons/footer-bg.png") left bottom/cover repeat-x;
@@ -191,29 +215,8 @@ footer .footer > div {
     }
 }
 
-.newsletter {
-    position: relative;
-    background: var(--dark-orange);
-    border-top: 35px solid rgb(179 70 40);
-    border-bottom: 55px solid rgb(179 70 40);
+/* eslint-disable no-descending-specificity */
 
-    .default-content-wrapper {
-        border: none;
-        padding: 52px 59px 49px 40px;
-    }
-
-    h2 {
-        font: 400 15px var(--body-font-family);
-        color: var(--orange);
-        margin: unset;
-    }
-
-    a {
-        color: #000;
-        text-decoration: underline;
-    }
-    
-}
 
 @media (width >= 900px) {
     .newsletter h2 {
@@ -225,6 +228,7 @@ footer .footer > div {
         width: 665px;
     }
 }
+
 @media only screen and (width <= 900px) {
     /* widget for share */
   .floating-share-btn {
@@ -257,10 +261,7 @@ footer .footer > div {
   
 
   .share-btn {
-        top: auto;
-        left: auto;
-        bottom: 5px;
-        right: 5px;
+        inset: auto;
     }
 
     
