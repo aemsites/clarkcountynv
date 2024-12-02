@@ -7,11 +7,11 @@ footer {
         max-width: 100%;
         margin: 0 auto;
         display: flex;
+        flex-wrap: wrap;
         padding: 40px 0 17px;
 
-        a {
-            color: white;
-            text-decoration: underline;
+        .newsletter:first-child {
+            width: 100%;
         }
     }
 
@@ -46,6 +46,11 @@ footer {
                 font: 400 18px 'Open Sans',sans-serif;
                 color: #fff;
                 margin-bottom: 4%;
+            }
+
+            a {
+                color: white;
+                text-decoration: underline;
             }
         }
 
@@ -183,5 +188,37 @@ footer .footer > div {
             gap: 40vw;
 
         }
+    }
+}
+
+.newsletter {
+    position: relative;
+    background: var(--dark-orange);
+
+    .default-content-wrapper {
+        border: none;
+        padding: 52px 59px 49px 40px;
+    }
+
+    h2 {
+        font: 400 15px var(--body-font-family);
+        color: var(--orange);
+        margin: unset;
+    }
+
+    a {
+        color: #000;
+        text-decoration: underline;
+    }
+}
+
+@media (width >= 900px) {
+    .newsletter h2 {
+        font: 400 24px var(--body-font-family);
+    }
+
+    .newsletter > div {
+        padding: 52px 59px 49px 40px;
+        width: 665px;
     }
 }

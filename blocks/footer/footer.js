@@ -16,6 +16,9 @@ export default async function decorate(block) {
   const footer = document.createElement('div');
   while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
 
+  const newsletterLink = footer.querySelector('.newsletter a');
+  newsletterLink.classList.length >= 1 ? newsletterLink.classList.remove('button') : null;
+
   // add class to footer-contact
   const paragraphs = footer.querySelectorAll('.footer-middle p');
   paragraphs.forEach((p) => {
