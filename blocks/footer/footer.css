@@ -194,6 +194,8 @@ footer .footer > div {
 .newsletter {
     position: relative;
     background: var(--dark-orange);
+    border-top: 35px solid rgb(179 70 40);
+    border-bottom: 55px solid rgb(179 70 40);
 
     .default-content-wrapper {
         border: none;
@@ -210,6 +212,7 @@ footer .footer > div {
         color: #000;
         text-decoration: underline;
     }
+    
 }
 
 @media (width >= 900px) {
