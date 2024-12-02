@@ -17,6 +17,7 @@ export default async function decorate(block) {
   while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
 
   const newsletterLink = footer.querySelector('.newsletter a');
+  // eslint-disable-next-line no-unused-expressions
   newsletterLink.classList.length >= 1 ? newsletterLink.classList.remove('button') : null;
 
   // add class to footer-contact
