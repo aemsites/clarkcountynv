@@ -16,7 +16,7 @@
 }
 
 .cards > ul > li:hover {
-  background: #C54B2A;
+  background: var(--orange);
   text-decoration: none;
   transition: background .3s ease;
   color: white;
