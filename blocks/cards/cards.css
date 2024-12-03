@@ -21,10 +21,6 @@
   transition: background .3s ease;
   color: white;
 }
-/* 
-.cards .cards-card-body {
-  margin: 16px;
-} */
 
 .cards .cards-card-body p:first-child {
   margin-top: 0;
