@@ -1,73 +1,6 @@
 import { div, section } from '../../scripts/dom-helpers.js';
 import { normalizeString } from '../../scripts/utils.js';
 
-// Scripts for Full Calendar
-
-// function getEventsManual() {
-//   const events = [
-//     {
-//       title: 'All Day Event',
-//       start: '2024-12-01',
-//       backgroundColor: '#3787d8',
-//     },
-//     {
-//       title: 'Long Event',
-//       start: '2024-12-07',
-//       end: '2024-12-10',
-//       backgroundColor: '#da80c1',
-//     },
-//     {
-//       groupId: '999',
-//       title: 'Repeating Event',
-//       start: '2024-12-09T16:00:00',
-//       backgroundColor: '#3a9500',
-//       classNames: ['county_commissioners'],
-//     },
-//     {
-//       groupId: '1000',
-//       title: 'Repeating Event',
-//       start: '2024-12-16T16:00:00',
-//       end: '2024-12-16T18:00:00',
-//       backgroundColor: '#3a9500',
-//       borderColor: 'blue',
-//     },
-//     {
-//       title: 'Conference',
-//       start: '2024-12-11',
-//       end: '2024-12-13',
-//       backgroundColor: 'red',
-//     },
-//     {
-//       title: 'Meeting',
-//       start: '2024-12-12T10:30:00',
-//       end: '2024-12-12T12:30:00',
-//       backgroundColor: 'red',
-//     },
-//     {
-//       title: 'Lunch',
-//       start: '2024-12-12T12:00:00',
-//       backgroundColor: 'red',
-//     },
-//     {
-//       title: 'Meeting',
-//       start: '2024-12-12T14:30:00',
-//       backgroundColor: 'red',
-//     },
-//     {
-//       title: 'Birthday Party',
-//       start: '2024-12-13T07:00:00',
-//       backgroundColor: 'red',
-//     },
-//     {
-//       title: 'Click for Facebook',
-//       url: 'https://google.com/',
-//       start: '2024-12-28',
-//       backgroundColor: 'red',
-//     },
-//   ];
-//   return events;
-// }
-
 const childCalendars = [
   'County Commissioners',
   'County Commission District A',
@@ -128,7 +61,7 @@ async function initializeCalendar() {
         selectable: true,
         dayMaxEvents: true,
         events: eventsData,
-        eventTimeFormat: { hour: 'numeric', minute: '2-digit', timeZoneName: 'short' },
+        eventTimeFormat: { hour: 'numeric', minute: '2-digit' },
       });
       calendar.render();
     }
