@@ -2,11 +2,11 @@ import { div, section } from '../../scripts/dom-helpers.js';
 import { normalizeString } from '../../scripts/utils.js';
 
 const childCalendars = [
-//   'County Commissioners',
+  'County Commissioners',
   'County Commission District A',
   'County Commission District B',
-//   'County Commissioners District C',
-//   'County Commissioners District D',
+  'County Commissioners District C',
+  'County Commissioners District D',
 ];
 
 // Fetching events from individual calendar sheets
