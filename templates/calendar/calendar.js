@@ -123,7 +123,12 @@ async function initializeCalendar() {
           center: 'title',
           right: 'dayGridMonth,timeGridWeek,timeGridDay',
         },
+        navLinks: true, // can click day/week names to navigate views
+        editable: true,
+        selectable: true,
+        dayMaxEvents: true,
         events: eventsData,
+        eventTimeFormat: { hour: 'numeric', minute: '2-digit', timeZoneName: 'short' },
       });
       calendar.render();
     }
