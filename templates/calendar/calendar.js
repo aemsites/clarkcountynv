@@ -68,7 +68,7 @@ async function initializeCalendar() {
   });
 }
 
-export function loadfullcalendar() {
+export async function loadfullcalendar() {
   const scriptfullcalendar = document.createElement('script');
   scriptfullcalendar.setAttribute('type', 'text/javascript');
   scriptfullcalendar.src = 'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js';
