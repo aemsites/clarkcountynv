@@ -30,17 +30,17 @@
   --heading-font-family: 'Neue Montreal', sans-serif;
 
   /* body sizes */
-  --body-font-size-m: 22px;
-  --body-font-size-s: 18px;
-  --body-font-size-xs: 16px;
+  --body-font-size-m: 18px;
+  --body-font-size-s: 16px;
+  --body-font-size-xs: 14px;
 
   /* heading sizes */
-  --heading-font-size-xxl: 48px;
-  --heading-font-size-xl: 40px;
-  --heading-font-size-l: 32px;
-  --heading-font-size-m: 24px;
-  --heading-font-size-s: 20px;
-  --heading-font-size-xs: 18px;
+  --heading-font-size-xxl: 36px;
+  --heading-font-size-xl: 32px;
+  --heading-font-size-l: 28px;
+  --heading-font-size-m: 21px;
+  --heading-font-size-s: 16px;
+  --heading-font-size-xs: 14px;
 
   /* nav height */
   --nav-height: 104px;
@@ -48,12 +48,12 @@
 
 @media (width >= 900px) {
   :root {
-    --heading-font-size-xxl: 60px;
-    --heading-font-size-xl: 48px;
-    --heading-font-size-l: 36px;
-    --heading-font-size-m: 30px;
-    --heading-font-size-s: 24px;
-    --heading-font-size-xs: 22px;
+    --heading-font-size-xxl: 36px;
+    --heading-font-size-xl: 32px;
+    --heading-font-size-l: 28px;
+    --heading-font-size-m: 21px;
+    --heading-font-size-s: 16px;
+    --heading-font-size-xs: 14px;
   }
 }
 
@@ -261,12 +261,24 @@ main div.section.desktop img {
   object-fit: cover;
 }
 
+main div.section.desktop.short img {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    top: -105px;
+}
+
+main div.section.desktop.short::before {
+    background: unset;
+}
+
 main > div.section.mobile.with-background-image img {
   object-fit: cover;
   height: 700px;
 }
 
-main > div:first-child::before {
+main > div:first-child:not(.short)::before {
     content: '';
     position: absolute;
     top: 0;
@@ -362,6 +374,13 @@ main > div.mobile.with-background-image {
 
   main > div.section.desktop.with-background-image {
     height: 667px;
+  }
+
+  main > div.section.desktop.with-background-image.short {
+    height: 500px;
+    top: -105px;
+
+
   }
 
   /* widget for share */
