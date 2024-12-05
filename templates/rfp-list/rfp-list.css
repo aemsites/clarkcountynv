@@ -1,0 +1,66 @@
+/* TODO: add even/odd styling for list
+         odd numbers grey, even numbers white */
+
+/* TODO: add class fa fa-envelope from original 
+         site for mail envelope icon */
+
+/* TODO: check to see if we need to include left nav. 
+         Left nav seems to be universal in the business_opportunities
+         directory and child dirs */
+
+/* TODO:  Grab original attrs from .table class for rows 
+          a tag color should be inherited from parent, make sure applies to 
+          envelope icon (it should because it's an a tag) */
+
+h1 {
+    margin-top: 0;
+   }
+
+.card {
+    width: auto;
+    h3 {
+        font-family: sans-serif;
+        font-size: 18px;
+        color: #535353;
+        text-decoration: underline;
+            
+    }
+    
+    p {
+        font-family: sans-serif;
+        font-size: 13px;
+        color: #343534;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+
+    p::after {
+        content: '...';
+    }
+
+}
+
+
+.pagination {
+    text-align: center;
+
+    button {
+        border: none;
+        outline: none;
+        margin: 1px;
+        padding: 8px 12px;
+        background: #61B2E6;
+        font-size: 12px;
+        font-family: inherit;
+        line-height: 1em;
+        
+        &.active {
+            background: #0f7cc1;
+        }
+                
+    }
+
+}

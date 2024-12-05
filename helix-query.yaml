@@ -1,0 +1,48 @@
+indices:
+  opportunities:
+    include:
+      - '/business/business_opportunities/current_opportunities/**'
+    exclude:
+      - '/business/business_opportunities/current_opportunities/'
+    target: '/business/business_opportunities/current_opportunities/query-index.json'
+    properties:
+      title:
+        select: head > meta[name="rfpTitle"]
+        value: textContent(el)
+      number:
+        select: head > meta[name="rfpNumber"]
+        value: textContent(el)
+      description:
+        select: head > meta[name="rfpDescription"]
+        value: words(textContent(el), 0, 50)
+      publishDate:
+        select: head > meta[name="publishdatetime"]
+        value: parseTimestamp(attribute(el, "content"), "ddd, DD MMM YYYY hh:mm:ss GMT")
+      contactEmail:
+        select: head > meta[name="contactEmail"]
+        value: attribute(el, "content")
+      externalLink:
+        select: head > meta[name="externalLink"]
+        value: attribute(el, "content")
+      linkToPDF:
+        select: head > meta[name="linkToPDF"]
+        value: attribute(el, "content")
+  news:
+    include:
+      - /en/news/**
+    exclude:
+      - /en/news/
+    target: /en/news/query-index.json
+    properties:
+      title:
+        select: h1
+        value: textContent(el)
+      description:
+        select: main > div p
+        value: words(textContent(el), 0, 50)
+      publishDate:
+        select: head > meta[name="publishdatetime"]
+        value: parseTimestamp(attribute(el, "content"), "ddd, DD MMM YYYY hh:mm:ss GMT")
+      image:
+        select: head > meta[property="og:image"]
+        value: attribute(el, 'content')
