@@ -377,10 +377,7 @@ main > div.mobile.with-background-image {
   }
 
   main > div.section.desktop.with-background-image.short {
-    height: 500px;
-    top: -105px;
-
-
+    height: 400px;
   }
 
   /* widget for share */
