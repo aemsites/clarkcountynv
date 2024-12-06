@@ -6,6 +6,12 @@
   <script type="text/javascript">
     window.isErrorPage = true;
     window.errorCode = '404';
+
+    // Adding logic to redirect to a custom page if the user lands on /404.html
+    window.stop();
+    window.location.href = '/pagenotfound';
+    
+    
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta property="og:title" content="Page not found">
