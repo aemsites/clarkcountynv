@@ -339,6 +339,7 @@ main .section.details-404 > .default-content-wrapper {
   gap: 2vh;
   font-family: var(--heading-font-family);
   font-size: var(--heading-font-size-xs);
+  padding: 3vw;
 }
 
 @media only screen and (width <= 991px) {
