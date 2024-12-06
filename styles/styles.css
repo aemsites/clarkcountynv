@@ -372,6 +372,18 @@ main > div.mobile.with-background-image {
       height: 667px;
   }
 
+  main .section.details-404 > .default-content-wrapper {
+    height: 350px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2vh;
+    font-family: var(--heading-font-family);
+    font-size: var(--heading-font-size-xs);
+  }
+
   main > div.section.desktop.with-background-image {
     height: 667px;
   }
