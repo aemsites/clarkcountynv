@@ -13,5 +13,8 @@ export default async function decorate(doc) {
     doc.querySelectorAll('body.calendar-event main .section.hero .hero-wrapper .block.hero div div').forEach((element) => {
       element.style.backgroundColor = divisionColor;
     });
+    doc.querySelectorAll('body.calendar-event main .section.event-footer .default-content-wrapper p > a').forEach((element) => {
+      element.style.backgroundColor = divisionColor;
+    });
   }
 }

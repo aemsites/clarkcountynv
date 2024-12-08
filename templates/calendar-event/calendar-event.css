@@ -135,6 +135,16 @@ body.calendar-event main .section.locations {
     font-family: var(--heading-font-family);
 }
 
+body.calendar-event main .section.event-footer .default-content-wrapper p > a {
+    line-height: 1 !important;
+    padding: 8px 12px 6px;
+    display: block;
+    float: right;
+    font-weight: 600 !important;
+    border-radius: 3px;
+    margin-left: 5px;
+}
+
 body.calendar-event main .section.locations .default-content-wrapper > ul > li > a {
     font-weight: 600;
 }
@@ -144,6 +154,21 @@ body.calendar-event main .section.locations ul ul {
     padding: 0;
     margin-top: 0;
 }
+
+body.calendar-event main .section.event-footer {
+    padding: 15px;
+    font-size: 16px;
+    font-family: var(--heading-font-family);
+    border-top: 1px solid #dee2e6;
+}
+
+body.calendar-event main .section.event-footer .default-content-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-self: flex-end;
+    gap: 1vw;
+}
+
 
 
 
