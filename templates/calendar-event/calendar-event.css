@@ -13,14 +13,23 @@ body.calendar-event main .section.hero .hero-wrapper .block.hero {
     margin: 0;
 }
 
-/* body.calendar-event main .section.hero .hero-wrapper .block.hero div div {
-    background-color: var(--orange);
-} */
-
 body.calendar-event main .section.hero .hero-wrapper .block.hero.time div div {
     bottom: 0;
     position: absolute;
     min-width: 165px;
+}
+
+body.calendar-event main .section.description p:has(a) {
+    margin-top: 2vh;
+}
+
+body.calendar-event main .section.description p a {
+    color: #007bff;
+    text-decoration: underline;
+    background-color: transparent;
+    font-size: 18px;
+    font-family: var(--heading-font-family);
+    padding: 0;
 }
 
 body.calendar-event main .section.hero .hero-wrapper .block.hero.time div p {
@@ -67,3 +76,40 @@ body.calendar-event main .section.hero .hero-wrapper .block.hero.date div div p:
 body.calendar-event main .section.hero .hero-wrapper .block.hero.time {
     position: relative;
 }
+
+body.calendar-event main .section.title {
+    padding: 15px;
+}
+
+body.calendar-event main .section.title h2 {
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.2;
+    font-family: var(--heading-font-family);
+}
+
+body.calendar-event main .section.image {
+    padding: 15px;
+}
+
+body.calendar-event main .section.image img {
+    width: 100%;
+    height: auto;
+}
+
+body.calendar-event main .section.address {
+    padding: 15px;
+    font-size: 18px;
+    font-family: var(--heading-font-family);
+}
+
+body.calendar-event main .section.description {
+    padding: 15px;
+    font-size: 18px;
+    font-family: var(--heading-font-family);
+}
+
+
+
+
+
