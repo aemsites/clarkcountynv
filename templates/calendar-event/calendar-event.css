@@ -109,6 +109,17 @@ body.calendar-event main .section.description {
     font-family: var(--heading-font-family);
 }
 
+body.calendar-event main .section.map-location {
+    padding: 15px;
+}
+
+body.calendar-event main .section.map-location iframe {
+    width: 100%;
+    margin: 10px 0;
+    border: 1px solid #3787d8;
+    height: 175px;
+}
+
 
 
 
