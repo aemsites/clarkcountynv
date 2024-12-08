@@ -129,6 +129,22 @@ body.calendar-event main .section.map-location iframe {
     height: 175px;
 }
 
+body.calendar-event main .section.locations {
+    padding: 15px;
+    font-size: 18px;
+    font-family: var(--heading-font-family);
+}
+
+body.calendar-event main .section.locations .default-content-wrapper > ul > li > a {
+    font-weight: 600;
+}
+
+body.calendar-event main .section.locations ul ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 0;
+}
+
 
 
 
