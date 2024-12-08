@@ -3,8 +3,8 @@
 import { getMetadata } from '../../scripts/aem.js';
 
 export default async function decorate(doc) {
-  doc.querySelector('header').remove();
-  doc.querySelector('footer').remove();
+  // doc.querySelector('header').remove();
+  // doc.querySelector('footer').remove();
   doc.body.classList.add('calendar-event');
 
   // Change the background color of the hero date & time based on the division-color metadata
