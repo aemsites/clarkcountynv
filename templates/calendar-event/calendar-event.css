@@ -20,7 +20,8 @@ body.calendar-event main .section.hero .hero-wrapper .block.hero.time div div {
 }
 
 body.calendar-event main .section.description p:has(a) {
-    margin-top: 2vh;
+    margin-top: 1vh;
+    font-weight: 600;
 }
 
 body.calendar-event main .section.description p a {
@@ -107,6 +108,14 @@ body.calendar-event main .section.description {
     padding: 15px;
     font-size: 18px;
     font-family: var(--heading-font-family);
+}
+
+body.calendar-event main .section.description-center {
+    padding: 15px;
+    text-align: center;
+    font-size: 18px;
+    font-family: var(--heading-font-family);
+    line-height: 1.7;
 }
 
 body.calendar-event main .section.map-location {
