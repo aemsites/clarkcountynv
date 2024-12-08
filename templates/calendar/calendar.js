@@ -1,5 +1,4 @@
 import { div, section } from '../../scripts/dom-helpers.js';
-import { normalizeString } from '../../scripts/utils.js';
 
 // const childCalendars = [
 //   'County Commissioners',
