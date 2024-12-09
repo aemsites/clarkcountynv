@@ -1,6 +1,7 @@
 import { div, section } from '../../scripts/dom-helpers.js';
 
 class Obj {
+  // eslint-disable-next-line max-len
   constructor(title, start, end, allDay, daysOfWeek, startTime, endTime, startRecur, endRecur, url, backgroundColor, textColor) {
     this.title = title;
     this.start = start;
@@ -16,7 +17,6 @@ class Obj {
     this.textColor = textColor;
   }
 }
-
 
 // Fetching events from individual calendar sheets
 export async function fetchPlaceholders(prefix) {
@@ -50,7 +50,7 @@ export async function fetchPlaceholders(prefix) {
 
 async function initializeCalendar() {
   let importedData = [];
-  let eventsList = [];
+  const eventsList = [];
   const calendarEl = document.getElementById('calendar');
   // const data = getEventsManual();
   const normalizeCalendar = 'events';
@@ -93,8 +93,7 @@ async function initializeCalendar() {
         backgroundColor: event.backgroundColor,
         textColor: event.textColor,
       });
-    }
-    else {
+    } else {
       calendar.addEvent({
         title: event.title,
         start: event.start,
