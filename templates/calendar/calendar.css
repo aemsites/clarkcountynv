@@ -43,11 +43,14 @@ body.calendar .event-modal .event-modal-content {
     height: 650px;
     margin: auto;
     margin-top: 5%;
+    position: relative;
+    animation: animatetop 2s;
 }
 
-/* body.calendar .modal.fade .modal-dialog {
-    transform: translate(0, -50px);
-} */
+@keyframes animatetop {
+    from {top: -50px; opacity: 0}
+    to {top: 0; opacity: 1}
+}
 
 
 
