@@ -23,6 +23,13 @@ body.modal-open {
   padding: 24px;
   padding-top: 0;
   margin-top: 0;
+  font-size: 18px;
+  font-family: 'Neue Montreal', sans-serif;
+  font-weight: normal;
+}
+
+.modal dialog .modal-content p:first-child {
+  font: 500 32px 'Neue Montreal', sans-serif;
 }
 
 @media (width >= 900px) {
@@ -85,6 +92,10 @@ body.modal-open {
   border-color: #DBE7F0;
   background: #F4F9FD;
   border-width: 1px;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  display: block;
+  font-size: 87.5%;
+  color: #212529;
 }
 
 .modal .social-nav-item {
@@ -159,7 +170,7 @@ body.modal-open {
 @media (width >= 900px) {
   .modal dialog {
     overscroll-behavior: none;
-    overflow-y: hidden;;
+    overflow-y: hidden;
     max-height: 672px;
   }
 }
