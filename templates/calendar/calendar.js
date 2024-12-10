@@ -55,7 +55,6 @@ function createModal(doc) {
       { class: 'event-modal-content' },
       iframe({
         id: 'event-iframe',
-        // src: 'https://main--clarkcountynv--aemsites.aem.page/calendar/county-commission-district-a/event-1',
         width: '100%',
         height: '100%',
       }),
