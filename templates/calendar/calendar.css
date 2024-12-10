@@ -22,34 +22,27 @@ body.calendar a:any-link {
     color: white;
 }
 
-.fade {
-    transition: opacity .15s linear;
-}
-
-.fade:not(.show) {
-    opacity: 0;
-}
-
-body.calendar .modal {
-    position: fixed;
-    top: 0;
+body.calendar .event-modal {
+    display: none; 
+    position: fixed; 
+    z-index: 10000; 
+    padding-top: 100px; 
     left: 0;
-    z-index: 10000;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    outline: 0;
-    background-color: rgba(0, 0, 0, .5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    top: 0;
+    width: 100%;
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4);
 }
 
-body.calendar .modal .modal-dialog {
+body.calendar .event-modal .event-modal-content {
     width: 500px;
     max-width: 100%;
     background-color: white;
     height: 650px;
+    margin: auto;
+    margin-top: 5%;
 }
 
 /* body.calendar .modal.fade .modal-dialog {
