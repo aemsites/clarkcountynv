@@ -21,3 +21,42 @@ body.calendar .county-commissioners-district-d {
 body.calendar a:any-link {
     color: white;
 }
+
+.fade {
+    transition: opacity .15s linear;
+}
+
+.fade:not(.show) {
+    opacity: 0;
+}
+
+body.calendar .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    outline: 0;
+    background-color: rgba(0, 0, 0, .5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body.calendar .modal .modal-dialog {
+    width: 500px;
+    max-width: 100%;
+    background-color: white;
+    height: 650px;
+}
+
+/* body.calendar .modal.fade .modal-dialog {
+    transform: translate(0, -50px);
+} */
+
+
+
+
+

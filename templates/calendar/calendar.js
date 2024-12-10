@@ -1,4 +1,4 @@
-import { div, section } from '../../scripts/dom-helpers.js';
+import { div, iframe, section } from '../../scripts/dom-helpers.js';
 
 class Obj {
   // eslint-disable-next-line max-len
@@ -48,6 +48,30 @@ export async function fetchPlaceholders(prefix) {
   return window.placeholders[`${TRANSLATION_KEY}`];
 }
 
+// const closeModal = () => {
+//   document.querySelector('.event-modal').style.display = 'none';
+// };
+
+const createModal = () => {
+  const modal = div(
+    { class: 'modal' },
+    div(
+      { class: 'modal-dialog' },
+      iframe({
+        id: 'event-iframe',
+        src: 'https://main--clarkcountynv--aemsites.aem.page/calendar/county-commission-district-a/event-1',
+        width: '100%',
+        height: '100%',
+      }),
+      // span({
+      //   class: 'close',
+      //   onclick: () => closeModal(),
+      // }),
+    ),
+  );
+  document.body.append(modal);
+};
+
 async function initializeCalendar() {
   let importedData = [];
   const eventsList = [];
@@ -70,6 +94,12 @@ async function initializeCalendar() {
     dayMaxEvents: true,
     // events: importedData,
     eventTimeFormat: { hour: 'numeric', minute: '2-digit' },
+    eventClick: (info) => {
+      info.jsEvent.preventDefault(); // don't let the browser navigate
+      if (info.event.url) {
+        createModal();
+      }
+    },
   });
   calendar.render();
   importedData.forEach((event) => {
