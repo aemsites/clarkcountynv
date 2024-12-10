@@ -68,9 +68,10 @@ export default {
       const heroBlock = WebImporter.Blocks.createBlock(document, {
         name: 'Hero (agenda)',
         cells: [
-          [main.querySelector('#page-title').textContent, ''],
+          [pageHeading.textContent.trim(), ''],
         ],
       });
+      params['breadcrumbs-current'] = pageHeading.textContent.trim();
       main.querySelector('#page-title').remove();
       main.insertBefore(blockSeparator.cloneNode(true), main.firstChild);
       main.insertBefore(heroBlock, main.firstChild);
@@ -92,6 +93,7 @@ export default {
     main.append(blockSeparator.cloneNode(true));
 
     params.template = 'agenda';
+    params['breadcrumbs-base'] = '/agenda/agenda-breadcrumbs';
     createMetadata(main, document, params);
 
     let path = new URL(params.originalURL).pathname;

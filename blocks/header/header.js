@@ -523,22 +523,6 @@ async function buildBreadcrumbsFromNavTree(nav, currentUrl) {
   return crumbs;
 }
 
-async function buildBreadcrumbsFromMetadata(nav, currentUrl) {
-  const crumbs = [];
-  // TODO: changing logic based on path as we will likely load from meta or tabs from index later
-  let paths = await fetchAndParseDocument(getMetadata('breadcrumbs-base'));
-  paths = paths.querySelectorAll('li a');
-  paths.forEach((path) => {
-      crumbs.push({ title: path.textContent, url: path.href });
-  });
-
-  const homeUrl = document.querySelector('.nav-brand a[href]')?.href || window.location.origin;
-  if (currentUrl !== homeUrl && getMetadata('breadcrumbs-current') !== "") {
-    crumbs.push({ title: getMetadata('breadcrumbs-current'), url: null });
-  }
-  return crumbs;
-}
-
 export const fetchAndParseDocument = async (url) => {
   try {
     const response = await fetch(`${url}.plain.html`);
@@ -553,12 +537,28 @@ export const fetchAndParseDocument = async (url) => {
   return null;
 };
 
+async function buildBreadcrumbsFromMetadata(nav, currentUrl) {
+  const crumbs = [];
+  // TODO: changing logic based on path as we will likely load from meta or tabs from index later
+  let paths = await fetchAndParseDocument(getMetadata('breadcrumbs-base'));
+  paths = paths.querySelectorAll('li a');
+  paths.forEach((path) => {
+    crumbs.push({ title: path.textContent, url: path.href });
+  });
+
+  const homeUrl = document.querySelector('.nav-brand a[href]')?.href || window.location.origin;
+  if (currentUrl !== homeUrl && getMetadata('breadcrumbs-current') !== '') {
+    crumbs.push({ title: getMetadata('breadcrumbs-current'), url: null });
+  }
+  return crumbs;
+}
+
 async function buildBreadcrumbs() {
   const breadcrumbs = document.createElement('nav');
   breadcrumbs.className = 'breadcrumbs';
 
   let crumbs;
-  if(getMetadata('breadcrumbs-base')) {
+  if (getMetadata('breadcrumbs-base')) {
     crumbs = await buildBreadcrumbsFromMetadata(document.querySelector('.nav-sections'), document.location.href);
   } else {
     crumbs = await buildBreadcrumbsFromNavTree(document.querySelector('.nav-sections'), document.location.href);

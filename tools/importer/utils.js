@@ -23,6 +23,14 @@ export const createMetadata = (main, document, params) => {
     meta.template = params.template;
   }
 
+  if (params['breadcrumbs-base']) {
+    meta['breadcrumbs-base'] = params['breadcrumbs-base'];
+  }
+
+  if (params['breadcrumbs-current']) {
+    meta['breadcrumbs-current'] = params['breadcrumbs-current'];
+  }
+
   const image = document.createElement('img');
   image.src = `${PREVIEW_DOMAIN}/assets/images/logo.png`;
   meta.Image = image;
