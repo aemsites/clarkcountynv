@@ -48,10 +48,6 @@ export async function fetchPlaceholders(prefix) {
   return window.placeholders[`${TRANSLATION_KEY}`];
 }
 
-// const closeModal = () => {
-//   document.querySelector('.event-modal').style.display = 'none';
-// };
-
 function createModal(doc) {
   const modal = div(
     { class: 'event-modal' },
@@ -59,7 +55,7 @@ function createModal(doc) {
       { class: 'event-modal-content' },
       iframe({
         id: 'event-iframe',
-        src: 'https://main--clarkcountynv--aemsites.aem.page/calendar/county-commission-district-a/event-1',
+        // src: 'https://main--clarkcountynv--aemsites.aem.page/calendar/county-commission-district-a/event-1',
         width: '100%',
         height: '100%',
       }),
@@ -68,8 +64,9 @@ function createModal(doc) {
   doc.body.append(modal);
 }
 
-function popupEvent() {
+function popupEvent(url) {
   const modal = document.querySelector('.event-modal');
+  modal.querySelector('iframe').src = url;
   modal.style.display = 'block';
   window.onclick = (event) => {
     if (event.target === modal) {
@@ -103,7 +100,7 @@ async function initializeCalendar() {
     eventClick: (info) => {
       info.jsEvent.preventDefault(); // don't let the browser navigate
       if (info.event.url) {
-        popupEvent();
+        popupEvent(info.event.url);
       }
     },
   });
