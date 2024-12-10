@@ -7,12 +7,9 @@ body.modal-open {
 }
 
 .modal dialog {
-  overscroll-behavior: none;
-  overflow-y: hidden;
   position: relative;
   width: calc(100vw - 48px);
   max-width: 800px;
-  max-height: 672px;
   padding: 0;
   border: 1px solid var(--dark-color);
 }
@@ -142,6 +139,10 @@ body.modal-open {
   height: 64px;
 }
 
+.modal.block .cards .cards-card-body p {
+  margin-top: 2.5vh;
+}
+
 .modal.block .section.cards-container .default-content-wrapper:last-child p > a.share-close {
   background-color: #0094C3;
   font-size: 16px;
@@ -153,4 +154,12 @@ body.modal-open {
 
 .modal.block .section.cards-container .default-content-wrapper:last-child p > a.share-close:hover {
   background-color: #218838
+}
+
+@media (width >= 900px) {
+  .modal dialog {
+    overscroll-behavior: none;
+    overflow-y: hidden;;
+    max-height: 672px;
+  }
 }
