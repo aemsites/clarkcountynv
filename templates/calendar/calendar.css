@@ -90,11 +90,11 @@ body.calendar .event-modal .event-modal-content {
     width: 500px;
     max-width: 100%;
     background-color: white;
-    height: 650px;
+    height: 700px;
     margin: auto;
     margin-top: 5%;
     position: relative;
-    animation: animatetop .2s;
+    animation: animatetop 1s;
 }
 
 @keyframes animatetop {
