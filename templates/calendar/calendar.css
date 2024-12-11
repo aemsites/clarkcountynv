@@ -22,6 +22,10 @@ body.calendar a:any-link {
     color: white;
 }
 
+body.calendar .off {
+    display: none;
+}
+
 body.calendar .event-modal {
     display: none; 
     position: fixed; 
@@ -34,6 +38,52 @@ body.calendar .event-modal {
     overflow: auto; 
     background-color: rgb(0,0,0); 
     background-color: rgba(0,0,0,0.4);
+}
+
+body.calendar .event-modal .event-modal-date {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    text-align: center;
+    color: #fff;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    padding-top: 1.2vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: .2vh;
+    line-height: 1;
+}
+
+body.calendar .event-modal .event-modal-date p {
+    color: white;
+    z-index: 1;
+    padding: 0;
+    margin: 0;
+    font-family: var(--heading-font-family);
+    font-size: 21px;
+}
+
+body.calendar .event-modal .event-modal-date p:last-child {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+body.calendar .event-modal .event-modal-time {
+    top: 276px;
+    position: absolute;
+    min-width: 165px;
+}
+
+body.calendar .event-modal .event-modal-time p {
+    color: white;
+    z-index: 1;
+    padding: 0 .6vw;
+    margin: 0;
+    font-family: var(--heading-font-family);
+    font-size: 16px;
 }
 
 body.calendar .event-modal .event-modal-content {

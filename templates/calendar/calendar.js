@@ -1,4 +1,4 @@
-import { div, iframe, section } from '../../scripts/dom-helpers.js';
+import { div, iframe, section, p, } from '../../scripts/dom-helpers.js';
 
 class Obj {
   // eslint-disable-next-line max-len
@@ -58,15 +58,79 @@ function createModal(doc) {
         width: '100%',
         height: '100%',
       }),
-    ),
+      div(
+        { class: 'event-modal-date' }, p(), p()), 
+        div(
+          { class: 'event-modal-time' }, p()), 
+    ),div(
+      { class: 'event-modal-footer' }),
   );
   doc.body.append(modal);
 }
 
-function popupEvent(url) {
+function tConv24(time24) {
+  var ts = time24;
+  var H = +ts.substr(0, 2);
+  var h = (H % 12) || 12;
+  h = (h < 10)?("0"+h):h;  // leading 0 at the left for 1 digit hours
+  var ampm = H < 12 ? " AM" : " PM";
+  ts = h + ts.substr(2, 3) + ampm;
+  return ts;
+};
+
+function popupEvent(url, startTime, endTime, backgroundColor) {
+  console.log(startTime);
+  console.log(endTime);
+  const eventDate = startTime.getDate();
+  const eventMonth = startTime.getMonth();
+  const eventStartHours = startTime.toString().split(' ')[4].split(':')[0];
+  const eventStartMinutes = startTime.toString().split(' ')[4].split(':')[1];
+  const eventStartTime = tConv24(`${eventStartHours}:${eventStartMinutes}`);
+  console.log(eventStartTime);
+  const eventEndHours = endTime.toString().split(' ')[4].split(':')[0];
+  const eventEndMinutes = endTime.toString().split(' ')[4].split(':')[1];
+  const eventEndTime = tConv24(`${eventEndHours}:${eventEndMinutes}`);
+  console.log(eventEndTime);
+
+  // convert number into Month name
+  var months = [ "JAN", "FEB", "MAR", "APR", "MAY", "JUNE", 
+    "JULY", "AUG", "SEPT", "OCT", "NOV", "DEC" ];
+  const eventMonthName = months[eventMonth];
+  console.log(eventMonthName);
+  console.log(backgroundColor);
+
   const modal = document.querySelector('.event-modal');
+  modal.querySelector('.event-modal-date').style.backgroundColor = backgroundColor;
+  modal.querySelector('.event-modal-time').style.backgroundColor = backgroundColor;
+  modal.querySelector('.event-modal-date p:first-child').textContent = `${eventDate}`;
+  modal.querySelector('.event-modal-date p:last-child').textContent = `${eventMonthName}`;
+  modal.querySelector('.event-modal-time p').textContent = `${eventStartTime} - ${eventEndTime}`;
   modal.querySelector('iframe').src = url;
   modal.style.display = 'block';
+  const iframeDiv = modal.querySelector('iframe');
+  iframeDiv.onscroll = function funcScroll() { 
+    if (iframeDiv.scrollTop > 100) {
+      console.log(modal.querySelector('.event-modal-date'));
+      modal.querySelector('.event-modal-date').classList.add('off'); 
+      modal.querySelector('.event-modal-time').classList.add('off');
+    }
+    else {
+      modal.querySelector('.event-modal-date').classList.remove('off');
+      modal.querySelector('.event-modal-time').classList.remove('off');
+    }
+  }
+
+  // window.onscroll = function funcScroll() {
+  //   if (window.scrollY > 100) {
+  //     console.log(modal.querySelector('.event-modal-date'));
+  //     modal.querySelector('.event-modal-date').classList.add('off'); 
+  //     modal.querySelector('.event-modal-time').classList.add('off');
+  //   }
+  //   else {
+  //     modal.querySelector('.event-modal-date').classList.remove('off');
+  //     modal.querySelector('.event-modal-time').classList.remove('off');
+  //   }
+  // };
   window.onclick = (event) => {
     if (event.target === modal) {
       modal.style.display = 'none';
@@ -99,7 +163,7 @@ async function initializeCalendar() {
     eventClick: (info) => {
       info.jsEvent.preventDefault(); // don't let the browser navigate
       if (info.event.url) {
-        popupEvent(info.event.url);
+        popupEvent(info.event.url, info.event.start, info.event.end, info.event.backgroundColor);
       }
     },
   });
