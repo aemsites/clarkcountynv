@@ -79,7 +79,10 @@ function tConv24(time24) {
 function popupEvent(url, startTime, endTime, backgroundColor) {
   const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUNE',
     'JULY', 'AUG', 'SEPT', 'OCT', 'NOV', 'DEC'];
-  const eventDate = startTime.getDate();
+  let eventDate = startTime.getDate();
+  if (eventDate < 10) {
+    eventDate = `0${eventDate}`;
+  }
   const eventMonth = startTime.getMonth();
   const eventStartHours = startTime.toString().split(' ')[4].split(':')[0];
   const eventStartMinutes = startTime.toString().split(' ')[4].split(':')[1];

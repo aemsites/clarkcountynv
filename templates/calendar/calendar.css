@@ -23,7 +23,7 @@ body.calendar a:any-link {
 }
 
 body.calendar .off {
-    visibility: hidden;
+    opacity: 0;
 }
 
 body.calendar .event-modal {
