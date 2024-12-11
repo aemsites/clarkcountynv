@@ -16,7 +16,7 @@ export default async function decorate(doc) {
   }
   // Configuring a POST Message on scrolling to send the event title to the parent window
   window.onscroll = function funcScroll() {
-    if (window.scrollY > 100) {
+    if (window.scrollY > 50) {
       window.top.postMessage({ message: 'off' }, '*');
     } else {
       window.top.postMessage({ message: 'on' }, '*');
