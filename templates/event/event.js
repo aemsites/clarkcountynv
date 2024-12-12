@@ -18,12 +18,12 @@ export default async function decorate(doc) {
   window.onscroll = function funcScroll() {
     if (window.scrollY > 50) {
       // window.top.postMessage({ eventtop: 'off' }, '*');
-        if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
-          // you're at the bottom of the page
-          window.top.postMessage({ eventfooter: 'on', eventtop: 'off' }, '*');
-        } else {
-          window.top.postMessage({ eventfooter: 'off', eventtop: 'off' }, '*');
-        }
+      if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+        // you're at the bottom of the page
+        window.top.postMessage({ eventfooter: 'on', eventtop: 'off' }, '*');
+      } else {
+        window.top.postMessage({ eventfooter: 'off', eventtop: 'off' }, '*');
+      }
     } else {
       window.top.postMessage({ eventtop: 'on' }, '*');
     }
