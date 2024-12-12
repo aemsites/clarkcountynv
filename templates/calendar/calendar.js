@@ -60,7 +60,7 @@ function createModal(doc) {
     }),
     div({ class: 'event-modal-date' }, p(), p()),
     div({ class: 'event-modal-time' }, p()),
-    div({ class: 'event-modal-footer' }, button({ class: 'ics' }, 'ICS'), button({ class: 'close' }, 'Close'), a('Read More')),
+    div({ class: 'event-modal-footer' }, button({ class: 'ics' }, 'ICS'), button({ class: 'close', onclick: () => { document.querySelector('.event-modal').style.display = 'none'; } }, 'Close'), a('Read More')),
   ));
   doc.body.append(modal);
 }
