@@ -108,9 +108,9 @@ function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
   modal.style.display = 'block';
   if (readMore.length > 0) {
     modal.querySelector('.event-modal-footer a').href = readMore;
-    modal.querySelector('.event-modal-footer a').classList.remove('off');
+    modal.querySelector('.event-modal-footer a').classList.remove('displayoff');
   } else {
-    modal.querySelector('.event-modal-footer a').classList.add('off');
+    modal.querySelector('.event-modal-footer a').classList.add('displayoff');
   }
 
   // Listen for messages from iframe window
