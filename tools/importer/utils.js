@@ -31,6 +31,10 @@ export const createMetadata = (main, document, params) => {
     meta['page-title'] = params['page-title'];
   }
 
+  if (params['breadcrumbs-title-override']) {
+    meta['breadcrumbs-title-override'] = params['breadcrumbs-title-override'];
+  }
+
   const image = document.createElement('img');
   image.src = `${PREVIEW_DOMAIN}/assets/images/logo.png`;
   meta.Image = image;
