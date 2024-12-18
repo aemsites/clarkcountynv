@@ -146,6 +146,10 @@ body.calendar main section .fc {
     font-family: var(--heading-font-family);
 }
 
+body.calendar main section .fc .fc-button {
+    border-radius: 0;
+}
+
 body.calendar main section .fc .fc-button-primary {
     background-color: var(--orange);
     border-color: var(--orange);
