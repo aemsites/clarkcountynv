@@ -148,9 +148,9 @@ async function initializeCalendar() {
   const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
     headerToolbar: {
-      left: 'prev,next today',
-      center: 'addEventButton',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay',
+      left: 'prev,next today dayGridMonth,timeGridWeek,timeGridDay,list',
+      center: '',
+      right: 'title',
     },
     navLinks: true, // can click day/week names to navigate views
     editable: true,

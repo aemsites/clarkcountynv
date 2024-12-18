@@ -141,6 +141,34 @@ body.calendar .event-modal .event-modal-footer button, body.calendar .event-moda
     }
 }
 
+body.calendar main section .fc thead {
+    font-family: var(--heading-font-family);
+}
+
+body.calendar main section .fc .fc-daygrid-day.fc-day-today {
+    background-color: var(--orange);
+}
+
+body.calendar main section .fc .fc-daygrid-day-number {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+body.calendar main section .fc .fc-daygrid-day-number:hover {
+    color: #0056b3;
+}
+
+body.calendar main section .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+    color: white;
+}
+
+@media (width >= 900px) {
+    body.calendar main section .fc {
+        padding: 0 15px;
+    }
+
+}
+
 
 
 
