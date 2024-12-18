@@ -162,6 +162,20 @@ body.calendar main section .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-numb
     color: white;
 }
 
+body.calendar main section .fc .fc-header-toolbar > .fc-toolbar-chunk:first-child {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 2vh;
+    align-items: flex-start;
+    font-size: 16px;
+    font-family: var(--heading-font-family);
+}
+
+body.calendar main section .fc .fc-header-toolbar > .fc-toolbar-chunk:first-child > .fc-button-group:last-child {
+    margin-left: 0;
+}
+
 @media (width >= 900px) {
     body.calendar main section .fc {
         padding: 0 15px;

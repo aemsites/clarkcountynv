@@ -148,7 +148,7 @@ async function initializeCalendar() {
   const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
     headerToolbar: {
-      left: 'prev,next today dayGridMonth,timeGridWeek,timeGridDay,list',
+      left: 'prev,next,today dayGridMonth,timeGridWeek,timeGridDay,list',
       center: '',
       right: 'title',
     },
@@ -167,6 +167,7 @@ async function initializeCalendar() {
     },
   });
   calendar.render();
+
   importedData.forEach((event) => {
     const startTime = event.startRecur.split('T')[1];
     const endTime = event.endRecur.split('T')[1];
