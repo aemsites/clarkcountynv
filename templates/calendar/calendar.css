@@ -141,8 +141,29 @@ body.calendar .event-modal .event-modal-footer button, body.calendar .event-moda
     }
 }
 
+body.calendar main section .fc {
+    padding: 0 1vw;
+    font-family: var(--heading-font-family);
+}
+
+body.calendar main section .fc .fc-button-primary {
+    background-color: var(--orange);
+    border-color: var(--orange);
+    color: white;
+}
+
+body.calendar main section .fc .fc-button-primary:not(:disabled).fc-button-active, body.calendar main section .fc .fc-button-primary:not(:disabled):active {
+    background-color: #d8684a !important;
+    border-color: #d8684a;
+    color: white;
+}
+
 body.calendar main section .fc thead {
     font-family: var(--heading-font-family);
+}
+
+body.calendar main section .fc .fc-header-toolbar {
+    gap: vw;
 }
 
 body.calendar main section .fc .fc-daygrid-day.fc-day-today {
@@ -176,9 +197,13 @@ body.calendar main section .fc .fc-header-toolbar > .fc-toolbar-chunk:first-chil
     margin-left: 0;
 }
 
+body.calendar main section .fc .fc-header-toolbar > .fc-toolbar-chunk:last-child h2 {
+    font-weight: normal;
+}
+
 @media (width >= 900px) {
     body.calendar main section .fc {
-        padding: 0 15px;
+        padding: 0 1vw;
     }
 
 }
