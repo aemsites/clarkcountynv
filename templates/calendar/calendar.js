@@ -66,6 +66,8 @@ const divisions = [
   { name: 'Independent Living', color: '#3787d8', id: 41 },
 ];
 
+console.log(divisions);
+
 // Fetching events from individual calendar sheets
 export async function fetchPlaceholders(prefix) {
   window.placeholders = window.placeholders || {};
