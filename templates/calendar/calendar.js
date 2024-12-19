@@ -220,15 +220,27 @@ export function loadfullcalendar() {
 export default async function decorate(doc) {
   doc.body.classList.add('calendar');
   const $main = doc.querySelector('main');
-  const $mainChildren = Array.from($main.childNodes);
-  const $section = section();
+  const $searchSection = section();
   const $calendarSection = section();
 
-  $mainChildren.forEach((child) => {
-    $section.appendChild(child);
-  });
+  // For the search section implementation
+  const calendarButton = a();
+  const searchDiv = div();
+  searchDiv.innerHTML = `
+    <form>
+        <label for="url">Enter a URL:</label>
+        <input type="text" id="url" name="url" placeholder="URL">
+        <input type="submit">
+    </form>
+    `;
+  const bottomDiv = div();
+  bottomDiv.appendChild(searchDiv);
+  const searchIcon = document.querySelector('.section.search .default-content-wrapper');
+  bottomDiv.appendChild(searchIcon);
+  $searchSection.appendChild(calendarButton);
+  $searchSection.appendChild(bottomDiv);
 
-  $main.appendChild($section);
+  $main.appendChild($searchSection);
   const calDiv = div({ id: 'calendar' });
   $calendarSection.append(calDiv);
   $main.append($calendarSection);
