@@ -220,23 +220,21 @@ export function loadfullcalendar() {
 export default async function decorate(doc) {
   doc.body.classList.add('calendar');
   const $main = doc.querySelector('main');
-  const $searchSection = section();
+  const $searchSection = section({ class: 'fc-search' });
   const $calendarSection = section();
 
   // For the search section implementation
   const calendarButton = a();
+  calendarButton.textContent = 'Calendars';
   const searchDiv = div();
   searchDiv.innerHTML = `
-    <form>
-        <label for="url">Enter a URL:</label>
-        <input type="text" id="url" name="url" placeholder="URL">
-        <input type="submit">
+    <form class="fc-search">
+        <input type="text" id="event" name="event" placeholder="Search for Events...">
+        <button type="submit" class="fc-search"><i class="fc-search"></i></button>
     </form>
     `;
   const bottomDiv = div();
   bottomDiv.appendChild(searchDiv);
-  const searchIcon = document.querySelector('.section.search .default-content-wrapper');
-  bottomDiv.appendChild(searchIcon);
   $searchSection.appendChild(calendarButton);
   $searchSection.appendChild(bottomDiv);
 
