@@ -300,6 +300,10 @@ export default async function decorate(doc) {
     });
   });
   calendarButton.textContent = 'Calendars';
+  calendarButton.addEventListener('click', () => {
+    calendarList.classList.toggle('expanded');
+    closeButton.classList.toggle('expanded');
+  });
   const searchDiv = div();
   searchDiv.innerHTML = `
     <form class="fc-search">
