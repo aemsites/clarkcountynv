@@ -49,6 +49,9 @@ body.calendar main section.fc-search .fc-calendar-filters {
 
 body.calendar main section.fc-search .fc-calendar-filters ul {
     /* display: none; */
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    grid-auto-rows: 1fr;
     position: absolute;
     z-index: 999;
     box-shadow: 0 2px 15px rgba(0 0 0 / 25%);
@@ -57,6 +60,33 @@ body.calendar main section.fc-search .fc-calendar-filters ul {
     top: 3.2vh;
     background: #fff;
     padding: 30px;
+}
+
+body.calendar main section.fc-search .fc-calendar-filters ul li {
+    background: #fff;
+    transition: all .2s ease;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+body.calendar main section.fc-search .fc-calendar-filters ul li a {
+    transition: all .2s ease;
+    line-height: 1;
+    display: block;
+    padding: 11px;
+    color: #333;
+    text-decoration: none;
+    border: 0;
+    border-radius: 4px;
+    margin-bottom: 6px;
+    font-size: 13px;
+}
+
+body.calendar main section.fc-search .fc-calendar-filters ul li.active a {
+    transition: all .2s ease;
+    text-decoration: underline;
+    color: #fff;
 }
 
 body.calendar main section.fc-search form {
@@ -297,6 +327,11 @@ body.calendar main section .fc .fc-header-toolbar > .fc-toolbar-chunk:last-child
     
     body.calendar main section.fc-search {
         padding: 5vh 1vw 1vw;
+    }
+
+    body.calendar main section.fc-search .fc-calendar-filters ul {
+        /* display: none; */
+        grid-template-columns: repeat(3, 33%);
     }
 }
 
