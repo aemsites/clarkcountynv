@@ -22,6 +22,10 @@ body.calendar main a:any-link {
     color: white;
 }
 
+body.calendar div.event-modal a:any-link {
+    color: white;
+}
+
 body.calendar .off {
     opacity: 0;
 }
@@ -109,6 +113,7 @@ body.calendar main section.fc-search .fc-calendar-filters ul li a {
     border-radius: 4px;
     margin-bottom: 6px;
     font-size: 13px;
+    cursor: pointer;
 }
 
 body.calendar main section.fc-search .fc-calendar-filters ul li.active a {
