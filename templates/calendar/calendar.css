@@ -26,7 +26,7 @@ body.calendar .off {
     opacity: 0;
 }
 
-body.calendar main section.fc-search a {
+body.calendar main section.fc-search .fc-calendar-filters > a {
     margin: 5px 0;
     padding: .375rem .75rem;
     background: var(--default-button);

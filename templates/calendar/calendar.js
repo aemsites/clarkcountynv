@@ -66,8 +66,6 @@ const divisions = [
   { name: 'Independent Living', color: '#3787d8', id: 41 },
 ];
 
-console.log(divisions);
-
 // Fetching events from individual calendar sheets
 export async function fetchPlaceholders(prefix) {
   window.placeholders = window.placeholders || {};
@@ -275,6 +273,32 @@ export default async function decorate(doc) {
   const calendarButton = a();
   const closeButton = button({ class: 'fc-close' });
   const calendarList = ul({ class: 'fc-calendar-list' });
+  divisions.forEach((division) => {
+    const divisionLi = li({ class: 'fc-calendar-list-item', id: `${division.id}` });
+    const divisionButton = a({ class: 'fc-calendar-list-button' });
+    divisionButton.textContent = division.name;
+    divisionLi.appendChild(divisionButton);
+    calendarList.appendChild(divisionLi);
+  });
+  calendarList.querySelectorAll('.fc-calendar-list-item').forEach((divisionLi, _, parent) => {
+    divisionLi.addEventListener('click', () => {
+      parent.forEach((liele) => {
+        liele.classList.toggle('active', liele === divisionLi);
+        if (liele.classList.contains('active')) {
+          const divisionId = liele.id;
+          divisions.forEach((division) => {
+            if (division.id === parseInt(divisionId, 10)) {
+              liele.style.backgroundColor = division.color;
+              liele.querySelector('.fc-calendar-list-button').style.backgroundColor = division.color;
+            }
+          });
+        } else {
+          liele.style.backgroundColor = '#fff';
+          liele.querySelector('.fc-calendar-list-button').style.backgroundColor = '#fff';
+        }
+      });
+    });
+  });
   calendarButton.textContent = 'Calendars';
   const searchDiv = div();
   searchDiv.innerHTML = `
