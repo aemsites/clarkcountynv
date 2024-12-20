@@ -304,6 +304,10 @@ export default async function decorate(doc) {
     calendarList.classList.toggle('expanded');
     closeButton.classList.toggle('expanded');
   });
+  closeButton.addEventListener('click', () => {
+    calendarList.classList.remove('expanded');
+    closeButton.classList.remove('expanded');
+  });
   const searchDiv = div();
   searchDiv.innerHTML = `
     <form class="fc-search">
