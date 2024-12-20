@@ -22,6 +22,10 @@ class Obj {
   }
 }
 
+let calendar = null;
+let events = [];
+let calendarEl = null;
+
 // Array of divisions
 const divisions = [
   { name: 'Events', color: '#312222', id: 1 },
@@ -182,7 +186,7 @@ function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
   };
 }
 
-function createEvents(eventsList, calendar) {
+function createEvents(eventsList) {
   eventsList.forEach((event) => {
     if (event.daysOfWeek.length > 0) {
       calendar.addEvent({
@@ -215,29 +219,21 @@ function createEvents(eventsList, calendar) {
   });
 }
 
-function createEventList(calendar, importedData, eventsList) {
+function createEventList(importedData, eventsList) {
   importedData.forEach((event) => {
-    console.log(event);
     const startTime = event.startRecur.split('T')[1];
     const endTime = event.endRecur.split('T')[1];
     const url = window.location.origin + event.path;
     const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, event.startRecur, event.endRecur, url, event['division-color'], event.classNames, event.readMore, event.divisionid);
     eventsList.push(eventObj);
   });
-  console.log(eventsList);
-  createEvents(eventsList, calendar);
+  createEvents(eventsList);
+  return eventsList;
 }
 
-async function initializeCalendar() {
-  let importedData = [];
-  const eventsList = [];
-  const calendarEl = document.getElementById('calendar');
-  // const data = getEventsManual();
-  const normalizeCalendar = 'events';
-  const placeholders = await fetchPlaceholders(normalizeCalendar);
-  importedData = [...importedData, ...placeholders.data];
+function createCalendar() {
   // eslint-disable-next-line no-undef
-  const calendar = new FullCalendar.Calendar(calendarEl, {
+  calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
     headerToolbar: {
       left: 'prev,next,today dayGridMonth,timeGridWeek,timeGridDay,list',
@@ -259,8 +255,18 @@ async function initializeCalendar() {
     },
   });
   calendar.render();
+}
 
-  createEventList(calendar, importedData, eventsList);
+async function initializeCalendar() {
+  let importedData = [];
+  const eventsList = [];
+  calendarEl = document.getElementById('calendar');
+  // const data = getEventsManual();
+  const normalizeCalendar = 'events';
+  const placeholders = await fetchPlaceholders(normalizeCalendar);
+  importedData = [...importedData, ...placeholders.data];
+  createCalendar();
+  events = createEventList(importedData, eventsList);
 }
 
 export function loadfullcalendar() {
@@ -269,6 +275,19 @@ export function loadfullcalendar() {
   scriptfullcalendar.src = 'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js';
   scriptfullcalendar.addEventListener('load', initializeCalendar);
   document.head.append(scriptfullcalendar);
+}
+
+function filterEvents(divisionId) {
+  if (divisionId === '1') {
+    calendar.destroy();
+    createCalendar();
+    createEvents(events);
+    return;
+  }
+  const filteredEvents = events.filter((event) => event.divisionid === divisionId);
+  calendar.destroy();
+  createCalendar();
+  createEvents(filteredEvents);
 }
 
 export default async function decorate(doc) {
@@ -320,6 +339,7 @@ export default async function decorate(doc) {
             if (division.id === parseInt(divisionId, 10)) {
               liele.style.backgroundColor = division.color;
               liele.querySelector('.fc-calendar-list-button').style.backgroundColor = division.color;
+              filterEvents(divisionId);
             }
           });
         } else {
