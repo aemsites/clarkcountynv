@@ -43,6 +43,22 @@ body.calendar main section.fc-search a {
     transition: all .3s;
 }
 
+body.calendar main section.fc-search .fc-calendar-filters {
+    position: relative;
+}
+
+body.calendar main section.fc-search .fc-calendar-filters ul {
+    /* display: none; */
+    position: absolute;
+    z-index: 999;
+    box-shadow: 0 2px 15px rgba(0 0 0 / 25%);
+    left: 0;
+    right: 0;
+    top: 3.2vh;
+    background: #fff;
+    padding: 30px;
+}
+
 body.calendar main section.fc-search form {
     display: flex;
     flex-direction: row;
@@ -75,6 +91,19 @@ body.calendar main section.fc-search form button {
     margin: 0;
     width: 38.5px;
     padding: 0;
+}
+
+body.calendar main section.fc-search .fc-calendar-filters button.fc-close {
+    position: absolute;
+    z-index: 1000;
+    right: .2vw;
+    top: 5.5vh;
+    width: 25px;
+    height: 25px;
+    padding: 0;
+    margin: 0;
+    background-color: white;
+    background-image: url('https://main--clarkcountynv--aemsites.aem.page/assets/images/media_1340ed71a23c8180cbade5b224fea6977ac4b3510.png');
 }
 
 body.calendar .event-modal .event-modal-footer a.displayoff {

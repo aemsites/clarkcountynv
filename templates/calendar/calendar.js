@@ -1,5 +1,5 @@
 import {
-  div, iframe, section, p, button, a,
+  div, iframe, section, p, button, a, ul, li,
 } from '../../scripts/dom-helpers.js';
 
 class Obj {
@@ -271,7 +271,10 @@ export default async function decorate(doc) {
   const $calendarSection = section();
 
   // For the search section implementation
+  const calendarfilters = div({ class: 'fc-calendar-filters' });
   const calendarButton = a();
+  const closeButton = button({ class: 'fc-close' });
+  const calendarList = ul({ class: 'fc-calendar-list' });
   calendarButton.textContent = 'Calendars';
   const searchDiv = div();
   searchDiv.innerHTML = `
@@ -280,9 +283,12 @@ export default async function decorate(doc) {
         <button type="submit" class="fc-search"><i class="fc-search"></i></button>
     </form>
     `;
-  const bottomDiv = div();
+  const bottomDiv = div({ class: 'fc-calendar-search' });
   bottomDiv.appendChild(searchDiv);
-  $searchSection.appendChild(calendarButton);
+  calendarfilters.appendChild(calendarButton);
+  calendarfilters.appendChild(closeButton);
+  calendarfilters.appendChild(calendarList);
+  $searchSection.appendChild(calendarfilters);
   $searchSection.appendChild(bottomDiv);
 
   $main.appendChild($searchSection);
