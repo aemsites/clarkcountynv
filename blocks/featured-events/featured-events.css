@@ -17,7 +17,7 @@
     width: 100%;
     margin-bottom: 72px;
     cursor: pointer;
-    height: 263px;
+    height: auto;
 }
 
 .block.featured-events .block.columns .event-image {
@@ -89,17 +89,22 @@
 
 .block.featured-events .block.columns div.event {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
 
 @media (width >= 900px) {
     .block.featured-events .block.columns > div {
         width: 48%;
+        height: 263px;
     }
 
     .block.featured-events .block.columns {
         padding-left: 1vw;
         padding-right: 1vw;
+    }
+
+    .block.featured-events .block.columns div.event {
+        flex-direction: row;
     }
 
 }
