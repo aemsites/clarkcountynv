@@ -11,10 +11,10 @@ const resultParsers = {
     const blockContents = [];
     results.forEach((result) => {
       const row = [];
-      const divLeft = div();
+      const divLeft = div({ class: 'event-image' });
       const columnImage = createOptimizedPicture(result.image);
       divLeft.appendChild(columnImage);
-      const divRight = div();
+      const divRight = div({ class: 'event-body' });
       const dateDiv = div({ class: 'date' }, result.start);
       const divTitle = div({ class: 'title' }, h3(result.title));
       const divDescription = div({ class: 'description' }, result.eventdescription);
@@ -23,7 +23,7 @@ const resultParsers = {
       divRight.appendChild(divTitle);
       divRight.appendChild(divDescription);
       divRight.appendChild(divPath);
-      const columnBody = div();
+      const columnBody = div({ class: 'event' });
       columnBody.appendChild(divLeft);
       columnBody.appendChild(divRight);
       row.push(columnBody);

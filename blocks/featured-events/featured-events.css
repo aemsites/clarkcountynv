@@ -1,0 +1,19 @@
+.block.featured-events.columns-wrapper {
+    margin-top: 0;
+}
+
+.block.featured-events .block.columns {
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    grid-auto-rows: 1fr;
+    grid-gap: 5vw;
+}
+
+.block.featured-events .block.columns > div > div.column1 p {
+    white-space: normal;
+}
+
+.block.featured-events .block.columns div.event {
+    display: flex;
+    flex-direction: row;
+}
