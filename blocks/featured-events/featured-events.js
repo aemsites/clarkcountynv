@@ -3,19 +3,34 @@ import {
   createOptimizedPicture, buildBlock, decorateBlock, loadBlock,
 } from '../../scripts/aem.js';
 
+const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEPT', 'OCT', 'NOV', 'DEC'];
+
 // Result parsers parse the query results into a format that can be used by the block builder for
 // the specific block types
 const resultParsers = {
   // Parse results into a cards block
   columns: (results) => {
     const blockContents = [];
+    let sourceDate = '';
     results.forEach((result) => {
       const row = [];
       const divLeft = div({ class: 'event-image' });
       const columnImage = createOptimizedPicture(result.image);
       divLeft.appendChild(columnImage);
       const divRight = div({ class: 'event-body' });
-      const dateDiv = div({ class: 'date' }, result.start);
+      if (result.start.length === 0) {
+        sourceDate = result.startRecur;
+      } else {
+        sourceDate = result.start;
+      }
+      const dateObj = new Date(sourceDate.split('T')[0]);
+      const eventDate = dateObj.getDate();
+      const eventMonth = dateObj.getMonth();
+      // convert number into Month name
+      const eventMonthName = months[eventMonth];
+      const eventYear = dateObj.getFullYear();
+      const fullDate = `${eventMonthName} ${eventDate}, ${eventYear}`;
+      const dateDiv = div({ class: 'date' }, fullDate);
       const divTitle = div({ class: 'title' }, h3(result.title));
       const divDescription = div({ class: 'description' }, result.eventdescription);
       const divPath = div({ class: 'path' }, result.path);
