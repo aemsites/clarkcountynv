@@ -3,10 +3,55 @@
 }
 
 .block.featured-events .block.columns {
-    display: grid;
-    grid-template-columns: repeat(2, 50%);
-    grid-auto-rows: 1fr;
-    grid-gap: 5vw;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.block.featured-events .block.columns > div {
+    display: flex;
+    width: 48%;
+    margin-bottom: 72px;
+    cursor: pointer;
+}
+
+.block.featured-events .block.columns .event-image {
+    flex-basis: 50%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.block.featured-events .block.columns .event-body {
+    flex-basis: 60%;
+    padding: 22px 30px;
+}
+
+.block.featured-events .block.columns h3 {
+    font: 500 24px var(--heading-font-family);
+    line-height: 1.25;
+    margin: 13px 0 18px;
+}
+
+.block.featured-events .block.columns > div .event-body .date {
+    align-items: center;
+    font: 400 18px var(--body-font-family);
+    display: flex;
+    text-transform: uppercase;
+    margin-right: 5px;
+}
+
+.block.featured-events .block.columns > div .event-body .date::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    margin-right: 10px;
+    background: url('https://main--clarkcountynv--aemsites.aem.page/assets/images/calendar-icon.png') center / cover no-repeat;
 }
 
 .block.featured-events .block.columns > div > div.column1 p {
