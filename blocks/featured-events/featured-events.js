@@ -1,4 +1,7 @@
-import { div, h3 } from '../../scripts/dom-helpers.js';
+import {
+  div, h3, iframe, p, button, a,
+} from '../../scripts/dom-helpers.js';
+
 import {
   createOptimizedPicture, buildBlock, decorateBlock, loadBlock,
 } from '../../scripts/aem.js';
@@ -76,6 +79,21 @@ export async function fetchPlaceholders() {
   return [window.placeholders[TRANSLATION_KEY_EVENTS]];
 }
 
+function createModal(block) {
+  const modal = div({ class: 'event-modal' }, div(
+    { class: 'event-modal-content' },
+    iframe({
+      id: 'event-iframe',
+      width: '100%',
+      height: '100%',
+    }),
+    div({ class: 'event-modal-date' }, p(), p()),
+    div({ class: 'event-modal-time' }, p()),
+    div({ class: 'event-modal-footer' }, button({ class: 'ics' }, 'ICS'), button({ class: 'close', onclick: () => { document.querySelector('.event-modal').style.display = 'none'; } }, 'Close'), a('Read More')),
+  ));
+  block.append(modal);
+}
+
 export default async function decorate(block) {
   const placeholders = await fetchPlaceholders();
   const yesArray = placeholders[0].data.filter((item) => item.featured === 'yes');
@@ -84,4 +102,5 @@ export default async function decorate(block) {
   block.appendChild(builtBlock);
   decorateBlock(builtBlock);
   await loadBlock(builtBlock);
+  createModal(block);
 }
