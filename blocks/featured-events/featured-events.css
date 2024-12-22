@@ -7,23 +7,38 @@
     justify-content: space-between;
     flex-wrap: wrap;
     position: relative;
+    margin-top: 4vh;
+    padding-left: 4vw;
+    padding-right: 4vw;
 }
 
 .block.featured-events .block.columns > div {
     display: flex;
-    width: 48%;
+    width: 100%;
     margin-bottom: 72px;
     cursor: pointer;
+    height: 263px;
 }
 
 .block.featured-events .block.columns .event-image {
     flex-basis: 50%;
+    background: #ccc;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
     display: flex;
     align-items: center;
+    justify-content: center;
+}
+
+.block.featured-events .block.columns .event-image picture {
+    height: 263px;
+}
+
+
+.block.featured-events .block.columns .event-image img {
+    height: 100%;
 }
 
 .block.featured-events .block.columns .event-body {
@@ -45,6 +60,20 @@
     margin-right: 5px;
 }
 
+.block.featured-events .block.columns > div .event-body .description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    line-clamp: 3;
+    font: 400 18px var(--body-font-family);
+    line-height: 1.35;
+}
+
+.block.featured-events .block.columns > div .event-body .path {
+    display: none;
+}
+
 .block.featured-events .block.columns > div .event-body .date::before {
     content: '';
     display: inline-block;
@@ -61,4 +90,23 @@
 .block.featured-events .block.columns div.event {
     display: flex;
     flex-direction: row;
+}
+
+@media (width >= 900px) {
+    .block.featured-events .block.columns > div {
+        width: 48%;
+    }
+
+    .block.featured-events .block.columns {
+        padding-left: 1vw;
+        padding-right: 1vw;
+    }
+
+}
+
+@media (width >= 1200px) {
+    .block.featured-events .block.columns {
+        padding-left: 8vw;
+        padding-right: 8vw;
+    }
 }
