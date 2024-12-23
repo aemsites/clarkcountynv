@@ -18,11 +18,18 @@ function tConv24(time24) {
   return ts;
 }
 
-function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
-  const dateStartObj = new Date(startTime.split('T')[0]);
-  const dateEndObj = new Date(endTime.split('T')[0]);
-  console.log(dateStartObj);
-  console.log(url);
+function popupEvent(url, startTime, startRecur, endTime, endRecur, backgroundColor, readMore) {
+  let sourceDate = '';
+  let endDate = '';
+  if (startTime.length === 0) {
+    sourceDate = startRecur;
+    endDate = endRecur;
+  } else {
+    sourceDate = startTime;
+    endDate = endTime;
+  }
+  const dateStartObj = new Date(sourceDate.split('T')[0]);
+  const dateEndObj = new Date(endDate.split('T')[0]);
   let eventDate = dateStartObj.getDate();
   if (eventDate < 10) {
     eventDate = `0${eventDate}`;
@@ -66,12 +73,9 @@ function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
       modal.querySelector('.event-modal-date').classList.remove('off');
       modal.querySelector('.event-modal-time').classList.remove('off');
     }
-    console.log(event.data.eventfooter);
     if (event.data.eventfooter === 'on') {
-        console.log('footer on');
       modal.querySelector('.event-modal-footer').classList.remove('off');
     } else {
-        console.log('footer off');
       modal.querySelector('.event-modal-footer').classList.add('off');
     }
   });
@@ -91,7 +95,6 @@ const resultParsers = {
     const blockContents = [];
     let sourceDate = '';
     results.forEach((result) => {
-      console.log(result);
       const row = [];
       const divLeft = div({ class: 'event-image' });
       const columnImage = createOptimizedPicture(result.image);
@@ -119,9 +122,8 @@ const resultParsers = {
       divRight.appendChild(divPath);
       const columnBody = div({ class: 'event' });
       columnBody.addEventListener('click', () => {
-        console.log('clicked');
         const url = window.location.origin + result.path;
-        popupEvent(url, result.start, result.end, result['division-color'], result.readMore);
+        popupEvent(url, result.start, result.startRecur, result.end, result.endRecur, result['division-color'], result.readMore);
       });
       columnBody.appendChild(divLeft);
       columnBody.appendChild(divRight);
