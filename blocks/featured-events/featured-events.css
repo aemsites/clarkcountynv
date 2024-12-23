@@ -117,11 +117,23 @@
     width: 500px;
     max-width: 100%;
     background-color: white;
-    height: 700px;
+    height: 750px;
     margin: auto;
-    margin-top: 5%;
+    margin-top: 0;
     position: relative;
     animation: animatetop 1s;
+}
+
+@keyframes animatetop {
+    from {
+        top: -50px;
+        opacity: 0
+    }
+
+    to {
+        top: 0;
+        opacity: 1
+    }
 }
 
 .block.featured-events .event-modal .event-modal-footer {
