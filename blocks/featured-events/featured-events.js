@@ -66,9 +66,12 @@ function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
       modal.querySelector('.event-modal-date').classList.remove('off');
       modal.querySelector('.event-modal-time').classList.remove('off');
     }
+    console.log(event.data.eventfooter);
     if (event.data.eventfooter === 'on') {
+        console.log('footer on');
       modal.querySelector('.event-modal-footer').classList.remove('off');
     } else {
+        console.log('footer off');
       modal.querySelector('.event-modal-footer').classList.add('off');
     }
   });
@@ -88,7 +91,7 @@ const resultParsers = {
     const blockContents = [];
     let sourceDate = '';
     results.forEach((result) => {
-        console.log(result);
+      console.log(result);
       const row = [];
       const divLeft = div({ class: 'event-image' });
       const columnImage = createOptimizedPicture(result.image);
@@ -118,7 +121,7 @@ const resultParsers = {
       columnBody.addEventListener('click', () => {
         console.log('clicked');
         const url = window.location.origin + result.path;
-        popupEvent(url, result.start, result.end, result.backgroundColor, result.readMore);
+        popupEvent(url, result.start, result.end, result['division-color'], result.readMore);
       });
       columnBody.appendChild(divLeft);
       columnBody.appendChild(divRight);
