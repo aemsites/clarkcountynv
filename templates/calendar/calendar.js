@@ -313,7 +313,7 @@ function filterMatches(tokenizedSearchWords) {
   return [...new Set(allMatches)];
 }
 
-function implememtSearch(searchDiv) {
+function implementSearch(searchDiv) {
   const response = document.getElementById('eventform');
   searchDiv.querySelector('form').addEventListener('submit', async (web) => {
     web.preventDefault();
@@ -394,5 +394,5 @@ export default async function decorate(doc) {
     calendarList.classList.remove('expanded');
     closeButton.classList.remove('expanded');
   });
-  implememtSearch(searchDiv);
+  implementSearch(searchDiv);
 }

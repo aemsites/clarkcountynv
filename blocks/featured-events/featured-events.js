@@ -8,6 +8,78 @@ import {
 
 const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEPT', 'OCT', 'NOV', 'DEC'];
 
+function tConv24(time24) {
+  let ts = time24;
+  const H = +ts.substr(0, 2);
+  let h = (H % 12) || 12;
+  h = (h < 10) ? (`0${h}`) : h; // leading 0 at the left for 1 digit hours
+  const ampm = H < 12 ? ' AM' : ' PM';
+  ts = h + ts.substr(2, 3) + ampm;
+  return ts;
+}
+
+function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
+  const dateStartObj = new Date(startTime.split('T')[0]);
+  const dateEndObj = new Date(endTime.split('T')[0]);
+  console.log(dateStartObj);
+  console.log(url);
+  let eventDate = dateStartObj.getDate();
+  if (eventDate < 10) {
+    eventDate = `0${eventDate}`;
+  }
+  const eventMonth = dateStartObj.getMonth();
+  const eventStartHours = dateStartObj.toString().split(' ')[4].split(':')[0];
+  const eventStartMinutes = dateStartObj.toString().split(' ')[4].split(':')[1];
+  const eventStartTime = tConv24(`${eventStartHours}:${eventStartMinutes}`);
+  const eventEndHours = dateEndObj.toString().split(' ')[4].split(':')[0];
+  const eventEndMinutes = dateEndObj.toString().split(' ')[4].split(':')[1];
+  const eventEndTime = tConv24(`${eventEndHours}:${eventEndMinutes}`);
+
+  // convert number into Month name
+  const eventMonthName = months[eventMonth];
+
+  const modal = document.querySelector('.event-modal');
+  modal.querySelector('.event-modal-date').style.backgroundColor = backgroundColor;
+  modal.querySelector('.event-modal-time').style.backgroundColor = backgroundColor;
+  modal.querySelector('.event-modal-footer button.ics').style.backgroundColor = backgroundColor;
+  modal.querySelector('.event-modal-footer button.close').style.backgroundColor = backgroundColor;
+  modal.querySelector('.event-modal-footer a').style.backgroundColor = backgroundColor;
+  modal.querySelector('.event-modal-footer').classList.add('off');
+  modal.querySelector('.event-modal-date p:first-child').textContent = `${eventDate}`;
+  modal.querySelector('.event-modal-date p:last-child').textContent = `${eventMonthName}`;
+  modal.querySelector('.event-modal-time p').textContent = `${eventStartTime} - ${eventEndTime}`;
+  modal.querySelector('iframe').src = url;
+  modal.style.display = 'block';
+  if (readMore.length > 0) {
+    modal.querySelector('.event-modal-footer a').href = readMore;
+    modal.querySelector('.event-modal-footer a').classList.remove('displayoff');
+  } else {
+    modal.querySelector('.event-modal-footer a').classList.add('displayoff');
+  }
+
+  // Listen for messages from iframe window
+  window.addEventListener('message', (event) => {
+    if (event.data.eventtop === 'off') {
+      modal.querySelector('.event-modal-date').classList.add('off');
+      modal.querySelector('.event-modal-time').classList.add('off');
+    } else {
+      modal.querySelector('.event-modal-date').classList.remove('off');
+      modal.querySelector('.event-modal-time').classList.remove('off');
+    }
+    if (event.data.eventfooter === 'on') {
+      modal.querySelector('.event-modal-footer').classList.remove('off');
+    } else {
+      modal.querySelector('.event-modal-footer').classList.add('off');
+    }
+  });
+
+  window.onclick = (event) => {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
+  };
+}
+
 // Result parsers parse the query results into a format that can be used by the block builder for
 // the specific block types
 const resultParsers = {
@@ -16,6 +88,7 @@ const resultParsers = {
     const blockContents = [];
     let sourceDate = '';
     results.forEach((result) => {
+        console.log(result);
       const row = [];
       const divLeft = div({ class: 'event-image' });
       const columnImage = createOptimizedPicture(result.image);
@@ -42,6 +115,11 @@ const resultParsers = {
       divRight.appendChild(divDescription);
       divRight.appendChild(divPath);
       const columnBody = div({ class: 'event' });
+      columnBody.addEventListener('click', () => {
+        console.log('clicked');
+        const url = window.location.origin + result.path;
+        popupEvent(url, result.start, result.end, result.backgroundColor, result.readMore);
+      });
       columnBody.appendChild(divLeft);
       columnBody.appendChild(divRight);
       row.push(columnBody);
