@@ -2,6 +2,10 @@
     margin-top: 0;
 }
 
+.block.featured-events .off {
+    opacity: 0;
+}
+
 .block.featured-events .block.columns {
     display: flex;
     justify-content: space-between;
