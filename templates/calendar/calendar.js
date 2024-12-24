@@ -385,6 +385,8 @@ export default async function decorate(doc) {
           liele.style.backgroundColor = '#fff';
           liele.querySelector('.fc-calendar-list-button').style.backgroundColor = '#fff';
         }
+        calendarList.classList.remove('expanded');
+        closeButton.classList.remove('expanded');
       });
     });
   });
