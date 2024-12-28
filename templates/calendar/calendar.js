@@ -320,10 +320,12 @@ function filterEvents(divisionId) {
     createEvents(events);
     return;
   }
-  filteredEvents = events.filter((event) => event.divisionid === divisionId);
-  calendar.destroy();
-  createCalendar();
-  createEvents(filteredEvents);
+  window.location.href = `https://${window.location.host}/calendar/${normalizeString(divisions[divisionId - 1].name)}/`;
+
+  // filteredEvents = events.filter((event) => event.divisionid === divisionId);
+  // calendar.destroy();
+  // createCalendar();
+  // createEvents(filteredEvents);
 }
 
 function searchItems(searchTerm) {
