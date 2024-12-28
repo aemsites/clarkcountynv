@@ -27,7 +27,6 @@ class Obj {
 
 let calendar = null;
 let events = [];
-let filteredEvents = [];
 let calendarEl = null;
 
 // Array of divisions
@@ -267,6 +266,44 @@ function createCalendar() {
   calendar.render();
 }
 
+// Get the featured events for the Calendar panel
+export async function fetchFeatured() {
+  window.placeholders = window.placeholders || {};
+  const TRANSLATION_KEY_EVENTS = 'featured-events';
+  const loaded = window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`];
+
+  if (!loaded) {
+    window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`] = new Promise((resolve, reject) => {
+      fetch('/calendar/featured-events/featured.json?sheet=events')
+        .then((resp) => {
+          if (resp.ok) {
+            return resp.json();
+          }
+          throw new Error(`${resp.status}: ${resp.statusText}`);
+        })
+        .then((json) => {
+          window.placeholders[TRANSLATION_KEY_EVENTS] = json;
+          resolve();
+        }).catch((error) => {
+        // Error While Loading Placeholders
+          window.placeholders[TRANSLATION_KEY_EVENTS] = {};
+          reject(error);
+        });
+    });
+  }
+  await window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`];
+  return [window.placeholders[TRANSLATION_KEY_EVENTS]];
+}
+
+async function getFeaturedEvents() {
+  const placeholders = await fetchFeatured();
+  const yesArray = placeholders[0].data.filter((item) => item.featured === 'yes');
+  calendar.destroy();
+  createCalendar();
+  const eventsList = [];
+  createEventList(yesArray, eventsList);
+}
+
 async function initializeCalendar() {
   let importedData = [];
   const eventsList = [];
@@ -280,8 +317,13 @@ async function initializeCalendar() {
   if (checkDivision[2] && checkDivision[2].length > 0) {
     divisions.forEach((division) => {
       if (normalizeString(division.name) === checkDivision[2]) {
-        const filterData = importedData.filter((event) => event.divisionid === String(division.id));
-        filteredEvents = createEventList(filterData, eventsList);
+        if (normalizeString(division.name) === 'featured-events') {
+          getFeaturedEvents();
+        } else {
+          // eslint-disable-next-line max-len
+          const filterData = importedData.filter((event) => event.divisionid === String(division.id));
+          createEventList(filterData, eventsList);
+        }
       }
     });
   } else {
@@ -365,44 +407,6 @@ function implementSearch(searchDiv) {
   });
 }
 
-// Get the featured events for the Calendar panel
-export async function fetchFeatured() {
-  window.placeholders = window.placeholders || {};
-  const TRANSLATION_KEY_EVENTS = 'featured-events';
-  const loaded = window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`];
-
-  if (!loaded) {
-    window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`] = new Promise((resolve, reject) => {
-      fetch('/featured.json?sheet=events')
-        .then((resp) => {
-          if (resp.ok) {
-            return resp.json();
-          }
-          throw new Error(`${resp.status}: ${resp.statusText}`);
-        })
-        .then((json) => {
-          window.placeholders[TRANSLATION_KEY_EVENTS] = json;
-          resolve();
-        }).catch((error) => {
-        // Error While Loading Placeholders
-          window.placeholders[TRANSLATION_KEY_EVENTS] = {};
-          reject(error);
-        });
-    });
-  }
-  await window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`];
-  return [window.placeholders[TRANSLATION_KEY_EVENTS]];
-}
-
-async function getFeaturedEvents() {
-  const placeholders = await fetchFeatured();
-  const yesArray = placeholders[0].data.filter((item) => item.featured === 'yes');
-  calendar.destroy();
-  createCalendar();
-  const eventsList = [];
-  createEventList(yesArray, eventsList);
-}
-
 export default async function decorate(doc) {
   doc.body.classList.add('calendar');
   const $main = doc.querySelector('main');
@@ -453,6 +457,7 @@ export default async function decorate(doc) {
               liele.style.backgroundColor = division.color;
               liele.querySelector('.fc-calendar-list-button').style.backgroundColor = division.color;
               if (divisionId === '2') {
+                window.location.href = `https://${window.location.host}/calendar/${normalizeString(divisions[divisionId - 1].name)}/`;
                 getFeaturedEvents();
               } else { filterEvents(divisionId); }
             }
