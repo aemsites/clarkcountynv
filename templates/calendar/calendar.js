@@ -2,6 +2,8 @@ import {
   div, iframe, section, p, button, a, ul, li,
 } from '../../scripts/dom-helpers.js';
 
+import { normalizeString } from '../../scripts/utils.js';
+
 class Obj {
   // eslint-disable-next-line max-len
   constructor(title, start, end, allDay, daysOfWeek, startTime, endTime, startRecur, endRecur, url, backgroundColor, classNames, readMore, divisionid, excludeDates) {
@@ -25,6 +27,7 @@ class Obj {
 
 let calendar = null;
 let events = [];
+let filteredEvents = [];
 let calendarEl = null;
 
 // Array of divisions
@@ -273,7 +276,17 @@ async function initializeCalendar() {
   const placeholders = await fetchPlaceholders(normalizeCalendar);
   importedData = [...importedData, ...placeholders.data];
   createCalendar();
-  events = createEventList(importedData, eventsList);
+  const checkDivision = window.location.pathname.split('/');
+  if (checkDivision[2] && checkDivision[2].length > 0) {
+    divisions.forEach((division) => {
+      if (normalizeString(division.name) === checkDivision[2]) {
+        const filterData = importedData.filter((event) => event.divisionid === String(division.id));
+        filteredEvents = createEventList(filterData, eventsList);
+      }
+    });
+  } else {
+    events = createEventList(importedData, eventsList);
+  }
 }
 
 export function loadrrtofullcalendar() {
@@ -307,7 +320,7 @@ function filterEvents(divisionId) {
     createEvents(events);
     return;
   }
-  const filteredEvents = events.filter((event) => event.divisionid === divisionId);
+  filteredEvents = events.filter((event) => event.divisionid === divisionId);
   calendar.destroy();
   createCalendar();
   createEvents(filteredEvents);
@@ -424,7 +437,6 @@ export default async function decorate(doc) {
   const calDiv = div({ id: 'calendar' });
   $calendarSection.append(calDiv);
   $main.append($calendarSection);
-  // loadfullcalendar();
   loadrrule();
   createModal(doc);
   calendarList.querySelectorAll('.fc-calendar-list-item').forEach((divisionLi, _, parent) => {
