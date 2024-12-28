@@ -357,18 +357,10 @@ export function loadrrule() {
 
 function filterEvents(divisionId) {
   if (divisionId === '1') {
-    // calendar.destroy();
-    // createCalendar();
-    // createEvents(events);
     window.location.href = `https://${window.location.host}/calendar`;
     return;
   }
   window.location.href = `https://${window.location.host}/calendar/${normalizeString(divisions[divisionId - 1].name)}/`;
-
-  // filteredEvents = events.filter((event) => event.divisionid === divisionId);
-  // calendar.destroy();
-  // createCalendar();
-  // createEvents(filteredEvents);
 }
 
 function searchItems(searchTerm) {
