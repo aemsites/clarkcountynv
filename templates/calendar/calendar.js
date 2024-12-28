@@ -315,9 +315,10 @@ export function loadrrule() {
 
 function filterEvents(divisionId) {
   if (divisionId === '1') {
-    calendar.destroy();
-    createCalendar();
-    createEvents(events);
+    // calendar.destroy();
+    // createCalendar();
+    // createEvents(events);
+    window.location.href = `https://${window.location.host}/calendar`;
     return;
   }
   window.location.href = `https://${window.location.host}/calendar/${normalizeString(divisions[divisionId - 1].name)}/`;
