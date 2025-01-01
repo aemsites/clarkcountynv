@@ -1,6 +1,6 @@
 /* global WebImporter */
 import {
-  PREVIEW_DOMAIN, createMetadata,
+  PREVIEW_DOMAIN, createMetadata, fetchAndParseDocument
 } from './utils.js';
 
 function fixPdfLinks(main, results) {
@@ -19,12 +19,24 @@ function fixPdfLinks(main, results) {
   });
 }
 
+function getBackgroundUrl(element) {
+  if (!element || !element.style) {
+    return null; // Return null if the element is invalid or doesn't have a style property
+  }
+
+  const backgroundStyle = element.style.background;
+  const urlMatch = backgroundStyle.match(/url\(['"]?(.*?)['"]?\)/);
+
+  // If a match is found, return the URL; otherwise, return null
+  return urlMatch ? urlMatch[1] : null;
+}
+
 export default {
 
-  transform: ({
-    // eslint-disable-next-line no-unused-vars
-    document, url, html, params,
-  }) => {
+  transform: async ({
+                      // eslint-disable-next-line no-unused-vars
+                      document, url, html, params,
+                    }) => {
     const main = document.body;
     const results = [];
 
@@ -87,6 +99,18 @@ export default {
     params.template = 'agenda';
     params['breadcrumbs-base'] = '/news/news-breadcrumbs';
     params['breadcrumbs-title-override'] = 'News Post';
+    const listMetadata = await extractPageInfo(
+      'http://localhost:3001/newslist.php?host=https://www.clarkcountynv.gov/newslist.php',
+      params['originalURL'],
+      results
+    );
+
+    Object.keys(listMetadata).forEach((key) => {
+      if (listMetadata[key] && listMetadata[key].length > 0) {
+        params[key] = listMetadata[key];
+      }
+    });
+
     createMetadata(main, document, params);
 
     let path = new URL(params.originalURL).pathname;
@@ -100,3 +124,43 @@ export default {
     return results;
   },
 };
+
+const extractPageInfo = async (url, href, results) => {
+  const doc = await fetchAndParseDocument(url);
+  const page = href.split('/').pop();
+  if (doc) {
+    const { body } = doc;
+    const a = body.querySelector(`a[href="${page}"]`);
+    const container = a.closest('.news');
+
+    const bannerEl = container.querySelector('.news-banner');
+    const backgroundImageUrl = getBackgroundUrl(bannerEl);
+    let bannerUrl;
+    if (backgroundImageUrl) {
+      const u = new URL(backgroundImageUrl, 'https://webfiles.clarkcountynv.gov');
+      const newPath = WebImporter.FileUtils.sanitizePath(`/assets/images/news/${u.pathname.split('/').pop()}`);
+      bannerUrl = newPath;
+      results.push({
+        path: newPath,
+        from: u.toString(),
+      });
+    }
+    const publishDateEl = container.querySelector('.news-date');
+    const categoryEl = publishDateEl.querySelector('span.news-category');
+    let category;
+    if (categoryEl) {
+      category = categoryEl.textContent.trim();
+      categoryEl.remove();
+    }
+    const publishDate = publishDateEl.textContent.replace(/-\s+/g, '').trim();
+    const brief = container.querySelector('.news-brief').textContent.trim();
+
+    return {
+      bannerUrl,
+      category,
+      publishDate,
+      brief
+    };
+  }
+};
+
