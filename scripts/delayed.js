@@ -1,5 +1,6 @@
 // add delayed functionality here
 import { loadScript, sampleRUM } from './aem.js';
+import { loadrrule } from '../templates/calendar/calendar.js';
 
 // Core Web Vitals RUM collection
 sampleRUM('cwv');
@@ -76,3 +77,5 @@ function resizeAction() {
 }
 
 window.addEventListener('resize', resizeAction);
+
+loadrrule();

@@ -443,7 +443,10 @@ export default async function decorate(doc) {
   const calDiv = div({ id: 'calendar' });
   $calendarSection.append(calDiv);
   $main.append($calendarSection);
-  loadrrule();
+  // set timer for 3 seconds
+  // setTimeout(() => {
+  //   loadrrule();
+  // }, 3000);
   createModal(doc);
   calendarList.querySelectorAll('.fc-calendar-list-item').forEach((divisionLi, _, parent) => {
     divisionLi.addEventListener('click', () => {
