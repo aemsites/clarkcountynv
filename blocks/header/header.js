@@ -464,7 +464,7 @@ function buildNavSections(navSections) {
   }
 }
 
-const getPageTitle = async (url) => {
+/*const getPageTitle = async (url) => {
   // TODO: check if URL is valid, shouldn't be empty or null or need trailing slash
   const resp = await fetch(url); // invalid URL will return 404 in console
   if (resp.ok) {
@@ -488,7 +488,7 @@ const getAllPathsExceptCurrent = async (paths) => {
     const prevPath = result[i - 1] ? result[i - 1].path : '';
     const path = `${prevPath}/${pathPart}`;
     const url = `${window.location.origin}${path}/`;
-    /* eslint-disable-next-line no-await-in-loop */
+    /!* eslint-disable-next-line no-await-in-loop *!/
     const name = await getPageTitle(url);
     result.push({ path, name, url });
   }
@@ -586,7 +586,7 @@ async function buildBreadcrumbs() {
 
   breadcrumbs.append(ul);
   return breadcrumbs;
-}
+}*/
 
 /**
  * loads and decorates the header, mainly the nav
@@ -728,7 +728,7 @@ export default async function decorate(block) {
   block.append(navWrapper);
 
   if (getMetadata('breadcrumbs').toLowerCase() === 'true') {
-    navWrapper.append(await buildBreadcrumbs());
+    //navWrapper.append(await buildBreadcrumbs());
   }
 
   window.addEventListener('scroll', () => {

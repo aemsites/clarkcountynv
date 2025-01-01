@@ -689,7 +689,7 @@ header .nav-bottom {
 }
 
 /* breadcrumbs */
-header .breadcrumbs {
+/*header .breadcrumbs {
   left: 0;
   right: 0;
   top: 150px;
@@ -698,7 +698,7 @@ header .breadcrumbs {
   overflow: hidden;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
+!* stylelint-disable-next-line no-descending-specificity *!
 header .breadcrumbs ul {
   margin: 0;
   padding: 0;
@@ -708,7 +708,7 @@ header .breadcrumbs ul {
   line-height: 1;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
+!* stylelint-disable-next-line no-descending-specificity *!
 header .breadcrumbs ul li {
   display: inline-block;
   margin: 0;
@@ -727,13 +727,13 @@ header .breadcrumbs ul li:not(:last-of-type)::after {
   right: -15px;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
+!* stylelint-disable-next-line no-descending-specificity *!
 header .breadcrumbs a:any-link {
   color: currentcolor;
   font-weight: normal;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
+!* stylelint-disable-next-line no-descending-specificity *!
 header .breadcrumbs a {
   display:inline-block;
   color:#fff;
@@ -741,10 +741,10 @@ header .breadcrumbs a {
   text-decoration:none;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
+!* stylelint-disable-next-line no-descending-specificity *!
 header .breadcrumbs ul li:first-of-type a {
   color:#FFC7B8;
-}
+}*/
 
 
 @media (width >= 900px) {
