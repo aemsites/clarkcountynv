@@ -348,6 +348,7 @@ body.calendar .event-modal .event-modal-footer button {
 body.calendar main section .fc {
     padding: 0 1vw 5vw;
     font-family: var(--heading-font-family);
+    height: 507px;
 }
 
 body.calendar main section.fc-search {
@@ -417,6 +418,7 @@ body.calendar main section .fc .fc-header-toolbar > .fc-toolbar-chunk:last-child
 @media (width >= 900px) {
     body.calendar main section .fc {
         padding: 0 1vw 5vw;
+        height: 1241px;
     }
     
     body.calendar main section.fc-search {
