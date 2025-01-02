@@ -50,28 +50,16 @@ body.calendar .off {
     opacity: 0;
 }
 
-/* body.calendar main div.spinner {
-    display: flex;
-    background-color: white;
-    transition: opacity 0.75s, visibility 0.75s;
-    position: relative;
-    margin-top: 10vh;
-    left: 45%;
-    margin-bottom: 20vh;
-    z-index: 20000; 
-} */
-
 body.calendar main div.spinner {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 20px;
-    margin-top: 10vh;
-    left: 45%;
-    margin-bottom: 20vh;
     z-index: 20000; 
+    height:250px;
+    margin-top: 100px;
 }
 
 body.calendar main div.spinner div.circle-spinner {
@@ -81,7 +69,7 @@ body.calendar main div.spinner div.circle-spinner {
     border-radius: 50%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     animation: rotate 2s ease-in-out infinite;
 }
 
@@ -423,6 +411,10 @@ body.calendar main section .fc .fc-header-toolbar > .fc-toolbar-chunk:last-child
     
     body.calendar main section.fc-search {
         padding: 5vh 1vw 1vw;
+    }
+
+    body.calendar main div.spinner {
+        height: 1141px;
     }
 
     body.calendar main section.fc-search .fc-calendar-filters ul {
