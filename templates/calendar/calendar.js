@@ -190,7 +190,13 @@ function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
   };
 }
 
+function disableSpinner() {
+  const spinnerDiv = document.querySelector('.spinner');
+  spinnerDiv.style.display = 'none';
+}
+
 function createEvents(eventsList) {
+  disableSpinner();
   let eventDuration = '';
   eventsList.forEach((event) => {
     if (event.daysOfWeek.length > 0) {
@@ -271,11 +277,6 @@ function createCalendar() {
     },
   });
   calendar.render();
-}
-
-function disableSpinner() {
-  const spinnerDiv = document.querySelector('.spinner');
-  spinnerDiv.style.display = 'none';
 }
 
 // Get the featured events for the Calendar panel
@@ -450,8 +451,6 @@ export default async function decorate(doc) {
   const calDiv = div({ id: 'calendar' });
   $calendarSection.append(calDiv);
   $main.append($calendarSection);
-  // diable spinner after 3 seconds
-  setTimeout(disableSpinner, 3300);
   // loadrrule() is loaded after 3 seconds via the delayed.js script for improving page performance
   createModal(doc);
   calendarList.querySelectorAll('.fc-calendar-list-item').forEach((divisionLi, _, parent) => {
