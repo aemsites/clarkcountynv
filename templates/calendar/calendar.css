@@ -50,37 +50,57 @@ body.calendar .off {
     opacity: 0;
 }
 
-body.calendar main div.spinner {
+/* body.calendar main div.spinner {
     display: flex;
     background-color: white;
     transition: opacity 0.75s, visibility 0.75s;
-    position: absolute;
+    position: relative;
+    margin-top: 10vh;
+    left: 45%;
+    margin-bottom: 20vh;
+    z-index: 20000; 
+} */
+
+body.calendar main div.spinner {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
     margin-top: 10vh;
     left: 45%;
     margin-bottom: 20vh;
     z-index: 20000; 
 }
 
-body.calendar main div.spinner::after {
-    content: "";
-    width: 100px;
-    height: 100px;
-    border: 50px solid grey;
-    border-top-color: green;
+body.calendar main div.spinner div.circle-spinner {
+    width: 40px;
+    height: 40px;
+    background: conic-gradient(var(--default-button), var(--default-button), #fff);
     border-radius: 50%;
-    animation-name: loading;
-    animation-duration: 0.75s;
-    animation-timing-function: ease;
-    animation-iteration-count: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: rotate 2s ease-in-out infinite;
 }
 
-@keyframes loading {
-    from{
-        transform: rotate(0turn);
-    } 
+body.calendar main div.spinner div.circle-spinner::after {
+    content: "";
+    background: white;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transform: scale(0.7);
+}
 
-    to{
-        transform: rotate(1turn);
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(720deg);
     }
 }
 

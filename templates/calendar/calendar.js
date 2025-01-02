@@ -438,7 +438,7 @@ export default async function decorate(doc) {
     `;
   const bottomDiv = div({ class: 'fc-calendar-search' });
   bottomDiv.appendChild(searchDiv);
-  const spinnerDiv = div({ class: 'spinner' });
+  const spinnerDiv = div({ class: 'spinner' }, div({ class: 'circle-spinner' }));
   bottomDiv.appendChild(spinnerDiv);
   calendarfilters.appendChild(calendarButton);
   calendarfilters.appendChild(closeButton);
@@ -451,7 +451,7 @@ export default async function decorate(doc) {
   $calendarSection.append(calDiv);
   $main.append($calendarSection);
   // diable spinner after 3 seconds
-  setTimeout(disableSpinner, 3000);
+  setTimeout(disableSpinner, 3300);
   // loadrrule() is loaded after 3 seconds via the delayed.js script for improving page performance
   createModal(doc);
   calendarList.querySelectorAll('.fc-calendar-list-item').forEach((divisionLi, _, parent) => {
