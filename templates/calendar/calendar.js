@@ -273,6 +273,11 @@ function createCalendar() {
   calendar.render();
 }
 
+function disableSpinner() {
+  const spinnerDiv = document.querySelector('.spinner');
+  spinnerDiv.style.display = 'none';
+}
+
 // Get the featured events for the Calendar panel
 export async function fetchFeatured() {
   window.placeholders = window.placeholders || {};
@@ -433,6 +438,8 @@ export default async function decorate(doc) {
     `;
   const bottomDiv = div({ class: 'fc-calendar-search' });
   bottomDiv.appendChild(searchDiv);
+  const spinnerDiv = div({ class: 'spinner' });
+  bottomDiv.appendChild(spinnerDiv);
   calendarfilters.appendChild(calendarButton);
   calendarfilters.appendChild(closeButton);
   calendarfilters.appendChild(calendarList);
@@ -443,6 +450,8 @@ export default async function decorate(doc) {
   const calDiv = div({ id: 'calendar' });
   $calendarSection.append(calDiv);
   $main.append($calendarSection);
+  // diable spinner after 3 seconds
+  setTimeout(disableSpinner, 3000);
   // loadrrule() is loaded after 3 seconds via the delayed.js script for improving page performance
   createModal(doc);
   calendarList.querySelectorAll('.fc-calendar-list-item').forEach((divisionLi, _, parent) => {
