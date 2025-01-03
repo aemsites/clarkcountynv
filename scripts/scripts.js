@@ -178,7 +178,7 @@ function decorateSectionsWithBackgrounds(element) {
 
     if (getMetadata('breadcrumbs').toLowerCase() === 'true') {
       section.insertBefore(await buildBreadcrumbs(), section.firstChild);
-      //section.append(await buildBreadcrumbs());
+      // section.append(await buildBreadcrumbs());
     }
 
     const heading = getMetadata('page-title');

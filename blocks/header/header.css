@@ -689,7 +689,8 @@ header .nav-bottom {
 }
 
 /* breadcrumbs */
-/*header .breadcrumbs {
+
+/* header .breadcrumbs {
   left: 0;
   right: 0;
   top: 150px;
@@ -744,7 +745,7 @@ header .breadcrumbs a {
 !* stylelint-disable-next-line no-descending-specificity *!
 header .breadcrumbs ul li:first-of-type a {
   color:#FFC7B8;
-}*/
+} */
 
 
 @media (width >= 900px) {
