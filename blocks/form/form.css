@@ -709,4 +709,11 @@ main .mainmenu .rightsection .form.block.calculator div.text-wrapper input {
     border-radius: 0;
     margin: 0;
     border-width: 0;
+    pointer-events: none; 
+}
+
+main .mainmenu .rightsection .form.block.calculator div.number-wrapper:has(label[for='taxmultiplier']) input {
+    background: white;
+    border-width: 0;
+    pointer-events: none;
 }
