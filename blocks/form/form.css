@@ -574,8 +574,9 @@ main .form form .horizontal {
     gap: inherit;
 }
 
+/* CSS for Forms RPTT Calculator  */
+
 main .mainmenu .rightsection .form.calculator.block {
-    height: 900px;
     font-size: 11px;
     padding-left: 5px;
     padding-right: 8px;
@@ -585,6 +586,26 @@ main .mainmenu .rightsection .form.calculator.block {
 main .mainmenu .rightsection.form-container:has(.form.calculator.block) {
     padding: 50px 50px 60px;
     margin: 0;
+    width: 437px;
+}
+
+main .mainmenu .rightsection.form-container:has(.form.calculator.block) .default-content-wrapper {
+    width: 437px;
+    margin: 0;
+    font-size: 11px;
+    padding-left: 5px;
+    padding-right: 8px;
+}
+
+main .mainmenu .rightsection.form-container:has(.form.calculator.block) .default-content-wrapper h2 {
+    font-weight: normal;
+    font-size: 21px;
+    font-family: var(--heading-font-family);
+    margin-bottom: 30px;
+}
+
+main .mainmenu .rightsection.form-container:has(.form.calculator.block) .default-content-wrapper img {
+    margin-top: 30px;
 }
 
 main .mainmenu .rightsection .form.block.calculator div.number-wrapper {
@@ -606,9 +627,18 @@ main .mainmenu .rightsection .form.block.calculator div.button-wrapper {
     border-bottom: 2px solid #000;
 }
 
+main .mainmenu .rightsection .form.block.calculator div.text-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0;
+    gap: 2vw;
+}
+
 main .mainmenu .rightsection .form.block.calculator div.button-wrapper::after {
     content: "";
-    width: 1.3vw;
+    width: 1.5vw;
 }
 
 main .mainmenu .rightsection .form.block.calculator div.button-wrapper button {
@@ -635,6 +665,24 @@ main .mainmenu .rightsection .form.block.calculator div.number-wrapper label {
 }
 
 main .mainmenu .rightsection .form.block.calculator div.number-wrapper input {
+    flex-basis: 30%;
+    height: 18px;
+    padding: 10px 14px;
+    border: 1px solid #92ACAF;
+    background-color: #eee;
+    text-align: right;
+    font-size: var(--form-font-size-xxs);
+    border-radius: 0;
+    margin: 0;
+}
+
+main .mainmenu .rightsection .form.block.calculator div.text-wrapper label {
+    flex-basis: 50%;
+    font-size: var(--form-font-size-xxs);
+    color: black;
+}
+
+main .mainmenu .rightsection .form.block.calculator div.text-wrapper input {
     flex-basis: 30%;
     height: 18px;
     padding: 10px 14px;
