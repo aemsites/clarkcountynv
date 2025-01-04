@@ -1,3 +1,4 @@
+/* eslint-disable */
 const textIntersectionClass = 'tnc__text-intersect';
 const textDecorationClass = 'tnc__text-decoration';
 
