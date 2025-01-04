@@ -638,7 +638,7 @@ main .mainmenu .rightsection .form.block.calculator div.text-wrapper {
 
 main .mainmenu .rightsection .form.block.calculator div.button-wrapper::after {
     content: "";
-    width: 1.5vw;
+    width: 1vw;
 }
 
 main .mainmenu .rightsection .form.block.calculator div.button-wrapper button {
@@ -656,6 +656,7 @@ main .mainmenu .rightsection .form.block.calculator div.button-wrapper button {
     vertical-align: top;
     font-family: var(--heading-font-family);
     transition: all .3s;
+    flex-grow: .13;
 }
 
 main .mainmenu .rightsection .form.block.calculator div.number-wrapper label {
@@ -664,8 +665,23 @@ main .mainmenu .rightsection .form.block.calculator div.number-wrapper label {
     color: black;
 }
 
+main .mainmenu .rightsection .form.block.calculator div.number-wrapper label[for='deed'] {
+    position: relative;
+    left: 10px;
+}
+
+main .mainmenu .rightsection .form.block.calculator div.number-wrapper label[for='transfertax'] {
+    position: relative;
+    left: 10px;
+}
+
+main .mainmenu .rightsection .form.block.calculator div.number-wrapper label[for='realpropertyttd'] {
+    position: relative;
+    left: 10px;
+}
+
 main .mainmenu .rightsection .form.block.calculator div.number-wrapper input {
-    flex-basis: 30%;
+    flex-basis: 35%;
     height: 18px;
     padding: 10px 14px;
     border: 1px solid #92ACAF;
@@ -680,16 +696,17 @@ main .mainmenu .rightsection .form.block.calculator div.text-wrapper label {
     flex-basis: 50%;
     font-size: var(--form-font-size-xxs);
     color: black;
+    position: relative;
+    left: 10px;
 }
 
 main .mainmenu .rightsection .form.block.calculator div.text-wrapper input {
-    flex-basis: 30%;
+    flex-basis: 35%;
     height: 18px;
     padding: 10px 14px;
-    border: 1px solid #92ACAF;
-    background-color: #eee;
     text-align: right;
     font-size: var(--form-font-size-xxs);
     border-radius: 0;
     margin: 0;
+    border-width: 0;
 }
