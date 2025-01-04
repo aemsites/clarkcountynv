@@ -14,7 +14,7 @@ function fixPdfLinks(main, results) {
         from: u.toString(),
       });
 
-      a.setAttribute('href', newPath);
+      a.setAttribute('href', new URL(newPath, PREVIEW_DOMAIN));
     }
   });
 }
