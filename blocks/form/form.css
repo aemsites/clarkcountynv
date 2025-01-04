@@ -590,19 +590,52 @@ main .mainmenu .rightsection.form-container:has(.form.calculator.block) {
 main .mainmenu .rightsection .form.block.calculator div.number-wrapper {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     margin: 0;
+    gap: 2vw;
+}
+
+main .mainmenu .rightsection .form.block.calculator div.button-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 0;
+    height: 47px;
+    border-bottom: 2px solid #000;
+}
+
+main .mainmenu .rightsection .form.block.calculator div.button-wrapper::after {
+    content: "";
+    width: 1.3vw;
+}
+
+main .mainmenu .rightsection .form.block.calculator div.button-wrapper button {
+    padding: .375rem .75rem;
+    background: #0094C3;
+    color: #fff;
+    border: 0;
+    border-radius: 0;
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 400;
+    text-decoration: none;
+    cursor: pointer;
+    line-height: 1.5;
+    vertical-align: top;
+    font-family: var(--heading-font-family);
+    transition: all .3s;
 }
 
 main .mainmenu .rightsection .form.block.calculator div.number-wrapper label {
-    flex-basis: 60%;
+    flex-basis: 50%;
     font-size: var(--form-font-size-xxs);
     color: black;
 }
 
 main .mainmenu .rightsection .form.block.calculator div.number-wrapper input {
-    flex-basis: 40%;
+    flex-basis: 30%;
     height: 18px;
     padding: 10px 14px;
     border: 1px solid #92ACAF;
