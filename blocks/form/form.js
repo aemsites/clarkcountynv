@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {
   createButton, createFieldWrapper, createLabel, getHTMLRenderType,
   createHelpText,
@@ -18,7 +19,7 @@ export const DELAY_MS = 0;
 let captchaField;
 let afModule;
 
-const withFieldWrapper = (element) => (fd) => {
+const withFieldWrapper = (element) => (fd) => { // eslint-disable-line
   const wrapper = createFieldWrapper(fd);
   wrapper.append(element(fd));
   return wrapper;
