@@ -598,6 +598,7 @@ main .mainmenu .rightsection .form.block.calculator div.number-wrapper {
 main .mainmenu .rightsection .form.block.calculator div.number-wrapper label {
     flex-basis: 60%;
     font-size: var(--form-font-size-xxs);
+    color: black;
 }
 
 main .mainmenu .rightsection .form.block.calculator div.number-wrapper input {
@@ -609,4 +610,5 @@ main .mainmenu .rightsection .form.block.calculator div.number-wrapper input {
     text-align: right;
     font-size: var(--form-font-size-xxs);
     border-radius: 0;
+    margin: 0;
 }
