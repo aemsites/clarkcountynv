@@ -68,7 +68,7 @@ main .mainmenu .rightsection .form.block.calculator div.text-wrapper {
 
 main .mainmenu .rightsection .form.block.calculator div.button-wrapper::after {
     content: "";
-    width: 1vw;
+    width: .9vw;
 }
 
 main .mainmenu .rightsection .form.block.calculator div.button-wrapper button {
