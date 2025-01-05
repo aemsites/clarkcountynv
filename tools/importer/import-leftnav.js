@@ -1,7 +1,8 @@
 /* global WebImporter */
 import {
   PREVIEW_DOMAIN, createMetadata, getSanitizedPath, getCardsImagePath, fixPdfLinks, fixAudioLinks,
-  getImportPagePath,
+  getImportPagePath, getDesktopBgBlock, getMobileBgBlock, buildSectionMetadata, blockSeparator,
+  setPageTitle,
 } from './utils.js';
 
 function buildLeftNavItems(root) {
@@ -88,6 +89,7 @@ export default {
     const results = [];
 
     const leftNavUlEl = main.querySelector('#flyout');
+    const leftNavHeading = main.querySelector('#flyout-header').textContent.trim();
 
     // use helper method to remove header, footer, etc.
     WebImporter.DOMUtils.remove(main, [
@@ -108,30 +110,10 @@ export default {
     fixPdfLinks(main, results);
     fixAudioLinks(main);
 
-    const blockSeparator = document.createElement('p');
-    blockSeparator.innerText = '---';
+    setPageTitle(main, params);
 
-    const pageTitleEl = main.querySelector('#page-title');
-    const pageHeading = pageTitleEl.textContent.trim();
-    if (pageHeading.length > 0) {
-      params['page-title'] = pageHeading;
-      pageTitleEl.remove();
-    }
-
-    const desktopBlock = WebImporter.Blocks.createBlock(document, {
-      name: 'Section Metadata',
-      cells: [
-        ['Bg-image', `${PREVIEW_DOMAIN}/assets/images/slide1.jpg`],
-        ['Style', 'Desktop, homepage, short'],
-      ],
-    });
-    const mobileBlock = WebImporter.Blocks.createBlock(document, {
-      name: 'Section Metadata',
-      cells: [
-        ['Bg-image', `${PREVIEW_DOMAIN}/assets/images/slide1.jpg`],
-        ['Style', 'Mobile, homepage, short'],
-      ],
-    });
+    const desktopBlock = getDesktopBgBlock();
+    const mobileBlock = getMobileBgBlock();
 
     const nav = buildLeftNavItems(leftNavUlEl);
     const leftSectionBlock = WebImporter.Blocks.createBlock(document, {
@@ -141,36 +123,27 @@ export default {
       ],
     });
     const leftSectionHeading = document.createElement('h2');
-    leftSectionHeading.innerText = pageHeading;
+    leftSectionHeading.innerText = leftNavHeading;
     const subMenuToggleEl = document.createElement('p');
     subMenuToggleEl.innerText = ':submenu: SUB MENU';
-    const leftSectionMetadata = WebImporter.Blocks.createBlock(document, {
-      name: 'Section Metadata',
-      cells: [
-        ['Style', 'leftsection'],
-      ],
-    });
-    const rightSectionMetadata = WebImporter.Blocks.createBlock(document, {
-      name: 'Section Metadata',
-      cells: [
-        ['Style', 'rightsection'],
-      ],
-    });
 
-    main.insertBefore(blockSeparator.cloneNode(true), main.firstChild);
+    const leftSectionMetadata = buildSectionMetadata([['Style', 'leftsection']]);
+    const rightSectionMetadata = buildSectionMetadata([['Style', 'rightsection'], ['temp', 'new']]);
+
+    main.insertBefore(blockSeparator().cloneNode(true), main.firstChild);
     main.insertBefore(leftSectionMetadata, main.firstChild);
     main.insertBefore(leftSectionBlock, main.firstChild);
     main.insertBefore(leftSectionHeading, main.firstChild);
     main.insertBefore(subMenuToggleEl, main.firstChild);
-    main.insertBefore(blockSeparator.cloneNode(true), main.firstChild);
+    main.insertBefore(blockSeparator().cloneNode(true), main.firstChild);
     main.insertBefore(mobileBlock, main.firstChild);
-    main.insertBefore(blockSeparator.cloneNode(true), main.firstChild);
+    main.insertBefore(blockSeparator().cloneNode(true), main.firstChild);
     main.insertBefore(desktopBlock, main.firstChild);
 
     // add right section
     buildCardsBlock(main);
     main.append(rightSectionMetadata);
-    main.append(blockSeparator.cloneNode(true));
+    main.append(blockSeparator().cloneNode(true));
 
     params.template = 'default';
     createMetadata(main, document, params);

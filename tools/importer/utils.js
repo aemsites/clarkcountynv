@@ -84,12 +84,12 @@ export const fetchAndParseDocument = async (url) => {
   return null;
 };
 
-export const fixPdfLinks = (main, results, assetPath = '/assets/documents/') => {
+export const fixPdfLinks = (main, results, assetType = '') => {
   main.querySelectorAll('a').forEach((a) => {
     const href = a.getAttribute('href');
     if (href && href.endsWith('.pdf')) {
       const u = new URL(href, 'https://webfiles.clarkcountynv.gov');
-      const newPath = WebImporter.FileUtils.sanitizePath(`${assetPath}${u.pathname.split('/').pop()}`);
+      const newPath = WebImporter.FileUtils.sanitizePath(`/assets/documents/${assetType ? `/${assetType}/` : ''}${u.pathname.split('/').pop()}`);
       results.push({
         path: newPath,
         from: u.toString(),
@@ -114,4 +114,34 @@ export const getCardsImagePath = (src) => {
   const imagePath = new URL(src).pathname;
   const u = new URL(imagePath, 'https://webfiles.clarkcountynv.gov');
   return u.toString();
+};
+
+export const buildSectionMetadata = (cells) => WebImporter.Blocks.createBlock(document, {
+  name: 'Section Metadata',
+  cells: [...cells],
+});
+
+export const getDesktopBgBlock = (imageName = 'slide1.jpg') => buildSectionMetadata([
+  ['Bg-image', `${PREVIEW_DOMAIN}/assets/images/${imageName}`],
+  ['Style', 'Desktop, homepage, short'],
+]);
+
+export const getMobileBgBlock = (imageName = 'slide1.jpg') => buildSectionMetadata([
+  ['Bg-image', `${PREVIEW_DOMAIN}/assets/images/${imageName}`],
+  ['Style', 'Mobile, homepage, short'],
+]);
+
+export const blockSeparator = () => {
+  const p = document.createElement('p');
+  p.innerText = '---';
+  return p;
+};
+
+export const setPageTitle = (main, params) => {
+  const pageTitleEl = main.querySelector('#page-title');
+  const pageHeading = pageTitleEl.textContent.trim();
+  if (pageHeading.length > 0) {
+    params['page-title'] = pageHeading;
+    pageTitleEl.remove();
+  }
 };
