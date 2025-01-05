@@ -45,9 +45,8 @@ export const fixRelativeLinks = (document) => {
 };
 
 export const getImportPagePath = (url) => {
-  let path = new URL(url).pathname;
-  path = path.endsWith('.php') ? path.slice(0, -4) : path;
-  return WebImporter.FileUtils.sanitizePath(path);
+  const path = new URL(url).pathname;
+  return path.endsWith('.php') ? path.slice(0, -4) : path;
 };
 
 export const getSanitizedPath = (url) => {
@@ -58,13 +57,12 @@ export const getSanitizedPath = (url) => {
   }
 
   const path = u.pathname;
-  const sanitizedPath = WebImporter.FileUtils.sanitizePath(path);
-  if (sanitizedPath.endsWith('index.php')) {
-    return sanitizedPath.slice(0, -9);
-  } if (sanitizedPath.endsWith('.php')) {
-    return sanitizedPath.slice(0, -4);
+  if (path.endsWith('index.php')) {
+    return path.slice(0, -9);
+  } if (path.endsWith('.php')) {
+    return path.slice(0, -4);
   }
-  return sanitizedPath;
+  return path;
 };
 
 export const getPathSegments = (url) => (new URL(url)).pathname.split('/')
