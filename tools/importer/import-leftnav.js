@@ -1,16 +1,16 @@
 /* global WebImporter */
 import {
-  PREVIEW_DOMAIN, createMetadata, getSanitizedPath, getImagePath, fixPdfLinks, fixAudioLinks,
+  PREVIEW_DOMAIN, createMetadata, getSanitizedPath, getCardsImagePath, fixPdfLinks, fixAudioLinks,
   getImportPagePath,
 } from './utils.js';
 
 function buildLeftNavItems(root) {
   const parentUl = document.createElement('ul');
   [...root.children].forEach((li) => {
-    const $a = li.querySelector('a');
+    const a = li.querySelector('a');
     const item = {
-      title: $a.innerText,
-      href: new URL(getSanitizedPath($a.href), PREVIEW_DOMAIN).toString(),
+      title: a.innerText,
+      href: new URL(getSanitizedPath(a.href), PREVIEW_DOMAIN).toString(),
     };
     const listEl = document.createElement('li');
     const aEl = document.createElement('a');
@@ -26,7 +26,7 @@ function buildLeftNavItems(root) {
   return parentUl;
 }
 
-function buildCardsBlock(main, results) {
+function buildCardsBlock(main) {
   const tileBoxEl = main.querySelector('.tiles-box');
   if (!tileBoxEl) {
     return;
@@ -35,7 +35,7 @@ function buildCardsBlock(main, results) {
   [...tileBoxEl.children].forEach((a) => {
     const card = {
       href: new URL(getSanitizedPath(a.href), PREVIEW_DOMAIN).toString(),
-      imageSrc: getImagePath(a.querySelector('.tile-icon-box img').src, results),
+      imageSrc: getCardsImagePath(a.querySelector('.tile-icon-box img').src),
       imageAlt: a.querySelector('.tile-icon-box img').alt,
       title: a.querySelector('.tile-link').innerText.trim(),
       brief: a.querySelector('.tile-brief').innerText.trim(),
@@ -103,7 +103,7 @@ export default {
       '.uwy.userway_p5.utb',
     ]);
 
-    const newPath = getImportPagePath(params.originalURL);
+    const newPagePath = getImportPagePath(params.originalURL);
 
     fixPdfLinks(main, results);
     fixAudioLinks(main);
@@ -168,16 +168,16 @@ export default {
     main.insertBefore(desktopBlock, main.firstChild);
 
     // add right section
-    buildCardsBlock(main, results);
-
-    params.template = 'default';
+    buildCardsBlock(main);
     main.append(rightSectionMetadata);
     main.append(blockSeparator.cloneNode(true));
+
+    params.template = 'default';
     createMetadata(main, document, params);
 
     results.push({
       element: main,
-      path: newPath,
+      path: newPagePath,
     });
     return results;
   },

@@ -70,8 +70,6 @@ export const getSanitizedPath = (url) => {
 export const getPathSegments = (url) => (new URL(url)).pathname.split('/')
   .filter((segment) => segment);
 
-export const normalizeString = (str) => str.toLowerCase().replace(/ /g, '_');
-
 export const fetchAndParseDocument = async (url) => {
   try {
     const response = await fetch(url);
@@ -112,13 +110,8 @@ export const fixAudioLinks = (main) => {
   });
 };
 
-export const getImagePath = (src, results, imgLocation = '/assets/images/departments/') => {
-  const imagePath = new URL(src).pathname.toLowerCase();
+export const getCardsImagePath = (src) => {
+  const imagePath = new URL(src).pathname;
   const u = new URL(imagePath, 'https://webfiles.clarkcountynv.gov');
-  const newPath = WebImporter.FileUtils.sanitizePath(`${imgLocation}${imagePath.split('/').pop()}`);
-  results.push({
-    path: newPath,
-    from: u.toString(),
-  });
-  return new URL(newPath, PREVIEW_DOMAIN);
+  return u.toString();
 };
