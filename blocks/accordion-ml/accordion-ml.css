@@ -60,7 +60,7 @@ details[open] > ul {
 }
 
 .accordion-ml details:not(:has(ul)) summary > div {
-    padding: 7px 60px 15px 0;
+    padding: 7px 7px 15px 0;
     border-bottom: 1px solid rgba(0 0 0 / 15%);
 }
 
