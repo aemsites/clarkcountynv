@@ -4,18 +4,15 @@
     }
 
     details {
-
         summary {
             padding: 11px 55px;
             cursor: pointer;
             position: relative;
             border: 1px solid #ddd;
-            margin: 3px 0 0 0;
-            background: #f9f9f9 url(/icons/arrow-down.png) no-repeat 20px center;
-            -webkit-transition: 0.4s;
-            -moz-transition: 0.4s;
-            -o-transition: 0.4s;
-            -webkit-backface-visibility: hidden;
+            margin: 3px 0 0;
+            background: #f9f9f9 url("/icons/arrow-down.png") no-repeat 20px center;
+            transition: 0.4s;
+            backface-visibility: hidden;
             font-size: 14px;
             line-height: 1.5;
             color: #333;
@@ -43,11 +40,9 @@
     }
 
     details[open] {
-
         summary {
-            background-color: var(--light-color);
             border-color: #C54B2A;
-            background: #C54B2A url(/icons/arrow-up.png) no-repeat 20px center;
+            background: #C54B2A url("/icons/arrow-up.png") no-repeat 20px center;
 
             p {
                 color: #fff;
