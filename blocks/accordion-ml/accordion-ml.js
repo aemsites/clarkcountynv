@@ -7,7 +7,7 @@ import {
 const tracker = [];
 
 // Using the Web Animations API to animate the accordion
-class Accordion {
+export class Accordion {
   constructor(el) {
     // Store the <details> element
     this.el = el;
@@ -27,7 +27,9 @@ class Accordion {
     // Store if the element is expanding
     this.isExpanding = false;
     // Detect user clicks on the summary element
-    this.summary.addEventListener('click', (e) => this.onClick(e));
+    if (this.content) {
+      this.summary.addEventListener('click', (e) => this.onClick(e));
+    }
   }
 
   onClick(e) {
@@ -235,7 +237,7 @@ function decorateDesktopView(mainUL) {
 }
 
 export default function decorate(block) {
-  const mainUL = document.querySelector('ul');
+  const mainUL = block.querySelector('ul');
   const mainULBackUp = mainUL.parentElement.parentElement.cloneNode(true);
   if (getViewPort() === 'mobile') {
     decorateMobileView(mainUL);

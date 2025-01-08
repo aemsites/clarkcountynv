@@ -1,7 +1,8 @@
 /* global WebImporter */
 
 export const PREVIEW_DOMAIN = 'https://main--clarkcountynv--aemsites.aem.page';
-
+const METADATA_ALLOWED_KEYS = ['template', 'breadcrumbs-base', 'page-title', 'breadcrumbs-title-override',
+  'backgroundImageUrl', 'category', 'publishDate', 'title', 'brief', 'bannerUrl'];
 export const createMetadata = (main, document, params) => {
   const meta = {};
 
@@ -19,17 +20,11 @@ export const createMetadata = (main, document, params) => {
     Object.assign(meta, params.preProcessMetadata);
   }
 
-  if (params.template) {
-    meta.template = params.template;
-  }
-
-  if (params['breadcrumbs-base']) {
-    meta['breadcrumbs-base'] = params['breadcrumbs-base'];
-  }
-
-  if (params['page-title']) {
-    meta['page-title'] = params['page-title'];
-  }
+  METADATA_ALLOWED_KEYS.forEach((key) => {
+    if (params[key]) {
+      meta[key] = params[key];
+    }
+  });
 
   const image = document.createElement('img');
   image.src = `${PREVIEW_DOMAIN}/assets/images/logo.png`;
@@ -49,10 +44,44 @@ export const fixRelativeLinks = (document) => {
   });
 };
 
-export const getPathSegments = (url) => (new URL(url)).pathname.split('/')
-  .filter((segment) => segment);
+export const getImportPagePath = (url) => {
+  let path = new URL(url).pathname;
+  path = path.endsWith('.php') ? path.slice(0, -4) : path;
+  const pathParts = path.split('/');
+  pathParts[pathParts.length - 1] = WebImporter.FileUtils.sanitizeFilename(
+    pathParts[pathParts.length - 1],
+  );
+  return pathParts.join('/');
+};
 
-export const normalizeString = (str) => str.toLowerCase().replace(/ /g, '_');
+export const getSanitizedPath = (url) => {
+  if (url && (url.endsWith('.pdf') || url.endsWith('.mp3') || url.endsWith('.mp4') || url.endsWith('.MP3') || url.endsWith('.MP4'))) {
+    return url;
+  }
+
+  let u;
+  try {
+    u = new URL(url);
+    if (u.hostname && u.hostname !== 'www.clarkcountynv.gov' && u.hostname !== 'localhost') {
+      return url;
+    }
+  } catch (error) {
+    // noop
+  }
+  let path = url;
+
+  path = path.endsWith('.php') ? path.slice(0, -4) : path;
+  const pathParts = path.split('/');
+  if (pathParts[pathParts.length - 1] === 'index') {
+    pathParts.pop();
+  }
+  pathParts[pathParts.length - 1] = WebImporter.FileUtils.sanitizeFilename(
+    pathParts[pathParts.length - 1],
+  );
+  return pathParts.join('/');
+};
+
+export const getPathSegments = (url) => (url.split('/').filter((segment) => segment));
 
 export const fetchAndParseDocument = async (url) => {
   try {
@@ -66,4 +95,73 @@ export const fetchAndParseDocument = async (url) => {
     console.error('Error fetching and parsing document:', error);
   }
   return null;
+};
+
+export const fixPdfLinks = (main, results, assetType = '') => {
+  main.querySelectorAll('a').forEach((a) => {
+    const href = a.getAttribute('href');
+    if (href && href.endsWith('.pdf')) {
+      const u = new URL(href, 'https://webfiles.clarkcountynv.gov');
+      const newPath = WebImporter.FileUtils.sanitizePath(`/assets/documents/${assetType ? `/${assetType}/` : ''}${u.pathname.split('/').pop()}`);
+      results.push({
+        path: newPath,
+        from: u.toString(),
+      });
+
+      a.setAttribute('href', new URL(newPath, PREVIEW_DOMAIN));
+    }
+  });
+};
+
+export const fixAudioLinks = (main) => {
+  main.querySelectorAll('a').forEach((a) => {
+    const href = a.getAttribute('href');
+    if (href && (href.toLowerCase().search('.mp3') !== -1 || href.toLowerCase().search('.mp4') !== -1)) {
+      const u = new URL(href, 'https://webfiles.clarkcountynv.gov');
+      a.setAttribute('href', u.toString());
+    }
+  });
+};
+
+export const getCardsImagePath = (src) => {
+  const imagePath = new URL(src).pathname;
+  const u = new URL(imagePath, 'https://webfiles.clarkcountynv.gov');
+  return u.toString();
+};
+
+export const buildSectionMetadata = (cells) => WebImporter.Blocks.createBlock(document, {
+  name: 'Section Metadata',
+  cells: [...cells],
+});
+
+export const getDesktopBgBlock = (imageName = 'slide1.jpg') => buildSectionMetadata([
+  ['Bg-image', `${PREVIEW_DOMAIN}/assets/images/${imageName}`],
+  ['Style', 'Desktop, homepage, short'],
+]);
+
+export const getMobileBgBlock = (imageName = 'slide1.jpg') => buildSectionMetadata([
+  ['Bg-image', `${PREVIEW_DOMAIN}/assets/images/${imageName}`],
+  ['Style', 'Mobile, homepage, short'],
+]);
+
+export const blockSeparator = () => {
+  const p = document.createElement('p');
+  p.innerText = '---';
+  return p;
+};
+
+export const setPageTitle = (main, params) => {
+  const pageTitleEl = main.querySelector('#page-title');
+  const pageHeading = pageTitleEl.textContent.trim();
+  if (pageHeading.length > 0) {
+    params['page-title'] = pageHeading;
+    pageTitleEl.remove();
+  }
+};
+
+export const fixLinks = (main) => {
+  main.querySelectorAll('a').forEach((a) => {
+    const href = getSanitizedPath(a.getAttribute('href'));
+    a.setAttribute('href', href);
+  });
 };
