@@ -239,6 +239,7 @@ function createCalendar() {
       center: '',
       right: 'title',
     },
+    eventDisplay: 'block',
     navLinks: true, // can click day/week names to navigate views
     editable: true,
     selectable: true,
