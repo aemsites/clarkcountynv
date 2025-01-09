@@ -223,6 +223,14 @@ function createEventList(importedData, eventsList) {
     const startTime = event.start.split('T')[1];
     const endTime = event.end.split('T')[1];
     const url = window.location.origin + event.path;
+    // Check for each division and assign the class, color, id to the event
+    divisions.forEach((division) => {
+      if (normalizeString(division.name) === normalizeString(event.divisionname)) {
+        event['division-color'] = division.color;
+        event.divisionid = division.id;
+        event.classNames = normalizeString(event.divisionname);
+      }
+    });
     const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, url, event['division-color'], event.classNames, event.readMore, event.divisionid, event.excludeDates, event.duration);
     eventsList.push(eventObj);
   });
