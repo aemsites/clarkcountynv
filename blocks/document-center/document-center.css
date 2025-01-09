@@ -1,0 +1,118 @@
+.document-center.block {
+    @media (width >= 900px) {
+        padding: 50px 70px 60px 50px;
+    }
+
+    .documents-wrap {
+        padding-top: 20px;
+    }
+
+    details {
+        summary {
+            /*padding: 11px 55px;
+            cursor: pointer;
+            position: relative;
+            border: 1px solid #ddd;
+            margin: 3px 0 0;
+            background: #f9f9f9 url("/icons/arrow-down.png") no-repeat 20px center;
+            transition: 0.4s;
+            backface-visibility: hidden;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+            list-style: none;*/
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid #a0a0a0;
+            background: #fff;
+            position: relative;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 7px rgba(0, 0, 0, .15);
+            p {
+                padding: unset;
+                margin: unset;
+            }
+        }
+
+        .content {
+            padding: 20px 20px 0;
+            margin: 0 0 3px;
+            background: #fff;
+            border: 1px solid #C54B2A;
+            border-top-style: none;
+
+            p {
+                margin: 0 0 20px;
+                font-size: 14px;
+                line-height: 1.5;
+            }
+        }
+    }
+
+    details[open] {
+        summary {
+            border-color: #C54B2A;
+            background: #C54B2A url("/icons/arrow-up.png") no-repeat 20px center;
+
+            p {
+                color: #fff;
+            }
+        }
+
+        .content {
+            border-top: 1px solid #dadada;
+            background-color: var(--background-color);
+        }
+    }
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.document-center details + details {
+    margin-top: 3px;
+}
+
+.search-form {
+
+    label {
+        font-weight: bold;
+        margin-bottom: 10px;
+        display: block;
+
+        h2 {
+            font-size: var(--heading-font-size-l);
+        }
+    }
+
+    input {
+        flex: 1;
+        height: 44px;
+        border-radius: 4px;
+        width: 90%;
+        padding: 10px 129px 10px 14px;
+        font-size: 16px;
+        border: 1px solid #22497d;
+    }
+
+    .search-button {
+        padding: 10px 20px;
+        background: #0094C3;
+        color: #fff;
+        border: 0;
+        border-radius: 0;
+        font-size: 1rem;
+        font-weight: 400;
+        cursor: pointer;
+    }
+
+    .reset-button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #C52E2E;
+        color: #fff;
+        border: 0;
+        border-radius: 0;
+        font-size: 1rem;
+        font-weight: 400;
+        cursor: pointer;
+    }
+}
