@@ -134,32 +134,63 @@ const resultParsers = {
   },
 };
 
+// export async function fetchPlaceholders() {
+//   window.placeholders = window.placeholders || {};
+//   const TRANSLATION_KEY_EVENTS = 'events';
+//   const loaded = window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`];
+
+//   if (!loaded) {
+//     window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`] = new Promise((resolve, reject) => {
+//       fetch('/calendar/featured-events/featured.json?sheet=events')
+//         .then((resp) => {
+//           if (resp.ok) {
+//             return resp.json();
+//           }
+//           throw new Error(`${resp.status}: ${resp.statusText}`);
+//         })
+//         .then((json) => {
+//           window.placeholders[TRANSLATION_KEY_EVENTS] = json;
+//           resolve();
+//         }).catch((error) => {
+//         // Error While Loading Placeholders
+//           window.placeholders[TRANSLATION_KEY_EVENTS] = {};
+//           reject(error);
+//         });
+//     });
+//   }
+//   await window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`];
+//   return [window.placeholders[TRANSLATION_KEY_EVENTS]];
+// }
+
+// Fetching events from individual calendar sheets
 export async function fetchPlaceholders() {
   window.placeholders = window.placeholders || {};
-  const TRANSLATION_KEY_EVENTS = 'events';
-  const loaded = window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`];
+  const KEY = 'events';
+  const loaded = window.placeholders[`${KEY}-loaded`];
 
   if (!loaded) {
-    window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`] = new Promise((resolve, reject) => {
-      fetch('/calendar/featured-events/featured.json?sheet=events')
+    window.placeholders[`${KEY}-loaded`] = new Promise((resolve) => {
+      fetch(`/calendar/${KEY}.json?sheet=default&sheet=divisions`)
         .then((resp) => {
           if (resp.ok) {
             return resp.json();
           }
-          throw new Error(`${resp.status}: ${resp.statusText}`);
+          return {};
         })
         .then((json) => {
-          window.placeholders[TRANSLATION_KEY_EVENTS] = json;
-          resolve();
-        }).catch((error) => {
-        // Error While Loading Placeholders
-          window.placeholders[TRANSLATION_KEY_EVENTS] = {};
-          reject(error);
+          window.placeholders.calendarevents = json.default;
+          window.placeholders.divisions = json.divisions;
+          resolve(window.placeholders[KEY]);
+        })
+        .catch(() => {
+          // error loading placeholders
+          window.placeholders[KEY] = {};
+          resolve(window.placeholders[KEY]);
         });
     });
   }
-  await window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`];
-  return [window.placeholders[TRANSLATION_KEY_EVENTS]];
+  await window.placeholders[`${KEY}-loaded`];
+  return window.placeholders;
 }
 
 function createModal(block) {
@@ -177,9 +208,16 @@ function createModal(block) {
   block.append(modal);
 }
 
+function priorDate(date) {
+  const today = new Date();
+  const eventDate = new Date(date);
+  return eventDate < today;
+}
+
 export default async function decorate(block) {
   const placeholders = await fetchPlaceholders();
-  const yesArray = placeholders[0].data.filter((item) => item.featured === 'yes');
+  const yesArray = placeholders.calendarevents.data.filter((item) => item.featured === 'yes' && !priorDate(item.start));
+  console.log(yesArray);
   const blockContents = resultParsers.columns(yesArray);
   const builtBlock = buildBlock('columns', blockContents);
   block.appendChild(builtBlock);
