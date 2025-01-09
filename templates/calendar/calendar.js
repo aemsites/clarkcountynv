@@ -179,6 +179,7 @@ function createEvents(eventsList) {
           backgroundColor: event.backgroundColor,
           classNames: event.classNames,
           groupId: event.divisionid,
+          borderColor: event.backgroundColor,
           extendedProps: { readMore: event.readMore },
         });
       } else {
@@ -196,6 +197,7 @@ function createEvents(eventsList) {
           backgroundColor: event.backgroundColor,
           classNames: event.classNames,
           groupId: event.divisionid,
+          borderColor: event.backgroundColor,
           extendedProps: { readMore: event.readMore },
         });
       }
@@ -210,6 +212,7 @@ function createEvents(eventsList) {
         classNames: event.classNames,
         groupId: event.divisionid,
         extendedProps: { readMore: event.readMore },
+        borderColor: event.backgroundColor,
       });
     }
   });
