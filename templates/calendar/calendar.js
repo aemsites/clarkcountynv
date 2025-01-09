@@ -323,7 +323,6 @@ async function initializeCalendar() {
         } else {
           // eslint-disable-next-line max-len
           const filterData = importedData.filter((event) => normalizeString(event.divisionname) === normalizeString(division.name));
-          console.log(filterData);
           createEventList(filterData, eventsList);
         }
       }
@@ -359,10 +358,10 @@ export function loadrrule() {
 
 function filterEvents(divisionId) {
   if (divisionId === '1') {
-    window.location.href = `http://${window.location.host}/calendar`;
+    window.location.href = `https://${window.location.host}/calendar`;
     return;
   }
-  window.location.href = `http://${window.location.host}/calendar/${normalizeString(divisions[divisionId - 1].name)}/`;
+  window.location.href = `https://${window.location.host}/calendar/${normalizeString(divisions[divisionId - 1].name)}/`;
 }
 
 function searchItems(searchTerm) {
@@ -456,10 +455,9 @@ export default async function decorate(doc) {
               liele.style.backgroundColor = division.color;
               liele.querySelector('.fc-calendar-list-button').style.backgroundColor = division.color;
               if (divisionId === '2') {
-                window.location.href = `http://${window.location.host}/calendar/${normalizeString(divisions[divisionId - 1].name)}/`;
+                window.location.href = `https://${window.location.host}/calendar/${normalizeString(divisions[divisionId - 1].name)}/`;
                 getFeaturedEvents();
               } else {
-                console.log(divisionId);
                 filterEvents(divisionId);
               }
             }
