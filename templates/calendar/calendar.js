@@ -163,7 +163,9 @@ function createEvents(eventsList) {
         eventDuration = '01:00';
       }
       if (event.excludeDates && event.excludeDates.length > 1) {
-        event.excludeDates = event.excludeDates.split(',').map((date) => `${date}T${event.startTime}`);
+        if (typeof event.excludeDates === 'string') {
+          event.excludeDates = event.excludeDates.split(',').map((date) => `${date}T${event.startTime}`);
+        }
         calendar.addEvent({
           title: event.title,
           allDay: false,
@@ -219,6 +221,7 @@ function createEvents(eventsList) {
 }
 
 function createEventList(importedData, eventsList) {
+  console.log(importedData);
   importedData.forEach((event) => {
     const startTime = event.start.split('T')[1];
     const endTime = event.end.split('T')[1];
@@ -231,9 +234,12 @@ function createEventList(importedData, eventsList) {
         event.classNames = normalizeString(event.divisionname);
       }
     });
+    console.log(event.excludeDates);
     const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, url, event['division-color'], event.classNames, event.readMore, event.divisionid, event.excludeDates, event.duration);
+    console.log(eventObj);
     eventsList.push(eventObj);
   });
+  console.log(eventsList);
   createEvents(eventsList);
   return eventsList;
 }
@@ -356,10 +362,10 @@ export function loadrrule() {
 
 function filterEvents(divisionId) {
   if (divisionId === '1') {
-    window.location.href = `https://${window.location.host}/calendar`;
+    window.location.href = `http://${window.location.host}/calendar`;
     return;
   }
-  window.location.href = `https://${window.location.host}/calendar/${normalizeString(divisions[divisionId - 1].name)}/`;
+  window.location.href = `http://${window.location.host}/calendar/${normalizeString(divisions[divisionId - 1].name)}/`;
 }
 
 function searchItems(searchTerm) {
@@ -392,6 +398,7 @@ function implementSearch(searchDiv) {
     const rawdata = response.value;
     const tokenizedSearchWords = searchItems(rawdata);
     const searchResults = filterMatches(tokenizedSearchWords);
+    console.log(searchResults);
     calendar.destroy();
     createCalendar();
     createEvents(searchResults);
@@ -453,7 +460,7 @@ export default async function decorate(doc) {
               liele.style.backgroundColor = division.color;
               liele.querySelector('.fc-calendar-list-button').style.backgroundColor = division.color;
               if (divisionId === '2') {
-                window.location.href = `https://${window.location.host}/calendar/${normalizeString(divisions[divisionId - 1].name)}/`;
+                window.location.href = `http://${window.location.host}/calendar/${normalizeString(divisions[divisionId - 1].name)}/`;
                 getFeaturedEvents();
               } else {
                 filterEvents(divisionId);
