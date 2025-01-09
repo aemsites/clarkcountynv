@@ -221,7 +221,6 @@ function createEvents(eventsList) {
 }
 
 function createEventList(importedData, eventsList) {
-  console.log(importedData);
   importedData.forEach((event) => {
     const startTime = event.start.split('T')[1];
     const endTime = event.end.split('T')[1];
@@ -234,12 +233,9 @@ function createEventList(importedData, eventsList) {
         event.classNames = normalizeString(event.divisionname);
       }
     });
-    console.log(event.excludeDates);
     const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, url, event['division-color'], event.classNames, event.readMore, event.divisionid, event.excludeDates, event.duration);
-    console.log(eventObj);
     eventsList.push(eventObj);
   });
-  console.log(eventsList);
   createEvents(eventsList);
   return eventsList;
 }
@@ -326,7 +322,8 @@ async function initializeCalendar() {
           getFeaturedEvents();
         } else {
           // eslint-disable-next-line max-len
-          const filterData = importedData.filter((event) => event.divisionid === String(division.id));
+          const filterData = importedData.filter((event) => normalizeString(event.divisionname) === normalizeString(division.name));
+          console.log(filterData);
           createEventList(filterData, eventsList);
         }
       }
@@ -398,7 +395,6 @@ function implementSearch(searchDiv) {
     const rawdata = response.value;
     const tokenizedSearchWords = searchItems(rawdata);
     const searchResults = filterMatches(tokenizedSearchWords);
-    console.log(searchResults);
     calendar.destroy();
     createCalendar();
     createEvents(searchResults);
@@ -463,6 +459,7 @@ export default async function decorate(doc) {
                 window.location.href = `http://${window.location.host}/calendar/${normalizeString(divisions[divisionId - 1].name)}/`;
                 getFeaturedEvents();
               } else {
+                console.log(divisionId);
                 filterEvents(divisionId);
               }
             }
