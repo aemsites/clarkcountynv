@@ -270,38 +270,9 @@ function createCalendar() {
   calendar.render();
 }
 
-// Get the featured events for the Calendar panel
-export async function fetchFeatured() {
-  window.placeholders = window.placeholders || {};
-  const TRANSLATION_KEY_EVENTS = 'featured-events';
-  const loaded = window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`];
-
-  if (!loaded) {
-    window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`] = new Promise((resolve, reject) => {
-      fetch('/calendar/featured-events/featured.json?sheet=events')
-        .then((resp) => {
-          if (resp.ok) {
-            return resp.json();
-          }
-          throw new Error(`${resp.status}: ${resp.statusText}`);
-        })
-        .then((json) => {
-          window.placeholders[TRANSLATION_KEY_EVENTS] = json;
-          resolve();
-        }).catch((error) => {
-        // Error While Loading Placeholders
-          window.placeholders[TRANSLATION_KEY_EVENTS] = {};
-          reject(error);
-        });
-    });
-  }
-  await window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`];
-  return [window.placeholders[TRANSLATION_KEY_EVENTS]];
-}
-
 async function getFeaturedEvents() {
-  const placeholdersfeatured = await fetchFeatured();
-  const yesArray = placeholdersfeatured[0].data.filter((item) => item.featured === 'yes');
+  const placeholdersfeatured = placeholders.calendarevents;
+  const yesArray = placeholdersfeatured.data.filter((item) => item.featured === 'yes');
   calendar.destroy();
   createCalendar();
   const eventsList = [];
