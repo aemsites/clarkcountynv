@@ -1,8 +1,9 @@
 /* global WebImporter */
+/* eslint-disable no-console */
 import {
   PREVIEW_DOMAIN, createMetadata, getSanitizedPath, getCardsImagePath, fixPdfLinks, fixAudioLinks,
   getImportPagePath, getDesktopBgBlock, getMobileBgBlock, buildSectionMetadata, blockSeparator,
-  setPageTitle, fixLinks, getPathSegments,
+  setPageTitle, fixLinks, getPathSegments, getPreviewDomainLink,
 } from './utils.js';
 
 function buildLeftNavItems(root) {
@@ -25,6 +26,16 @@ function buildLeftNavItems(root) {
     }
   });
   return parentUl;
+}
+
+function buildLeftNavAccordionBlock(asideEl) {
+  const nav = buildLeftNavItems(asideEl.querySelector('#flyout'));
+  return WebImporter.Blocks.createBlock(document, {
+    name: 'Accordion-ml ',
+    cells: [
+      [nav],
+    ],
+  });
 }
 
 function buildCardsBlock(main) {
@@ -144,6 +155,130 @@ function buildNewsletterAccordion(main) {
   documentCenterEl.replaceWith(docCenterBlock);
 }
 
+function buildLeftnavContactCardsBlock(aside, infoTypeSelector = '.freeform-contact') {
+  if (aside.querySelector(`${infoTypeSelector}.no-content`) != null) {
+    return null;
+  }
+
+  const infoEl = aside.querySelector(infoTypeSelector);
+  const container = document.createElement('div');
+  if (!infoEl) {
+    return null;
+  }
+  const infoTitleEl = infoEl.querySelector('h2');
+  const heading = document.createElement('h2');
+  heading.innerText = infoTitleEl.textContent.trim();
+  container.append(heading);
+  infoTitleEl.remove();
+
+  infoEl.querySelectorAll('span').forEach((span) => {
+    const p = document.createElement('p');
+    p.innerHTML = span.innerHTML;
+    container.append(p);
+  });
+
+  return WebImporter.Blocks.createBlock(document, {
+    name: 'leftnav-info ',
+    cells: [
+      [container],
+    ],
+  });
+}
+
+function buildLeftnavHourCardsBlock(aside, infoTypeSelector = '.department-hours') {
+  if (aside.querySelector(infoTypeSelector).parentElement.classList.contains('no-content')) {
+    return null;
+  }
+
+  const infoEl = aside.querySelector(infoTypeSelector);
+  const container = document.createElement('div');
+  if (!infoEl) {
+    return null;
+  }
+  const infoTitleEl = infoEl.querySelector('h2');
+  const heading = document.createElement('h2');
+  heading.innerText = infoTitleEl.textContent.trim();
+  container.append(heading);
+  infoTitleEl.remove();
+
+  const { childNodes } = infoEl;
+  Array.from(childNodes)
+    .filter((node) => node.textContent.trim() === '')
+    .forEach((node) => node.remove());
+
+  for (let i = 0; i < childNodes.length;) {
+    if (childNodes[i].nodeName.toLowerCase() === 'strong') {
+      const strongPrefix = document.createElement('strong');
+      strongPrefix.innerText = childNodes[i].textContent.trim();
+      const p = document.createElement('p');
+      p.append(strongPrefix);
+      if (childNodes[i + 1].nodeName.toLowerCase() === '#text') {
+        p.append(` ${childNodes[i + 1].textContent.trim()}`);
+      }
+      container.append(p);
+      i += 2;
+    } else {
+      console.log(`An unhandled tag encountered inside leftNav - ${childNodes[i].nodeName}`);
+      i += 1;
+    }
+  }
+  return WebImporter.Blocks.createBlock(document, {
+    name: 'leftnav-info ',
+    cells: [
+      [container],
+    ],
+  });
+}
+
+function buildIframeForm(main) {
+  const iframeEl = main.querySelector('#post iframe');
+  if (iframeEl) {
+    const iframeLink = iframeEl.src;
+    const link = document.createElement('a');
+    link.href = iframeLink;
+    const block = WebImporter.Blocks.createBlock(document, {
+      name: 'embed',
+      cells: [[iframeLink]],
+    });
+    iframeEl.replaceWith(block);
+  }
+  console.log('Iframe form not found');
+}
+
+function buildCardsTilesBlock(main) {
+  const tilesEl = main.querySelector('#visitors-tiles');
+  if (tilesEl) {
+    const cells = [];
+    [...tilesEl.children].forEach((tile) => {
+      const link = getPreviewDomainLink(tile.href);
+      const title = tile.querySelector('.visitors-tile-text').textContent.trim();
+
+      const imgSrc = tile.querySelector('.visitors-tile-banner').style['background-image'];
+      const urlMatch = imgSrc ? imgSrc.match(/url\(["']?(.*?)["']?\)/) : '';
+      const url = urlMatch ? urlMatch[1] : null;
+
+      const container = document.createElement('div');
+      const aEl = document.createElement('a');
+      aEl.href = link;
+      aEl.innerText = title;
+      container.append(aEl);
+
+      const img = document.createElement('img');
+      img.src = new URL(url, 'https://webfiles.clarkcountynv.gov').toString();
+      container.append(img);
+
+      cells.push([container]);
+    });
+    const block = WebImporter.Blocks.createBlock(document, {
+      name: 'cards (tiles)',
+      cells: [...cells],
+    });
+    tilesEl.replaceWith(block);
+  } else {
+    console.log('Visitors tiles cards not found');
+  }
+}
+
 export default {
 
   transform: ({
@@ -153,8 +288,8 @@ export default {
     const main = document.body;
     const results = [];
 
-    const leftNavUlEl = main.querySelector('#flyout');
-    const leftNavHeading = main.querySelector('#flyout-header').textContent.trim();
+    const leftNavAsideEl = main.querySelector('aside#freeform-left-box');
+    const leftNavHeading = leftNavAsideEl.querySelector('#flyout-header').textContent.trim();
 
     // use helper method to remove header, footer, etc.
     WebImporter.DOMUtils.remove(main, [
@@ -195,23 +330,26 @@ export default {
     const desktopBlock = getDesktopBgBlock();
     const mobileBlock = getMobileBgBlock();
 
-    const nav = buildLeftNavItems(leftNavUlEl);
-    const leftSectionBlock = WebImporter.Blocks.createBlock(document, {
-      name: 'Accordion-ml ',
-      cells: [
-        [nav],
-      ],
-    });
+    const leftSectionBlock = buildLeftNavAccordionBlock(leftNavAsideEl);
     const leftSectionHeading = document.createElement('h2');
     leftSectionHeading.innerText = leftNavHeading;
     const subMenuToggleEl = document.createElement('p');
     subMenuToggleEl.innerText = ':submenu: SUB MENU';
 
+    const contactUsLeftNavCard = buildLeftnavContactCardsBlock(leftNavAsideEl);
+    const businessHoursLeftNavCard = buildLeftnavHourCardsBlock(leftNavAsideEl);
+
     const leftSectionMetadata = buildSectionMetadata([['Style', 'leftsection']]);
-    const rightSectionMetadata = buildSectionMetadata([['Style', 'rightsection'], ['temp', 'new']]);
+    const rightSectionMetadata = buildSectionMetadata([['Style', 'rightsection']]);
 
     main.insertBefore(blockSeparator().cloneNode(true), main.firstChild);
     main.insertBefore(leftSectionMetadata, main.firstChild);
+    if (businessHoursLeftNavCard != null) {
+      main.insertBefore(businessHoursLeftNavCard, main.firstChild);
+    }
+    if (contactUsLeftNavCard != null) {
+      main.insertBefore(contactUsLeftNavCard, main.firstChild);
+    }
     main.insertBefore(leftSectionBlock, main.firstChild);
     main.insertBefore(leftSectionHeading, main.firstChild);
     main.insertBefore(subMenuToggleEl, main.firstChild);
@@ -224,6 +362,8 @@ export default {
     buildCardsBlock(main);
     buildFaqAccordion(main);
     buildNewsletterAccordion(main, results);
+    buildIframeForm(main);
+    buildCardsTilesBlock(main);
     fixLinks(main);
     main.append(rightSectionMetadata);
     main.append(blockSeparator().cloneNode(true));
