@@ -101,7 +101,7 @@
   }
 }
 
-.cards.focus.block{
+.cards.tiles.block{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -159,7 +159,7 @@
 }
 
 @media screen and (width <= 900px) {
-    .cards.focus.block li {
+    .cards.tiles.block li {
         flex: 1 1 calc(100% - 20px);
         max-width: calc(100% - 20px);
         width: 100%;
@@ -167,7 +167,7 @@
 }
 
 @media screen and (width >= 900px) {
-    .cards.focus.block li {
+    .cards.tiles.block li {
         flex: 1 1 calc(50% - 20px);
         max-width: calc(50% - 20px);
     }

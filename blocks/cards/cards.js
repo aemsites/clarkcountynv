@@ -1,6 +1,6 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import {
-  ul, li, a, p, div,
+  ul, li, a, div,
 } from '../../scripts/dom-helpers.js';
 
 export default function decorate(block) {
@@ -23,7 +23,7 @@ export default function decorate(block) {
         }
       });
       $ul.append(aEle);
-    } else if (block.classList.contains('focus')) {
+    } else if (block.classList.contains('tiles')) {
       const $a = row.querySelector('a');
       let url;
       if ($a) {
