@@ -116,6 +116,16 @@ pre {
   overflow: scroll;
 }
 
+.section.biography img {
+  padding-right: 10px;
+  width: 265px;
+  float: left;
+}
+
+.section.biography p:not(:first-child) {
+  margin-top: 4em;
+}
+
 main pre {
   background-color: var(--light-color);
   padding: 1em;
