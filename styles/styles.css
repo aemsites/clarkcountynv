@@ -363,6 +363,36 @@ main .section.highlight {
   background-color: var(--light-color);
 }
 
+body > main .section.rightsection.biography {
+  img {
+    padding-right: 10px;
+    width: 265px;
+    float: left;
+  }
+
+  h4 + p {
+    margin-top: 0 !important;
+  }
+
+  p:not(:first-child) {
+    margin-top: 4em;
+  }
+
+  h4 {
+    font: 500 35px 'Neue Montreal',sans-serif;
+    color: #000;
+  }
+}
+
+.team .icon {
+    line-height: inherit;
+
+    /* stylelint-disable no-descending-specificity */
+    img {
+        margin-block: -5px;
+    }
+}
+
 main > div.mobile.with-background-image {
   height: 700px;
 }
@@ -459,7 +489,7 @@ main .section.details-404 > .default-content-wrapper {
   main > div.section.desktop.with-background-image.short {
     height: 400px;
   }
-  
+
    /* widget for share */
   .floating-share-btn {
     position:fixed;
@@ -480,7 +510,7 @@ main .section.details-404 > .default-content-wrapper {
   .floating-share-btn-home {
     background:#0094C3!important;
   }
-  
+
   .floating-share-btn span {
     width: 18px;
     display:block;
@@ -488,7 +518,7 @@ main .section.details-404 > .default-content-wrapper {
     font-size:12px;
     line-height:1;
   }
-  
+
   .share-float{
     margin-top:12px;
   }
