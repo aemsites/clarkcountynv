@@ -25,7 +25,6 @@
   --original-height: y;
   --tab-height: z;
   --default-button: #0094C3;
-  --no-button-link: #007bff;
 
   /* fonts */
   --body-font-family: 'Open Sans',sans-serif;
@@ -128,7 +127,7 @@ main pre {
 /* links */
 a:any-link {
   color: var(--link-color);
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 a:hover {
@@ -363,35 +362,16 @@ main .section.highlight {
   background-color: var(--light-color);
 }
 
-body > main .section.rightsection.biography {
-  img {
-    padding-right: 10px;
-    width: 265px;
-    float: left;
-  }
-
-  h4 + p {
-    margin-top: 0 !important;
-  }
-
-  p:not(:first-child) {
-    margin-top: 4em;
-  }
-
-  h4 {
-    font: 500 35px 'Neue Montreal',sans-serif;
-    color: #000;
-  }
+body > main .section.rightsection.biography img {
+  padding-right: 10px;
+  width: 265px;
+  float: left;
 }
 
-.team .icon {
-    line-height: inherit;
-
-    /* stylelint-disable no-descending-specificity */
-    img {
-        margin-block: -5px;
-    }
+body > main .section.rightsection.biography p:not(:first-child) {
+  margin-top: 4em;
 }
+
 
 main > div.mobile.with-background-image {
   height: 700px;
@@ -571,7 +551,7 @@ main .section.details-404 > .default-content-wrapper {
   .coulums-2-cols strong {
     font: 500 45px 'Neue Montreal', sans-serif;
   }
-
+/* stylelint-disable no-descending-specificity */
   .columns > div > div.column1 {
     display: inline-block;
     width: 50%;
