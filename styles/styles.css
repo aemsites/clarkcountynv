@@ -571,7 +571,7 @@ main .section.details-404 > .default-content-wrapper {
   .coulums-2-cols strong {
     font: 500 45px 'Neue Montreal', sans-serif;
   }
-/* stylelint-disable no-descending-specificity */
+
   .columns > div > div.column1 {
     display: inline-block;
     width: 50%;
