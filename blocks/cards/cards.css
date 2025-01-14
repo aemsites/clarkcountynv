@@ -236,15 +236,6 @@
     white-space: normal;
 }
 
-.team .icon {
-    line-height: inherit;
-
-    /* stylelint-disable no-descending-specificity */
-    img {
-        margin-block: -5px;
-    }
-}
-
 .fa-phone::before {
     content: "\f095"
 }
