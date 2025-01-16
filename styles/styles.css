@@ -738,3 +738,7 @@ main > div.section.newsdetail > .default-content-wrapper > p {
         text-decoration:none;
     }
 }
+
+.default-no-padding-bottom .default-content-wrapper {
+    padding-bottom: unset !important;
+}
