@@ -1,6 +1,7 @@
 .table {
   width: 100%;
   overflow-x: auto;
+  padding: 0px 50px 50px 50px;
 }
 
 .table table {
@@ -66,37 +67,59 @@
   border: 1px solid #dadada;
 }
 
-.table.no-header.no-border table {
+.table.no-border table {
 
     width: 100%;
-
+    padding-top: 0px;
     tbody tr {
 
         border-collapse: collapse;
         border: none;
-        height: 327px;
 
-        td p {
-            margin: 0 0 30px 0;
-        }
-        td:nth-child(1) {
-            width: 29.3321%;
-            height: 193px;
-            text-align: left;
-            vertical-align: top;
-
-            img {
-                max-width: 100%;
-                height: auto;
-                padding-top: 30px;
-            }
-        }
-
-        td:nth-child(2) {
-            width: 70.5521%;
+        td {
             text-align: left;
             vertical-align: middle;
-            height: 193px;
+            p {
+                margin: 0 0 30px 0;
+
+                img {
+                    max-width: 100%;
+                    height: auto;
+                    padding-top: 30px;
+                }
+            }
+        }
+    }
+}
+
+.table.type2border {
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        border: 1px solid #e67e23;
+
+        tr {
+            border-collapse: collapse;
+            border-bottom: 1px solid #e67e23;
+            border-top-color: #e67e23 !important;
+
+            th, td {
+                padding: 8px;
+                text-align: left;
+
+                p {
+                    margin-top: 25px;
+                    margin-bottom: 25px;
+                }
+            }
+        }
+        tr:last-child {
+            border-bottom: none;
+        }
+
+        td:has(picture) {
+            width: 25%;
         }
     }
 }
