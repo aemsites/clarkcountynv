@@ -411,7 +411,7 @@ export default {
     const leftNavAsideEl = main.querySelector('aside#freeform-left-box');
     const breadcrumbsEl = main.querySelector('#breadcrumbs');
 
-    if(breadcrumbsEl) {
+    if (breadcrumbsEl) {
       printBreadcrumbUrl(breadcrumbsEl, results, newPagePath);
     }
 
