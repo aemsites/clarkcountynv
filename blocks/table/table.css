@@ -65,3 +65,38 @@
 .table.bordered table td {
   border: 1px solid #dadada;
 }
+
+.table.no-header.no-border table {
+
+    width: 100%;
+
+    tbody tr {
+
+        border-collapse: collapse;
+        border: none;
+        height: 327px;
+
+        td p {
+            margin: 0 0 30px 0;
+        }
+        td:nth-child(1) {
+            width: 29.3321%;
+            height: 193px;
+            text-align: left;
+            vertical-align: top;
+
+            img {
+                max-width: 100%;
+                height: auto;
+                padding-top: 30px;
+            }
+        }
+
+        td:nth-child(2) {
+            width: 70.5521%;
+            text-align: left;
+            vertical-align: middle;
+            height: 193px;
+        }
+    }
+}
