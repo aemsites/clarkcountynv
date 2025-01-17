@@ -467,7 +467,6 @@ main .section.details-404 > .default-content-wrapper {
   /* /residents/community_housing_fund/ pages */
   div.section.desktop.with-background-image.image-overlay {
       background-color: #bbb7b7;
-
       img {
           mix-blend-mode: multiply;
       }
