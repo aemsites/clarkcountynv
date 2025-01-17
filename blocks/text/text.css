@@ -14,7 +14,6 @@ main .block.text.stacked-left-align {
     padding-left: 50px;
   }
 
-  main .block.text.mini.center p {
+  main .block.text.mini p {
     font-size: 12px;
-    text-align: center;
   }
