@@ -3,20 +3,19 @@ import {
   ul, li, a, div, img, h4, i, br,
 } from '../../scripts/dom-helpers.js';
 
-let cardImage =  '';
+let cardImage = '';
 
 export default function decorate(block) {
   /* change to ul, li */
   const $ul = ul();
   [...block.children].forEach((row) => {
-    [...row.children].forEach((col, i) => {
-        if (i === 0) {
-          cardImage = createOptimizedPicture(col.querySelector('a'));
-          col.textContent = ''
-          col.append(cardImage);
-        }
+    [...row.children].forEach((col, index) => {
+      if (index === 0) {
+        cardImage = createOptimizedPicture(col.querySelector('a'));
+        col.textContent = '';
+        col.append(cardImage);
+      }
     });
-    
     if (block.classList.contains('clickable') || block.classList.contains('clickable-images')) {
       const $li = li();
       const aEle = a();
