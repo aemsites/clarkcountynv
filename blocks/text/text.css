@@ -1,4 +1,8 @@
 main .block.text {
+    margin-top: 50px;
+    margin-left: 50px;
+    margin-right: 70px;
+
     &.half-width-center {
         margin: auto;
         width: 50%;
@@ -25,5 +29,9 @@ main .block.text {
 
     &.color-orange p{
         color: #ba372a;
+    }
+
+    &.img-medium img{
+        width: 50%;
     }
 }
