@@ -11,7 +11,7 @@ export default function decorate(block) {
   [...block.children].forEach((row) => {
     [...row.children].forEach((col, index) => {
       if (index === 0) {
-        cardImage = createOptimizedPicture(col.querySelector('a'));
+        cardImage = createOptimizedPicture(col.querySelector('a').href);
         col.textContent = '';
         col.append(cardImage);
       }
