@@ -6,7 +6,7 @@
 
 import { Accordion } from '../accordion-ml/accordion-ml.js';
 import {
-  button, details, div, h2, input, label, li, small, span, summary, ul,
+  button, details, div, h2, input, label, small, span, summary, ul,
 } from '../../scripts/dom-helpers.js';
 
 let oldSearch = '';
@@ -53,7 +53,7 @@ function searchDocuments(searchValue) {
     if (aEl) {
       fileText = aEl.textContent.toUpperCase();
       if (fileText.indexOf(searchValue) >= 0) {
-        results.push(file);
+        results.push(file.closest('li'));
         return;
       }
     }
@@ -61,7 +61,7 @@ function searchDocuments(searchValue) {
     if (spanEl) {
       fileText = spanEl.textContent.toUpperCase();
       if (fileText.indexOf(searchValue) >= 0) {
-        results.push(file);
+        results.push(file.closest('li'));
       }
     }
   });
@@ -75,7 +75,7 @@ function searchDocuments(searchValue) {
   } else {
     const ulEl = ul({ class: 'search-result-files' });
     results.forEach((result) => {
-      ulEl.append(li({ class: 'search-result-file' }, result.cloneNode(true)));
+      ulEl.append(result.cloneNode(true));
     });
     searchResults.append(ulEl);
   }
@@ -141,7 +141,7 @@ export default function decorate(block) {
         const [fileName] = fullFileTitle.split('[description=');
         fileLink.textContent = fileName;
       }
-      fileLink.replaceWith(div({ class: 'file-item' }, fileLink.cloneNode(true), span(fileDescription)));
+      fileLink.replaceWith(div({ class: 'file-item' }, fileLink.cloneNode(true), span({ class: 'doc-file-desc' }, fileDescription)));
     });
 
     // decorate accordion item
