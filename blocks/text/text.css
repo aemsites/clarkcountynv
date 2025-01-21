@@ -1,8 +1,4 @@
 main .block.text {
-    margin-top: 50px;
-    margin-left: 50px;
-    margin-right: 70px;
-
     &.half-width-center {
         margin: auto;
         width: 50%;
