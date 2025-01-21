@@ -6,7 +6,7 @@
 
 import { Accordion } from '../accordion-ml/accordion-ml.js';
 import {
-  button, details, div, h2, input, label, li, span, summary, ul,
+  button, details, div, h2, input, label, li, small, span, summary, ul,
 } from '../../scripts/dom-helpers.js';
 
 let oldSearch = '';
@@ -102,7 +102,9 @@ function clearSearch(element) {
 
 function createFileSearchForm(block) {
   const searchLabel = label({ class: 'search-label', for: 'file-search' }, h2('Search for file name:'));
-  const searchInput = input({ class: 'search-input', type: 'text', placeholder: 'search here' });
+  const searchInput = input({
+    class: 'search-input', type: 'text', placeholder: 'search here', onkeypress: (e) => { if (e.key === 'Enter') searchFile(); },
+  });
   const searchButton = button({ class: 'search-button', onclick: () => searchFile() }, 'Search');
   const resetButton = button({ class: 'reset-button', onclick(e) { clearSearch(this, e); } }, 'RESET');
   const searchForm = div(
@@ -122,13 +124,17 @@ export default function decorate(block) {
     // decorate accordion item label
 
     const fileGroup = row.children[0];
-    const summaryEl = summary({ class: 'accordion-item-label' }, ...fileGroup.childNodes);
+    const summaryEl = summary({ class: 'accordion-item-label' }, ...fileGroup.childNodes, small({ class: 'doc-center-counter' }, '2 documents'));
 
     const body = row.children[1];
     body.className = 'content';
     const fileLinks = body.querySelectorAll('a');
+    const numOfDocs = fileLinks.length;
+    summaryEl.querySelector('.doc-center-counter').textContent = `${numOfDocs} documents`;
     fileLinks.forEach((fileLink) => {
       const fullFileTitle = fileLink.textContent.trim();
+      const fileTypeClass = fileLink.href.split('.').pop().endsWith('pdf') ? 'fa-file-pdf-o' : 'fa-file-text-o';
+      fileLink.classList.add(fileTypeClass);
       let fileDescription;
       if (fullFileTitle.search('\\[description=') !== -1) {
         fileDescription = fullFileTitle.split('[description=')[1].slice(0, -1);
@@ -143,11 +149,11 @@ export default function decorate(block) {
     container.append(detailsEl);
     row.remove();
 
-    const aElems = block.querySelectorAll('.content a');
+    /* const aElems = block.querySelectorAll('.content a');
     aElems.forEach((aElem) => {
       aElem.classList.remove('button');
       aElem.setAttribute('target', '_blank');
-    });
+    }); */
   });
   block.append(searchResults);
   block.append(container);
