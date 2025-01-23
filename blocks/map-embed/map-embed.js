@@ -4,8 +4,8 @@ let $mapEmbedUrl = '';
 
 export default function decorate(block) {
   [...block.children].forEach((row) => {
-    if (row.querySelector('a')) { 
-      $mapEmbedUrl = row.querySelector('a').href; 
+    if (row.querySelector('a')) {
+      $mapEmbedUrl = row.querySelector('a').href;
       const $iframe = iframe(
         {
           src: $mapEmbedUrl,
