@@ -21,7 +21,8 @@ import { h3 } from './dom-helpers.js';
 
 import { getViewPort, externalLinks } from './utils.js';
 
-const DEFAULT_BACKGROUND_IMAGE = `${window.location.origin}/assets/images/slide1.jpg`;
+const DEFAULT_BACKGROUND_IMAGE = `${window.location.origin}/assets/images/general/slide1.jpg`;
+
 const getPageTitle = async (url) => {
   // TODO: check if URL is valid, shouldn't be empty or null or need trailing slash
   const resp = await fetch(url); // invalid URL will return 404 in console
