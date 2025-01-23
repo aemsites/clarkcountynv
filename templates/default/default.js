@@ -1,8 +1,11 @@
 // eslint-disable-next-line no-unused-vars,no-empty-function
 import {
   div,
+  span,
 } from '../../scripts/dom-helpers.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
+
+const rep = /\[\[[a-z]*\]\]/g;
 
 export default async function decorate(doc) {
   const $main = doc.querySelector('main');
@@ -29,6 +32,13 @@ export default async function decorate(doc) {
   $rightsection.querySelectorAll('a[href$=".jpg"], a[href$=".png"], a[href$=".jpeg"]').forEach((aEl) => {
     const picture = createOptimizedPicture(aEl.href, aEl.href.split('/').pop());
     aEl.replaceWith(picture);
+  });
+
+  const x = $rightsection.querySelectorAll('.rightsection.specific-words p');
+  x.forEach((y) => {
+    console.log(y.textContent);
+    console.log(/\[\[[a-zA-Z 0-9]*\]\]/.test(y.textContent));
+    y.innerHTML = y.innerHTML.replace(/\[\[[a-zA-Z 0-9]*\]\]/, '<span class="red"> test </span>');
   });
 
   const $mainmenu = div({ class: 'mainmenu' }, $leftsection, $rightsection);
