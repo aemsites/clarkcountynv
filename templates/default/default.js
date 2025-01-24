@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars,no-empty-function
 import {
-  div, span,
+  div,
 } from '../../scripts/dom-helpers.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
