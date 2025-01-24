@@ -1,11 +1,8 @@
 // eslint-disable-next-line no-unused-vars,no-empty-function
 import {
-  div,
-  span,
+  div, span,
 } from '../../scripts/dom-helpers.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
-
-const rep = /\[\[[a-z]*\]\]/g;
 
 export default async function decorate(doc) {
   const $main = doc.querySelector('main');
@@ -34,11 +31,18 @@ export default async function decorate(doc) {
     aEl.replaceWith(picture);
   });
 
-  const x = $rightsection.querySelectorAll('.rightsection.specific-words p');
+  const x = $rightsection.querySelectorAll('.rightsection.special-words p');
   x.forEach((y) => {
-    console.log(y.textContent);
-    console.log(/\[\[[a-zA-Z 0-9]*\]\]/.test(y.textContent));
-    y.innerHTML = y.innerHTML.replace(/\[\[[a-zA-Z 0-9]*\]\]/, '<span class="red"> test </span>');
+    // console.log(y.textContent);
+    // console.log(/\[\[[a-zA-Z 0-9]*\]\]/.test(y.textContent));
+    const z = y.innerHTML.match(/\[\[[a-zA-Z 0-9]*\]\]/);
+    if (z) {
+      console.log(z[0]);
+      // remove the first and last character of the string
+      const str = z[0].slice(2, -2);
+      console.log(str);
+      y.innerHTML = y.innerHTML.replace(/\[\[[a-zA-Z 0-9]*\]\]/, `<span class="special"> ${str} </span>`);
+    }
   });
 
   const $mainmenu = div({ class: 'mainmenu' }, $leftsection, $rightsection);
