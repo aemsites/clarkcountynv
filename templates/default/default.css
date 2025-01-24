@@ -202,6 +202,6 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
 }
 
 main .mainmenu .rightsection.special-words.red span.special {
-    color: red;
+    color: var(--special-red);
     font-weight: 600;
 }
