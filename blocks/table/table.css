@@ -150,10 +150,43 @@
 .table.green {
     table {
         background-color: #d5ebce;
-        border-color: #169179;
+        border-color: gray;
 
         td, th {
-            border: 1px solid #169179;
+            border: 1px solid gray;
         }
     }
+}
+
+.table.light-brown {
+  table {
+      background-color: #efe6dc;
+      border-color: gray;
+
+      td, th {
+          border: 1px solid gray;
+      }
+  }
+}
+
+.table.yellow {
+  table {
+      background-color: #f5e7b8;
+      border-color: gray;
+
+      td, th {
+          border: 1px solid gray;
+      }
+  }
+}
+
+.table.light-blue {
+  table {
+      background-color: #c2e0f4;
+      border-color: gray;
+
+      td, th {
+          border: 1px solid gray;
+      }
+  }
 }
