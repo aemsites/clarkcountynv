@@ -125,7 +125,7 @@ export const fixPdfLinks = (main, results, pagePath, assetPath = 'general') => {
   const EXCLUDE_EXTENSIONS = ['php', 'gov', 'org'];
 
   main.querySelectorAll('a').forEach((a) => {
-    const href = a.getAttribute('href');
+    const href = a.getAttribute('href').replace('gov//', 'gov/');
     const url = new URL(href, window.location.origin);
     const extension = url.pathname.split('.').pop().toLowerCase();
     if (href) {
