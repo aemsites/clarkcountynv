@@ -200,6 +200,9 @@ export const fixLinks = (main) => {
   }
   main.querySelectorAll('a').forEach((a) => {
     const href = getSanitizedPath(a.getAttribute('href'));
+    if (a.textContent.trim().search(a.getAttribute('href')) !== -1) {
+      a.innerText = new URL(href, PREVIEW_DOMAIN).toString();
+    }
     a.setAttribute('href', new URL(href, PREVIEW_DOMAIN).toString());
   });
 };
