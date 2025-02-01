@@ -125,7 +125,7 @@ export const fixPdfLinks = (main, results, pagePath, assetPath = 'general') => {
   const EXCLUDE_EXTENSIONS = ['php', 'gov', 'org'];
 
   main.querySelectorAll('a').forEach((a) => {
-    const href = a.getAttribute('href');
+    const href = a.getAttribute('href').replace('gov//', 'gov/');
     const url = new URL(href, window.location.origin);
     const extension = url.pathname.split('.').pop().toLowerCase();
     if (href) {
@@ -200,6 +200,9 @@ export const fixLinks = (main) => {
   }
   main.querySelectorAll('a').forEach((a) => {
     const href = getSanitizedPath(a.getAttribute('href'));
+    if (a.textContent.trim().search(a.getAttribute('href')) !== -1) {
+      a.innerText = new URL(href, PREVIEW_DOMAIN).toString();
+    }
     a.setAttribute('href', new URL(href, PREVIEW_DOMAIN).toString());
   });
 };
