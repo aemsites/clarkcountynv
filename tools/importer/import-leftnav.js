@@ -231,25 +231,31 @@ function buildDocumentCenterBlock(main) {
     const files = document.createElement('div');
     const summary = elems[i].childNodes[0].nodeValue.trim();
     const liEls = elems[i + 1].querySelectorAll('li');
-    liEls.forEach((li) => {
-      const a = li.querySelector('a');
-      const fileName = a.textContent.trim();
-      const { href } = a;
-      let description;
-      if (li.querySelector('.doc-file-desc')) {
-        description = li.querySelector('.doc-file-desc').textContent.trim() || '';
-      }
+    if(liEls.length > 0) {
+      liEls.forEach((li) => {
+        const a = li.querySelector('a');
+        const fileName = a.textContent.trim();
+        const { href } = a;
+        let description;
+        if (li.querySelector('.doc-file-desc')) {
+          description = li.querySelector('.doc-file-desc').textContent.trim() || '';
+        }
 
-      const elem = document.createElement('a');
-      elem.href = href;
-      elem.innerText = description ? `${fileName} [description=${description}]` : `${fileName}`;
-      const newLi = document.createElement('li');
-      newLi.append(elem);
-      files.append(newLi);
-    });
+        const elem = document.createElement('a');
+        elem.href = href;
+        elem.innerText = description ? `${fileName} [description=${description}]` : `${fileName}`;
+        const newLi = document.createElement('li');
+        newLi.append(elem);
+        files.append(newLi);
 
-    cells.push([summary, files]);
+
+      });
+    } else {
+      i += 1;
+      continue;
+    }
     i += 2;
+    cells.push([summary, files]);
   }
 
   const docCenterBlock = WebImporter.Blocks.createBlock(document, {

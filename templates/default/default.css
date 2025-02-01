@@ -80,6 +80,14 @@ body > main .section.rightsection.biography-right {
   }
 }
 
+.rightsection .icon {
+  line-height: inherit;
+
+  img {
+    margin-block: -5px;
+  }
+}
+
 main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordion-ml-wrapper > .block.accordion-ml.active {
     height: var(--height);
     transition: height .5s ease-in;
