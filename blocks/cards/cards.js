@@ -31,9 +31,9 @@ export default function decorate(block) {
           divEl.className = 'cards-card-body';
           if (divEl.querySelector('a')) {
             const cardsLinkEl = divEl.querySelector('a');
-            if(cardsLinkEl) {
+            if (cardsLinkEl) {
               aEle.href = cardsLinkEl.href;
-              if(cardsLinkEl.parentElement.tagName === 'P') {
+              if (cardsLinkEl.parentElement.tagName === 'P') {
                 cardsLinkEl.parentElement.remove();
               } else {
                 cardsLinkEl.remove();

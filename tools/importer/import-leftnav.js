@@ -231,7 +231,7 @@ function buildDocumentCenterBlock(main) {
     const files = document.createElement('div');
     const summary = elems[i].childNodes[0].nodeValue.trim();
     const liEls = elems[i + 1].querySelectorAll('li');
-    if(liEls.length > 0) {
+    if (liEls.length > 0) {
       liEls.forEach((li) => {
         const a = li.querySelector('a');
         const fileName = a.textContent.trim();
@@ -247,11 +247,10 @@ function buildDocumentCenterBlock(main) {
         const newLi = document.createElement('li');
         newLi.append(elem);
         files.append(newLi);
-
-
       });
     } else {
       i += 1;
+      // eslint-disable-next-line no-continue
       continue;
     }
     i += 2;

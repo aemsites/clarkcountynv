@@ -27,10 +27,10 @@ export default async function decorate(doc) {
 
   // change all image anchor links to img tag
   $rightsection.querySelectorAll('a[href$=".jpg"], a[href$=".png"], a[href$=".jpeg"]').forEach((aEl) => {
-    if(['jpg', 'jpeg', 'png'].some(ext => aEl.textContent.trim().endsWith(ext))) {
+    if (['jpg', 'jpeg', 'png'].some((ext) => aEl.textContent.trim().endsWith(ext))) {
       const picture = createOptimizedPicture(aEl.href, aEl.href.split('/').pop());
       const parent = aEl.parentElement;
-      if(parent.tagName === 'P') {
+      if (parent.tagName === 'P') {
         parent.replaceWith(picture);
       } else {
         aEl.replaceWith(picture);

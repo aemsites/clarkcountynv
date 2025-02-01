@@ -202,18 +202,6 @@
     }
 }
 
-.cards.staff.block.min-height-3-title .staff-tile-title{
-        display: block;
-        min-height: calc(1.2em * 3);
-        line-height: 1.2em;
-}
-
-.cards.staff.block.min-height-2-title .staff-tile-title{
-    display: block;
-    min-height: calc(1.2em * 2);
-    line-height: 1.2em;
-}
-
 .cards.staff.block {
     ul {
         margin: unset;
@@ -267,6 +255,18 @@
             font-style: normal;
         }
     }
+}
+
+.cards.staff.block.min-height-3-title .staff-tile-title{
+    display: block;
+    min-height: calc(1.2em * 3);
+    line-height: 1.2em;
+}
+
+.cards.staff.block.min-height-2-title .staff-tile-title{
+    display: block;
+    min-height: calc(1.2em * 2);
+    line-height: 1.2em;
 }
 
 .team .cards.staff.block .staff-tile-title   {
