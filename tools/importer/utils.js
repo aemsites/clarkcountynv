@@ -41,7 +41,7 @@ export const createMetadata = (main, document, params) => {
   });
 
   const image = document.createElement('img');
-  image.src = `${PREVIEW_DOMAIN}/assets/images/logo.png`;
+  image.src = 'http://localhost:3000/assets/images/general/media_1cd00e6d663e3a8f17a6a71845a2d09cc41f55b6d.png';
   meta.Image = image;
   const block = WebImporter.Blocks.getMetadataBlock(document, meta);
   main.append(block);
@@ -194,13 +194,13 @@ export const setPageTitle = (main, params) => {
   }
 };
 
-export const fixLinks = (main) => {
+export const fixLinks = (main, shouldCheckTextIsLink = true) => {
   if (!main) {
     return;
   }
   main.querySelectorAll('a').forEach((a) => {
     const href = getSanitizedPath(a.getAttribute('href'));
-    if (a.textContent.trim().search(a.getAttribute('href')) !== -1) {
+    if (shouldCheckTextIsLink && href.search('https://lasvegasfit.org') === -1 && a.textContent.trim().search(a.getAttribute('href')) !== -1) {
       a.innerText = new URL(href, PREVIEW_DOMAIN).toString();
     }
     a.setAttribute('href', new URL(href, PREVIEW_DOMAIN).toString());

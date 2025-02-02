@@ -230,8 +230,8 @@ function buildDocumentCenterBlock(main) {
   for (let i = 0; i < elems.length;) {
     const files = document.createElement('div');
     const summary = elems[i].childNodes[0].nodeValue.trim();
-    const liEls = elems[i + 1].querySelectorAll('li');
-    if (liEls.length > 0) {
+    const liEls = elems[i + 1]?.querySelectorAll('li');
+    if (liEls && liEls.length > 0) {
       liEls.forEach((li) => {
         const a = li.querySelector('a');
         const fileName = a.textContent.trim();
@@ -502,7 +502,7 @@ export default {
     const heroBackgroundEl = main.querySelector('div.tns-bg-slide');
     const backgroundImageUrl = extractBackgroundImageUrl(heroBackgroundEl);
 
-    if (breadcrumbsEl) {
+    if (breadcrumbsEl && params['page-title']) {
       printBreadcrumbUrl(breadcrumbsEl, results, newPagePath, params['page-title'], params);
     }
 
@@ -531,8 +531,8 @@ export default {
 
     fixPdfLinks(main, results, newPagePath, assetsPath);
     fixPdfLinks(leftNavAsideEl, results, newPagePath, assetsPath);
-    fixLinks(main);
-    fixLinks(leftNavAsideEl);
+    fixLinks(main, true);
+    fixLinks(leftNavAsideEl, false);
     fixImageLinks(main, results, assetsPath);
 
     setPageTitle(main, params);
