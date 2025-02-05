@@ -228,7 +228,8 @@ export const fixImageSrcPath = (src, results, imagePath = 'general') => {
 
 export const fixImageLinks = (main, results, imagePath = 'general') => {
   main.querySelectorAll('img').forEach((image) => {
-    const src = image.getAttribute('src');
+    let src = image.getAttribute('src');
+    src = src.replaceAll(',', '');
     const newSrcPath = fixImageSrcPath(src, results, imagePath);
     image.setAttribute('src', newSrcPath);
   });
