@@ -45,20 +45,18 @@ export default async function decorate(doc) {
 
     if (match1) {
       // remove the first and last character of the string
-      console.log('match1', match1);
       const str = match1[0].slice(2, -2);
       section.innerHTML = section.innerHTML.replace(/\[\[.*\]\]/, `<span class="special"> ${str} </span>`);
     }
     if (match2) {
-      console.log('match2', match2);
       // remove the first and last character of the string
       const str = match2[0].slice(3, -3);
-      section.innerHTML = section.innerHTML.replace(/\[2\[.*\]2\]/, `<span class="special"> ${str} </span>`); // eslint-disable-line no-useless-escape  
+      section.innerHTML = section.innerHTML.replace(/\[2\[.*\]2\]/, `<span class="special"> ${str} </span>`); // eslint-disable-line no-useless-escape
     }
     if (match3) {
       // remove the first and last character of the string
       const str = match3[0].slice(3, -3);
-      section.innerHTML = section.innerHTML.replace(/\[3\[.*\]3\]/, `<span class="special"> ${str} </span>`); // eslint-disable-line no-useless-escape  
+      section.innerHTML = section.innerHTML.replace(/\[3\[.*\]3\]/, `<span class="special"> ${str} </span>`); // eslint-disable-line no-useless-escape
     }
   });
 
