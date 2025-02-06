@@ -36,6 +36,6 @@ main .block.text {
     }
 
     &.highlight-color-pink {
-        background-color: #ffcccc;
+        background-color: #fcc;
     }
 }
