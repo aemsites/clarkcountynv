@@ -88,15 +88,14 @@ export const getSanitizedPath = (url) => {
   path = path.endsWith('.php') ? path.slice(0, -4) : path;
   path = path.replaceAll(',', '');
   const pathParts = path.split('/');
-  let shouldAddTrailingSlash = false;
   if (pathParts[pathParts.length - 1] === 'index') {
     pathParts.pop();
-    shouldAddTrailingSlash = true;
+    return `${pathParts.join('/')}/`;
   }
   pathParts[pathParts.length - 1] = WebImporter.FileUtils.sanitizeFilename(
     pathParts[pathParts.length - 1],
   );
-  return shouldAddTrailingSlash ? `${pathParts.join('/')}/` : pathParts.join('/');
+  return pathParts.join('/');
 };
 
 export const getPathSegments = (url) => (url.split('/').filter((segment) => segment));
