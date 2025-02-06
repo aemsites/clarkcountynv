@@ -70,6 +70,10 @@ export const getImportPagePath = (url) => {
 };
 
 export const getSanitizedPath = (url) => {
+  if (!url) {
+    return url;
+  }
+
   if (url && (url.endsWith('.pdf') || url.endsWith('.mp3') || url.endsWith('.mp4') || url.endsWith('.MP3') || url.endsWith('.MP4') || url.startsWith('mailto') || url.startsWith('tel:') || url.endsWith('.docx'))) {
     return url;
   }
@@ -128,7 +132,10 @@ export const fixPdfLinks = (main, results, pagePath, assetPath = 'general') => {
   const EXCLUDE_EXTENSIONS = ['php', 'gov', 'org'];
 
   main.querySelectorAll('a').forEach((a) => {
-    let href = a.getAttribute('href').replace('gov//', 'gov/');
+    let href = a.getAttribute('href')?.replace('gov//', 'gov/');
+    if (!href) {
+      return;
+    }
     href = href.replaceAll(',', '');
     const url = new URL(href, window.location.origin);
     const extension = url.pathname.split('.').pop().toLowerCase();
@@ -203,11 +210,15 @@ export const fixLinks = (main, shouldCheckTextIsLink = true) => {
     return;
   }
   main.querySelectorAll('a').forEach((a) => {
-    const href = getSanitizedPath(a.getAttribute('href'));
-    if (shouldCheckTextIsLink && a.textContent.trim().search(a.getAttribute('href')) !== -1) {
-      a.innerText = new URL(href, PREVIEW_DOMAIN).toString();
+    const href = a.getAttribute('href');
+    if (!href) {
+      return;
     }
-    a.setAttribute('href', new URL(href, PREVIEW_DOMAIN).toString());
+    const link = getSanitizedPath(href);
+    if (shouldCheckTextIsLink && a.textContent.trim().search(href) !== -1) {
+      a.innerText = new URL(link, PREVIEW_DOMAIN).toString();
+    }
+    a.setAttribute('href', new URL(link, PREVIEW_DOMAIN).toString());
   });
 };
 
