@@ -388,9 +388,6 @@
 
 @media (width >= 900px) {
     .cards.clickable-images:not(:has(ul)) {
-        display: flex;
         flex-direction: row;
-        gap: .5rem;
-        justify-content: center;
     }
 }
