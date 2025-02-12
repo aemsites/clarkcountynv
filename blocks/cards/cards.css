@@ -383,6 +383,12 @@
         }
     }
 
+    &.v-align-center {
+        ul li {
+            align-content: center;
+        }
+    }
+
     ul {
         display: flex;
         justify-content: center;
