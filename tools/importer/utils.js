@@ -198,10 +198,12 @@ export const blockSeparator = () => {
 
 export const setPageTitle = (main, params) => {
   const pageTitleEl = main.querySelector('#page-title');
-  const pageHeading = pageTitleEl.textContent.trim();
-  if (pageHeading.length > 0) {
-    params['page-title'] = pageHeading;
-    pageTitleEl.remove();
+  if (pageTitleEl) {
+    const pageHeading = pageTitleEl.textContent.trim();
+    if (pageHeading.length > 0) {
+      params['page-title'] = pageHeading;
+      pageTitleEl.remove();
+    }
   }
 };
 
@@ -242,7 +244,7 @@ export const fixImageLinks = (main, results, imagePath = 'general') => {
   main.querySelectorAll('img').forEach((image) => {
     let src = image.getAttribute('src');
     src = src.replaceAll(/[,!]/g, '');
-    const newSrcPath = fixImageSrcPath(src, results, imagePath);
+      const newSrcPath = fixImageSrcPath(src, results, imagePath);
     image.setAttribute('src', newSrcPath);
   });
 };
