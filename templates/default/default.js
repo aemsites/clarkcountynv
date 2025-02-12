@@ -16,6 +16,7 @@ export function decorateLinks(element) {
       // eslint-disable-next-line no-unused-vars
       const [_, linkText, attrs] = match;
       a.textContent = linkText.trim();
+      a.setAttribute('title', a.textContent);
       attrs.split(',').forEach((attr) => {
         let [key, ...value] = attr.trim().split(':');
         key = key.trim().toLowerCase();
