@@ -4,6 +4,28 @@ import {
 } from '../../scripts/dom-helpers.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
+/** allow for link attributes to be added by authors
+ * example usage = Text [class:button,target:_blank,title:Title goes here]
+ * @param main
+ */
+export function decorateLinks(element) {
+  element.querySelectorAll('a').forEach((a) => {
+    // match text inside [] and split by '|'
+    const match = a.textContent.match(/(.*)\[([^\]]*)]/);
+    if (match) {
+      // eslint-disable-next-line no-unused-vars
+      const [_, linkText, attrs] = match;
+      a.textContent = linkText.trim();
+      attrs.split(',').forEach((attr) => {
+        let [key, ...value] = attr.trim().split(':');
+        key = key.trim().toLowerCase();
+        value = value.join().trim();
+        if (key) a.setAttribute(key, value);
+      });
+    }
+  });
+}
+
 export default async function decorate(doc) {
   const $main = doc.querySelector('main');
   const $leftsection = document.querySelector('.leftsection');
@@ -38,6 +60,8 @@ export default async function decorate(doc) {
     }
   });
 
+  decorateLinks($rightsection);
+
   $rightsection.querySelectorAll('.rightsection.special-words p, .rightsection.special-words ul, .rightsection.special-words h2').forEach((section) => {
     const match1 = section.innerHTML.match(/\[\[.*\]\]/);
     const match2 = section.innerHTML.match(/\[2\[.*\]2\]/);
@@ -59,6 +83,8 @@ export default async function decorate(doc) {
       section.innerHTML = section.innerHTML.replace(/\[3\[.*\]3\]/, `<span class="special"> ${str} </span>`); // eslint-disable-line no-useless-escape
     }
   });
+
+
 
   const $mainmenu = div({ class: 'mainmenu' }, $leftsection, $rightsection);
   $main.append($mainmenu);
