@@ -253,7 +253,7 @@ function createCalendar() {
   calendar = new FullCalendar.Calendar(calendarEl, {
     timeZone: 'local',
     initialView: 'dayGridMonth',
-    dayMaxEventRows: mobilecheck() ? 1 : 3,
+    dayMaxEventRows: mobilecheck() ? 1 : 6,
     views: {
       listMonth: { buttonText: 'list' },
     },
