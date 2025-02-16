@@ -2,7 +2,7 @@ import {
   div, iframe, section, p, button, a, ul, li,
 } from '../../scripts/dom-helpers.js';
 
-import { normalizeString } from '../../scripts/utils.js';
+import { normalizeString, getWindowSize } from '../../scripts/utils.js';
 
 class Obj {
   // eslint-disable-next-line max-len
@@ -22,6 +22,14 @@ class Obj {
     this.excludeDates = excludeDates;
     this.duration = duration;
   }
+}
+
+export function mobilecheck() {
+  const { width } = getWindowSize();
+  if (width >= 900) {
+    return false;
+  }
+  return true;
 }
 
 let calendar = null;
@@ -245,6 +253,7 @@ function createCalendar() {
   calendar = new FullCalendar.Calendar(calendarEl, {
     timeZone: 'local',
     initialView: 'dayGridMonth',
+    dayMaxEventRows: mobilecheck() ? 1 : 3,
     views: {
       listMonth: { buttonText: 'list' },
     },
@@ -257,7 +266,6 @@ function createCalendar() {
     navLinks: true, // can click day/week names to navigate views
     editable: true,
     selectable: true,
-    dayMaxEvents: true,
     // events: importedData,
     eventTimeFormat: { hour: 'numeric', minute: '2-digit' },
     eventClick: (info) => {
