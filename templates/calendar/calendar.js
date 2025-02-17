@@ -25,6 +25,11 @@ class Obj {
   }
 }
 
+let deepLinkDay = 0;
+let deepLinkMonth = 0;
+let deepLinkYear = 0;
+let deepLinkView = '';
+
 export function mobilecheck() {
   const { width } = getWindowSize();
   if (width >= 900) {
@@ -252,6 +257,58 @@ function createEventList(importedData, eventsList) {
   return eventsList;
 }
 
+function getInfo(view) {
+  const currentStart = view.currentStart.getFullYear();
+  const currentEnd = view.currentEnd.getFullYear();
+  const currentView = view.type;
+  const currentTitle = view.title;
+  console.log(currentStart);
+  console.log(currentEnd);
+  console.log(currentView);
+  console.log(currentTitle);
+  deepLinkDay = view.currentStart.getDate();
+  deepLinkMonth = view.currentStart.getMonth() + 1;
+  deepLinkYear = view.currentStart.getFullYear();
+  if (view.type === 'dayGridMonth') {
+    deepLinkView = 'month';
+  } else if (view.type === 'timeGridWeek') {
+    deepLinkView = 'week';
+  } else if (view.type === 'timeGridDay') {
+    deepLinkView = 'day';
+  } else if (view.type === 'listMonth') {
+    deepLinkView = 'list';
+  }
+  let windowHref = window.location.href;
+  console.log(windowHref);
+  if (!windowHref.includes('?')) {
+    const queryParam = `?view=${deepLinkView}&day=${deepLinkDay}&month=${deepLinkMonth}&year=${deepLinkYear}`;
+    const newUrl = windowHref + queryParam;
+    window.location.replace(newUrl);
+  } else {
+    const queryParam = `view=${deepLinkView}&day=${deepLinkDay}&month=${deepLinkMonth}&year=${deepLinkYear}`;
+    let url = new URL(windowHref);
+    console.log(url);
+    console.log(url.searchParams.get('view'));
+    if (url.searchParams.get('view') != deepLinkView) {
+      console.log('not equal');
+      url.searchParams.set('view', deepLinkView);
+      url.searchParams.set('day', deepLinkDay);
+      url.searchParams.set('month', deepLinkMonth);
+      url.searchParams.set('year', deepLinkYear);
+      console.log(url);
+      history.pushState({}, "", url);
+    }
+    // let url = new URL(windowHref);
+    // if (url.searchParams.get('view') != deepLinkView) {
+    //   const newUrl = windowHref.replace(/view=[a-z]+&day=[0-9]+&month=[0-9]+&year=[0-9]+/, queryParam);
+    //   window.location.replace(newUrl);
+    // }
+    // const newUrl = windowHref.replace(/view=[a-z]+&day=[0-9]+&month=[0-9]+&year=[0-9]+/, queryParam);
+    // window.location.replace(newUrl);
+  }
+}
+
+
 function createCalendar() {
   // eslint-disable-next-line no-undef
   calendar = new FullCalendar.Calendar(calendarEl, {
@@ -270,6 +327,10 @@ function createCalendar() {
     navLinks: true, // can click day/week names to navigate views
     editable: true,
     selectable: true,
+    datesSet: function (dateInfo) {
+      var view = dateInfo.view;
+      getInfo(view);
+    },
     // events: importedData,
     eventTimeFormat: { hour: 'numeric', minute: '2-digit' },
     eventClick: (info) => {
@@ -281,6 +342,11 @@ function createCalendar() {
     },
   });
   calendar.render();
+  // var view = calendar.view;
+  // alert("The view's title is " + view.currentStart);
+  // var ricksDate = new Date(2025, 1, 1);
+  // calendar.gotoDate(ricksDate);
+  // calendar.changeView('listMonth');
 }
 
 async function getFeaturedEvents() {
