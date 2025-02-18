@@ -29,6 +29,10 @@ let deepLinkDay = 0;
 let deepLinkMonth = 0;
 let deepLinkYear = 0;
 let deepLinkView = '';
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0');
+var yyyy = today.getFullYear();
 
 export function mobilecheck() {
   const { width } = getWindowSize();
@@ -492,7 +496,17 @@ function implementSearch(searchDiv) {
   });
 }
 
+function changeURL() {
+  let windowHref = window.location.href;
+  if (!windowHref.includes('?')) {
+    const queryParam = `?view=month&day=01&month=${mm}&year=${yyyy}`;
+    const newUrl = windowHref + queryParam;
+    window.location.replace(newUrl);
+  }
+}
+
 export default async function decorate(doc) {
+  changeURL();
   doc.body.classList.add('calendar');
   const $main = doc.querySelector('main');
   const $searchSection = section({ class: 'fc-search' });
