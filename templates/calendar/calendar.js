@@ -270,6 +270,12 @@ function getInfo(view) {
   } else if (view.type === 'listMonth') {
     deepLinkView = 'list';
   }
+  if (deepLinkDay < 10) {
+    deepLinkDay = `0${deepLinkDay}`;
+  }
+  if (deepLinkMonth < 10) {
+    deepLinkMonth = `0${deepLinkMonth}`;
+  }
   const windowHref = window.location.href;
   if (!windowHref.includes('?')) {
     const queryParam = `?view=${deepLinkView}&day=${deepLinkDay}&month=${deepLinkMonth}&year=${deepLinkYear}`;
@@ -359,11 +365,6 @@ function createCalendar() {
     }
     calendar.gotoDate(ricksDate);
   }
-  // var view = calendar.view;
-  // alert("The view's title is " + view.currentStart);
-  // var ricksDate = new Date(2025, 1, 1);
-  // calendar.gotoDate(ricksDate);
-  // calendar.changeView('listMonth');
 }
 
 async function getFeaturedEvents() {
