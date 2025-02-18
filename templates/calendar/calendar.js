@@ -258,10 +258,6 @@ function createEventList(importedData, eventsList) {
 }
 
 function getInfo(view) {
-  const currentStart = view.currentStart.getFullYear();
-  const currentEnd = view.currentEnd.getFullYear();
-  const currentView = view.type;
-  const currentTitle = view.title;
   deepLinkDay = view.currentStart.getDate();
   deepLinkMonth = view.currentStart.getMonth() + 1;
   deepLinkYear = view.currentStart.getFullYear();
@@ -274,20 +270,19 @@ function getInfo(view) {
   } else if (view.type === 'listMonth') {
     deepLinkView = 'list';
   }
-  let windowHref = window.location.href;
+  const windowHref = window.location.href;
   if (!windowHref.includes('?')) {
     const queryParam = `?view=${deepLinkView}&day=${deepLinkDay}&month=${deepLinkMonth}&year=${deepLinkYear}`;
     const newUrl = windowHref + queryParam;
     window.location.replace(newUrl);
   } else {
-    const queryParam = `view=${deepLinkView}&day=${deepLinkDay}&month=${deepLinkMonth}&year=${deepLinkYear}`;
-    let url = new URL(windowHref);
-    if (url.searchParams.get('view') != deepLinkView) {
+    const url = new URL(windowHref);
+    if (url.searchParams.get('view') !== deepLinkView) {
       url.searchParams.set('view', deepLinkView);
       url.searchParams.set('day', deepLinkDay);
       url.searchParams.set('month', deepLinkMonth);
       url.searchParams.set('year', deepLinkYear);
-      history.pushState({}, "", url); 
+      history.pushState({}, '', url); 
     }
   }
 }
@@ -343,7 +338,7 @@ function createCalendar() {
     },
   });
   calendar.render();
-  let windowHref = window.location.href;
+  const windowHref = window.location.href;
   if (windowHref.includes('?')) {
     const url = new URL(windowHref);
     const view = url.searchParams.get('view');
