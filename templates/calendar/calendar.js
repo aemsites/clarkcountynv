@@ -262,10 +262,6 @@ function getInfo(view) {
   const currentEnd = view.currentEnd.getFullYear();
   const currentView = view.type;
   const currentTitle = view.title;
-  console.log(currentStart);
-  console.log(currentEnd);
-  console.log(currentView);
-  console.log(currentTitle);
   deepLinkDay = view.currentStart.getDate();
   deepLinkMonth = view.currentStart.getMonth() + 1;
   deepLinkYear = view.currentStart.getFullYear();
@@ -279,7 +275,6 @@ function getInfo(view) {
     deepLinkView = 'list';
   }
   let windowHref = window.location.href;
-  console.log(windowHref);
   if (!windowHref.includes('?')) {
     const queryParam = `?view=${deepLinkView}&day=${deepLinkDay}&month=${deepLinkMonth}&year=${deepLinkYear}`;
     const newUrl = windowHref + queryParam;
@@ -287,33 +282,39 @@ function getInfo(view) {
   } else {
     const queryParam = `view=${deepLinkView}&day=${deepLinkDay}&month=${deepLinkMonth}&year=${deepLinkYear}`;
     let url = new URL(windowHref);
-    console.log(url);
-    console.log(url.searchParams.get('view'));
     if (url.searchParams.get('view') != deepLinkView) {
-      console.log('not equal');
       url.searchParams.set('view', deepLinkView);
       url.searchParams.set('day', deepLinkDay);
       url.searchParams.set('month', deepLinkMonth);
       url.searchParams.set('year', deepLinkYear);
-      console.log(url);
-      history.pushState({}, "", url);
+      history.pushState({}, "", url); 
     }
-    // let url = new URL(windowHref);
-    // if (url.searchParams.get('view') != deepLinkView) {
-    //   const newUrl = windowHref.replace(/view=[a-z]+&day=[0-9]+&month=[0-9]+&year=[0-9]+/, queryParam);
-    //   window.location.replace(newUrl);
-    // }
-    // const newUrl = windowHref.replace(/view=[a-z]+&day=[0-9]+&month=[0-9]+&year=[0-9]+/, queryParam);
-    // window.location.replace(newUrl);
   }
 }
 
+function getView() {
+  let windowHref = window.location.href;
+  if (windowHref.includes('?')) {
+    const url = new URL(windowHref);
+    const view = url.searchParams.get('view');
+    if (view === 'month') {
+      return 'dayGridMonth';
+    } else if (view === 'week') {
+      return 'timeGridWeek';
+    } else if (view === 'day') {
+      return 'timeGridDay';
+    } else if (view === 'list') {
+      return 'listMonth';
+    }
+  }
+  return 'dayGridMonth';
+}
 
 function createCalendar() {
   // eslint-disable-next-line no-undef
   calendar = new FullCalendar.Calendar(calendarEl, {
     timeZone: 'local',
-    initialView: 'dayGridMonth',
+    initialView: getView(),
     dayMaxEventRows: mobilecheck() ? 1 : 6,
     views: {
       listMonth: { buttonText: 'list' },
@@ -342,6 +343,25 @@ function createCalendar() {
     },
   });
   calendar.render();
+  let windowHref = window.location.href;
+  if (windowHref.includes('?')) {
+    const url = new URL(windowHref);
+    const view = url.searchParams.get('view');
+    const day = url.searchParams.get('day');
+    const month = url.searchParams.get('month');
+    const year = url.searchParams.get('year');
+    const ricksDate = new Date(year, month - 1, day);
+    if (view === 'month') {
+      calendar.changeView('dayGridMonth');
+    } else if (view === 'week') {
+      calendar.changeView('timeGridWeek');
+    } else if (view === 'day') {
+      calendar.changeView('timeGridDay');
+    } else if (view === 'list') {
+      calendar.changeView('listMonth');
+    }
+    calendar.gotoDate(ricksDate);
+  }
   // var view = calendar.view;
   // alert("The view's title is " + view.currentStart);
   // var ricksDate = new Date(2025, 1, 1);
