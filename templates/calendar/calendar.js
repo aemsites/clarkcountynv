@@ -282,23 +282,26 @@ function getInfo(view) {
       url.searchParams.set('day', deepLinkDay);
       url.searchParams.set('month', deepLinkMonth);
       url.searchParams.set('year', deepLinkYear);
-      history.pushState({}, '', url); 
+      window.history.pushState({}, '', url);
     }
   }
 }
 
 function getView() {
-  let windowHref = window.location.href;
+  const windowHref = window.location.href;
   if (windowHref.includes('?')) {
     const url = new URL(windowHref);
     const view = url.searchParams.get('view');
     if (view === 'month') {
       return 'dayGridMonth';
-    } else if (view === 'week') {
+    }
+    if (view === 'week') {
       return 'timeGridWeek';
-    } else if (view === 'day') {
+    }
+    if (view === 'day') {
       return 'timeGridDay';
-    } else if (view === 'list') {
+    }
+    if (view === 'list') {
       return 'listMonth';
     }
   }
@@ -323,9 +326,8 @@ function createCalendar() {
     navLinks: true, // can click day/week names to navigate views
     editable: true,
     selectable: true,
-    datesSet: function (dateInfo) {
-      var view = dateInfo.view;
-      getInfo(view);
+    datesSet: (dateInfo) => {
+      getInfo(dateInfo.view);
     },
     // events: importedData,
     eventTimeFormat: { hour: 'numeric', minute: '2-digit' },
