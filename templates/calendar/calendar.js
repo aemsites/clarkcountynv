@@ -281,22 +281,17 @@ function getInfo(view) {
     deepLinkMonth = `0${deepLinkMonth}`;
   }
   const windowHref = window.location.href;
-  if (!windowHref.includes('?')) {
-    const queryParam = `?view=${deepLinkView}&day=${deepLinkDay}&month=${deepLinkMonth}&year=${deepLinkYear}`;
-    const newUrl = windowHref + queryParam;
-    window.location.replace(newUrl);
-  } else {
-    const url = new URL(windowHref);
-    if (url.searchParams.get('view') !== deepLinkView) {
-      url.searchParams.set('view', deepLinkView);
-      url.searchParams.set('day', deepLinkDay);
-      url.searchParams.set('month', deepLinkMonth);
-      url.searchParams.set('year', deepLinkYear);
-      window.history.pushState({}, '', url);
-    }
+  const url = new URL(windowHref);
+  if (url.searchParams.get('view') !== deepLinkView) {
+    url.searchParams.set('view', deepLinkView);
+    url.searchParams.set('day', deepLinkDay);
+    url.searchParams.set('month', deepLinkMonth);
+    url.searchParams.set('year', deepLinkYear);
+    window.history.pushState({}, '', url);
   }
 }
 
+/* get the view and accordingly target the calendar */
 function getView() {
   const windowHref = window.location.href;
   if (windowHref.includes('?')) {
@@ -351,24 +346,22 @@ function createCalendar() {
   });
   calendar.render();
   const windowHref = window.location.href;
-  if (windowHref.includes('?')) {
-    const url = new URL(windowHref);
-    const view = url.searchParams.get('view');
-    const day = url.searchParams.get('day');
-    const month = url.searchParams.get('month');
-    const year = url.searchParams.get('year');
-    const ricksDate = new Date(year, month - 1, day);
-    if (view === 'month') {
-      calendar.changeView('dayGridMonth');
-    } else if (view === 'week') {
-      calendar.changeView('timeGridWeek');
-    } else if (view === 'day') {
-      calendar.changeView('timeGridDay');
-    } else if (view === 'list') {
-      calendar.changeView('listMonth');
-    }
-    calendar.gotoDate(ricksDate);
+  const url = new URL(windowHref);
+  const view = url.searchParams.get('view');
+  const day = url.searchParams.get('day');
+  const month = url.searchParams.get('month');
+  const year = url.searchParams.get('year');
+  const ricksDate = new Date(year, month - 1, day);
+  if (view === 'month') {
+    calendar.changeView('dayGridMonth');
+  } else if (view === 'week') {
+    calendar.changeView('timeGridWeek');
+  } else if (view === 'day') {
+    calendar.changeView('timeGridDay');
+  } else if (view === 'list') {
+    calendar.changeView('listMonth');
   }
+  calendar.gotoDate(ricksDate);
 }
 
 async function getFeaturedEvents() {
