@@ -160,6 +160,10 @@ function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
   window.onclick = (event) => {
     if (event.target === modal) {
       modal.style.display = 'none';
+      const windowHref = window.location.href;
+      const url = new URL(windowHref);
+      url.searchParams.delete('id');
+      window.history.pushState({}, '', url);
     }
   };
 }
@@ -228,6 +232,7 @@ function createEvents(eventsList) {
           groupId: event.divisionid,
           borderColor: event.backgroundColor,
           extendedProps: { readMore: event.readMore },
+          id: `${event.divisionid}-${event.title.length}${event.start}`,
         });
       } else {
         calendar.addEvent({
@@ -247,6 +252,7 @@ function createEvents(eventsList) {
           groupId: event.divisionid,
           borderColor: event.backgroundColor,
           extendedProps: { readMore: event.readMore },
+          id: `${event.divisionid}-${event.title.length}${event.start}`,
         });
       }
     } else {
@@ -262,6 +268,7 @@ function createEvents(eventsList) {
         groupId: event.divisionid,
         extendedProps: { readMore: event.readMore },
         borderColor: event.backgroundColor,
+        id: `${event.divisionid}-${event.title.length}${event.start}`,
       });
     }
   });
@@ -371,7 +378,17 @@ function createCalendar() {
     eventTimeFormat: { hour: 'numeric', minute: '2-digit' },
     eventClick: (info) => {
       info.jsEvent.preventDefault(); // don't let the browser navigate
+      info.event.setProp('id', `${info.event.groupId}-${info.event.title.length}${info.event.start.getDate()}${info.event.start.getDate()}`);
       if (info.event.url) {
+        const windowHref = window.location.href;
+        const url = new URL(windowHref);
+        if (URLSearchParams && !url.searchParams.get('id')) {
+          url.searchParams.append('id', info.event.id);
+          window.history.pushState({}, '', url);
+        } else {
+          url.searchParams.set('id', info.event.id);
+          window.history.pushState({}, '', url);
+        }
         // eslint-disable-next-line max-len
         popupEvent(info.event.url, info.event.start, info.event.end, info.event.backgroundColor, info.event.extendedProps.readMore);
       }
