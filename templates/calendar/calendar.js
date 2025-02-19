@@ -232,7 +232,7 @@ function createEvents(eventsList) {
           groupId: event.divisionid,
           borderColor: event.backgroundColor,
           extendedProps: { readMore: event.readMore },
-          id: `${event.divisionid}-${event.title.length}${event.start}`,
+          id: `${event.divisionid}${event.title.length}${event.start.length}`,
         });
       } else {
         calendar.addEvent({
@@ -252,7 +252,7 @@ function createEvents(eventsList) {
           groupId: event.divisionid,
           borderColor: event.backgroundColor,
           extendedProps: { readMore: event.readMore },
-          id: `${event.divisionid}-${event.title.length}${event.start}`,
+          id: `${event.divisionid}${event.title.length}${event.start.length}`,
         });
       }
     } else {
@@ -268,7 +268,7 @@ function createEvents(eventsList) {
         groupId: event.divisionid,
         extendedProps: { readMore: event.readMore },
         borderColor: event.backgroundColor,
-        id: `${event.divisionid}-${event.title.length}${event.start}`,
+        id: `${event.divisionid}${event.title.length}${event.start.length}`,
       });
     }
   });
@@ -376,9 +376,11 @@ function createCalendar() {
     },
     // events: importedData,
     eventTimeFormat: { hour: 'numeric', minute: '2-digit' },
+    eventDidMount: function(info) {
+      info.el.setAttribute("id", info.event.id);
+    },
     eventClick: (info) => {
       info.jsEvent.preventDefault(); // don't let the browser navigate
-      info.event.setProp('id', `${info.event.groupId}-${info.event.title.length}${info.event.start.getDate()}${info.event.start.getDate()}`);
       if (info.event.url) {
         const windowHref = window.location.href;
         const url = new URL(windowHref);
@@ -412,6 +414,16 @@ function createCalendar() {
     calendar.changeView('listMonth');
   }
   calendar.gotoDate(ricksDate);
+  const eventID = url.searchParams.get('id');
+  /* Get Pop up window of the event automatically if event ID is mentioned in the URL*/
+  setTimeout(() => {
+    if (eventID) {
+      const element = document.getElementById(eventID);
+      if (element) {
+        element.click();
+      }
+    }
+  }, 1);
 }
 
 async function getFeaturedEvents() {
