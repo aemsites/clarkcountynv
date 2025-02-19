@@ -161,9 +161,9 @@ function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
     if (event.target === modal) {
       modal.style.display = 'none';
       const windowHref = window.location.href;
-      const url = new URL(windowHref);
-      url.searchParams.delete('id');
-      window.history.pushState({}, '', url);
+      const urlObj = new URL(windowHref);
+      urlObj.searchParams.delete('id');
+      window.history.pushState({}, '', urlObj);
     }
   };
 }
@@ -376,8 +376,8 @@ function createCalendar() {
     },
     // events: importedData,
     eventTimeFormat: { hour: 'numeric', minute: '2-digit' },
-    eventDidMount: function(info) {
-      info.el.setAttribute("id", info.event.id);
+    eventDidMount: (info) => {
+      info.el.setAttribute('id', info.event.id);
     },
     eventClick: (info) => {
       info.jsEvent.preventDefault(); // don't let the browser navigate
@@ -415,7 +415,7 @@ function createCalendar() {
   }
   calendar.gotoDate(ricksDate);
   const eventID = url.searchParams.get('id');
-  /* Get Pop up window of the event automatically if event ID is mentioned in the URL*/
+  /* Get Pop up window of the event automatically if event ID is mentioned in the URL */
   setTimeout(() => {
     if (eventID) {
       const element = document.getElementById(eventID);
