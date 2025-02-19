@@ -232,7 +232,7 @@ function createEvents(eventsList) {
           groupId: event.divisionid,
           borderColor: event.backgroundColor,
           extendedProps: { readMore: event.readMore },
-          id: `${event.divisionid}${event.title.length}${event.start.length}`,
+          id: `${event.divisionid}-${event.title.length}${event.start.length}`,
         });
       } else {
         calendar.addEvent({
@@ -252,7 +252,7 @@ function createEvents(eventsList) {
           groupId: event.divisionid,
           borderColor: event.backgroundColor,
           extendedProps: { readMore: event.readMore },
-          id: `${event.divisionid}${event.title.length}${event.start.length}`,
+          id: `${event.divisionid}-${event.title.length}${event.start.length}`,
         });
       }
     } else {
@@ -268,7 +268,7 @@ function createEvents(eventsList) {
         groupId: event.divisionid,
         extendedProps: { readMore: event.readMore },
         borderColor: event.backgroundColor,
-        id: `${event.divisionid}${event.title.length}${event.start.length}`,
+        id: `${event.divisionid}-${event.title.length}${event.start.length}`,
       });
     }
   });
