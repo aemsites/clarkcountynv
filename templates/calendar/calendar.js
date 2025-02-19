@@ -176,9 +176,22 @@ function disableRightClick() {
   });
 }
 
-function changehref() {
-  document.querySelectorAll('.yesReadMore').forEach((element) => {
-    element.href = 'https://www.google.com';
+async function getfromDOM(element) {
+  const currentURL = element.href;
+  const resp = await fetch(currentURL);
+  const htmlBody = await resp.text();
+  const parser = new DOMParser();
+  const dom = parser.parseFromString(htmlBody, 'text/html');
+  dom.querySelectorAll('p a').forEach((ele) => {
+    if (ele.textContent === 'readmore') {
+      element.href = ele.href;
+    }
+  });
+}
+
+async function changehref() {
+  document.querySelectorAll('.yesReadMore').forEach(async (element) => {
+    await getfromDOM(element);
   });
 }
 
