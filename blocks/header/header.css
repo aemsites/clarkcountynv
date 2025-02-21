@@ -738,6 +738,34 @@ header .nav-bottom {
     padding: 0;
   }
 
+  header .nav-tools .nav-search .search-box {
+    border-color: var(--dark-orange);
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: calc(100% + 27px);
+    z-index: 10;
+    width: 100%;
+    background: #fff;
+    border-top: 10px solid;
+    margin-bottom: 0;
+    box-shadow: 0 5px 10px 0 rgb(0 0 0 / 10%);
+  }
+
+  header .nav-tools .nav-search .search-box .search-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font: normal 18px var(--heading-font-family);
+    padding: 33px 50px 23px;
+    border-bottom: 1px solid #bbb;
+    color: var(--dark-orange);
+  }
+
+  header .nav-tools .nav-search .search-box .search-top .search-top-left {
+    margin-right: 20px;
+  }
+
   header nav .nav-tools .nav-language {
     display: flex;
     align-items: center;

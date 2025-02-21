@@ -162,8 +162,9 @@ function letsTranslate(ele) {
 }
 
 function decorateSearchBox(searchBox) {
-  searchBox.innerHTML = `<div id="search-box">
-            <div class="search-top">
+  searchBox.innerHTML = `<div class="search-top">
+  <div class="searchHeaderBtn">
+              </div>
               <div class="search-top-left">What would you like to search?</div>
               <div class="search-top-right"><span class="close-search">Close</span></div>
             </div><!--/#search-top-->
@@ -176,10 +177,11 @@ function decorateSearchBox(searchBox) {
             </div><!--/#search-form-wrap-->
             <div class="search-middle">
               <div class="search-middle-left">
+              <div class="searchHeaderBtn">
+              </div>
                 <h2>Popular Searches</h2>
               </div><!--/#search-middle-left-->
-            </div><!--/#search-middle-->
-</div><!--/#search-box-->`;
+            </div><!--/#search-middle-->`;
 }
 
 function handleNavTools(navWrapper, expandElement) {
