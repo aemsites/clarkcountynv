@@ -779,3 +779,15 @@ main > div.section.newsdetail > .default-content-wrapper > p {
 .image-right img {
     float: right;
 }
+
+.team-list {
+    h2 {
+        padding-top: 30px;
+        padding-bottom: 0;
+        margin: unset;
+    }
+
+    p {
+        margin-top: 0;
+    }
+}
