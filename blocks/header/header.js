@@ -161,6 +161,27 @@ function letsTranslate(ele) {
   hideGoogleTranslateBar();
 }
 
+function decorateSearchBox(searchBox) {
+  searchBox.innerHTML = `<div id="search-box">
+            <div class="search-top">
+              <div class="search-top-left">What would you like to search?</div>
+              <div class="search-top-right"><span class="close-search">Close</span></div>
+            </div><!--/#search-top-->
+            <div class="search-form-wrap">
+              <form class="search-form" method="GET" action="search.php" role="search" aria-label="sitewide">
+                <label for="search-input"><span class="sr-only">Search</span></label>
+                <input name="q" class="form-control search-input" placeholder="Search" type="search" id="search-input">
+                <button>Go</button>
+              </form>
+            </div><!--/#search-form-wrap-->
+            <div class="search-middle">
+              <div class="search-middle-left">
+                <h2>Popular Searches</h2>
+              </div><!--/#search-middle-left-->
+            </div><!--/#search-middle-->
+</div><!--/#search-box-->`;
+}
+
 function handleNavTools(navWrapper, expandElement) {
   let buttonInnerText = 'English';
   let imgSrc = normalizeImage('english');
@@ -179,6 +200,13 @@ function handleNavTools(navWrapper, expandElement) {
     const searchText = span();
     searchText.textContent = searchTool.innerText;
     searchDiv.appendChild(searchText);
+    const searchBox = div({ class: 'search-box' });
+    decorateSearchBox(searchBox);
+    searchBox.classList.add('hidden');
+    searchDiv.appendChild(searchBox);
+    searchDiv.addEventListener('click', () => {
+      searchBox.classList.remove('hidden');
+    });
     const languageDiv = div({ class: 'nav-language' });
     languageDiv.setAttribute('id', 'google-translate-wrap');
     const languageDiv1 = div({ class: 'google-translate' });
