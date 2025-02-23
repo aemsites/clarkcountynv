@@ -189,10 +189,12 @@ function handleNavTools(navWrapper, expandElement) {
   let imgSrc = normalizeImage('english');
   const tools = [];
   tools[0] = navWrapper.querySelector('.nav-tools .default-content-wrapper p');
-  tools[1] = navWrapper.querySelector('.nav-tools .default-content-wrapper ul');
-  if (tools && tools.length === 2) {
+  tools[1] = navWrapper.querySelector('.nav-tools .default-content-wrapper ul:first-of-type');
+  tools[2] = navWrapper.querySelector('.nav-tools .default-content-wrapper ul:last-of-type');
+  if (tools && tools.length === 3) {
     const searchTool = tools[0];
-    const languageTool = tools[1];
+    const searchPopularList = tools[1];
+    const languageTool = tools[2];
     const nav = document.querySelector('.nav-wrapper nav');
     const searchDiv = div({ class: 'nav-search' });
     const searchIcon = img({ class: 'nav-search-icon' });
@@ -204,6 +206,8 @@ function handleNavTools(navWrapper, expandElement) {
     searchDiv.appendChild(searchText);
     const searchBox = div({ class: 'search-box' });
     decorateSearchBox(searchBox);
+    searchBox.querySelector('.search-middle-left').appendChild(searchPopularList);
+    searchPopularList.classList.add('search-popular-list');
     searchBox.classList.add('hidden');
     searchDiv.appendChild(searchBox);
     searchDiv.addEventListener('click', () => {
