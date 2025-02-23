@@ -22,7 +22,7 @@ header.mobile {
 }
 
 .top {
-  top: 0 !important
+  top: 0 !important;
 }
 
 header.mobile + main {

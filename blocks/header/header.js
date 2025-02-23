@@ -210,8 +210,22 @@ function handleNavTools(navWrapper, expandElement) {
     searchPopularList.classList.add('popular-searches-list');
     searchBox.classList.add('hidden');
     searchDiv.appendChild(searchBox);
-    searchDiv.addEventListener('click', () => {
-      searchBox.classList.remove('hidden');
+    searchIcon.addEventListener('click', () => {
+      if (searchBox.classList.contains('hidden')) {
+        searchBox.classList.remove('hidden');
+      } else {
+        searchBox.classList.add('hidden');
+      }
+    });
+    searchText.addEventListener('click', () => {
+      if (searchBox.classList.contains('hidden')) {
+        searchBox.classList.remove('hidden');
+      } else {
+        searchBox.classList.add('hidden');
+      }
+    });
+    searchBox.querySelector('.search-top-right').addEventListener('click', () => {
+      searchBox.classList.add('hidden');
     });
     const languageDiv = div({ class: 'nav-language' });
     languageDiv.setAttribute('id', 'google-translate-wrap');
