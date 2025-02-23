@@ -207,7 +207,7 @@ function handleNavTools(navWrapper, expandElement) {
     const searchBox = div({ class: 'search-box' });
     decorateSearchBox(searchBox);
     searchBox.querySelector('.search-middle-left').appendChild(searchPopularList);
-    searchPopularList.classList.add('search-popular-list');
+    searchPopularList.classList.add('popular-searches-list');
     searchBox.classList.add('hidden');
     searchDiv.appendChild(searchBox);
     searchDiv.addEventListener('click', () => {
