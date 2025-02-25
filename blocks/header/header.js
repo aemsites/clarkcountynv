@@ -183,16 +183,16 @@ function decorateSearchBox(searchBox) {
                   <li><a id="search-3" href="#search-3">All of Clark County</a></li>
                 </ul>
                 <div class="tab-content clearfix">
-                  <div class="tab-pane active" id="search-1">
+                  <div class="tab-pane" id="search-1">
                     <h2>Services</h2>
                     <div id="curated" style="">
                     </div>
                   </div>
-                  <div class="tab-pane" id="search-2">
+                  <div class="tab-pane off" id="search-2">
                     <h2>Forms</h2>
                     <div class="g-search-wrap"></div>
                   </div>
-                  <div class="tab-pane" id="search-3">
+                  <div class="tab-pane off" id="search-3">
                     <h2>All of Clark County</h2>
                     <div class="g-search-wrap"></div>
                   </div>
@@ -218,9 +218,9 @@ function enableTabbing(searchBox) {
         const targetId = ele.querySelector('a').getAttribute('id');
         tabContent.querySelectorAll('.tab-pane').forEach((tab) => {
           if (tab.getAttribute('id') !== targetId) {
-            tab.style.display = 'none';
+            tab.classList.add('off');
           } else {
-            tab.style.display = 'block';
+            tab.classList.remove('off');
           }
         });
         const siblings = getAllSiblings(ele, ele.parentElement);

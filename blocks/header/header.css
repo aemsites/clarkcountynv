@@ -17,6 +17,10 @@ iframe.skiptranslate {
   visibility: hidden !important;
 }
 
+.off {
+  display: none;
+}
+
 header.mobile {
   position: absolute;
 }
