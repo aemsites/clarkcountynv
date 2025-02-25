@@ -3,6 +3,7 @@ import { loadFragment } from '../fragment/fragment.js';
 import {
   div, img, span, a, button, details, summary, h2,
 } from '../../scripts/dom-helpers.js';
+import { getAllSiblings } from '../../scripts/utils.js';
 
 function normalizeImage(str) {
   const imagePath = '/assets/images/google-translations/';
@@ -175,14 +176,14 @@ function decorateSearchBox(searchBox) {
                 <button>Go</button>
               </form>
               <div class="search-results" class="clearfix" style="">
-                <ul class="search-nav clearfix nav nav-tabs">
+                <ul class="search-nav clearfix">
                   <li class="pull-right" id="close-curated"><i class="fa fa-close"></i></li>
-                  <li class="active" href="#search-1" data-toggle="tab">Services</li>
-                  <li href="#search-2" data-toggle="tab">Forms</li>
-                  <li href="#search-3" data-toggle="tab">All of Clark County</li>
+                  <li><a id="search-1" href="#search-1">Services</a></li>
+                  <li><a id="search-2" href="#search-2">Forms</a></li>
+                  <li><a id="search-3" href="#search-3">All of Clark County</a></li>
                 </ul>
                 <div class="tab-content clearfix">
-                  <div class="tab-pane" id="search-1">
+                  <div class="tab-pane active" id="search-1">
                     <h2>Services</h2>
                     <div id="curated" style="">
                     </div>
@@ -208,6 +209,31 @@ function decorateSearchBox(searchBox) {
             </div><!--/#search-middle-->`;
 }
 
+function enableTabbing(searchBox) {
+  const tabContent = searchBox.querySelector('.search-results .tab-content');
+  searchBox.querySelectorAll('.search-results .search-nav li').forEach((ele) => {
+    if (ele.querySelector('a')) {
+      ele.querySelector('a').addEventListener('click', () => {
+        ele.querySelector('a').classList.add('active');
+        const targetId = ele.querySelector('a').getAttribute('id');
+        tabContent.querySelectorAll('.tab-pane').forEach((tab) => {
+          if (tab.getAttribute('id') !== targetId) {
+            tab.style.display = 'none';
+          } else {
+            tab.style.display = 'block';
+          }
+        });
+        const siblings = getAllSiblings(ele, ele.parentElement);
+        siblings.forEach((sibling) => {
+          if (sibling.querySelector('a') && sibling.querySelector('a').classList.contains('active')) {
+            sibling.querySelector('a').classList.remove('active');
+          }
+        });
+      });
+    }
+  });
+}
+
 function handleNavTools(navWrapper, expandElement) {
   let buttonInnerText = 'English';
   let imgSrc = normalizeImage('english');
@@ -230,6 +256,7 @@ function handleNavTools(navWrapper, expandElement) {
     searchDiv.appendChild(searchText);
     const searchBox = div({ class: 'search-box' });
     decorateSearchBox(searchBox);
+    enableTabbing(searchBox);
     searchBox.querySelector('.search-middle-left').appendChild(searchPopularList);
     searchPopularList.classList.add('popular-searches-list');
     searchBox.classList.add('hidden');
