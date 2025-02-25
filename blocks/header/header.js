@@ -178,8 +178,8 @@ function decorateSearchBox(searchBox) {
                 <ul class="search-nav clearfix nav nav-tabs">
                   <li class="pull-right" id="close-curated"><i class="fa fa-close"></i></li>
                   <li class="active" href="#search-1" data-toggle="tab">Services</li>
-                  <li class="" href="#search-2" data-toggle="tab">Forms</li>
-                  <li class="" href="#search-3" data-toggle="tab">All of Clark County</li>
+                  <li href="#search-2" data-toggle="tab">Forms</li>
+                  <li href="#search-3" data-toggle="tab">All of Clark County</li>
                 </ul>
                 <div class="tab-content clearfix">
                   <div class="tab-pane" id="search-1">
