@@ -175,7 +175,7 @@ function decorateSearchBox(searchBox) {
                 <input name="q" class="form-control search-input" placeholder="Search" type="search" id="search-input">
                 <button>Go</button>
               </form>
-              <div class="search-results" class="clearfix off" style="">
+              <div class="search-results off" style="">
                 <ul class="search-nav clearfix">
                   <li class="pull-right" id="close-curated"><i class="fa fa-close"></i></li>
                   <li><a id="search-1" href="#search-1">Services</a></li>
