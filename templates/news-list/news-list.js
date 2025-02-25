@@ -35,7 +35,7 @@ export default async function decorate(doc) {
 
   // TODO: add proper location for query index
   await new ArticleList({
-    jsonPath: `/${locale}/${news}/query-index.json`,
+    jsonPath: '/news/query-index.json',
     articleContainer: $articles,
     articleCard: $articleCard,
     articlesPerPage,
