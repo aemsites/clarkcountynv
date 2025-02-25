@@ -969,6 +969,12 @@ header .nav-tools .nav-search .search-box .search-middle .search-middle-left ul.
     margin: 0 0 10px;
    }
 
+   header .nav-tools .nav-search .search-box .search-form-wrap .search-results .tab-content .tab-pane .g-search-wrap iframe {
+    min-height: 370px;
+    border: 0 !important;
+    width: 100%;
+   }
+
   header nav .nav-sections .default-content-wrapper > ul > li {
     flex: 0 1 auto;
     position: relative;

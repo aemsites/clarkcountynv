@@ -1,7 +1,7 @@
 import { getMetadata, toClassName } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 import {
-  div, img, span, a, button, details, summary, h2,
+  div, img, span, a, button, details, summary, h2, iframe,
 } from '../../scripts/dom-helpers.js';
 import { getAllSiblings } from '../../scripts/utils.js';
 
@@ -190,11 +190,13 @@ function decorateSearchBox(searchBox) {
                   </div>
                   <div class="tab-pane off" id="search-2">
                     <h2>Forms</h2>
-                    <div class="g-search-wrap"></div>
+                    <div class="g-search-wrap">
+                    </div>
                   </div>
                   <div class="tab-pane off" id="search-3">
                     <h2>All of Clark County</h2>
-                    <div class="g-search-wrap"></div>
+                    <div class="g-search-wrap">
+                    </div>
                   </div>
                 </div><!--/.tab-content-->
               </div>
@@ -221,6 +223,15 @@ function enableTabbing(searchBox) {
             tab.classList.add('off');
           } else {
             tab.classList.remove('off');
+            if (targetId === 'search-2') {
+              const addIframe = iframe();
+              addIframe.src = 'https://clarkcountynv.gov/_assets_/plugins/search-box.html?q=the%20filetype:doc%20OR%20filetype:pdf%20OR%20filetype:docx';
+              tab.querySelector('.g-search-wrap').appendChild(addIframe);
+            } else if (targetId === 'search-3') {
+              const addIframe = iframe();
+              addIframe.src = 'https://www.clarkcountynv.gov/_assets_/plugins/search-box.html?q=the';
+              tab.querySelector('.g-search-wrap').appendChild(addIframe);
+            }
           }
         });
         const siblings = getAllSiblings(ele, ele.parentElement);
