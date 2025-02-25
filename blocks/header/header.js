@@ -289,6 +289,16 @@ function handleNavTools(navWrapper, expandElement) {
     searchBox.querySelector('.search-top-right').addEventListener('click', () => {
       searchBox.classList.add('hidden');
     });
+
+    searchBox.querySelector('input').addEventListener('input', (key) => {
+      key.preventDefault();
+      const rawkey = key.target.value;
+      if (rawkey.length > 3) {
+        searchBox.querySelector('.search-results').classList.remove('off');
+        searchBox.querySelector('.tab-pane').classList.remove('off');
+      }
+    });
+
     const languageDiv = div({ class: 'nav-language' });
     languageDiv.setAttribute('id', 'google-translate-wrap');
     const languageDiv1 = div({ class: 'google-translate' });
