@@ -174,12 +174,12 @@ function decorateSearchBox(searchBox) {
                 <input name="q" class="form-control search-input" placeholder="Search" type="search" id="search-input">
                 <button>Go</button>
               </form>
-              <div id="search-results" class="clearfix" style="">
-                <ul class="search-nav clearfix">
+              <div class="search-results" class="clearfix" style="">
+                <ul class="search-nav clearfix nav nav-tabs">
                   <li class="pull-right" id="close-curated"><i class="fa fa-close"></i></li>
-                  <li class="" data-tab="#search-1" data-toggle="tab">Services</li>
-                  <li data-tab="#search-2" data-toggle="tab" class="active">Forms</li>
-                  <li data-tab="#search-3" data-toggle="tab" class="">All of Clark County</li>
+                  <li class="active" href="#search-1" data-toggle="tab">Services</li>
+                  <li class="" href="#search-2" data-toggle="tab">Forms</li>
+                  <li class="" href="#search-3" data-toggle="tab">All of Clark County</li>
                 </ul>
                 <div class="tab-content clearfix">
                   <div class="tab-pane" id="search-1">
@@ -187,7 +187,7 @@ function decorateSearchBox(searchBox) {
                     <div id="curated" style="">
                     </div>
                   </div>
-                  <div class="tab-pane active" id="search-2">
+                  <div class="tab-pane" id="search-2">
                     <h2>Forms</h2>
                     <div class="g-search-wrap"></div>
                   </div>
