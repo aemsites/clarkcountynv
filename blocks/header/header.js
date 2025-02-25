@@ -170,12 +170,12 @@ function decorateSearchBox(searchBox) {
               <div class="search-top-right"><span class="close-search">Close</span></div>
             </div><!--/#search-top-->
             <div class="search-form-wrap">
-              <form class="search-form" method="GET" action="search.php" role="search" aria-label="sitewide">
+              <form class="search-form" method="GET" action="search" role="search" aria-label="sitewide">
                 <label for="search-input"><span class="sr-only">Search</span></label>
                 <input name="q" class="form-control search-input" placeholder="Search" type="search" id="search-input">
                 <button>Go</button>
               </form>
-              <div class="search-results" class="clearfix" style="">
+              <div class="search-results" class="clearfix off" style="">
                 <ul class="search-nav clearfix">
                   <li class="pull-right" id="close-curated"><i class="fa fa-close"></i></li>
                   <li><a id="search-1" href="#search-1">Services</a></li>
@@ -225,11 +225,11 @@ function enableTabbing(searchBox) {
             tab.classList.remove('off');
             if (targetId === 'search-2') {
               const addIframe = iframe();
-              addIframe.src = 'https://clarkcountynv.gov/_assets_/plugins/search-box.html?q=the%20filetype:doc%20OR%20filetype:pdf%20OR%20filetype:docx';
+              addIframe.src = 'https://main--clarkcountynv--aemsites.aem.live/';
               tab.querySelector('.g-search-wrap').appendChild(addIframe);
             } else if (targetId === 'search-3') {
               const addIframe = iframe();
-              addIframe.src = 'https://www.clarkcountynv.gov/_assets_/plugins/search-box.html?q=the';
+              addIframe.src = 'https://main--clarkcountynv--aemsites.aem.live/';
               tab.querySelector('.g-search-wrap').appendChild(addIframe);
             }
           }
