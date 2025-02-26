@@ -226,11 +226,15 @@ function enableTabbing(searchBox) {
             if (targetId === 'search-2') {
               const addIframe = iframe();
               addIframe.src = 'https://main--clarkcountynv--aemsites.aem.live/';
-              tab.querySelector('.g-search-wrap').appendChild(addIframe);
+              if (!tab.querySelector('.g-search-wrap').querySelector('iframe')) {
+                tab.querySelector('.g-search-wrap').appendChild(addIframe);
+              }
             } else if (targetId === 'search-3') {
               const addIframe = iframe();
               addIframe.src = 'https://main--clarkcountynv--aemsites.aem.live/';
-              tab.querySelector('.g-search-wrap').appendChild(addIframe);
+              if (!tab.querySelector('.g-search-wrap').querySelector('iframe')) {
+                tab.querySelector('.g-search-wrap').appendChild(addIframe);
+              }
             }
           }
         });
