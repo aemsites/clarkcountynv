@@ -280,18 +280,23 @@ function handleNavTools(navWrapper, expandElement) {
     searchIcon.addEventListener('click', () => {
       if (searchBox.classList.contains('hidden')) {
         searchBox.classList.remove('hidden');
+        searchBox.querySelector('input').value = '';
       } else {
         searchBox.classList.add('hidden');
+        searchBox.querySelector('input').value = '';
       }
     });
     searchText.addEventListener('click', () => {
       if (searchBox.classList.contains('hidden')) {
         searchBox.classList.remove('hidden');
+        searchBox.querySelector('input').value = '';
       } else {
         searchBox.classList.add('hidden');
+        searchBox.querySelector('input').value = '';
       }
     });
     searchBox.querySelector('.search-top-right').addEventListener('click', () => {
+      searchBox.querySelector('input').value = '';
       searchBox.classList.add('hidden');
     });
 
