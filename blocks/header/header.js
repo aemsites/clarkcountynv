@@ -177,7 +177,7 @@ function decorateSearchBox(searchBox) {
               </form>
               <div class="search-results off" style="">
                 <ul class="search-nav clearfix">
-                  <li class="pull-right" id="close-curated"><i class="fa fa-close"></i></li>
+                  <li class="close-curated"><i class="fa fa-close"></i></li>
                   <li><a id="search-1" href="#search-1">Services</a></li>
                   <li><a id="search-2" href="#search-2">Forms</a></li>
                   <li><a id="search-3" href="#search-3">All of Clark County</a></li>
@@ -302,6 +302,11 @@ function handleNavTools(navWrapper, expandElement) {
         searchBox.querySelector('.search-results').classList.remove('off');
         searchBox.querySelector('.tab-pane').classList.remove('off');
       }
+    });
+
+    searchBox.querySelector('.close-curated').addEventListener('click', () => {
+      searchBox.querySelector('.search-results').classList.add('off');
+      searchBox.querySelector('.tab-pane').classList.add('off');
     });
 
     searchBox.querySelector('form').addEventListener('submit', (event) => {
