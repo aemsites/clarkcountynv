@@ -246,6 +246,7 @@ function enableTabbing(searchBox) {
 }
 
 function handleNavTools(navWrapper, expandElement) {
+  let rawkey = '';
   let buttonInnerText = 'English';
   let imgSrc = normalizeImage('english');
   const tools = [];
@@ -292,8 +293,16 @@ function handleNavTools(navWrapper, expandElement) {
 
     searchBox.querySelector('input').addEventListener('input', (key) => {
       key.preventDefault();
-      const rawkey = key.target.value;
-      if (rawkey.length > 3) {
+      rawkey = key.target.value;
+      if (rawkey.length > 2) {
+        searchBox.querySelector('.search-results').classList.remove('off');
+        searchBox.querySelector('.tab-pane').classList.remove('off');
+      }
+    });
+
+    searchBox.querySelector('form').addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (searchBox.querySelector('.search-results').classList.contains('off')) {
         searchBox.querySelector('.search-results').classList.remove('off');
         searchBox.querySelector('.tab-pane').classList.remove('off');
       }
