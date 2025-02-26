@@ -76,7 +76,7 @@
 .cards-wrapper:has(.center-button) {
     display: flex;
     justify-content: center;
-    align: center;
+    align-items: center;
     margin: 30px;
     color:blue;
 }

@@ -650,7 +650,6 @@ main .section.details-404 > .default-content-wrapper {
     
     picture {
       display: inline-block;
-      /* width: 60%; */
       height: 100%;
       object-fit: cover;
     }
