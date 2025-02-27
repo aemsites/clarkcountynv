@@ -231,7 +231,7 @@ function enableTabbing(searchBox) {
               }
             } else if (targetId === 'search-3') {
               const addIframe = iframe();
-              addIframe.src = 'https://main--clarkcountynv--aemsites.aem.live/';
+              addIframe.src = 'https://www.clarkcountynv.gov/_assets_/plugins/search-box.html?q=tax';
               if (!tab.querySelector('.g-search-wrap').querySelector('iframe')) {
                 tab.querySelector('.g-search-wrap').appendChild(addIframe);
               }
