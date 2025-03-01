@@ -49,7 +49,6 @@ export function getAllSiblings(element, parent) {
 export function ScrolltoTop() {
   const buttonScrolltoTop = document.querySelector('div.top-arrow picture');
   if (buttonScrolltoTop) {
-    console.log('buttonScrolltoTop', buttonScrolltoTop);
     buttonScrolltoTop.addEventListener('click', () => { window.scrollTo({ top: 0, left: 0, behavior: 'smooth' }); });
     window.onscroll = function funcScroll() {
       if (window.scrollY > 200) buttonScrolltoTop.classList.add('visible');
