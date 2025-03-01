@@ -36,15 +36,15 @@ function buildTOCSide(ul, block) {
   window.addEventListener('scroll', () => {
     if (ul) {
       if (
-        document.documentElement.scrollTop >
-          outerHeight(document.querySelector('main > .hero-vertical-tabs-container .hero-vertical-tabs.block')) - 45 &&
-        document.documentElement.scrollTop <
-          document.querySelector('body').offsetHeight -
-            outerHeight(document.querySelector('main .toc-container ul')) -
-            outerHeight(document.querySelector('main > .contact-us')) -
-            outerHeight(document.querySelector('main > .about-us')) -
-            outerHeight(document.querySelector('footer')) -
-            80
+        document.documentElement.scrollTop
+        > outerHeight(document.querySelector('main > .hero-vertical-tabs-container .hero-vertical-tabs.block')) - 45
+        && document.documentElement.scrollTop
+        < document.querySelector('body').offsetHeight
+        - outerHeight(document.querySelector('main .toc-container ul'))
+        - outerHeight(document.querySelector('main > .contact-us'))
+        - outerHeight(document.querySelector('main > .about-us'))
+        - outerHeight(document.querySelector('footer'))
+        - 80
       ) {
         ul.classList.add('fixed');
       } else {
