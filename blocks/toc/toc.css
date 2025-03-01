@@ -24,9 +24,8 @@ main .toc-container .section-container {
   main .toc.block ul {
     display: flex;
     justify-content: center;
-    flex-direction: row;
+    flex-flow: row wrap;
     padding: 0;
-    width: 15rem;
     background: var(--white);
     margin: 0;
     list-style: none;
@@ -49,10 +48,21 @@ main .toc-container .section-container {
   }
   
   main .toc.block ul li a {
-    line-height: 1.5rem;
-    display: inline-flex;
     align-items: center;
-    color: var(--secondary);
+    margin: 5px 0 !important;
+    padding: .375rem .75rem !important;
+    background: var(--default-button);
+    color: #fff;
+    border: 0;
+    border-radius: 5px;
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 400;
+    text-decoration: none;
+    cursor: pointer;
+    line-height: 1.5;
+    vertical-align: top;
+    transition: all .3s;
   }
   
   main .toc-container .section-container .main-content {
@@ -72,7 +82,7 @@ main .toc-container .section-container {
   
   main .toc-container .section-container .toc.flat ul li {
     padding: 4px 1rem;
-    color: var(--secondary);
+    color: var(--default-button);
     border-right: 1px solid var(--overlay-background-color);
   }
   
@@ -83,7 +93,7 @@ main .toc-container .section-container {
   main .toc-container .section-container .toc.flat ul li a {
     display: unset;
     line-height: unset;
-    color: var(--secondary);
+    color: var(--default-button);
   }
   
   main .main-content h2 {
@@ -94,7 +104,7 @@ main .toc-container .section-container {
     scroll-margin-top: 11rem;
   }
   
-  @media (min-width: 62rem) {
+  @media (width >= 600px) {
     main .toc-container .section-container {
       max-width: calc(54.5rem + 2rem);
     }
