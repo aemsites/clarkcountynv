@@ -174,8 +174,9 @@ div.top-arrow picture {
 }
 
 div.top-arrow picture img {
-  width: 100%;
-  height: 100%;
+  width: auto;
+  height: auto;
+  max-width: 300%;
 }
 
 div.top-arrow picture.visible {
