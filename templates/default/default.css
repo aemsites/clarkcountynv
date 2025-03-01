@@ -255,6 +255,7 @@ main .mainmenu .rightsection.no-button a:any-link {
     padding: 0 !important;
     margin: 0 !important;
     white-space: wrap;
+    text-align: unset;
 }
 
 main .mainmenu .rightsection a:any-link.button.default {
