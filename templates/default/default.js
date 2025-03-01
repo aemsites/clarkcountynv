@@ -105,7 +105,6 @@ export default async function decorate(doc) {
       }
     }
   });
-
   const $mainmenu = div({ class: 'mainmenu' }, $leftsection, $rightsection);
   $main.append($mainmenu);
 }
