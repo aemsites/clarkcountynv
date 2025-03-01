@@ -131,6 +131,24 @@ main .toc-container .section-container {
       border-top: 1px solid var(--overlay-background-color);
       margin-bottom: unset;
     }
+
+    main .toc.block ul li a {
+      align-items: center;
+      margin: 5px 0 !important;
+      padding: .375rem .75rem !important;
+      background: var(--default-button);
+      color: #fff;
+      border: 0;
+      border-radius: 5px;
+      display: inline-block;
+      font-size: 1rem;
+      font-weight: 400;
+      text-decoration: none;
+      cursor: pointer;
+      line-height: 1.5;
+      vertical-align: top;
+      transition: all .3s;
+    }
   
     main .toc.block ul li:last-child {
       border-bottom: 1px solid var(--overlay-background-color);
