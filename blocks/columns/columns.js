@@ -3,10 +3,17 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 export default function decorate(block) {
   [...block.children].forEach((row) => {
     [...row.children].forEach((col) => {
-      if (col.querySelector('a') && col.querySelectorAll('p:not(:has(a)), h1, h2, h3, h4, h5, h6, div').length === 0) {
-        const imgSrc = col.querySelector('a').href;
+      if (col.querySelectorAll('a') && col.querySelectorAll('p:not(:has(a)), h1, h2, h3, h4, h5, h6, div').length === 0) {
+        const imgSrc = col.querySelectorAll('a')[0].href;
         const pic = createOptimizedPicture(imgSrc, imgSrc.split('/').pop());
-        if (pic) {
+        if (col.querySelectorAll('a')[1]) {
+          const redirectElement = col.querySelectorAll('a')[1];
+          if (pic) {
+            col.innerHTML = '';
+            col.append(pic);
+            col.append(redirectElement);
+          }
+        } else if (pic) {
           col.replaceWith(pic);
         }
       }
