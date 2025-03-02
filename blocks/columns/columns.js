@@ -2,8 +2,8 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 
 export default function decorate(block) {
   [...block.children].forEach((row) => {
-    [...row.children].forEach((col, i) => {
-      if (i === 0 && col.querySelector('a')) {
+    [...row.children].forEach((col) => {
+      if (col.querySelector('a') && col.querySelectorAll('p:not(:has(a)), h1, h2, h3, h4, h5, h6, div').length === 0) {
         const imgSrc = col.querySelector('a').href;
         const pic = createOptimizedPicture(imgSrc, imgSrc.split('/').pop());
         if (pic) {
