@@ -23,10 +23,7 @@ export default async function decorate(doc) {
   const titleText = getMetadata('featuredtitle');
   doc.querySelector('.title').innerHTML = `<h2>${titleText}</h2>`;
 
-  let featuredImage = getMetadata('featuredimage');
-  if (featuredImage.length < 1) {
-    featuredImage = 'https://main--clarkcountynv--aemsites.aem.page/assets/images/general/logo-clarkcounty.png';
-  }
+  const featuredImage = getMetadata('featuredimage');
   doc.querySelector('.image').innerHTML = `<img src="${featuredImage}">`;
 
   const readMoreData = getMetadata('readmore');
