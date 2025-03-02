@@ -9,6 +9,29 @@ function enablePlaybutton(col, pic, redirectURL) {
   col.classList.add('explore-img');
 }
 
+/** allow for link attributes to be added by authors
+ * example usage = Text [class:button,target:_blank,title:Title goes here]
+ * @param main
+ */
+export function decorateLinks(element) {
+  element.querySelectorAll('a').forEach(($a) => {
+    // match text inside [] and split by '|'
+    const match = $a.textContent.match(/(.*)\[\[([^\]\]]*)]/);
+    if (match) {
+      // eslint-disable-next-line no-unused-vars
+      const [_, linkText, attrs] = match;
+      $a.textContent = linkText.trim();
+      $a.setAttribute('title', $a.textContent);
+      attrs.split(',').forEach((attr) => {
+        let [key, ...value] = attr.trim().split(':');
+        key = key.trim().toLowerCase();
+        value = value.join().trim();
+        if (key) $a.setAttribute(key, value);
+      });
+    }
+  });
+}
+
 export default function decorate(block) {
   [...block.children].forEach((row) => {
     [...row.children].forEach((col) => {
@@ -36,18 +59,19 @@ export default function decorate(block) {
         }
       } else {
         col.classList.add('explore-item');
+        decorateLinks(col);
       }
     });
   });
   const cols = [...block.firstElementChild.children];
 
   block.classList.add(`columns-${cols.length}-cols`);
-  for (let i = 0; i < cols.length; i += 1) {
-    cols[i].classList.add(`column${i + 1}`);
-    [...cols[i].children].forEach((child) => {
+  for (let counter = 0; counter < cols.length; counter += 1) {
+    cols[counter].classList.add(`column${counter + 1}`);
+    [...cols[counter].children].forEach((child) => {
       child.classList.remove('button-container');
       child.classList.add('columns-paragraph');
-      child.classList.add(`column${i + 1}-paragraph`);
+      child.classList.add(`column${counter + 1}-paragraph`);
     });
   }
 
