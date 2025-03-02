@@ -114,7 +114,7 @@
   }
 
   .columns.highlight .explore-img {
-    height: 700px;
+    height: auto;
     position: relative;
   }
 }
