@@ -216,7 +216,7 @@ export default async function decorate(block) {
   // Sort via dates
   yesArray.sort((x, y) => new Date(x.start) - new Date(y.start));
   divisions = placeholders.divisions.data;
-  const blockContents = resultParsers.columns(yesArray);
+  const blockContents = resultParsers.columns(yesArray.slice(0, 4));
   const builtBlock = buildBlock('columns', blockContents);
   block.appendChild(builtBlock);
   decorateBlock(builtBlock);
