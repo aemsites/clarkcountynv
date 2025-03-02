@@ -1,4 +1,13 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
+import { a, i } from '../../scripts/dom-helpers.js';
+
+function enablePlaybutton(col, pic, redirectURL) {
+  const playButton = a({ class: 'explore-video-play' }, i({ class: 'play-button' }));
+  playButton.href = redirectURL;
+  col.append(pic);
+  col.append(playButton);
+  col.classList.add('explore-img');
+}
 
 export default function decorate(block) {
   [...block.children].forEach((row) => {
@@ -10,12 +19,23 @@ export default function decorate(block) {
           const redirectElement = col.querySelectorAll('a')[1];
           if (pic) {
             col.innerHTML = '';
-            col.append(pic);
-            col.append(redirectElement);
+            if (redirectElement.href.includes('youtube.com') || redirectElement.href.includes('youtu.be')) {
+              enablePlaybutton(col, pic, redirectElement.href);
+            } else {
+              const redirect = a({ class: 'redirect' });
+              redirect.href = redirectElement.href;
+              redirect.append(pic);
+              col.append(pic);
+              col.classList.add('explore-img');
+            }
           }
         } else if (pic) {
-          col.replaceWith(pic);
+          col.innerHTML = '';
+          col.append(pic);
+          col.classList.add('explore-img');
         }
+      } else {
+        col.classList.add('explore-item');
       }
     });
   });
