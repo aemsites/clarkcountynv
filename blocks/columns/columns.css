@@ -24,14 +24,11 @@
 }
 
 .columns.highlight .explore-item {
-  width: 50%;
-  padding-left: calc(50% - 815px);
-  padding-right: 140px;
+  padding: 20px;
 }
 
 .columns.highlight .explore-img {
-  width: 50%;
-  height: 700px;
+  height: auto;
   position: relative;
 }
 
@@ -109,5 +106,15 @@
   .columns > div > div {
     flex: 1;
     order: unset;
+  }
+
+  .columns.highlight .explore-item {
+    padding-left: calc(50% - 815px);
+    padding-right: 140px;
+  }
+
+  .columns.highlight .explore-img {
+    height: 700px;
+    position: relative;
   }
 }
