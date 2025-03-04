@@ -8,9 +8,7 @@
     margin-bottom: 50px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+   
 }
 
 .alert div{
@@ -28,6 +26,9 @@
     margin: 0 0 15px;
     font: 700 36px Oswald, sans-serif;
     line-height: 1;
+    position: relative;
+    left: 40%;
+
 }
 
 .alert p{
@@ -48,8 +49,8 @@
 
 .icon-alert-icon{
     position: absolute;
-    top: 50%;
-    left: 5%;
+    top: 40%;
+    left: 4%;
     transform: translateY(-50%);
     display: inline-block;
     overflow: hidden;
@@ -66,11 +67,18 @@
     display: block;
     border-color: #B54425;
     border-radius: 5px;
+    height: 120px;
 }
 
 @media only screen and (width <= 767px) {
     .alert .icon-alert-icon {
         width: 40px;
         height: 40px;
+    }
+}
+
+@media only screen and (width <= 767px) {
+    h2 {
+        font-size: 30px;
     }
 }
