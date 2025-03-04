@@ -112,7 +112,8 @@
 }
 
 .cards.clickable.large-image > ul > a > li {
-    columns: black;
+    color: black;
+    text-decoration: none;
 }
 
 .cards.clickable.large-image > ul > a > li img {
