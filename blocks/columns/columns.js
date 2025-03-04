@@ -54,6 +54,7 @@ function decorateImage(col) {
         redirect.href = redirectElement.href;
         redirect.append(pic);
         col.append(redirect);
+        console.log(col);
       }
     } else {
       col.append(pic);
