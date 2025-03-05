@@ -1,1 +1,2 @@
-/*Placeholder for JS Code*/
+/* Placeholder for JS Code */
+
