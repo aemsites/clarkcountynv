@@ -229,12 +229,11 @@ function buildDocumentCenterBlock(main) {
   const cells = [];
   for (let i = 0; i < elems.length;) {
     const files = document.createElement('div');
-    //check node value null
     if (elems[i].childNodes[0].nodeValue === null) {
       i += 1;
       // eslint-disable-next-line no-continue
       continue;
-     }
+    }
     const summary = elems[i].childNodes[0].nodeValue.trim();
     const liEls = elems[i + 1]?.querySelectorAll('li');
     if (liEls && liEls.length > 0) {
