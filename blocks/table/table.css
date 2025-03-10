@@ -317,7 +317,7 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
 }
 
 .table.align-top table td{
-    vertical-align: top;
+    vertical-align: top !important;
 }
 
 .table.width-50 table td{
@@ -366,4 +366,14 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
 
 .table.fixed-img-150 img{
     width: 150px;
+}
+
+.table.fixed-img-170 img{
+    width: 170px;
+}
+
+.table.col-odd-15 table tbody tr {
+    td:nth-child(odd) {
+        width: 15%;
+    }
 }
