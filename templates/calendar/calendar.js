@@ -212,7 +212,7 @@ function createEvents(eventsList) {
       }
       if (event.excludeDates && event.excludeDates.length > 1) {
         if (typeof event.excludeDates === 'string') {
-          event.excludeDates = event.excludeDates.split(',').map((date) => `${date}T${event.startTime}`);
+          event.excludeDates = event.excludeDates.split(',').map((date) => `${date}T${event.startTime}`).filter((content) => content.includes('-'));
         }
         calendar.addEvent({
           title: event.title,
