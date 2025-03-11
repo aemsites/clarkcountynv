@@ -448,23 +448,25 @@ async function initializeCalendar() {
   let importedData = [];
   const eventsList = [];
   calendarEl = document.getElementById('calendar');
-  importedData = placeholders.calendarevents.data;
-  createCalendar();
-  const checkDivision = window.location.pathname.split('/');
-  if (checkDivision[2] && checkDivision[2].length > 0) {
-    divisions.forEach((division) => {
-      if (normalizeString(division.name) === checkDivision[2]) {
-        if (normalizeString(division.name) === 'featured-events') {
-          getFeaturedEvents();
-        } else {
-          // eslint-disable-next-line max-len
-          const filterData = importedData.filter((event) => normalizeString(event.divisionname) === normalizeString(division.name));
-          createEventList(filterData, eventsList);
+  if (placeholders.calendarevents) {
+    importedData = placeholders.calendarevents.data;
+    createCalendar();
+    const checkDivision = window.location.pathname.split('/');
+    if (checkDivision[2] && checkDivision[2].length > 0) {
+      divisions.forEach((division) => {
+        if (normalizeString(division.name) === checkDivision[2]) {
+          if (normalizeString(division.name) === 'featured-events') {
+            getFeaturedEvents();
+          } else {
+            // eslint-disable-next-line max-len
+            const filterData = importedData.filter((event) => normalizeString(event.divisionname) === normalizeString(division.name));
+            createEventList(filterData, eventsList);
+          }
         }
-      }
-    });
-  } else {
-    events = createEventList(importedData, eventsList);
+      });
+    } else {
+      events = createEventList(importedData, eventsList);
+    }
   }
 }
 
