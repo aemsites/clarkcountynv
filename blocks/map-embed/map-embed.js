@@ -1,6 +1,4 @@
-import {iframe, p} from '../../scripts/dom-helpers.js';
-
-let $mapEmbedUrl = '';
+import { iframe, p } from '../../scripts/dom-helpers.js';
 
 export default function decorate(block) {
   [...block.children].forEach((row) => {
@@ -16,8 +14,8 @@ export default function decorate(block) {
         },
       );
       row.replaceWith($iframe);
-      if(mapEmbedEl.textContent.trim() != mapLink) {
-        $iframe.parentElement.appendChild((p({class: 'map-title'}, mapEmbedEl.textContent.trim())));
+      if (mapEmbedEl.textContent.trim() !== mapLink) {
+        $iframe.parentElement.appendChild((p({ class: 'map-title' }, mapEmbedEl.textContent.trim())));
       }
     }
   });
