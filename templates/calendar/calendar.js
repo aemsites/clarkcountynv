@@ -202,13 +202,19 @@ async function changehref() {
 }
 
 function getbyweekday(daysOfWeek) {
-  if (daysOfWeek.includes('+') || daysOfWeek.includes('-')) {
-    const day = daysOfWeek.split('(')[0].toUpperCase();
-    const within = daysOfWeek.split('(')[1].split(')')[0];
-    return `${day},${within}`;
-  } else {
-    return daysOfWeek.split(',');
-  }
+  const arraydays = [];
+    daysOfWeek.split(',').forEach((ele) => {
+      if (ele.length > 1) {
+        if (ele.includes('(')) {
+          const day = ele.split('(')[0].toUpperCase();
+          const within = ele.split('(')[1].split(')')[0];
+          arraydays.push(`${day}#${within}`);
+        } else {
+          arraydays.push(ele.toUpperCase());
+        } 
+      }
+    });
+    return arraydays;
 }
 
 function createEvents(eventsList) {
@@ -225,22 +231,19 @@ function createEvents(eventsList) {
         if (typeof event.excludeDates === 'string') {
           event.excludeDates = event.excludeDates.split(',').map((date) => `${date}T${event.startTime}`).filter((content) => content.includes('-'));
         }
-        console.log(event.freq);
-        console.log(event.daysOfWeek);
         const eventbyweekday = getbyweekday(event.daysOfWeek);
-        console.log(eventbyweekday);
         /* Converting String into array to leverage map function */
-        const eventbyweekdayarray = eventbyweekday.split('#');
         calendar.addEvent({
           title: event.title,
           allDay: false,
           rrule: {
             freq: event.freq,
-            // byweekday: event.daysOfWeek.split(','),
-            // byweekday: [rrule.RRule.FR.nth(-2)],
-            // byweekday: rrule.RRule.MO.nth(+1),
-            byweekday: eventbyweekdayarray.map((day) => rrule.RRule[day.split(',')[0]].nth(day.split(',')[1])),
-            // byweekday: eventbyweekday,
+            byweekday: eventbyweekday.map((day) => {
+              if (day.includes('#')) {
+                return rrule.RRule[day.split('#')[0]].nth(day.split('#')[1]);
+              }
+              return rrule.RRule[day];
+            }),
             dtstart: event.start,
             until: event.end,
           },
@@ -257,14 +260,17 @@ function createEvents(eventsList) {
         });
       } else {
         const eventbyweekday = getbyweekday(event.daysOfWeek);
-        console.log(eventbyweekday);
         calendar.addEvent({
           title: event.title,
           allDay: false,
           rrule: {
             freq: event.freq,
-            // byweekday: event.daysOfWeek.split(','),
-            byweekday: eventbyweekday,
+            byweekday: eventbyweekday.map((day) => {
+              if (day.includes('#')) {
+                return rrule.RRule[day.split('#')[0]].nth(day.split('#')[1]);
+              }
+              return rrule.RRule[day];
+            }),
             dtstart: event.start,
             until: event.end,
           },
