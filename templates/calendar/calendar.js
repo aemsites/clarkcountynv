@@ -203,18 +203,18 @@ async function changehref() {
 
 function getbyweekday(daysOfWeek) {
   const arraydays = [];
-    daysOfWeek.split(',').forEach((ele) => {
-      if (ele.length > 1) {
-        if (ele.includes('(')) {
-          const day = ele.split('(')[0].toUpperCase();
-          const within = ele.split('(')[1].split(')')[0];
-          arraydays.push(`${day}#${within}`);
-        } else {
-          arraydays.push(ele.toUpperCase());
-        } 
+  daysOfWeek.split(',').forEach((ele) => {
+    if (ele.length > 1) {
+      if (ele.includes('(')) {
+        const day = ele.split('(')[0].toUpperCase();
+        const within = ele.split('(')[1].split(')')[0];
+        arraydays.push(`${day}#${within}`);
+      } else {
+        arraydays.push(ele.toUpperCase());
       }
-    });
-    return arraydays;
+    }
+  });
+  return arraydays;
 }
 
 function createEvents(eventsList) {
@@ -240,8 +240,10 @@ function createEvents(eventsList) {
             freq: event.freq,
             byweekday: eventbyweekday.map((day) => {
               if (day.includes('#')) {
+                // eslint-disable-next-line no-undef
                 return rrule.RRule[day.split('#')[0]].nth(day.split('#')[1]);
               }
+              // eslint-disable-next-line no-undef
               return rrule.RRule[day];
             }),
             dtstart: event.start,
@@ -267,8 +269,10 @@ function createEvents(eventsList) {
             freq: event.freq,
             byweekday: eventbyweekday.map((day) => {
               if (day.includes('#')) {
+                // eslint-disable-next-line no-undef
                 return rrule.RRule[day.split('#')[0]].nth(day.split('#')[1]);
               }
+              // eslint-disable-next-line no-undef
               return rrule.RRule[day];
             }),
             dtstart: event.start,
