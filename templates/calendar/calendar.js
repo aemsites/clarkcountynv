@@ -6,7 +6,7 @@ import { normalizeString, getWindowSize } from '../../scripts/utils.js';
 
 class Obj {
   // eslint-disable-next-line max-len
-  constructor(title, start, end, allDay, daysOfWeek, startTime, endTime, url, backgroundColor, textColor, classNames, readMore, divisionid, excludeDates, duration) {
+  constructor(title, start, end, allDay, daysOfWeek, startTime, endTime, url, backgroundColor, textColor, classNames, readMore, divisionid, excludeDates, duration, freq) {
     this.title = title;
     this.start = start;
     this.end = end;
@@ -22,6 +22,7 @@ class Obj {
     this.divisionid = divisionid;
     this.excludeDates = excludeDates;
     this.duration = duration;
+    this.freq = freq;
   }
 }
 
@@ -200,6 +201,16 @@ async function changehref() {
   });
 }
 
+function getbyweekday(daysOfWeek) {
+  if (daysOfWeek.includes('+') || daysOfWeek.includes('-')) {
+    const day = daysOfWeek.split('(')[0].toUpperCase();
+    const within = daysOfWeek.split('(')[1].split(')')[0];
+    return `${day},${within}`;
+  } else {
+    return daysOfWeek.split(',');
+  }
+}
+
 function createEvents(eventsList) {
   disableSpinner();
   let eventDuration = '';
@@ -214,12 +225,22 @@ function createEvents(eventsList) {
         if (typeof event.excludeDates === 'string') {
           event.excludeDates = event.excludeDates.split(',').map((date) => `${date}T${event.startTime}`).filter((content) => content.includes('-'));
         }
+        console.log(event.freq);
+        console.log(event.daysOfWeek);
+        const eventbyweekday = getbyweekday(event.daysOfWeek);
+        console.log(eventbyweekday);
+        /* Converting String into array to leverage map function */
+        const eventbyweekdayarray = eventbyweekday.split('#');
         calendar.addEvent({
           title: event.title,
           allDay: false,
           rrule: {
-            freq: 'weekly',
-            byweekday: event.daysOfWeek.split(','),
+            freq: event.freq,
+            // byweekday: event.daysOfWeek.split(','),
+            // byweekday: [rrule.RRule.FR.nth(-2)],
+            // byweekday: rrule.RRule.MO.nth(+1),
+            byweekday: eventbyweekdayarray.map((day) => rrule.RRule[day.split(',')[0]].nth(day.split(',')[1])),
+            // byweekday: eventbyweekday,
             dtstart: event.start,
             until: event.end,
           },
@@ -235,12 +256,15 @@ function createEvents(eventsList) {
           id: `${event.divisionid}-${event.title.length}${event.start.length}`,
         });
       } else {
+        const eventbyweekday = getbyweekday(event.daysOfWeek);
+        console.log(eventbyweekday);
         calendar.addEvent({
           title: event.title,
           allDay: false,
           rrule: {
-            freq: 'weekly',
-            byweekday: event.daysOfWeek.split(','),
+            freq: event.freq,
+            // byweekday: event.daysOfWeek.split(','),
+            byweekday: eventbyweekday,
             dtstart: event.start,
             until: event.end,
           },
@@ -294,7 +318,7 @@ function createEventList(importedData, eventsList) {
         }
       }
     });
-    const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, url, event['division-color'], event['division-textColor'], event.classNames, event.readMore, event.divisionid, event.excludeDates, event.duration);
+    const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, url, event['division-color'], event['division-textColor'], event.classNames, event.readMore, event.divisionid, event.excludeDates, event.duration, event.freq);
     eventsList.push(eventObj);
   });
   createEvents(eventsList);
