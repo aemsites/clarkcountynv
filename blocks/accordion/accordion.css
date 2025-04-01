@@ -30,7 +30,7 @@
             background: #fff;
             border: 1px solid #C54B2A;
             border-top-style: none;
-            font-size: 14px;
+            font-size: var(--body-font-size-m);
 
             p {
                 margin: 0 0 20px;
