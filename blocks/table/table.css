@@ -423,6 +423,19 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
     }
 }
 
+.table.bid {
+    th,td {
+        text-align: left;
+        vertical-align: top;
+        padding: 10px;
+        width: 15%;
+
+        &:nth-of-type(2) {
+            width: 40%;
+        }
+    }
+}
+
 .table.contacts {
     tr {
         text-align: left;
