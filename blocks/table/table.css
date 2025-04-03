@@ -3,6 +3,14 @@
   overflow-x: auto;
 }
 
+.table.parks {
+    color: var(--special-parks-purple);
+}
+
+.table.parks td {
+    padding: 2em;
+}
+
 .table table {
   width: 100%;
   max-width: 100%;
