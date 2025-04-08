@@ -85,7 +85,7 @@ export default function decorate(block) {
     console.log([...learnMore.children][0]);
     const $summary = summary({ class: 'accordion-item-label' });
 
-    const body = div({ class: 'accordion-item-body' });
+    const body = div({ class: 'accordion-item-body, content' });
     [...learnMore.children].forEach((row, i) => {
       if (i === 0) {
         // decorate accordion item label
@@ -138,4 +138,11 @@ export default function decorate(block) {
   const categoryTagContainer = buildCategoryTags([...new Set(categories)]);
   block.innerHTML = '';
   block.append(searchContainer, categoryTagContainer, contentContainer);
+
+  /* eslint-disable no-new */
+  block.querySelectorAll('details').forEach((el) => {
+    console.log(el);
+    const x = new Accordion(el);
+    console.log(x);
+  });
 }

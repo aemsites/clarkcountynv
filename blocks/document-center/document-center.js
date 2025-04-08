@@ -189,7 +189,8 @@ export default function decorate(block) {
 
   /* eslint-disable no-new */
   block.querySelectorAll('details').forEach((el) => {
-    new Accordion(el);
+    
+    console.log(new Accordion(el));
 
     window.addEventListener('hashchange', () => {
       const targetId = window.location.hash.substring(1);
