@@ -113,7 +113,7 @@
             .accordion-item-body {
                 padding: 0 16px;
 
-                &>ul {
+                & > ul {
                     display: flex;
                     flex: row;
                     justify-content: space-around;
