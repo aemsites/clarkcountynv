@@ -131,6 +131,17 @@
                     margin-top: 40px;
                     margin-bottom: 30px;
                 }
+                
+                & a:any-link {
+                    color: var(--no-button-link);
+                    background-color: transparent;
+                    text-decoration: underline;
+                    border: 0;
+                    padding: 0 !important;
+                    margin: 0 !important;
+                    white-space: wrap;
+                    text-align: unset;
+                }
             }
 
             &[open] {
