@@ -82,7 +82,6 @@ export default function decorate(block) {
   const categories = [];
 
   function decorateLearnMore(learnMore, idValue) {
-    console.log([...learnMore.children][0]);
     const $summary = summary({ class: 'accordion-item-label' });
 
     const body = div({ class: 'accordion-item-body, content' });
@@ -97,7 +96,6 @@ export default function decorate(block) {
         body.append(row);
       }
     });
-    console.log(body);
     const id = `learn-more-${idValue}`;
     const $details = details({ class: 'accordion-item', id });
     $details.append($summary, body);
@@ -141,8 +139,6 @@ export default function decorate(block) {
 
   /* eslint-disable no-new */
   block.querySelectorAll('details').forEach((el) => {
-    console.log(el);
-    const x = new Accordion(el);
-    console.log(x);
+    new Accordion(el);
   });
 }
