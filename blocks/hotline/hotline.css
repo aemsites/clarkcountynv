@@ -110,76 +110,10 @@
                 }
             }
 
-            .business-contacts {
-                padding: 0 20px;
-                float: left;
-                flex-basis: 33%;
-
-                p {
-                    margin: unset;
-
-                    img {
-                        width: 20px;
-                    }
-
-                    a {
-                        text-align: left;
-                        color: #1d5398;
-                        font-size: var(--body-font-size-xs);
-                        padding: unset;
-                        margin: unset;
-                        vertical-align: text-bottom;
-                        background-color: transparent;
-
-                        span {
-                            vertical-align: middle;
-                        }
-                    }
-                }
-
-            }
-
-            .business-info {
-                min-height: 0;
-                transition: all .2s ease;
-                flex-basis: 42%;
-                padding: 0 20px;
-
-                h2 {
-                    margin: 0 0 10px;
-                    text-transform: uppercase;
-                    font-weight: bold;
-                    font-size: 21px;
-                }
-
-                p {
-                    margin-top: 14px;
-
-                    a {
-                        color: #1d5398;
-                        padding: unset;
-                        margin: unset;
-                        background-color: transparent;
-                    }
-                }
-
-                p:first-of-type {
-                    height: auto;
-                    font-size: 14px !important;
-                    padding: 0;
-                    line-height: 20px !important;
-                    display: block;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    color: #222;
-                    word-break: break-word;
-                }
-            }
-
             .accordion-item-body {
                 padding: 0 16px;
 
-                & > ul {
+                &>ul {
                     display: flex;
                     flex: row;
                     justify-content: space-around;
@@ -196,7 +130,7 @@
                     margin-top: 40px;
                     margin-bottom: 30px;
                 }
-                
+
                 & a:any-link {
                     color: var(--no-button-link);
                     background-color: transparent;
@@ -265,6 +199,71 @@
                 }
             }
 
+            .business-contacts {
+                padding: 0 20px;
+                float: left;
+                flex-basis: 33%;
+
+                p {
+                    margin: unset;
+
+                    img {
+                        width: 20px;
+                    }
+
+                    a:any-link {
+                        text-align: left;
+                        color: #1d5398;
+                        font-size: var(--body-font-size-xs);
+                        padding: unset;
+                        margin: unset;
+                        vertical-align: text-bottom;
+                        background-color: transparent;
+
+                        span {
+                            vertical-align: middle;
+                        }
+                    }
+                }
+
+            }
+
+            .business-info {
+                min-height: 0;
+                transition: all .2s ease;
+                flex-basis: 42%;
+                padding: 0 20px;
+
+                h2 {
+                    margin: 0 0 10px;
+                    text-transform: uppercase;
+                    font-weight: bold;
+                    font-size: 21px;
+                }
+
+                p {
+                    margin-top: 14px;
+
+                    a:any-link {
+                        color: #1d5398;
+                        padding: unset;
+                        margin: unset;
+                        background-color: transparent;
+                    }
+                }
+
+                p:first-of-type {
+                    height: auto;
+                    font-size: 14px !important;
+                    padding: 0;
+                    line-height: 20px !important;
+                    display: block;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    color: #222;
+                    word-break: break-word;
+                }
+            }
         }
     }
 }
