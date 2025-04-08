@@ -80,11 +80,36 @@ export default function decorate(block) {
   const contentContainer = div({ class: 'business-list' });
   const categories = [];
 
+  function decorateLearnMore(learnMore) {
+    console.log([...learnMore.children][0]);
+    const summary = document.createElement('summary');
+    const body = div({ class: 'accordion-item-body' });
+    [...learnMore.children].forEach((row, i) => {
+      if (i === 0) {
+        // decorate accordion item label
+        const label = row;
+        summary.className = 'accordion-item-label';
+        summary.append(label);
+      } else {
+        // decorate accordion item content
+        body.append(row);
+      }
+    });
+    console.log(summary);
+    console.log(body);
+    const details = document.createElement('details');
+    details.className = 'accordion-item';
+    details.append(summary, body);
+    return details;
+  }
+
   [...block.children].forEach((row) => {
     const backgroundImage = row.children[0].querySelector('img')?.getAttribute('src');
     const category = row.children[1].textContent;
     const descriptionEl = row.children[2];
     const contacts = row.children[3];
+    const learnMore = row.children[4];
+    const accLearnMore = decorateLearnMore(learnMore);
 
     categories.push(category);
     const businessBlock = div(
@@ -105,6 +130,7 @@ export default function decorate(block) {
         ),
       ),
     );
+    businessBlock.append(accLearnMore);
     contentContainer.append(businessBlock);
   });
   const searchContainer = buildSearchForm();
