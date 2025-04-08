@@ -1,5 +1,6 @@
+import { Accordion } from '../accordion-ml/accordion-ml.js';
 import {
-  div, input, li, p, ul,
+  div, input, li, p, ul, details, summary,
 } from '../../scripts/dom-helpers.js';
 
 function searchBlocks(searchValue, searchTarget) {
@@ -80,36 +81,36 @@ export default function decorate(block) {
   const contentContainer = div({ class: 'business-list' });
   const categories = [];
 
-  function decorateLearnMore(learnMore) {
+  function decorateLearnMore(learnMore, idValue) {
     console.log([...learnMore.children][0]);
-    const summary = document.createElement('summary');
+    const $summary = summary({ class: 'accordion-item-label' });
+
     const body = div({ class: 'accordion-item-body' });
     [...learnMore.children].forEach((row, i) => {
       if (i === 0) {
         // decorate accordion item label
         const label = row;
-        summary.className = 'accordion-item-label';
-        summary.append(label);
+        $summary.className = 'accordion-item-label';
+        $summary.append(label);
       } else {
         // decorate accordion item content
         body.append(row);
       }
     });
-    console.log(summary);
     console.log(body);
-    const details = document.createElement('details');
-    details.className = 'accordion-item';
-    details.append(summary, body);
-    return details;
+    const id = `learn-more-${idValue}`;
+    const $details = details({ class: 'accordion-item', id });
+    $details.append($summary, body);
+    return $details;
   }
 
-  [...block.children].forEach((row) => {
+  [...block.children].forEach((row, i) => {
     const backgroundImage = row.children[0].querySelector('img')?.getAttribute('src');
     const category = row.children[1].textContent;
     const descriptionEl = row.children[2];
     const contacts = row.children[3];
     const learnMore = row.children[4];
-    const accLearnMore = decorateLearnMore(learnMore);
+    const accLearnMore = decorateLearnMore(learnMore, i);
 
     categories.push(category);
     const businessBlock = div(
