@@ -83,6 +83,10 @@
                     width: 30%;
                 }
 
+                @media (width >=1500px) {
+                    width: 22%;
+                }
+
                 p {
                     margin: 0;
                     padding: 0;
@@ -115,13 +119,13 @@
 
                 & > ul {
                     display: flex;
-                    flex: row;
+                    flex-direction: row;
                     justify-content: space-around;
                     align-items: center;
                     list-style-type: none;
 
                     & li {
-                        list-style-type: none
+                        list-style-type: none;
                     }
                 }
 
