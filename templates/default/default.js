@@ -14,7 +14,7 @@ export function decorateLinks(element) {
     const match1 = a.textContent.match(/(.*)\[\[([^\]\]]*)]/);
     if (match1) {
       // eslint-disable-next-line no-unused-vars
-      const [_, linkText, attrs] = match;
+      const [_, linkText, attrs] = match1;
       a.textContent = linkText.trim();
       a.setAttribute('title', a.textContent);
       attrs.split(',').forEach((attr) => {
