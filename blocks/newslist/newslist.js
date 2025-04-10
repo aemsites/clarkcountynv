@@ -2,6 +2,7 @@ import ffetch from '../../scripts/ffetch.js';
 import { addPagingWidget } from '../../scripts/utils.js';
 import {
   div, a, li,
+  h3,
 } from '../../scripts/dom-helpers.js';
 import {
   buildBlock, decorateBlock, loadBlock, createOptimizedPicture,
@@ -29,7 +30,9 @@ const resultParsers = {
       const cardleft = div({ class: 'card-left' });
       const row = [];
       if (result.newsImage.length > 0) {
+        console.log(result.newsImage);
         const cardImage = createOptimizedPicture(result.newsImage);
+        console.log(cardImage);
         cardleft.append(cardImage);
       }
       const cardright = div({ class: 'card-right' });
@@ -45,10 +48,11 @@ const resultParsers = {
       cardright.append(divTitle);
 
       const divDescription = div({ class: 'description' });
+      const pageTitle = h3({ class: 'pagetitle' }, result.newsTitle);
       divDescription.textContent = result.newsDescription;
       const aEle = a({ class: 'description' });
       aEle.href = window.location.origin + result.newsPath;
-      aEle.append(divDescription);
+      aEle.append(pageTitle, divDescription);
       cardright.append(aEle);
       const divReadmore = div({ class: 'readmore' });
       const aEle1 = a({ class: 'readmore' }, 'Read More');
@@ -71,6 +75,7 @@ const loadresults = async (jsonDataNews, resultsDiv, page) => {
     newsResults.push(obj);
   });
   newsResults.sort((x, y) => y.newsPublished - x.newsPublished);
+  console.log(newsResults);
 
   const blockType = 'columns';
   const resultsPerPage = 10;
