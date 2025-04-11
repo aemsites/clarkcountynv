@@ -193,7 +193,7 @@ export default {
 
     try {
       // Using relative path since events.json is in the same directory
-      const eventsJsonPath = new URL('./events.json', import.meta.url);
+      const eventsJsonPath = new URL('./events_test.json', import.meta.url);
       const response = await fetch(eventsJsonPath);
       eventsJsonData = await response.json();
     } catch (error) {
@@ -287,8 +287,7 @@ export default {
     main.append(blockSeparator().cloneNode(true));
 
     // calenders display
-    params.divisionName = colorToDivisionMapping(eventJson.color)
-      || eventJson.primary_calendar_name;
+    params.divisionName = calendarProps[eventJson.calendar_displays[0]]?.name;
     if (eventJson.calendar_displays && eventJson.calendar_displays.length > 1) {
       const eventDivisions = eventJson.calendar_displays;
       const names = eventDivisions
