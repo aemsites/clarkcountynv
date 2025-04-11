@@ -153,7 +153,7 @@ export default {
 
     try {
       // Using relative path since events.json is in the same directory
-      const eventsJsonPath = new URL('./events_test.json', import.meta.url);
+      const eventsJsonPath = new URL('./all_filtered_events.json', import.meta.url);
       const response = await fetch(eventsJsonPath);
       eventsJsonData = await response.json();
     } catch (error) {
@@ -166,7 +166,7 @@ export default {
     const pathPrefix = WebImporter.FileUtils.sanitizePath(
       BASE_PATH + eventJson.primary_calendar_name,
     );
-    const newPagePath = `${pathPrefix}/${WebImporter.FileUtils.sanitizeFilename(eventJson.title.toLowerCase())}`;// '/' + eventJson.title.toLowerCase().replace(/ /g, '-');
+    const newPagePath = `${pathPrefix}/${WebImporter.FileUtils.sanitizeFilename(`${eventJson.title.toLowerCase()}-${eventJson.start.toLowerCase()}`)}`;
 
     const main = document.createElement('body');
 
@@ -258,9 +258,6 @@ export default {
     }
 
     params.eventStart = eventJson.start;
-    if (eventJson.end) {
-      params.eventStop = eventJson.end;
-    }
     params.duration = eventJson.duration ? `T${eventJson.duration}:00` : '';
     if (eventJson.rrule) {
       const rrule = parseRRule(eventJson.rrule);
@@ -268,12 +265,14 @@ export default {
       params.daysOfWeek = rrule.daysOfWeek;
       params.excludeDates = rrule.excludeDates;
       if (rrule.until) {
-        params.eventStop = rrule.until; // Ideally we should support until in rrule
+        params.eventStop = rrule.until || ''; // Ideally we should support until in rrule
       } /* else {
         const startDate = new Date(params.eventStart);
         startDate.setFullYear(startDate.getFullYear() + 5);
         params.eventStop = startDate.toISOString().substring(0, 19);
       } */
+    } else if (eventJson.end) {
+      params.eventStop = eventJson.end;
     }
     if (!params.eventStop && params.allDay) {
       console.log('Not setting eventStop for single allDay event');
