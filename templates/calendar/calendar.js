@@ -105,7 +105,7 @@ function tConv24(time24) {
   return ts;
 }
 
-function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
+function popupEvent(url, startTime, endTime, allDay, backgroundColor, readMore) {
   const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUNE',
     'JULY', 'AUG', 'SEPT', 'OCT', 'NOV', 'DEC'];
   let eventDate = startTime.getDate();
@@ -116,9 +116,13 @@ function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
   const eventStartHours = startTime.toString().split(' ')[4].split(':')[0];
   const eventStartMinutes = startTime.toString().split(' ')[4].split(':')[1];
   const eventStartTime = tConv24(`${eventStartHours}:${eventStartMinutes}`);
-  const eventEndHours = endTime.toString().split(' ')[4].split(':')[0];
-  const eventEndMinutes = endTime.toString().split(' ')[4].split(':')[1];
-  const eventEndTime = tConv24(`${eventEndHours}:${eventEndMinutes}`);
+
+  let eventEndTime;
+  if (endTime) { // for allDay event, endTime is not mandatory
+    const eventEndHours = endTime.toString().split(' ')[4].split(':')[0];
+    const eventEndMinutes = endTime.toString().split(' ')[4].split(':')[1];
+    eventEndTime = tConv24(`${eventEndHours}:${eventEndMinutes}`);
+  }
 
   // convert number into Month name
   const eventMonthName = months[eventMonth];
@@ -131,7 +135,7 @@ function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
   modal.querySelector('.event-modal-footer').classList.add('off');
   modal.querySelector('.event-modal-date p:first-child').textContent = `${eventDate}`;
   modal.querySelector('.event-modal-date p:last-child').textContent = `${eventMonthName}`;
-  modal.querySelector('.event-modal-time p').textContent = `${eventStartTime} - ${eventEndTime}`;
+  modal.querySelector('.event-modal-time p').textContent = allDay ? 'All Day' : `${eventStartTime} - ${eventEndTime}`;
   modal.querySelector('iframe').src = url;
   modal.style.display = 'block';
   const readMoreAEl = modal.querySelector('.event-modal-footer a.footer-readmore');
@@ -243,7 +247,7 @@ function createEvents(eventsList) {
         /* Converting String into array to leverage map function */
         calendar.addEvent({
           title: event.title,
-          allDay: false,
+          allDay: event.allDay,
           rrule: {
             freq: event.freq,
             byweekday: eventbyweekday.map((day) => {
@@ -272,7 +276,7 @@ function createEvents(eventsList) {
         const eventbyweekday = getbyweekday(event.daysOfWeek);
         calendar.addEvent({
           title: event.title,
-          allDay: false,
+          allDay: event.allDay,
           rrule: {
             freq: event.freq,
             byweekday: eventbyweekday.map((day) => {
@@ -302,7 +306,7 @@ function createEvents(eventsList) {
         title: event.title,
         start: event.start,
         end: event.end,
-        allDay: false,
+        allDay: event.allDay,
         url: event.url,
         backgroundColor: event.backgroundColor,
         textColor: event.textColor,
@@ -452,7 +456,7 @@ function createCalendar() {
           window.history.pushState({}, '', url);
         }
         // eslint-disable-next-line max-len
-        popupEvent(info.event.url, info.event.start, info.event.end, info.event.backgroundColor, info.event.extendedProps.readMore);
+        popupEvent(info.event.url, info.event.start, info.event.end, info.event.allDay, info.event.backgroundColor, info.event.extendedProps.readMore);
       }
     },
   });
