@@ -233,7 +233,7 @@ function createEvents(eventsList) {
   disableSpinner();
   let eventDuration = '';
   eventsList.forEach((event) => {
-    event.allDay = event.allDay === "true";
+    event.allDay = event.allDay === 'true';
     if (event.daysOfWeek.length > 1) {
       if (event.duration && event.duration.length > 0) {
         eventDuration = `${event.duration.split('T')[1]}`;
