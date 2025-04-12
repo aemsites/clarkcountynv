@@ -585,7 +585,7 @@ function filterEvents(divisionId, redirectCalendarName) {
     window.location.href = `https://${window.location.host}/calendar`;
     return;
   }
-  window.location.href = `http://${window.location.host}/calendar/${normalizeString(redirectCalendarName)}/`;
+  window.location.href = `https://${window.location.host}/calendar/${normalizeString(redirectCalendarName)}/`;
 }
 
 function searchItems(searchTerm) {
@@ -700,7 +700,7 @@ export default async function decorate(doc) {
               liele.querySelector('.fc-calendar-list-button').style.backgroundColor = division.color;
               const redirectCalendarName = getName(divisionId);
               if (divisionId === '64') {
-                window.location.href = `http://${window.location.host}/calendar/${normalizeString(redirectCalendarName)}/`;
+                window.location.href = `https://${window.location.host}/calendar/${normalizeString(redirectCalendarName)}/`;
                 getFeaturedEvents();
               } else {
                 filterEvents(divisionId, redirectCalendarName);
