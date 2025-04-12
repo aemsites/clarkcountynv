@@ -335,22 +335,24 @@ function createEventList(importedData, eventsList) {
     } else {
       divisionArray.push(event.divisionname);
     }
-    divisionArray.forEach((divisionEle) => {
-      // Check for each division and assign the class, color, id to the event
-      divisions.forEach((division) => {
-        if (normalizeString(division.name) === normalizeString(divisionEle)) {
-          event['division-color'] = division.color;
-          event['division-textColor'] = division.textColor;
-          event.divisionid = division.id;
-          if (event.readMore.length > 1) {
-            event.classNames = `${normalizeString(division.name)} yesReadMore`;
-          } else {
-            event.classNames = `${normalizeString(division.name)} noReadMore`;
+    divisionArray.forEach((divisionEle, index) => {
+      if (index === 0) {
+        // Check for each division and assign the class, color, id to the event
+        divisions.forEach((division) => {
+          if (normalizeString(division.name) === normalizeString(divisionEle)) {
+            event['division-color'] = division.color;
+            event['division-textColor'] = division.textColor;
+            event.divisionid = division.id;
+            if (event.readMore.length > 1) {
+              event.classNames = `${normalizeString(division.name)} yesReadMore`;
+            } else {
+              event.classNames = `${normalizeString(division.name)} noReadMore`;
+            }
           }
-        }
-      });
-      const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, url, event['division-color'], event['division-textColor'], event.classNames, event.readMore, event.divisionid, event.excludeDates, event.duration, event.freq);
-      eventsList.push(eventObj);
+        });
+        const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, url, event['division-color'], event['division-textColor'], event.classNames, event.readMore, event.divisionid, event.excludeDates, event.duration, event.freq);
+        eventsList.push(eventObj);
+      }
     });
   });
   createEvents(eventsList);
@@ -516,7 +518,10 @@ async function initializeCalendar() {
             getFeaturedEvents();
           } else {
             // eslint-disable-next-line max-len
-            const filterData = importedData.filter((event) => normalizeString(event.divisionname) === normalizeString(division.name));
+            const filterData = importedData.filter((event) => normalizeString(event.divisionname).includes(normalizeString(division.name))).map((event) => {
+              event.divisionname = division.name;
+              return event;
+            });
             createEventList(filterData, eventsList);
           }
         }
@@ -580,7 +585,7 @@ function filterEvents(divisionId, redirectCalendarName) {
     window.location.href = `https://${window.location.host}/calendar`;
     return;
   }
-  window.location.href = `https://${window.location.host}/calendar/${normalizeString(redirectCalendarName)}/`;
+  window.location.href = `http://${window.location.host}/calendar/${normalizeString(redirectCalendarName)}/`;
 }
 
 function searchItems(searchTerm) {
@@ -695,7 +700,7 @@ export default async function decorate(doc) {
               liele.querySelector('.fc-calendar-list-button').style.backgroundColor = division.color;
               const redirectCalendarName = getName(divisionId);
               if (divisionId === '64') {
-                window.location.href = `https://${window.location.host}/calendar/${normalizeString(redirectCalendarName)}/`;
+                window.location.href = `http://${window.location.host}/calendar/${normalizeString(redirectCalendarName)}/`;
                 getFeaturedEvents();
               } else {
                 filterEvents(divisionId, redirectCalendarName);
