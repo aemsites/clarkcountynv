@@ -343,9 +343,9 @@ function createEventList(importedData, eventsList) {
           event['division-textColor'] = division.textColor;
           event.divisionid = division.id;
           if (event.readMore.length > 1) {
-            event.classNames = `${normalizeString(event.divisionname)} yesReadMore`;
+            event.classNames = `${normalizeString(division.name)} yesReadMore`;
           } else {
-            event.classNames = `${normalizeString(event.divisionname)} noReadMore`;
+            event.classNames = `${normalizeString(division.name)} noReadMore`;
           }
         }
       });
