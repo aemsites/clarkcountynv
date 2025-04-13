@@ -461,12 +461,14 @@ function createCalendar() {
         // eslint-disable-next-line max-len
         popupEvent(info.event.url, info.event.start, info.event.end, info.event.allDay, info.event.backgroundColor, info.event.extendedProps.readMore);
       }
-      // Check the height of the event iframe & then enable / disable event footer display accordingly. Currently by default its off
+      // Check the height of the event iframe & then enable / disable event footer display
       const eventIframe = document.querySelector('#event-iframe');
-      const waitForMyIframeToReload = () => (new Promise(resolve => eventIframe.addEventListener('load', () => resolve())));
+      const waitForMyIframeToReload = () => (new Promise((resolve) => {
+        eventIframe.addEventListener('load', () => resolve());
+      }));
       await waitForMyIframeToReload();
       const iframeHeight = eventIframe.contentWindow.document.body.scrollHeight;
-      //check the height of modal height
+      // Check the height of modal height
       const modal = document.querySelector('.event-modal');
       const modalHeight = modal.offsetHeight;
       if (iframeHeight < modalHeight) {
