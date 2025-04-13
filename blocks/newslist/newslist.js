@@ -70,8 +70,9 @@ const resultParsers = {
 const loadresults = async (jsonDataNews, resultsDiv, page) => {
   const newsResults = [];
   jsonDataNews.forEach((news) => {
+    console.log(news);
     // eslint-disable-next-line max-len
-    const obj = new NewsObj(news.pagetitle, news.brief, news.path, news.publishDate, news.Image, news.category);
+    const obj = new NewsObj(news.pagetitle, news.brief, news.path, news.publishDate, news.bannerUrl, news.category);
     newsResults.push(obj);
   });
   newsResults.sort((x, y) => y.newsPublished - x.newsPublished);
