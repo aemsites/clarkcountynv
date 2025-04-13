@@ -462,9 +462,13 @@ function createCalendar() {
         popupEvent(info.event.url, info.event.start, info.event.end, info.event.allDay, info.event.backgroundColor, info.event.extendedProps.readMore);
       }
       // Check the height of the event iframe
-      console.log('iframe height:', document.querySelector('#event-iframe').contentWindow.document.body.scrollHeight);
+      const iframeHeight = document.querySelector('#event-iframe').contentWindow.document.body.scrollHeight;
       //check the height of modal height
-      console.log('modal height:', document.querySelector('.event-modal').offsetHeight);
+      const modal = document.querySelector('.event-modal');
+      const modalHeight = modal.offsetHeight;
+      if (iframeHeight < modalHeight) {
+        modal.querySelector('.event-modal-footer').classList.remove('off');
+      }
     },
   });
   /* The Below code is for when the URL is loaded with a specific date */
