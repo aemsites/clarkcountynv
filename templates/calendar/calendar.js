@@ -463,10 +463,10 @@ function createCalendar() {
       }
       // Check the height of the event iframe & then enable / disable event footer display
       const eventIframe = document.querySelector('#event-iframe');
-      const waitForMyIframeToReload = () => (new Promise((resolve) => {
+      const waitForMyIframeToload = () => (new Promise((resolve) => {
         eventIframe.addEventListener('load', () => resolve());
       }));
-      await waitForMyIframeToReload();
+      await waitForMyIframeToload();
       const iframeHeight = eventIframe.contentWindow.document.body.scrollHeight;
       // Check the height of modal height
       const modal = document.querySelector('.event-modal');
