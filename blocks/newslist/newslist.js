@@ -32,6 +32,9 @@ const resultParsers = {
       if (result.newsImage.length > 0) {
         const cardImage = createOptimizedPicture(result.newsImage);
         cardleft.append(cardImage);
+      } else {
+        const cardImage = createOptimizedPicture('https://main--clarkcountynv--aemsites.aem.live/news/media_1cd00e6d663e3a8f17a6a71845a2d09cc41f55b6d.png');
+        cardleft.append(cardImage);
       }
       const cardright = div({ class: 'card-right' });
       if (result.newsPublished.length > 0) {
