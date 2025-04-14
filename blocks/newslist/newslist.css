@@ -48,6 +48,7 @@
     a {
         border-right: 1px solid #eee;
         padding: 7px 20px;
+        color: var(--default-button);
     }
 
     .notvisible {
@@ -78,8 +79,8 @@
 
     li a:hover,
     li.active a {
-        background-color: #0f7cc1;
-        border-color: #0f7cc1;
+        background-color: var(--default-button);
+        border-color: var(--default-button);
         color: #fff;
     }
 
