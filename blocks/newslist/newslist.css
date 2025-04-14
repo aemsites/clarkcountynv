@@ -73,13 +73,19 @@
     color: #000 !important;
 }
 
+.newslist.block .news .card-right > a {
+    text-decoration: none !important;
+}
+
 .newslist.block .news .card-right > a:hover {
     color: #000 !important;
+    text-decoration: underline !important;
 }
 
 .newslist.block .news .card-right > a .description {
     font-size: var(--heading-font-size-s);
     color: #000 !important;
     margin-bottom: 10px;
+    text-decoration: none;
 }
 
