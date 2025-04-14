@@ -182,7 +182,7 @@ async function getCategories(block, newsbox) {
     curPage = parseInt(curPage, 10);
   }
   loadresults(jsonDataNews, block, curPage, newsbox);
-  return categories;
+  return { categories, jsonDataNews, curPage };
 }
 
 export default async function decorate(block) {
@@ -197,10 +197,13 @@ export default async function decorate(block) {
 </div>`;
   block.append(newscontrol);
   block.append(newsbox);
-  const categories = await getCategories(block, newsbox);
+  const { categories, jsonDataNews, curPage } = await getCategories(block, newsbox);
+  console.log(jsonDataNews);
   // Allot options to the select element
   const select = block.querySelector('#news-filter');
   const firstOption = document.createElement('option');
+  firstOption.setAttribute('selected', true);
+  firstOption.setAttribute('disabled', true);
   firstOption.textContent = 'All News';
   select.append(firstOption);
   categories.forEach((category) => {
@@ -208,5 +211,15 @@ export default async function decorate(block) {
     option.value = category.toLowerCase();
     option.textContent = category;
     select.append(option);
+  });
+  // Select option change event
+  select.addEventListener('change', () => {
+    const selectedValue = select.value;
+    const filteredNews = jsonDataNews.filter((news) => news.category.toLowerCase() === selectedValue.toLowerCase());
+    // Clear the newsbox
+    newsbox.innerHTML = '';
+    document.querySelector('.columns-wrapper ul.pagination').remove();
+    // Call loadresults with filtered data
+    loadresults(filteredNews, block, 0, newsbox);
   });
 }
