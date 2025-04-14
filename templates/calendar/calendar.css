@@ -1,15 +1,3 @@
-body.calendar .event-modal .event-modal-footer a {
-    padding: 8px 12px 6px;
-    display: block;
-    float: right;
-    border-radius: 3px;
-    margin-left: 5px;
-    font-size: 16px;
-    font-family: var(--heading-font-family);
-    font-weight: 600 !important;
-    line-height: 1 !important;
-}
-
 body.calendar div.event-modal a:any-link {
     color: white;
 }
@@ -186,10 +174,6 @@ body.calendar main section.fc-search form button {
     padding: 0;
 }
 
-body.calendar .event-modal .event-modal-footer a.displayoff {
-    display: none;
-}
-
 body.calendar .event-modal {
     display: none; 
     position: fixed; 
@@ -267,26 +251,47 @@ body.calendar .event-modal .event-modal-footer {
     width: 500px;
     max-width: 100%;
     position: absolute;
-    padding: 15px;
+    padding-right: 15px;
     bottom: 0;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-end;
-    gap: 1vw;
+    gap: 0.5vw;
     color: white;
-}
 
-body.calendar .event-modal .event-modal-footer button {
-    padding: 8px 12px 6px;
-    display: block;
-    float: right;
-    border-radius: 3px;
-    margin-left: 5px;
-    font-size: 16px;
-    font-family: var(--heading-font-family);
-    font-weight: 600 !important;
-    line-height: 1 !important;
+    button {
+        padding: 8px 12px 6px;
+        display: block;
+        float: right;
+        border-radius: 3px;
+        margin-left: 5px;
+        font-size: 16px;
+        font-family: var(--heading-font-family);
+        font-weight: 600 !important;
+        line-height: 1 !important;
+    }
+
+    a {
+        padding: 8px 12px 6px;
+        display: block;
+        float: right;
+        border-radius: 3px;
+        border: 2px solid transparent;
+        margin-left: 5px;
+        font-size: 16px;
+        font-family: var(--heading-font-family);
+        font-weight: 600 !important;
+        line-height: 1 !important;
+        text-decoration: none;
+        margin-top: 16px;
+        margin-bottom: 16px;
+        height: 34px;
+
+        &.displayoff {
+            display: none;
+        }
+    }
 }
 
 @keyframes animatetop {

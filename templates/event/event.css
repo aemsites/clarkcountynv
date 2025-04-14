@@ -39,7 +39,6 @@ body.event main .section.hero .hero-wrapper .block.hero.time div div {
 
 body.event main .section.description p:has(a) {
     margin-top: 1vh;
-    font-weight: 600;
 }
 
 body.event main .section.description p a {
@@ -97,24 +96,26 @@ body.event main .section.hero .hero-wrapper .block.hero.time {
 }
 
 body.event main .section.title {
-    padding: 15px;
-}
+    padding-left: 15px;
+    padding-right: 15px;
 
-body.event main .section.title h2 {
-    font-size: 22px;
-    font-weight: 400;
-    line-height: 1.2;
-    font-family: var(--heading-font-family);
+    h2 {
+        font-size: 22px;
+        font-weight: 400;
+        line-height: 1.2;
+        font-family: var(--heading-font-family);
+    }
 }
 
 body.event main .section.image {
     padding: 15px;
+
+    img {
+        width: 100%;
+        height: auto;
+    }
 }
 
-body.event main .section.image img {
-    width: 100%;
-    height: auto;
-}
 
 body.event main .section.address {
     padding: 15px;
@@ -123,7 +124,9 @@ body.event main .section.address {
 }
 
 body.event main .section.description {
-    padding: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: 15px;
     font-size: 18px;
     font-family: var(--heading-font-family);
 }
@@ -137,14 +140,15 @@ body.event main .section.description-center {
 }
 
 body.event main .section.map-location {
-    padding: 15px;
-}
+    padding-left: 15px;
+    padding-right: 15px;
 
-body.event main .section.map-location iframe {
-    width: 100%;
-    margin: 10px 0;
-    border: 1px solid #3787d8;
-    height: 175px;
+    iframe {
+        width: 100%;
+        margin: 10px 0;
+        border: 1px solid #3787d8;
+        height: 175px;
+    }
 }
 
 body.event main .section.locations {
@@ -179,18 +183,5 @@ body.event main .section.event-footer {
     font-size: 16px;
     font-family: var(--heading-font-family);
     border-top: 1px solid #dee2e6;
-    height: 14vh;
+    height: 10vh;
 }
-
-body.event main .section.event-footer .default-content-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-self: flex-end;
-    gap: 1vw;
-}
-
-
-
-
-
-
