@@ -1,5 +1,5 @@
 import ffetch from '../../scripts/ffetch.js';
-import { addPagingWidget } from '../../scripts/utils.js';
+import { addPagingWidget, normalizeString } from '../../scripts/utils.js';
 import {
   div, a, li,
   h3,
@@ -64,7 +64,6 @@ const resultParsers = {
   },
 };
 
-// make the below function async to use await
 const loadresults = async (jsonDataNews, resultsDiv, page, newsbox) => {
   const newsResults = [];
   jsonDataNews.forEach((news) => {
@@ -80,7 +79,6 @@ const loadresults = async (jsonDataNews, resultsDiv, page, newsbox) => {
 
   // eslint-disable-next-line max-len
   const curPage = [...newsResults].slice(startResult, startResult + resultsPerPage);
-  console.log(curPage);
 
   const blockContents = resultParsers[blockType](curPage);
   const builtBlock = buildBlock(blockType, blockContents);
@@ -92,10 +90,8 @@ const loadresults = async (jsonDataNews, resultsDiv, page, newsbox) => {
   // Pagination logic
   const totalResults = jsonDataNews.length;
   const totalPages = Math.ceil(totalResults / resultsPerPage);
-  console.log(totalPages);
   addPagingWidget(parentDiv, page, totalPages);
   const paginationblock = parentDiv.querySelector('ul');
-  console.log(paginationblock);
   const paginationLimit = 5;
   if (totalPages > paginationLimit) {
     let elementForward = 0;
@@ -175,6 +171,11 @@ async function getCategories(block, newsbox) {
     }
   });
   const params = new URLSearchParams(window.location.search);
+  const catNews = params.get('category');
+  if (!catNews) {
+    params.set('category', normalizeString('All News'));
+    window.location.search = params.toString();
+  }
   let curPage = params.get('pg');
   if (!curPage) {
     curPage = 0;
@@ -182,37 +183,44 @@ async function getCategories(block, newsbox) {
     // convert the current page to a number
     curPage = parseInt(curPage, 10);
   }
+
   // Allot options to the select element
   const select = block.querySelector('#news-filter');
   const firstOption = document.createElement('option');
-  firstOption.setAttribute('selected', true);
-  // firstOption.setAttribute('disabled', true);
   firstOption.textContent = 'All News';
+  firstOption.value = normalizeString('All News');
   select.append(firstOption);
   categories.forEach((category) => {
     const option = document.createElement('option');
-    option.value = category.toLowerCase();
+    option.value = normalizeString(category);
     option.textContent = category;
     select.append(option);
   });
+
+  select.querySelectorAll('option').forEach((option) => {
+    if (normalizeString(option.value) === normalizeString(catNews)) {
+      option.setAttribute('selected', true);
+      if (normalizeString(catNews) === normalizeString('All News')) {
+        loadresults(jsonDataNews, block, curPage, newsbox);
+      } else {
+        // eslint-disable-next-line max-len
+        const filteredNews = jsonDataNews.filter((news) => normalizeString(news.category) === normalizeString(catNews));
+        loadresults(filteredNews, block, curPage, newsbox);
+      }
+    } else {
+      option.removeAttribute('selected');
+    }
+  });
+
   // Select option change event
   select.addEventListener('change', (e) => {
     const selectedCategory = e.target.value;
-    console.log(selectedCategory);
-    // eslint-disable-next-line max-len
-    const filteredNews = jsonDataNews.filter((news) => news.category.toLowerCase() === selectedCategory.toLowerCase());
-    if (selectedCategory.toLowerCase() === 'all news') {
-      console.log(jsonDataNews);
-      newsbox.innerHTML = '';
-      loadresults(jsonDataNews, block, 0, newsbox);
-    } else {
-      console.log(filteredNews);
-      newsbox.innerHTML = '';
-      loadresults(filteredNews, block, 0, newsbox);
-    }
+    // remove the query parameter from the URL
+    const paramsv1 = new URLSearchParams(window.location.search);
+    paramsv1.set('category', selectedCategory);
+    paramsv1.delete('pg');
+    window.location.search = paramsv1.toString();
   });
-  loadresults(jsonDataNews, block, curPage, newsbox);
-  // return { categories, jsonDataNews, curPage };
 }
 
 export default async function decorate(block) {
@@ -228,5 +236,4 @@ export default async function decorate(block) {
   block.append(newscontrol);
   block.append(newsbox);
   await getCategories(block, newsbox);
-  // Select option change event
 }
