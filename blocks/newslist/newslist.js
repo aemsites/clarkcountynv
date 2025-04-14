@@ -30,9 +30,7 @@ const resultParsers = {
       const cardleft = div({ class: 'card-left' });
       const row = [];
       if (result.newsImage.length > 0) {
-        console.log(result.newsImage);
         const cardImage = createOptimizedPicture(result.newsImage);
-        console.log(cardImage);
         cardleft.append(cardImage);
       }
       const cardright = div({ class: 'card-right' });
@@ -70,13 +68,11 @@ const resultParsers = {
 const loadresults = async (jsonDataNews, resultsDiv, page, newsbox) => {
   const newsResults = [];
   jsonDataNews.forEach((news) => {
-    console.log(news);
     // eslint-disable-next-line max-len
     const obj = new NewsObj(news.pagetitle, news.brief, news.path, news.publishDate, news.bannerUrl, news.category);
     newsResults.push(obj);
   });
   newsResults.sort((x, y) => y.newsPublished - x.newsPublished);
-  console.log(newsResults);
 
   const blockType = 'columns';
   const resultsPerPage = 10;
@@ -84,6 +80,7 @@ const loadresults = async (jsonDataNews, resultsDiv, page, newsbox) => {
 
   // eslint-disable-next-line max-len
   const curPage = [...newsResults].slice(startResult, startResult + resultsPerPage);
+  console.log(curPage);
 
   const blockContents = resultParsers[blockType](curPage);
   const builtBlock = buildBlock(blockType, blockContents);
@@ -91,13 +88,14 @@ const loadresults = async (jsonDataNews, resultsDiv, page, newsbox) => {
   const parentDiv = div(
     builtBlock,
   );
-  console.log(parentDiv);
 
   // Pagination logic
   const totalResults = jsonDataNews.length;
   const totalPages = Math.ceil(totalResults / resultsPerPage);
+  console.log(totalPages);
   addPagingWidget(parentDiv, page, totalPages);
   const paginationblock = parentDiv.querySelector('ul');
+  console.log(paginationblock);
   const paginationLimit = 5;
   if (totalPages > paginationLimit) {
     let elementForward = 0;
@@ -175,8 +173,8 @@ async function getCategories(block, newsbox) {
       categories.add(news.category);
     }
   });
-  const curLocation = window.location;
-  let curPage = new URLSearchParams(curLocation).get('pg');
+  const params = new URLSearchParams(window.location.search);
+  let curPage = params.get('pg');
   if (!curPage) {
     curPage = 0;
   } else {
@@ -200,7 +198,6 @@ export default async function decorate(block) {
   block.append(newscontrol);
   block.append(newsbox);
   const categories = await getCategories(block, newsbox);
-  console.log(categories);
   // Allot options to the select element
   const select = block.querySelector('#news-filter');
   const firstOption = document.createElement('option');
