@@ -462,19 +462,6 @@ function createCalendar() {
         // eslint-disable-next-line max-len
         popupEvent(info.event.url, info.event.start, info.event.end, info.event.allDay, info.event.backgroundColor, info.event.extendedProps.readMore);
       }
-      // Check the height of the event iframe & then enable / disable event footer display
-      const eventIframe = document.querySelector('#event-iframe');
-      const waitForMyIframeToload = () => (new Promise((resolve) => {
-        eventIframe.addEventListener('load', () => resolve());
-      }));
-      await waitForMyIframeToload();
-      const iframeHeight = eventIframe.contentWindow.document.body.scrollHeight;
-      // Check the height of modal height
-      const modal = document.querySelector('.event-modal');
-      const modalHeight = modal.offsetHeight;
-      if (iframeHeight < modalHeight) {
-        modal.querySelector('.event-modal-footer').classList.remove('off');
-      }
     },
   });
   /* The Below code is for when the URL is loaded with a specific date */
