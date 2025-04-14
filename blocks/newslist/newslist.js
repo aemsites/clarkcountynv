@@ -67,7 +67,7 @@ const resultParsers = {
 };
 
 // make the below function async to use await
-const loadresults = async (jsonDataNews, resultsDiv, page) => {
+const loadresults = async (jsonDataNews, resultsDiv, page, newsbox) => {
   const newsResults = [];
   jsonDataNews.forEach((news) => {
     console.log(news);
@@ -158,9 +158,13 @@ const loadresults = async (jsonDataNews, resultsDiv, page) => {
   decorateBlock(builtBlock);
   await loadBlock(builtBlock);
   builtBlock.classList.add('newsItems');
+  builtBlock.querySelectorAll(':scope > div').forEach((newsitem) => {
+    newsitem.classList.add('news');
+  });
+  newsbox.append(builtBlock);
 };
 
-async function getCategories(block) {
+async function getCategories(block, newsbox) {
   const categories = new Set();
   const jsonDataNews = await ffetch('/news/query-index.json')
     .chunks(1000)
@@ -179,7 +183,7 @@ async function getCategories(block) {
     // convert the current page to a number
     curPage = parseInt(curPage, 10);
   }
-  loadresults(jsonDataNews, block, curPage);
+  loadresults(jsonDataNews, block, curPage, newsbox);
   return categories;
 }
 
@@ -195,7 +199,7 @@ export default async function decorate(block) {
 </div>`;
   block.append(newscontrol);
   block.append(newsbox);
-  const categories = await getCategories(block);
+  const categories = await getCategories(block, newsbox);
   console.log(categories);
   // Allot options to the select element
   const select = block.querySelector('#news-filter');
