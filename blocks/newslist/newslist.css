@@ -35,7 +35,7 @@
     font-size: var(--body-font-size-m);
 }
 
-.newslist.block ul.pagination {
+.newslist.block .columns-wrapper ul.pagination {
     display: flex;
     justify-content: center;
     margin-top: 50px;
