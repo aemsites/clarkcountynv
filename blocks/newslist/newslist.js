@@ -1,14 +1,14 @@
 import ffetch from '../../scripts/ffetch.js';
 import { addPagingWidget, normalizeString } from '../../scripts/utils.js';
 import {
-  div, a, li,
+  div, a, li, option,
   h3,
 } from '../../scripts/dom-helpers.js';
 import {
   buildBlock, decorateBlock, loadBlock, createOptimizedPicture,
 } from '../../scripts/aem.js';
 
-class NewsObj {
+class News {
   constructor(newsTitle, newsDescription, newsPath, newsPublished, newsImage, newsCategory) {
     this.newsTitle = newsTitle;
     this.newsDescription = newsDescription;
@@ -33,7 +33,7 @@ const resultParsers = {
         const cardImage = createOptimizedPicture(result.newsImage);
         cardleft.append(cardImage);
       } else {
-        const cardImage = createOptimizedPicture('https://main--clarkcountynv--aemsites.aem.live/news/media_1cd00e6d663e3a8f17a6a71845a2d09cc41f55b6d.png');
+        const cardImage = createOptimizedPicture('/news/media_1cd00e6d663e3a8f17a6a71845a2d09cc41f55b6d.png');
         cardleft.append(cardImage);
       }
       const cardright = div({ class: 'card-right' });
@@ -41,10 +41,12 @@ const resultParsers = {
         publishedDate = new Date(result.newsPublished * 1000).toDateString();
       }
       const divTitle = div();
-      if (result.newsCategory.length > 0) {
-        divTitle.textContent = `${result.newsCategory} - ${publishedDate}`;
+      if (result.newsCategory && publishedDate) {
+        divTitle.textContent = `${result.newsCategory} - ${publishedDate.slice(4)}`;
       } else {
-        divTitle.textContent = publishedDate;
+        // eslint-disable-next-line no-nested-ternary
+        const available = publishedDate ? publishedDate.slice(4) : result.newsCategory ? result.newsCategory : '';
+        divTitle.textContent = available;
       }
       cardright.append(divTitle);
 
@@ -71,7 +73,7 @@ const loadresults = async (jsonDataNews, resultsDiv, page, newsbox) => {
   const newsResults = [];
   jsonDataNews.forEach((news) => {
     // eslint-disable-next-line max-len
-    const obj = new NewsObj(news.pagetitle, news.brief, news.path, news.publishDate, news.bannerUrl, news.category);
+    const obj = new News(news.pagetitle, news.brief, news.path, news.publishDate, news.bannerUrl, news.category);
     newsResults.push(obj);
   });
   newsResults.sort((x, y) => y.newsPublished - x.newsPublished);
@@ -189,9 +191,7 @@ async function getCategories(block, newsbox) {
 
   // Allot options to the select element
   const select = block.querySelector('#news-filter');
-  const firstOption = document.createElement('option');
-  firstOption.textContent = 'All News';
-  firstOption.value = normalizeString('All News');
+  const firstOption = option({ value: normalizeString('All News') }, 'All News');
   select.append(firstOption);
   categories.forEach((category) => {
     const option = document.createElement('option');
