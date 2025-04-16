@@ -1,8 +1,6 @@
 import ffetch from '../../scripts/ffetch.js';
-import { normalizeString } from '../../scripts/utils.js';
 import {
-  div, a,
-  h3,
+  div, a, img,
 } from '../../scripts/dom-helpers.js';
 import {
   buildBlock, decorateBlock, loadBlock, createOptimizedPicture,
@@ -26,7 +24,6 @@ const resultParsers = {
   cards: (results) => {
     const blockContents = [];
     results.forEach((result) => {
-      let publishedDate;
       const cardtop = div({ class: 'card-top' });
       const row = [];
       if (result.newsImage.length > 0) {
@@ -37,31 +34,18 @@ const resultParsers = {
         cardtop.append(cardImage);
       }
       const cardbottom = div({ class: 'card-bottom' });
-      if (result.newsPublished.length > 0) {
-        publishedDate = new Date(result.newsPublished * 1000).toDateString();
-      }
-      const divTitle = div();
-      if (result.newsCategory && publishedDate) {
-        divTitle.textContent = `${result.newsCategory} - ${publishedDate.slice(4)}`;
-      } else {
-        // eslint-disable-next-line no-nested-ternary
-        const available = publishedDate ? publishedDate.slice(4) : result.newsCategory ? result.newsCategory : '';
-        divTitle.textContent = available;
+
+      const divTitle = div({ class: 'category' });
+      if (result.newsCategory) {
+        divTitle.textContent = `${result.newsCategory}`;
       }
       cardbottom.append(divTitle);
 
-      const divDescription = div({ class: 'description' });
-      const pageTitle = h3({ class: 'pagetitle' }, result.newsTitle);
-      divDescription.textContent = result.newsDescription;
-      const aEle = a({ class: 'description' });
-      aEle.href = window.location.origin + result.newsPath;
-      aEle.append(pageTitle, divDescription);
-      cardbottom.append(aEle);
-      const divReadmore = div({ class: 'readmore' });
-      const aEle1 = a({ class: 'readmore' }, 'Read More');
-      aEle1.href = window.location.origin + result.newsPath;
-      divReadmore.append(aEle1);
-      cardbottom.append(divReadmore);
+      const pageTitle = div({ class: 'pagetitle' }, result.newsTitle);
+      cardbottom.append(pageTitle);
+      const aEle1 = div({ class: 'learnmore' }, a({ href: `${result.newsPath}` }, 'Learn More', img({ src: '/assets/images/general/white-arrow-right.png' })));
+    //   aEle1.href = window.location.origin + result.newsPath;
+      cardbottom.append(aEle1);
       row.push(cardtop, cardbottom);
       blockContents.push(row);
     });
@@ -91,10 +75,22 @@ const loadresults = async (jsonDataNews, resultsDiv) => {
     builtBlock,
   );
 
-  resultsDiv.append(parentDiv);
+  const newsTop = div({ class: 'news-top' }, div({ class: 'date' }));
+
+  // Get today's date along with sufgfix
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const today = new Date();
+  const day = today.getDate();
+  const month = today.getMonth(); // Months are zero-based
+  const year = today.getFullYear();
+  const suffix = ['th', 'st', 'nd', 'rd'][((day % 10) < 4 && ((day % 100) - (day % 10)) !== 10) ? day % 10 : 0];
+  const formattedDate = `${day}${suffix} ${monthNames[month]} ${year}`;
+  newsTop.querySelector('.date').textContent = formattedDate;
+
+  resultsDiv.append(newsTop, parentDiv);
   decorateBlock(builtBlock);
   await loadBlock(builtBlock);
-  builtBlock.classList.add('newsItems');
+  builtBlock.classList.add('newsitems');
   builtBlock.querySelectorAll(':scope > div').forEach((newsitem) => {
     newsitem.classList.add('news');
   });
