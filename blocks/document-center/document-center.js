@@ -137,7 +137,6 @@ export default function decorate(block) {
   const searchResults = div({ class: 'doc-search-results' });
   const container = div({ class: 'documents-wrap' });
   [...block.children].forEach((row) => {
-
     const fileGroup = row.children[0];
     const [fileGroupTitle, fileGroupDescription] = fileGroup.children;
 
@@ -155,7 +154,7 @@ export default function decorate(block) {
       const subAccordionsContainer = div({ class: 'sub-accordions' });
 
       sections.forEach((section) => {
-        const sectionTitle = section.previousSibling.textContent.trim()
+        const sectionTitle = section.previousSibling.textContent.trim();
         if (!sectionTitle) {
           return;
         }
@@ -166,9 +165,10 @@ export default function decorate(block) {
         customizeFileLinks(fileLinks);
 
         const subId = createHashId(sectionTitle);
-        const subDetailsEl = details({ class: 'accordion-item-inner', id: subId },
+        const subDetailsEl = details(
+          { class: 'accordion-item-inner', id: subId },
           sectionSummary,
-          div({class: 'content'}, section),
+          div({ class: 'content' }, section),
         );
         subAccordionsContainer.append(subDetailsEl);
       });
@@ -181,7 +181,7 @@ export default function decorate(block) {
 
     const titleText = fileGroupTitle.textContent.trim();
     const id = createHashId(titleText);
-    const mainSummaryEl = summary (
+    const mainSummaryEl = summary(
       { class: 'accordion-item-label' },
       fileGroupTitle,
       small(
