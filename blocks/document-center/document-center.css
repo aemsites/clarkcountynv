@@ -1,4 +1,4 @@
-.document-center-ml.block {
+.document-center.block {
     @media (width >= 900px) {
         padding-right: 10px;
     }
