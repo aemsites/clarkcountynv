@@ -65,7 +65,6 @@ const loadresults = async (jsonDataNews, resultsDiv) => {
 
   // eslint-disable-next-line max-len
   const curPage = [...newsResults].slice(0, 6);
-  console.log(curPage);
 
   const blockContents = resultParsers[blockType](curPage);
   const builtBlock = buildBlock(blockType, blockContents);
