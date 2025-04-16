@@ -44,7 +44,6 @@ const resultParsers = {
       const pageTitle = div({ class: 'pagetitle' }, result.newsTitle);
       cardbottom.append(pageTitle);
       const aEle1 = div({ class: 'learnmore' }, a({ href: `${result.newsPath}` }, 'Learn More', img({ src: '/assets/images/general/white-arrow-right.png' })));
-    //   aEle1.href = window.location.origin + result.newsPath;
       cardbottom.append(aEle1);
       row.push(cardtop, cardbottom);
       blockContents.push(row);
