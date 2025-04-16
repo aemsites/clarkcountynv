@@ -24,8 +24,6 @@ function getMaxColumns(block) {
   return maxColumns;
 }
 
-;
-
 export default async function decorate(block) {
   const table = document.createElement('table');
   const thead = document.createElement('thead');
@@ -50,17 +48,15 @@ export default async function decorate(block) {
       cell.innerHTML = childColumns[0].innerHTML;
       cell.setAttribute('colspan', '2');
       row.append(cell);
-    } 
+
     // Condition for blue-header-bordered table variant
-    else if (childColumns.length === 1 &&
-      block.classList.contains('blue-header-bordered')) {
-        const cell = buildCell(header ? i : i + 1);
-  cell.innerHTML = childColumns[0].innerHTML;
-  cell.setAttribute('colspan', '4');
-  row.append(cell);
-      }
-      
-    else {
+    } else if (childColumns.length === 1
+      && block.classList.contains('blue-header-bordered')) {
+      const cell = buildCell(header ? i : i + 1);
+      cell.innerHTML = childColumns[0].innerHTML;
+      cell.setAttribute('colspan', '4');
+      row.append(cell);
+    } else {
       // Normal case - add each column
       childColumns.forEach((col) => {
         const cell = buildCell(header ? i : i + 1);
@@ -71,7 +67,4 @@ export default async function decorate(block) {
   });
   block.innerHTML = '';
   block.append(table);
-
-  
 }
-

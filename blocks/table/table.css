@@ -578,15 +578,14 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
 {
     table {
     border-collapse: collapse;
-    
     width: 100%;
 }
-td, th {
-    border: 1px solid black;
-    padding: 8px;
-    
-  }
 
+    td, th {
+    border: 1px solid black;
+    padding: 8px;  
+  }
+  
   td[colspan] {
     text-align: left;
     font-weight: bold;
