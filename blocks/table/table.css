@@ -571,3 +571,36 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
         margin-bottom: 30px;
     }
 }
+
+
+/* CSS for blue-header-bordered Table variant */
+  .table.blue-header-bordered
+{
+    table {
+    border-collapse: collapse;
+    
+    width: 100%;
+}
+td, th {
+    border: 1px solid black;
+    padding: 8px;
+    
+  }
+
+  td[colspan] {
+    text-align: left;
+    font-weight: bold;
+    background-color: #f9f9f9;
+  }
+}
+
+.blue-header-bordered .merged-row td {
+    text-align: center;
+  }
+
+  .blue-header-bordered th {
+    text-align: center;
+    background-color: #c2e0f4; /* or any shade of blue you like */
+    font-weight: bold;
+    border: 1px solid black;
+  }
