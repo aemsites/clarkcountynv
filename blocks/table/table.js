@@ -51,7 +51,7 @@ export default async function decorate(block) {
 
     // Condition for blue-header-bordered table variant
     } else if (childColumns.length === 1
-      && block.classList.contains('blue-header-bordered')) {
+      && block.classList.contains('mixed-columns')) {
       const cell = buildCell(header ? i : i + 1);
       cell.innerHTML = childColumns[0].innerHTML;
       cell.setAttribute('colspan', maxColumns);

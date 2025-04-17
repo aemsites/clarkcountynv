@@ -574,7 +574,7 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
 
 
 /* CSS for blue-header-bordered Table variant */
-  .table.blue-header-bordered
+  .table.mixed-columns
 {
     table {
     border-collapse: collapse;
@@ -588,17 +588,10 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
 
   td[colspan] {
     text-align: left;  
-    background-color: #f9f9f9;
   }
 }
 
-.blue-header-bordered .merged-row td {
+.mixed-columns td {
     text-align: center;
   }
 
-  .blue-header-bordered th {
-    text-align: center;
-    background-color: #c2e0f4; /* or any shade of blue you like */
-    font-weight: bold;
-    border: 1px solid black;
-  }
