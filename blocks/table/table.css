@@ -585,10 +585,9 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
     border: 1px solid black;
     padding: 8px;  
   }
-  
+
   td[colspan] {
-    text-align: left;
-    font-weight: bold;
+    text-align: left;  
     background-color: #f9f9f9;
   }
 }

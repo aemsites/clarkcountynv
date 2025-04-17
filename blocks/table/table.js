@@ -54,7 +54,7 @@ export default async function decorate(block) {
       && block.classList.contains('blue-header-bordered')) {
       const cell = buildCell(header ? i : i + 1);
       cell.innerHTML = childColumns[0].innerHTML;
-      cell.setAttribute('colspan', '4');
+      cell.setAttribute('colspan', maxColumns);
       row.append(cell);
     } else {
       // Normal case - add each column
