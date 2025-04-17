@@ -123,17 +123,19 @@ export default {
     });
     finalBody.append(tableBlock);
 
-    let iframeSrc = main.querySelector('.leftnav-map iframe').src;
-    iframeSrc = iframeSrc.replace('AIzaSyAOLPINIt8gtJpi00yqu4vHL9Ye6hhKDYI', 'AIzaSyC5cMe92Yw3JgHrkvgIyHgdS2lTsH4C95k');
-    const mapEl = document.createElement('a');
-    mapEl.href = iframeSrc;
-    mapEl.textContent = iframeSrc;
+    let iframeSrc = main.querySelector('.leftnav-map iframe')?.src;
+    if (iframeSrc) {
+      iframeSrc = iframeSrc.replace('AIzaSyAOLPINIt8gtJpi00yqu4vHL9Ye6hhKDYI', 'AIzaSyC5cMe92Yw3JgHrkvgIyHgdS2lTsH4C95k');
+      const mapEl = document.createElement('a');
+      mapEl.href = iframeSrc;
+      mapEl.textContent = iframeSrc;
 
-    const mapBlock = WebImporter.Blocks.createBlock(document, {
-      name: 'Map-embed (business-map-bottom)',
-      cells: [[mapEl]],
-    });
-    finalBody.append(mapBlock);
+      const mapBlock = WebImporter.Blocks.createBlock(document, {
+        name: 'Map-embed (business-map-bottom)',
+        cells: [[mapEl]],
+      });
+      finalBody.append(mapBlock);
+    }
 
     finalBody.append(buildSectionMetadata([['Style', 'agendadetail, no button']]));
     finalBody.append(blockSeparator().cloneNode(true));
