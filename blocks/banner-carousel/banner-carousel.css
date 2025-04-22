@@ -207,6 +207,7 @@
     bottom: 100px;
     left: 100px;
     display: block;
+    z-index: 2;
 }
 
 .block.banner-carousel .banner-title h3{
