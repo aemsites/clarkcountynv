@@ -74,23 +74,11 @@ export function createLabel(fd, tagName = 'label') {
     if (fd.label.visible === false) {
       label.dataset.visible = 'false';
     }
-    
     if (fd.tooltip) {
       label.title = stripTags(fd.tooltip, '');
-      
-      const wrapper = document.createElement('div');
-      wrapper.className = 'field-label-wrapper';
-      wrapper.appendChild(label);
-
-      const tooltipIcon = document.createElement('span');
-      tooltipIcon.className = 'tooltip-icon';
-      tooltipIcon.textContent = '?';
-      tooltipIcon.setAttribute('data-tooltip', stripTags(fd.tooltip, ''));
-      wrapper.appendChild(tooltipIcon);
-
-      return wrapper;
+      label.setAttribute('data-tooltip', stripTags(fd.tooltip, ''));
+      label.classList.add('has-visible-tooltip');
     }
-
     return label;
   }
   return null;
