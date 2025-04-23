@@ -1,80 +1,84 @@
-/* CSS for Forms RPTT Calculator  */
-
-/* This CSS is for the RPTT calculator form in the right section of the main menu.
-   It styles the form, its labels, inputs, and buttons to create a user-friendly interface.
-   The styles are responsive and adapt to different screen sizes. */
-
-.section.rptt-calc .form.block {
-    form {
+.section.rptt-calc {
+    .form.block {
+      form {
         * {
-            color: #000;
+          color: #000;
         }
-
+  
         .number-wrapper {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            margin: 0;
-        }
-
-        .number-wrapper label {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          margin: 0;
+  
+          label {
             flex-basis: 75%;
-        }
-
-        .number-wrapper input {
+          }
+  
+          input {
             flex-basis: 25%;
             border: 1px solid #92ACAF;
             background-color: #eee;
             text-align: right;
+          }
+  
+          &:first-child {
+            label {
+              flex-basis: 50%;
+            }
+  
+            input {
+              flex-basis: 50%;
+            }
+          }
+  
+          &.field-taxable-amount {
+            label {
+              flex-basis: 60%;
+            }
+  
+            input {
+              flex-basis: 40%;
+            }
+          }
+  
+          &.field-transfer-tax {
+            margin-top: 10vh;
+          }
+  
+          &.field-deed-in-lieu-fixed {
+            label {
+              flex-basis: 60%;
+            }
+  
+            input {
+              flex-basis: 40%;
+            }
+          }
         }
-
-        [class*="fixed"] input {
+  
+        .number-wrapper[class*="fixed"] {
+          input {
             background-color: white;
             text-align: right;
+          }
         }
-
-        .number-wrapper:first-child label{
-            flex-basis: 50%;
+  
+        .number-wrapper[class*="newform"] {
+          margin-top: 15vh;
         }
-
-        .number-wrapper.field-taxable-amount label {
-            flex-basis: 60%;
-        }
-
-        .number-wrapper.field-taxable-amount input {
-            flex-basis: 40%;
-        }
-
-        .number-wrapper:first-child input{
-            flex-basis: 50%;
-        }
-
-        .number-wrapper.field-transfer-tax {
-            margin-top: 10vh;
-        }
-
-        .number-wrapper.field-deed-in-lieu-fixed label {
-            flex-basis: 60%;
-        }
-
-        .number-wrapper.field-deed-in-lieu-fixed input {
-            flex-basis: 40%;
-        }
-
-        [class*="newform"] {
-            margin-top: 15vh;
-        }
-
+  
         .button-wrapper {
-            display: flex;
-            justify-content: end;
-            position: relative;
-            width: 103%;
-            border-bottom: 2px solid #000;
+          display: flex;
+          justify-content: end;
+          position: relative;
+          width: 103%;
+          border-bottom: 2px solid #000;
         }
-      
-        .field-estimate-tax-button button {
+  
+        .field-estimate-tax-button {
+          button {
             background: #0094C3;
             color: #fff;
             border: 0;
@@ -87,10 +91,12 @@
             line-height: 1;
             vertical-align: top;
             font-family: sans-serif;
-            transition: all .3s;
+            transition: all 0.3s;
             right: 4vw;
             position: relative;
+          }
         }
-
+      }
     }
-}
+  }
+  
