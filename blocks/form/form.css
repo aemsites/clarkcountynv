@@ -818,7 +818,7 @@ main div.form-wrapper {
 /* Combined tooltip styles with transitions */
 .field-label.has-visible-tooltip .tooltip-content {
   position: absolute;
-  top: -40px;
+  top: -45px;
   right: -10px;
   padding: 8px 12px;
   background-color: black;
@@ -832,15 +832,14 @@ main div.form-wrapper {
   transition: 0.2s ease-in-out;
 }
 
-/* Arrow as part of tooltip */
+/* Arrow pointing down to question mark */
 .field-label.has-visible-tooltip .tooltip-content::after {
   content: '';
   position: absolute;
-  bottom: -6px;
-  left: 50%;
-  transform: translateX(-50%);
+  bottom: -12px;  /* Position below the tooltip */
+  right: 10px;    /* Align with question mark */
   border: 6px solid transparent;
-  border-top-color: black;
+  border-top: 6px solid black;  /* Arrow pointing down */
 }
 
 /* Single hover state */
