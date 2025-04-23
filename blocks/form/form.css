@@ -796,6 +796,7 @@ main div.form-wrapper {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  position: relative;
 }
 
 .field-label.has-visible-tooltip::after {
@@ -814,11 +815,11 @@ main div.form-wrapper {
 }
 
 /* Tooltip text */
-.field-label.has-visible-tooltip:hover::before {
+.field-label.has-visible-tooltip::before {
   content: attr(data-tooltip);
   position: absolute;
-  bottom: 100%;
-  left: 50%;
+  top: -35px;
+  left: 100%;
   transform: translateX(-50%);
   padding: 8px 12px;
   background-color: black;
@@ -827,5 +828,13 @@ main div.form-wrapper {
   font-size: 14px;
   white-space: nowrap;
   z-index: 1000;
-  margin-bottom: 8px;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.2s;
+}
+
+/* Show on hover */
+.field-label.has-visible-tooltip:hover::before {
+  visibility: visible;
+  opacity: 1;
 }
