@@ -15,6 +15,12 @@
             "name": "tooltip",
             "label": "Short description",
             "valueType": "string"
+        },
+        {
+            "component": "richtext",
+            "name": "tooltip-text",
+            "label": "Tooltip text",
+            "valueType": "string"
         }
     ]
 }
