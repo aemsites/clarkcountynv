@@ -806,7 +806,7 @@ main div.form-wrapper {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: black;
+  background-color: #666666;
   color: white;
   font-size: 14px;
   font-weight: bold;
@@ -826,9 +826,7 @@ main div.form-wrapper {
   color: white;
   border-radius: 4px;
   font-size: 14px;
-  white-space: pre-wrap;
-  max-width: 250px;
-  text-align: left;
+  white-space: nowrap;
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.2s;
