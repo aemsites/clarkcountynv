@@ -76,8 +76,12 @@ export function createLabel(fd, tagName = 'label') {
     }
     if (fd.tooltip) {
       label.title = stripTags(fd.tooltip, '');
-      label.setAttribute('data-tooltip', stripTags(fd.tooltip, ''));
       label.classList.add('has-visible-tooltip');
+      
+      const tooltipContent = document.createElement('span');
+      tooltipContent.className = 'tooltip-content';
+      tooltipContent.textContent = stripTags(fd.tooltip, '');
+      label.appendChild(tooltipContent);
     }
     return label;
   }

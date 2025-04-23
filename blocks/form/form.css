@@ -791,7 +791,7 @@ main div.form-wrapper {
     }
 }
 
-/* Tooltip styling */
+/* Tooltip styling - single position context */
 .field-label.has-visible-tooltip {
   display: inline-flex;
   align-items: center;
@@ -799,6 +799,7 @@ main div.form-wrapper {
   position: relative;
 }
 
+/* Question mark icon */
 .field-label.has-visible-tooltip::after {
   content: "?";
   display: inline-flex;
@@ -814,13 +815,11 @@ main div.form-wrapper {
   cursor: help;
 }
 
-/* Tooltip text */
-.field-label.has-visible-tooltip::before {
-  content: attr(data-tooltip);
+/* Combined tooltip styles with transitions */
+.field-label.has-visible-tooltip .tooltip-content {
   position: absolute;
-  top: -35px;
-  left: 100%;
-  transform: translateX(-50%);
+  top: -40px;
+  right: -10px;
   padding: 8px 12px;
   background-color: black;
   color: white;
@@ -828,13 +827,24 @@ main div.form-wrapper {
   font-size: 14px;
   white-space: nowrap;
   z-index: 1000;
-  visibility: hidden;
   opacity: 0;
-  transition: visibility 0s, opacity 0.2s;
+  visibility: hidden;
+  transition: 0.2s ease-in-out;
 }
 
-/* Show on hover */
-.field-label.has-visible-tooltip:hover::before {
-  visibility: visible;
+/* Arrow as part of tooltip */
+.field-label.has-visible-tooltip .tooltip-content::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: black;
+}
+
+/* Single hover state */
+.field-label.has-visible-tooltip:hover .tooltip-content {
   opacity: 1;
+  visibility: visible;
 }
