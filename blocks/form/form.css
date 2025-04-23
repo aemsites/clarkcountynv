@@ -3,7 +3,7 @@
 
 :root {
     --background-color-primary: #fff;
-    --label-color: #666;
+    --label-color: #000;
     --border-color: #818a91;
     --form-error-color: #ff5f3f;
     --button-primary-color: #5F8DDA;
@@ -771,9 +771,9 @@ main .form form .checkbox-group-wrapper.horizontal .field-description {
 
 main div.form-wrapper {
     background: white;
-    padding: 40px;
+    padding-top: 20px;
+    padding-bottom: 40px;
     border-radius: 12px;
-    box-shadow: 0 4px 24px rgb(0 0 0 / 8%);
 }
 
 /* Responsive adjustments for mobile */
@@ -791,59 +791,45 @@ main div.form-wrapper {
     }
 }
 
-/* Tooltip styling - single position context */
-.field-label.has-visible-tooltip {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  position: relative;
-}
+.tooltip-content {
+    position: relative;
+    color: #fff;
+    background: #000;
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    display: inline-block;
+    text-align: center;
+    line-height: 16px;
+    margin: 0 5px;
+    font-size: var(--body-font-size-s);
+    vertical-align: baseline;
+    top: -1px;
 
-/* Question mark icon */
-.field-label.has-visible-tooltip::after {
-  content: "?";
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: #666666;
-  color: white;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: help;
-}
+    &:hover::before {
+        border: solid;
+        border-color: #222 transparent;
+        border-width: 6px 6px 0;
+        bottom: 17px;
+        content: '';
+        left: 2px;
+        position: absolute;
+        z-index: 99
+    }
 
-/* Combined tooltip styles with transitions */
-.field-label.has-visible-tooltip .tooltip-content {
-  position: absolute;
-  top: -45px;
-  right: -10px;
-  padding: 8px 12px;
-  background-color: black;
-  color: white;
-  border-radius: 4px;
-  font-size: 14px;
-  white-space: nowrap;
-  z-index: 1000;
-  opacity: 0;
-  visibility: hidden;
-  transition: 0.2s ease-in-out;
-}
-
-/* Arrow pointing down to question mark */
-.field-label.has-visible-tooltip .tooltip-content::after {
-  content: '';
-  position: absolute;
-  bottom: -12px;  /* Position below the tooltip */
-  right: 10px;    /* Align with question mark */
-  border: 6px solid transparent;
-  border-top: 6px solid black;  /* Arrow pointing down */
-}
-
-/* Single hover state */
-.field-label.has-visible-tooltip:hover .tooltip-content {
-  opacity: 1;
-  visibility: visible;
+    &:hover::after {
+        background: rgb(0 0 0 / 90%);
+        border-radius: 5px 5px 5px 0;
+        bottom: 23px;
+        color: #fff;
+        content: attr(data-tooltip-text);
+        padding: 10px 5px;
+        position: absolute;
+        z-index: 98;
+        left: 2px;
+        width: 230px;
+        text-shadow: none;
+        font-size: 12px;
+        line-height: 1.5em
+    }
 }
