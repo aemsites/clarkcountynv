@@ -77,6 +77,23 @@ export function createLabel(fd, tagName = 'label') {
     if (fd.tooltip) {
       label.title = stripTags(fd.tooltip, '');
     }
+
+    // Only check for tooltip-text in properties
+    const tooltipText = fd.properties?.['tooltip-text'];
+    if (tooltipText) {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'field-label-wrapper';
+      wrapper.appendChild(label);
+
+      const tooltipIcon = document.createElement('span');
+      tooltipIcon.className = 'tooltip-icon';
+      tooltipIcon.textContent = '?';
+      tooltipIcon.setAttribute('data-tooltip', stripTags(tooltipText, ''));
+      wrapper.appendChild(tooltipIcon);
+
+      return wrapper;
+    }
+
     return label;
   }
   return null;

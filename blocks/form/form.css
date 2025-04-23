@@ -790,3 +790,74 @@ main div.form-wrapper {
         margin: 0;
     }
 }
+
+/* Tooltip container */
+.field-label-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Tooltip icon */
+.tooltip-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: black;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: help;
+  position: relative;
+}
+
+/* Tooltip text */
+.tooltip-icon::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 12px;
+  background-color: black;
+  color: white;
+  border-radius: 4px;
+  font-size: 14px;
+  white-space: pre-wrap;
+  max-width: 250px;
+  text-align: left;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 1000;
+  margin-bottom: 8px;
+}
+
+/* Show tooltip on hover */
+.tooltip-icon:hover::after {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Add a small arrow to the tooltip */
+.tooltip-icon::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: black;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s;
+  margin-bottom: -4px;
+}
+
+.tooltip-icon:hover::before {
+  visibility: visible;
+  opacity: 1;
+}
