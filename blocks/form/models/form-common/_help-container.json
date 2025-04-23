@@ -17,7 +17,7 @@
             "valueType": "string"
         },
         {
-            "component": "richtext",
+            "component": "text",
             "name": "tooltip-text",
             "label": "Tooltip text",
             "valueType": "string"
