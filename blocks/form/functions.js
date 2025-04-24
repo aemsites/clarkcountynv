@@ -44,11 +44,12 @@ function days(endDate, startDate) {
 
 /**
  * Set checkbox field value
- * @param {object} checkbox or panel component to set the property on
+ * @param {object} checkbox
+ * @param {object} textinput
  * @param {scope} globals Global scope object
  */
-function computeCheckboxValue(checkbox, globals) {
-  globals.setProperty(checkbox, { value: checkbox.$value });
+function computeCheckboxValue(checkbox, textinput, globals) {
+  globals.functions.setProperty(checkbox, { value: checkbox.$value });
 }
 
 // eslint-disable-next-line import/prefer-default-export
