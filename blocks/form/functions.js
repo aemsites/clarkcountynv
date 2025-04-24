@@ -42,5 +42,16 @@ function days(endDate, startDate) {
   return Math.floor(diffInMs / (1000 * 60 * 60 * 24));
 }
 
+/**
+ * Set checkbox field value
+ * @param {object} checkbox or panel component to set the property on
+ * @param {scope} globals Global scope object
+ */
+function computeCheckboxValue(checkbox, globals) {
+  globals.setProperty(checkbox, { value: checkbox?.$value });
+}
+
 // eslint-disable-next-line import/prefer-default-export
-export { getFullName, days, submitFormArrayToString };
+export {
+  getFullName, days, submitFormArrayToString, computeCheckboxValue,
+};
