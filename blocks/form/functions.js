@@ -48,7 +48,7 @@ function days(endDate, startDate) {
  * @param {scope} globals Global scope object
  */
 function computeCheckboxValue(checkbox, globals) {
-  globals.setProperty(checkbox, { value: checkbox?.$value });
+  globals.setProperty(checkbox, { value: checkbox.$value });
 }
 
 // eslint-disable-next-line import/prefer-default-export
