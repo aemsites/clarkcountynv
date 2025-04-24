@@ -55,6 +55,7 @@ function computeCheckboxValue(checkbox, textinput, globals) {
     newValue = checkbox.$value.map((item, i) => (index === i ? textinput.$value : item));
   }
   globals.functions.setProperty(checkbox, { value: newValue });
+  globals.functions.submitForm();
 }
 
 // eslint-disable-next-line import/prefer-default-export
