@@ -363,6 +363,14 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
     vertical-align: top !important;
 }
 
+.table.align-top-h2 table td{
+    vertical-align: top !important;
+    
+    h2 {
+        margin-top: unset !important;
+    }
+}
+
 .table.align-center table td{
     text-align: center !important;
 }
