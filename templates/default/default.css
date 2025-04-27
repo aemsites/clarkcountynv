@@ -147,15 +147,15 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
      main .mainmenu .rightsection.rptt-calc .section.calculator {
         display: flex;
         flex-direction: row;
-        gap: 5em;
+        gap: 7em;
      }
 
      main .mainmenu .rightsection.rptt-calc .section.calculator .form-wrapper {
-        flex-basis: 45%;
+        flex-basis: 55%;
      }
 
      main .mainmenu .rightsection.rptt-calc .section.calculator .default-content-wrapper {
-        flex-basis: 55%;
+        flex-basis: 45%;
         margin: 0;
      }
 
