@@ -60,7 +60,7 @@ export default async function decorate(doc) {
   /* Adding logic to match classes from array and then append to rightsection */
   const classesToPrepend = ['contact-us', 'calculator'];
   classesToPrepend.forEach((className) => {
-    const $section = document.querySelector(`.${className}`);
+    const $section = document.querySelector(`.section.${className}`);
     if ($section && !$section.classList.contains('rightsection')) {
       $rightsection.prepend($section);
     }
