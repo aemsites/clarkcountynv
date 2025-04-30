@@ -32,7 +32,9 @@ export function getRouting() {
 export const emailPattern = '([A-Za-z0-9][._]?)+[A-Za-z0-9]@[A-Za-z0-9]+(\.?[A-Za-z0-9]){2}\.([A-Za-z0-9]{2,4})?';
 
 let submitBaseUrl = '';
-
+if (window.location.hostname.includes('aem.page') || window.location.hostname.includes('aem.live')) {
+  submitBaseUrl = 'https://publish-p107005-e259333-cmstg.adobeaemcloud.com';
+} 
 export const SUBMISSION_SERVICE = 'https://forms.adobe.com/adobe/forms/af/submit/';
 
 export function setSubmitBaseUrl(url) {
