@@ -83,14 +83,14 @@ async function fieldChanged(payload, form, generateFormRendition) {
         }
         break;
       case 'validationMessage':
-      {
-        const { validity } = payload.field;
-        if (field.setCustomValidity
+        {
+          const { validity } = payload.field;
+          if (field.setCustomValidity
           && (validity?.expressionMismatch || validity?.customConstraint)) {
-          field.setCustomValidity(currentValue);
-          updateOrCreateInvalidMsg(field, currentValue);
+            field.setCustomValidity(currentValue);
+            updateOrCreateInvalidMsg(field, currentValue);
+          }
         }
-      }
         break;
       case 'value':
         if (['number', 'date', 'text', 'email'].includes(field.type) && (displayFormat || displayValueExpression)) {
