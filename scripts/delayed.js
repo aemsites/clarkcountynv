@@ -28,12 +28,12 @@ async function loadWidget() {
   await loadScript('/widgets/accessibility/accessibility.js');
 }
 
-// Script for Google Search Engine
-async function loadgse() {
-  await loadScript('/widgets/googlesearch/googlesearch.js');
-}
+// // Script for Google Search Engine
+// async function loadgse() {
+//   await loadScript('/widgets/googlesearch/googlesearch.js');
+// }
 
-loadgse();
+// loadgse();
 
 // Script for share Widget
 async function loadShareWidget() {
