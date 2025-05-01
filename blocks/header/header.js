@@ -18,6 +18,7 @@ function hideGoogleTranslateBar() {
 }
 
 let rawkey = '';
+let searchIframe = '';
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
@@ -300,15 +301,19 @@ function handleNavTools(navWrapper, expandElement) {
       rawkey = key.target.value;
       enableTabbing(searchBox);
       if (rawkey.length > 2) {
+        console.log(rawkey);
         searchBox.querySelector('.search-results').classList.remove('off');
         searchBox.querySelector('.tab-pane').classList.remove('off');
         const tabContent = searchBox.querySelector('.search-results .tab-content');
         const tab = tabContent.querySelector('.tab-pane');
         const addIframe = iframe();
-        // addIframe.src = `https://www.clarkcountynv.gov/_assets_/plugins/search-box.html?q=${rawkey}`;
-        addIframe.src = `https://issue1196--clarkcountynv--aemsites.aem.live/drafts/meet/search?q=${rawkey}`;
-        if (!tab.querySelector('.g-search-wrap').querySelector('iframe')) {
+        addIframe.src = `/drafts/meet/search?q=${rawkey}`;
+        if (!searchIframe) {
           tab.querySelector('.g-search-wrap').appendChild(addIframe);
+          searchIframe = tab.querySelector('.g-search-wrap').querySelector('iframe');
+        }
+        else {
+          searchIframe.src = `/drafts/meet/search?q=${rawkey}`;
         }
       }
     });
@@ -317,22 +322,6 @@ function handleNavTools(navWrapper, expandElement) {
       searchBox.querySelector('.search-results').classList.add('off');
       searchBox.querySelector('.tab-pane').classList.add('off');
       searchBox.querySelector('input').value = '';
-    });
-
-    searchBox.querySelector('form').addEventListener('submit', (event) => {
-      event.preventDefault();
-      if (searchBox.querySelector('.search-results').classList.contains('off')) {
-        searchBox.querySelector('.search-results').classList.remove('off');
-        searchBox.querySelector('.tab-pane').classList.remove('off');
-        const tabContent = searchBox.querySelector('.search-results .tab-content');
-        const tab = tabContent.querySelector('.tab-pane');
-        const addIframe = iframe();
-        // addIframe.src = `https://www.clarkcountynv.gov/_assets_/plugins/search-box.html?q=${rawkey}`;
-        addIframe.src = `https://issue1196--clarkcountynv--aemsites.aem.live/drafts/meet/search?q=${rawkey}`;
-        if (!tab.querySelector('.g-search-wrap').querySelector('iframe')) {
-          tab.querySelector('.g-search-wrap').appendChild(addIframe);
-        }
-      }
     });
 
     const languageDiv = div({ class: 'nav-language' });
