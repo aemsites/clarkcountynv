@@ -296,6 +296,13 @@ function handleNavTools(navWrapper, expandElement) {
       searchBox.classList.add('hidden');
     });
 
+    // print the value of input element the moment the user types
+    // searchBox.querySelector('input').addEventListener('input', (key) => {
+    //   key.preventDefault();
+    //   console.log(key.target.value);
+    // });
+
+
     searchBox.querySelector('input').addEventListener('input', (key) => {
       key.preventDefault();
       rawkey = key.target.value;
@@ -322,6 +329,25 @@ function handleNavTools(navWrapper, expandElement) {
       searchBox.querySelector('.search-results').classList.add('off');
       searchBox.querySelector('.tab-pane').classList.add('off');
       searchBox.querySelector('input').value = '';
+    });
+
+    searchBox.querySelector('form').addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (searchBox.querySelector('.search-results').classList.contains('off')) {
+        searchBox.querySelector('.search-results').classList.remove('off');
+        searchBox.querySelector('.tab-pane').classList.remove('off');
+        const tabContent = searchBox.querySelector('.search-results .tab-content');
+        const tab = tabContent.querySelector('.tab-pane');
+        const addIframe = iframe();
+        addIframe.src = `/drafts/meet/search?q=${rawkey}`;
+        if (!searchIframe) {
+          tab.querySelector('.g-search-wrap').appendChild(addIframe);
+          searchIframe = tab.querySelector('.g-search-wrap').querySelector('iframe');
+        }
+        else {
+          searchIframe.src = `/drafts/meet/search?q=${rawkey}`;
+        }
+      }
     });
 
     const languageDiv = div({ class: 'nav-language' });
