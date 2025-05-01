@@ -306,7 +306,7 @@ function handleNavTools(navWrapper, expandElement) {
         const tab = tabContent.querySelector('.tab-pane');
         const addIframe = iframe();
         // addIframe.src = `https://www.clarkcountynv.gov/_assets_/plugins/search-box.html?q=${rawkey}`;
-        addIframe.src = 'https://issue1196--clarkcountynv--aemsites.aem.live/drafts/meet/search?q=wedding';
+        addIframe.src = `https://issue1196--clarkcountynv--aemsites.aem.live/drafts/meet/search?q=${rawkey}`;
         if (!tab.querySelector('.g-search-wrap').querySelector('iframe')) {
           tab.querySelector('.g-search-wrap').appendChild(addIframe);
         }
@@ -328,7 +328,7 @@ function handleNavTools(navWrapper, expandElement) {
         const tab = tabContent.querySelector('.tab-pane');
         const addIframe = iframe();
         // addIframe.src = `https://www.clarkcountynv.gov/_assets_/plugins/search-box.html?q=${rawkey}`;
-        addIframe.src = 'https://issue1196--clarkcountynv--aemsites.aem.live/drafts/meet/search?q=wedding';
+        addIframe.src = `https://issue1196--clarkcountynv--aemsites.aem.live/drafts/meet/search?q=${rawkey}`;
         if (!tab.querySelector('.g-search-wrap').querySelector('iframe')) {
           tab.querySelector('.g-search-wrap').appendChild(addIframe);
         }
