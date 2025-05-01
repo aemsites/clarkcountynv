@@ -314,13 +314,13 @@ function handleNavTools(navWrapper, expandElement) {
         const tabContent = searchBox.querySelector('.search-results .tab-content');
         const tab = tabContent.querySelector('.tab-pane');
         const addIframe = iframe();
-        addIframe.src = `/drafts/meet/search?q=${rawkey}`;
+        addIframe.src = `/search?q=${rawkey}`;
         if (!searchIframe) {
           tab.querySelector('.g-search-wrap').appendChild(addIframe);
           searchIframe = tab.querySelector('.g-search-wrap').querySelector('iframe');
         }
         else {
-          searchIframe.src = `/drafts/meet/search?q=${rawkey}`;
+          searchIframe.src = `/search?q=${rawkey}`;
         }
       }
     });
@@ -339,13 +339,13 @@ function handleNavTools(navWrapper, expandElement) {
         const tabContent = searchBox.querySelector('.search-results .tab-content');
         const tab = tabContent.querySelector('.tab-pane');
         const addIframe = iframe();
-        addIframe.src = `/drafts/meet/search?q=${rawkey}`;
+        addIframe.src = `/search?q=${rawkey}`;
         if (!searchIframe) {
           tab.querySelector('.g-search-wrap').appendChild(addIframe);
           searchIframe = tab.querySelector('.g-search-wrap').querySelector('iframe');
         }
         else {
-          searchIframe.src = `/drafts/meet/search?q=${rawkey}`;
+          searchIframe.src = `/search?q=${rawkey}`;
         }
       }
     });
