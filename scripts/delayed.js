@@ -28,6 +28,13 @@ async function loadWidget() {
   await loadScript('/widgets/accessibility/accessibility.js');
 }
 
+// Script for Google Search Engine
+async function loadgse() {
+  await loadScript('/widgets/googlesearch/googlesearch.js');
+}
+
+loadgse();
+
 // Script for share Widget
 async function loadShareWidget() {
   const calendarPath = '/calendar/';
