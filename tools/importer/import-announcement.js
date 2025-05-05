@@ -8,6 +8,7 @@ import {
   fixPdfLinks,
   fixImageSrcPath,
   fixLinks,
+  normalizeFolderName,
 } from './utils.js';
 
 export const setPageTitleAnnouncement = (main, params) => {
@@ -17,20 +18,25 @@ export const setPageTitleAnnouncement = (main, params) => {
   }
 };
 
+let publishDate = null;
+
 const getInfo = async (main, department, results, year) => {
-  const publishDate = main.querySelector('a').innerText.split(':')[0];
+  const rawPublishDate = main.querySelector('a').innerText.split(':')[0].split(',');
+  publishDate = `${rawPublishDate[1].trim()}, ${rawPublishDate[2].trim()}`;
   const title = main.querySelector('a').innerText.split(':')[1].trim();
   const category = department;
+  const normalizeCategory = normalizeFolderName(department);
   const bannerEl = main.querySelector('img');
   let bannerUrl;
   if (bannerEl) {
     const backgroundImage = WebImporter.DOMUtils.replaceBackgroundByImg(bannerEl, document);
     if (backgroundImage) {
-      bannerUrl = fixImageSrcPath(backgroundImage.getAttribute('src'), results, `general/news/${department}/${year}`);
+      bannerUrl = fixImageSrcPath(backgroundImage.getAttribute('src'), results, `general/news/${normalizeCategory}/${year}`);
     }
   } else {
     bannerUrl = 'https://main--clarkcountynv--aemsites.aem.page/assets/images/general/clarkcounty-logo.png';
   }
+  main.querySelector('a').remove();
   return {
     bannerUrl,
     title,
@@ -57,6 +63,14 @@ export const getTextBlock = (title) => buildTextMetadata([
   [title],
 ]);
 
+function getUrlName(sentence, date) {
+  const words = sentence.split(' ');
+  const initials = words.map((word) => word.charAt(0));
+  const right = initials.join('').toLowerCase();
+  const left = date.replace(/ /, '').split(',').join('-').toLowerCase();
+  return `${left}-${right}`;
+}
+
 export default {
 
   transform: async ({
@@ -68,7 +82,8 @@ export default {
     console.log(main);
     const year = main.querySelector('a').innerText.split(':')[0].split(',')[2].trim();
     const results = [];
-    const department = 'environment_and_sustainability';
+    const department = 'Environment and Sustainability';
+    const normalizeCategory = normalizeFolderName(department);
 
     // use helper method to remove header, footer, etc.
     WebImporter.DOMUtils.remove(main, [
@@ -84,13 +99,28 @@ export default {
     ]);
 
     // Handle all PDFs
-    fixPdfLinks(main, results, `general/news/${department}/${year}`);
+    fixPdfLinks(main, results, `general/news/${normalizeCategory}/${year}`);
     setPageTitleAnnouncement(main, params);
     fixLinks(main);
 
     // Creating a Text block for the title
-    const textBlock = getTextBlock(main.querySelector('a').innerText.split(':')[1].trim());
-    main.insertBefore(textBlock, main.firstChild);
+    let counter = 0;
+    const title = main.querySelector('a').innerText.split(':')[1].trim();
+    const textBlock = getTextBlock(title);
+    main.querySelectorAll('p strong').forEach((ele) => {
+      if (ele.innerText === title) {
+        console.log(ele);
+        ele.remove();
+        main.insertBefore(textBlock, main.firstChild);
+        counter += 1;
+        return;
+      }
+      console.log('counter', counter);
+    });
+
+    if (counter === 0) {
+      main.insertBefore(textBlock, main.firstChild);
+    }
 
     /* Start for hero image */
     const imagePath = '';
@@ -104,7 +134,7 @@ export default {
 
     /* Taking care of rest of the images */
     main.querySelectorAll('img').forEach((image) => {
-      const imageUrl = fixImageSrcPath(image.getAttribute('src'), results, `general/news/${department}/${year}`);
+      const imageUrl = fixImageSrcPath(image.getAttribute('src'), results, `general/news/${normalizeCategory}/${year}`);
       image.replaceWith(imageUrl);
     });
 
@@ -124,9 +154,11 @@ export default {
 
     createMetadata(main, document, params);
 
+    const urlName = getUrlName(title, publishDate);
+
     results.push({
       element: main,
-      path: `/news/${department}/${year}`,
+      path: `/news/${normalizeCategory}/${year}/${urlName}`,
     });
 
     console.log('results', results);
