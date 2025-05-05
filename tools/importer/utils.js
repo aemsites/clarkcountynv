@@ -128,7 +128,7 @@ export const fetchAndParseDocument = async (url) => {
  * @param assetPath = sub directory to store assets -
  * Ex. "governement/department", "residents", "residents/dir1"
  */
-export const fixPdfLinks = (main, results, pagePath, assetPath = 'general') => {
+export const fixPdfLinks = (main, results, assetPath = 'general') => {
   if (!main) {
     return;
   }

@@ -1,59 +1,17 @@
 /* global WebImporter */
 import {
   createMetadata,
-  fetchAndParseDocument,
   blockSeparator,
   getMobileBgBlock,
   getDesktopBgBlock,
   buildSectionMetadata,
-  getImportPagePath,
   fixPdfLinks,
-  setPageTitle,
   fixImageSrcPath,
-  extractBackgroundImageUrl, fixLinks,
+  fixLinks,
 } from './utils.js';
-
-const extractPageInfo = async (url, href, results) => {
-  const doc = await fetchAndParseDocument(url);
-  const page = href.split('/').pop();
-  if (doc) {
-    const { body } = doc;
-    const a = body.querySelector(`a[href="${page}"]`);
-
-    // if article is present in list
-    if (a) {
-      const container = a.closest('.news');
-
-      const bannerEl = container.querySelector('.news-banner');
-      const backgroundImage = WebImporter.DOMUtils.replaceBackgroundByImg(bannerEl, document);
-      let bannerUrl;
-      if (backgroundImage) {
-        bannerUrl = fixImageSrcPath(backgroundImage.getAttribute('src'), results, 'general/news');
-      }
-      const publishDateEl = container.querySelector('.news-date');
-      const categoryEl = publishDateEl.querySelector('span.news-category');
-      let category;
-      if (categoryEl) {
-        category = categoryEl.textContent.trim();
-        categoryEl.remove();
-      }
-      const publishDate = publishDateEl.textContent.replace(/-\s+/g, '').trim();
-      const brief = container.querySelector('.news-brief').textContent.trim();
-
-      return {
-        bannerUrl,
-        category,
-        publishDate,
-        brief,
-      };
-    }
-  }
-  return {};
-};
 
 export const setPageTitleAnnouncement = (main, params) => {
   const pageTitleEl = main.querySelector('a').innerText.split(':')[1].trim();
-  console.log(pageTitleEl);
   if (pageTitleEl.length > 0) {
     params['page-title'] = pageTitleEl;
   }
@@ -61,23 +19,24 @@ export const setPageTitleAnnouncement = (main, params) => {
 
 const getInfo = async (main, department, results, year) => {
   const publishDate = main.querySelector('a').innerText.split(':')[0];
-  console.log('publishDate', publishDate);
   const title = main.querySelector('a').innerText.split(':')[1].trim();
-  console.log('title', title);
   const category = department;
-  console.log('category', category);
   const bannerEl = main.querySelector('img');
-  const backgroundImage = WebImporter.DOMUtils.replaceBackgroundByImg(bannerEl, document);
   let bannerUrl;
-  if (backgroundImage) {
-    bannerUrl = fixImageSrcPath(backgroundImage.getAttribute('src'), results, `general/news/${department}/${year}`);
+  if (bannerEl) {
+    const backgroundImage = WebImporter.DOMUtils.replaceBackgroundByImg(bannerEl, document);
+    if (backgroundImage) {
+      bannerUrl = fixImageSrcPath(backgroundImage.getAttribute('src'), results, `general/news/${department}/${year}`);
+    }
+  } else {
+    bannerUrl = 'https://main--clarkcountynv--aemsites.aem.page/assets/images/general/clarkcounty-logo.png';
   }
-  console.log('bannerUrl', bannerUrl);
   return {
     bannerUrl,
     title,
     category,
     publishDate,
+    year,
   };
 };
 
@@ -88,6 +47,15 @@ function getElement(url, doc) {
   // filter the element if hash matches index
   return parentDiv.querySelectorAll('.faq-item')[hash];
 }
+
+export const buildTextMetadata = (cells) => WebImporter.Blocks.createBlock(document, {
+  name: 'text (center)',
+  cells: [...cells],
+});
+
+export const getTextBlock = (title) => buildTextMetadata([
+  [title],
+]);
 
 export default {
 
@@ -101,10 +69,6 @@ export default {
     const year = main.querySelector('a').innerText.split(':')[0].split(',')[2].trim();
     const results = [];
     const department = 'environment_and_sustainability';
-    const newPagePath = getImportPagePath(params.originalURL);
-    console.log(newPagePath);
-    // const heroBackgroundEl = main.querySelector('div.tns-bg-slide');
-    // const backgroundImageUrl = heroBackgroundEl ? extractBackgroundImageUrl(heroBackgroundEl) : 'slide-1';
 
     // use helper method to remove header, footer, etc.
     WebImporter.DOMUtils.remove(main, [
@@ -120,9 +84,13 @@ export default {
     ]);
 
     // Handle all PDFs
-    fixPdfLinks(main, results, newPagePath, `general/news/${department}/${year}`);
+    fixPdfLinks(main, results, `general/news/${department}/${year}`);
     setPageTitleAnnouncement(main, params);
     fixLinks(main);
+
+    // Creating a Text block for the title
+    const textBlock = getTextBlock(main.querySelector('a').innerText.split(':')[1].trim());
+    main.insertBefore(textBlock, main.firstChild);
 
     /* Start for hero image */
     const imagePath = '';
@@ -134,16 +102,17 @@ export default {
     main.insertBefore(desktopBlock, main.firstChild);
     /* End for hero image */
 
+    /* Taking care of rest of the images */
+    main.querySelectorAll('img').forEach((image) => {
+      const imageUrl = fixImageSrcPath(image.getAttribute('src'), results, `general/news/${department}/${year}`);
+      image.replaceWith(imageUrl);
+    });
+
     main.append(buildSectionMetadata([['Style', 'newsdetail, no-button']]));
     main.append(blockSeparator().cloneNode(true));
 
     params['breadcrumbs-base'] = '/news/news-breadcrumbs';
     params['breadcrumbs-title-override'] = 'News Post';
-    // const listMetadata = await extractPageInfo(
-    //   'http://localhost:3001/newslist.php?host=https://www.clarkcountynv.gov/newslist.php',
-    //   params.originalURL,
-    //   results,
-    // );
 
     const listMetadata = await getInfo(main, department, results, year);
 
@@ -157,7 +126,7 @@ export default {
 
     results.push({
       element: main,
-      path: `${newPagePath}/${year}`,
+      path: `/news/${department}/${year}`,
     });
 
     console.log('results', results);
