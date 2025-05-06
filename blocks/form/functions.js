@@ -52,7 +52,19 @@ function replaceString(str, searchStr) {
   return str.replace(new RegExp(searchStr, 'g'), '');
 }
 
+/**
+ * Replace all instances of a substring in a string with empty string
+ * @param {object} dropdown - The dropdown component
+ * @returns {string} The selected option label
+ */
+function getSelectedOptionLabel(dropdown) {
+  const enums = dropdown.$enum;
+  const value = dropdown.$value;
+  const index = enums.indexOf(value);
+  return index !== -1 ? dropdown.$enumNames[index] : undefined;
+}
+
 // eslint-disable-next-line import/prefer-default-export
 export {
-  getFullName, days, submitFormArrayToString, replaceString,
+  getFullName, days, submitFormArrayToString, replaceString, getSelectedOptionLabel,
 };
