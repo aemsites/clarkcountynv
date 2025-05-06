@@ -157,7 +157,6 @@ export default {
     /* Taking care of rest of the images */
     main.querySelectorAll('img').forEach((image) => {
       const imageUrl = fixImageSrcPath(image.getAttribute('src'), results, `general/news/${normalizeCategory}/${year}`);
-      console.log(imageUrl);
       const imageAEl = document.createElement('a');
       imageAEl.href = imageUrl;
       imageAEl.innerText = imageUrl;
@@ -179,8 +178,6 @@ export default {
     createMetadata(main, document, params);
 
     const urlName = getUrlName(title, publishDate);
-
-    console.log(main);
 
     results.push({
       element: main,
