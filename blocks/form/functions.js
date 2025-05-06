@@ -53,7 +53,7 @@ function replaceString(str, searchStr) {
 }
 
 /**
- * Replace all instances of a substring in a string with empty string
+ * Returns the selected option label for a given dropdown
  * @param {object} dropdown - The dropdown component
  * @returns {string} The selected option label
  */
