@@ -9,13 +9,15 @@ import {
 } from '../../scripts/aem.js';
 
 class News {
-  constructor(newsTitle, newsDescription, newsPath, newsPublished, newsImage, newsCategory) {
+  // eslint-disable-next-line max-len
+  constructor(newsTitle, newsDescription, newsPath, newsPublished, newsImage, newsCategory, newsYear) {
     this.newsTitle = newsTitle;
     this.newsDescription = newsDescription;
     this.newsPath = newsPath;
     this.newsPublished = newsPublished;
     this.newsImage = newsImage;
     this.newsCategory = newsCategory;
+    this.newsYear = newsYear;
   }
 }
 
@@ -73,7 +75,7 @@ const loadresults = async (jsonDataNews, resultsDiv, page, newsbox) => {
   const newsResults = [];
   jsonDataNews.forEach((news) => {
     // eslint-disable-next-line max-len
-    const obj = new News(news.pagetitle, news.brief, news.path, news.publishDate, news.bannerUrl, news.category);
+    const obj = new News(news.pagetitle, news.brief, news.path, news.publishDate, news.bannerUrl, news.category, news.year);
     newsResults.push(obj);
   });
   newsResults.sort((x, y) => y.newsPublished - x.newsPublished);
@@ -164,21 +166,22 @@ const loadresults = async (jsonDataNews, resultsDiv, page, newsbox) => {
   newsbox.append(paginationblock.parentElement);
 };
 
-async function getCategories(block, newsbox) {
-  const categories = new Set();
-  const jsonDataNews = await ffetch('/news/query-index.json')
+async function getYear(block, newsbox) {
+  const years = new Set();
+  const jsonDataNewsAll = await ffetch('/news/query-index.json')
     .chunks(1000)
     .all();
-  // Get category from array of Objects
+  const jsonDataNews = jsonDataNewsAll.filter((news) => news.category === 'Environment and Sustainability');
+  // Get year from array of Objects
   jsonDataNews.forEach((news) => {
-    if (news.category) {
-      categories.add(news.category);
+    if (news.year) {
+      years.add(news.year);
     }
   });
   const params = new URLSearchParams(window.location.search);
-  const catNews = params.get('category');
+  const catNews = params.get('year');
   if (!catNews) {
-    params.set('category', normalizeString('All News'));
+    params.set('year', normalizeString('All News'));
     window.location.search = params.toString();
   }
   let curPage = params.get('pg');
@@ -193,9 +196,9 @@ async function getCategories(block, newsbox) {
   const select = block.querySelector('#news-filter');
   const firstOption = option({ value: normalizeString('All News') }, 'All News');
   select.append(firstOption);
-  categories.forEach((category) => {
-    const $option = option({ value: normalizeString(category) });
-    $option.textContent = category;
+  years.forEach((year) => {
+    const $option = option({ value: normalizeString(year) });
+    $option.textContent = year;
     select.append($option);
   });
 
@@ -206,7 +209,7 @@ async function getCategories(block, newsbox) {
         loadresults(jsonDataNews, block, curPage, newsbox);
       } else {
         // eslint-disable-next-line max-len
-        const filteredNews = jsonDataNews.filter((news) => normalizeString(news.category) === normalizeString(catNews));
+        const filteredNews = jsonDataNews.filter((news) => normalizeString(news.year) === normalizeString(catNews));
         loadresults(filteredNews, block, curPage, newsbox);
       }
     } else {
@@ -216,10 +219,10 @@ async function getCategories(block, newsbox) {
 
   // Select option change event
   select.addEventListener('change', (e) => {
-    const selectedCategory = e.target.value;
+    const selectedYear = e.target.value;
     // remove the query parameter from the URL
     const paramsv1 = new URLSearchParams(window.location.search);
-    paramsv1.set('category', selectedCategory);
+    paramsv1.set('year', selectedYear);
     paramsv1.delete('pg');
     window.location.search = paramsv1.toString();
   });
@@ -237,5 +240,5 @@ export default async function decorate(block) {
 </div>`;
   block.append(newscontrol);
   block.append(newsbox);
-  await getCategories(block, newsbox);
+  await getYear(block, newsbox);
 }
