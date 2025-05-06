@@ -250,7 +250,7 @@ export const fixLinks = (main, results, imagePath, shouldCheckTextIsLink = true)
 };
 
 export function normalizeFolderName(str) {
-  return str.trim().toLowerCase().replace(/ /g, '_');
+  return str.trim().toLowerCase().replaceAll(' ', '_');
 }
 
 export const fixImageLinks = (main, results, imagePath = 'general') => {

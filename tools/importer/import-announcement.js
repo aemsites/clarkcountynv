@@ -31,6 +31,7 @@ const getInfo = async (main, department, results, year) => {
   let bannerUrl;
   if (bannerEl) {
     bannerUrl = fixImageSrcPath(bannerEl.getAttribute('src'), results, `general/news/${normalizeCategory}/${year}`);
+    console.log(bannerUrl);
   } else {
     bannerUrl = 'https://main--clarkcountynv--aemsites.aem.page/assets/images/general/clarkcounty-logo.png';
   }
@@ -156,7 +157,11 @@ export default {
     /* Taking care of rest of the images */
     main.querySelectorAll('img').forEach((image) => {
       const imageUrl = fixImageSrcPath(image.getAttribute('src'), results, `general/news/${normalizeCategory}/${year}`);
-      image.replaceWith(imageUrl);
+      console.log(imageUrl);
+      const imageAEl = document.createElement('a');
+      imageAEl.href = imageUrl;
+      imageAEl.innerText = imageUrl;
+      image.replaceWith(imageAEl);
     });
 
     main.append(buildSectionMetadata([['Style', 'newsdetail, no-button']]));
@@ -174,6 +179,8 @@ export default {
     createMetadata(main, document, params);
 
     const urlName = getUrlName(title, publishDate);
+
+    console.log(main);
 
     results.push({
       element: main,
