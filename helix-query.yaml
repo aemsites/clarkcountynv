@@ -143,6 +143,6 @@ indices:
         select: head > meta[name="bannerurl"]
         value: attribute(el, 'content')  
       year:
-        select: head > meta[name="bannerurl"]
+        select: head > meta[name="year"]
         value: attribute(el, 'content')
 
