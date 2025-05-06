@@ -19,6 +19,7 @@ export const setPageTitleAnnouncement = (main, params) => {
 };
 
 let publishDate = null;
+let parentDiv = null;
 
 const getInfo = async (main, department, results, year) => {
   const rawPublishDate = main.querySelector('a').innerText.split(':')[0].split(',');
@@ -29,10 +30,7 @@ const getInfo = async (main, department, results, year) => {
   const bannerEl = main.querySelector('img');
   let bannerUrl;
   if (bannerEl) {
-    const backgroundImage = WebImporter.DOMUtils.replaceBackgroundByImg(bannerEl, document);
-    if (backgroundImage) {
-      bannerUrl = fixImageSrcPath(backgroundImage.getAttribute('src'), results, `general/news/${normalizeCategory}/${year}`);
-    }
+    bannerUrl = fixImageSrcPath(bannerEl.getAttribute('src'), results, `general/news/${normalizeCategory}/${year}`);
   } else {
     bannerUrl = 'https://main--clarkcountynv--aemsites.aem.page/assets/images/general/clarkcounty-logo.png';
   }
@@ -47,7 +45,13 @@ const getInfo = async (main, department, results, year) => {
 };
 
 function getElement(url, doc) {
-  const parentDiv = doc.querySelector('.faq-category');
+  doc.querySelectorAll('.faq-category').forEach((ele) => {
+    console.log(ele.querySelector('h2').innerText);
+    if (ele.querySelector('h2').innerText.includes('2024')) {
+      parentDiv = ele;
+    }
+  });
+  console.log('parentDiv', parentDiv);
   // get the # fragment from url
   const hash = url.split('#')[1];
   // filter the element if hash matches index
@@ -63,11 +67,24 @@ export const getTextBlock = (title) => buildTextMetadata([
   [title],
 ]);
 
+export const buildSpacerMetadata = (cells) => WebImporter.Blocks.createBlock(document, {
+  name: 'spacer',
+  cells: [...cells],
+});
+
+export const getSpacerBlock = (value) => buildSpacerMetadata([
+  ['Mobile', value],
+  ['Tablet', value],
+  ['Desktop', value],
+]);
+
 function getUrlName(sentence, date) {
   const words = sentence.split(' ');
   const initials = words.map((word) => word.charAt(0));
   const right = initials.join('').toLowerCase();
-  const left = date.replace(/ /, '').split(',').join('-').toLowerCase();
+  const left = date.replace(/\s\s+/g, '').replace(/ /g, '').replace(/\./, '').split(',')
+    .join('-')
+    .toLowerCase();
   return `${left}-${right}`;
 }
 
@@ -109,8 +126,10 @@ export default {
     const textBlock = getTextBlock(title);
     main.querySelectorAll('p strong').forEach((ele) => {
       if (ele.innerText === title) {
-        console.log(ele);
         ele.remove();
+        main.insertBefore(blockSeparator().cloneNode(true), main.firstChild);
+        main.insertBefore(getSpacerBlock('50px'), main.firstChild);
+        main.insertBefore(blockSeparator().cloneNode(true), main.firstChild);
         main.insertBefore(textBlock, main.firstChild);
         counter += 1;
         return;
@@ -121,6 +140,8 @@ export default {
     if (counter === 0) {
       main.insertBefore(textBlock, main.firstChild);
     }
+
+    const listMetadata = await getInfo(main, department, results, year);
 
     /* Start for hero image */
     const imagePath = '';
@@ -144,8 +165,6 @@ export default {
     params['breadcrumbs-base'] = '/news/news-breadcrumbs';
     params['breadcrumbs-title-override'] = 'News Post';
 
-    const listMetadata = await getInfo(main, department, results, year);
-
     Object.keys(listMetadata).forEach((key) => {
       if (listMetadata[key] && listMetadata[key].length > 0) {
         params[key] = listMetadata[key];
@@ -160,8 +179,6 @@ export default {
       element: main,
       path: `/news/${normalizeCategory}/${year}/${urlName}`,
     });
-
-    console.log('results', results);
 
     return results;
   },
