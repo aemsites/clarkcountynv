@@ -117,7 +117,7 @@ export default {
     ]);
 
     // Handle all PDFs
-    fixPdfLinks(main, results, `general/news/${normalizeCategory}/${year}`);
+    fixPdfLinks(main, results, '', `general/news/${normalizeCategory}/${year}`);
     setPageTitleAnnouncement(main, params);
     fixLinks(main);
 
