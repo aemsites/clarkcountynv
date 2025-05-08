@@ -589,10 +589,10 @@ export function loadrrule() {
 
 function filterEvents(divisionId, redirectCalendarName) {
   if (divisionId === '1') {
-    window.location.href = `https://${window.location.host}/calendar`;
+    window.location.href = `http://${window.location.host}/calendar`;
     return;
   }
-  window.location.href = `https://${window.location.host}/calendar/${normalizeString(redirectCalendarName)}/`;
+  window.location.href = `http://${window.location.host}/calendar/${normalizeString(redirectCalendarName)}/`;
 }
 
 function searchItems(searchTerm) {
@@ -696,6 +696,20 @@ export default async function decorate(doc) {
   // loadrrule() is loaded after 3 seconds via the delayed.js script for improving page performance
   createModal(doc);
   calendarList.querySelectorAll('.fc-calendar-list-item').forEach((divisionLi, _, parent) => {
+    // get path from url
+    const path = window.location.pathname.split('/');
+    const pathDivision = path[2];
+    if (pathDivision && pathDivision.length > 0) {
+      if (pathDivision === normalizeString(divisionLi.querySelector('a').innerText)) {
+        divisions.forEach((division) => {
+          if (divisionLi.id === division.id) {
+            divisionLi.classList.add('active');
+            divisionLi.style.backgroundColor = division.color;
+            divisionLi.querySelector('.fc-calendar-list-button').style.backgroundColor = division.color;
+          }
+        });
+      }
+    }
     divisionLi.addEventListener('click', () => {
       parent.forEach((liele) => {
         liele.classList.toggle('active', liele === divisionLi);
@@ -707,7 +721,7 @@ export default async function decorate(doc) {
               liele.querySelector('.fc-calendar-list-button').style.backgroundColor = division.color;
               const redirectCalendarName = getName(divisionId);
               if (divisionId === '64') {
-                window.location.href = `https://${window.location.host}/calendar/${normalizeString(redirectCalendarName)}/`;
+                window.location.href = `http://${window.location.host}/calendar/${normalizeString(redirectCalendarName)}/`;
                 getFeaturedEvents();
               } else {
                 filterEvents(divisionId, redirectCalendarName);
