@@ -719,6 +719,11 @@ header .nav-tools .nav-search .search-box .search-top {
   padding: 33px 50px 23px;
   border-bottom: 1px solid #bbb;
   color: var(--dark-orange);
+  cursor: default;
+}
+
+header .nav-tools .nav-search .search-box .search-top-right {
+  cursor: pointer;
 }
 
 header .nav-tools .nav-search .search-box .search-top .search-top-left {
