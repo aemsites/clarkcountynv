@@ -186,6 +186,11 @@ body.calendar main section.fc-search form button {
     padding: 0;
 }
 
+body.calendar .fc-scroller {
+    position: static !important;
+    overflow: visible !important;
+}
+
 body.calendar .event-modal .event-modal-footer a.displayoff {
     display: none;
 }
