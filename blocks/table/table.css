@@ -40,12 +40,15 @@
     background-color: var(--table-head-background-color7);
   }
 
-  .table.thbc8 thead {
+.table.thbc8 thead {
     background-color: var(--table-head-background-color8);
     color:white;
-  }
+}
 
-  
+.table.thbc9 thead {
+    background-color: var(--table-head-background-color-green);
+}
+
 @media (width >= 600px) {
   .table table {
     font-size: var(--body-font-size-s);
@@ -466,6 +469,10 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
 
 .table.fixed-img-170 img{
     width: 170px;
+}
+
+.table.fixed-img-300 img{
+    width: 300px;
 }
 
 .table.col-odd-15 table tbody tr {
