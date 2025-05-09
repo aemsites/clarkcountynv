@@ -523,6 +523,15 @@ async function initializeCalendar() {
         if (normalizeString(division.name) === checkDivision[2]) {
           if (normalizeString(division.name) === 'featured-events') {
             getFeaturedEvents();
+          } else if (normalizeString(division.name) === 'county-commissioners') {
+            // eslint-disable-next-line max-len
+            // filter data as per event.title includes bcc meetings OR event.title includes Planning Commission Meeting or  event.title includes Zoning Commission Meeting and event.daysOfWeek length greater 1
+            const filterData = importedData.filter((event) => (
+              (normalizeString(event.title).includes('bcc-meeting')
+                || normalizeString(event.title).includes('planning-commission-meeting')
+                || normalizeString(event.title).includes('zoning-commission-meeting'))
+              && event.daysOfWeek.length > 1));
+            createEventList(filterData, eventsList);
           } else {
             // eslint-disable-next-line max-len
             const filterData = importedData.filter((event) => normalizeString(event.divisionname).includes(normalizeString(division.name))).map((event) => {
@@ -589,10 +598,10 @@ export function loadrrule() {
 
 function filterEvents(divisionId, redirectCalendarName) {
   if (divisionId === '1') {
-    window.location.href = `https://${window.location.host}/calendar`;
+    window.location.href = `http://${window.location.host}/calendar`;
     return;
   }
-  window.location.href = `https://${window.location.host}/calendar/${normalizeString(redirectCalendarName)}/`;
+  window.location.href = `http://${window.location.host}/calendar/${normalizeString(redirectCalendarName)}/`;
 }
 
 function searchItems(searchTerm) {
@@ -721,7 +730,7 @@ export default async function decorate(doc) {
               liele.querySelector('.fc-calendar-list-button').style.backgroundColor = division.color;
               const redirectCalendarName = getName(divisionId);
               if (divisionId === '64') {
-                window.location.href = `https://${window.location.host}/calendar/${normalizeString(redirectCalendarName)}/`;
+                window.location.href = `http://${window.location.host}/calendar/${normalizeString(redirectCalendarName)}/`;
                 getFeaturedEvents();
               } else {
                 filterEvents(divisionId, redirectCalendarName);
