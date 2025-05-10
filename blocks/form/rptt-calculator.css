@@ -32,12 +32,14 @@
                 /* Chrome, Safari, Edge, Opera */
                 input[type='number']::-webkit-outer-spin-button,
                 input[type='number']::-webkit-inner-spin-button {
+                    /* stylelint-disable-next-line property-no-vendor-prefix */
                     -webkit-appearance: none;
                     margin: 0;
                 }
 
                 /* Firefox */
                 input[type='number'] {
+                    /* stylelint-disable-next-line property-no-vendor-prefix */
                     -moz-appearance: textfield;
                 }
 
