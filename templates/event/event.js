@@ -66,22 +66,40 @@ export default async function decorate(doc) {
     let ticking = false;
     const BOTTOM_THRESHOLD = 10;
 
-    function handleScroll() {
+    function checkScrollState() {
       const { scrollY } = window;
       const viewportHeight = window.innerHeight;
-      const pageHeight = document.body.scrollHeight;
+      const pageHeight = Math.max(
+        document.body.scrollHeight,
+        document.body.offsetHeight,
+        document.documentElement.scrollHeight,
+        document.documentElement.offsetHeight,
+      );
+
+      // Calculate total scrollable height
+      const scrollableHeight = pageHeight - viewportHeight;
+      const MIN_SCROLL_THRESHOLD = 50; // Increased threshold for minimal scroll
 
       let newState = { eventtop: null, eventfooter: null };
 
-      const nearTop = scrollY <= 100;
-      const nearBottom = (viewportHeight + scrollY) >= (pageHeight - BOTTOM_THRESHOLD);
-
-      if (nearTop) {
-        newState = { eventtop: 'on', eventfooter: 'off' };
-      } else if (nearBottom) {
-        newState = { eventtop: 'off', eventfooter: 'on' };
+      if (scrollableHeight <= MIN_SCROLL_THRESHOLD) {
+        // If scroll area is very small (<=50px), treat it as no scroll
+        newState = { eventtop: 'on', eventfooter: 'on' };
       } else {
-        newState = { eventtop: 'off', eventfooter: 'off' };
+        const nearTop = scrollY <= 100;
+        const nearBottom = (
+          scrollY > 0 // Ensure we've scrolled at least a bit
+          && (scrollableHeight - scrollY <= BOTTOM_THRESHOLD // Either near absolute bottom
+           || scrollY >= (scrollableHeight - MIN_SCROLL_THRESHOLD)) // within min scroll threshold
+        );
+
+        if (nearTop) {
+          newState = { eventtop: 'on', eventfooter: 'off' };
+        } else if (nearBottom) {
+          newState = { eventtop: 'off', eventfooter: 'on' };
+        } else {
+          newState = { eventtop: 'off', eventfooter: 'off' };
+        }
       }
 
       // Only post message if state actually changed
@@ -96,11 +114,34 @@ export default async function decorate(doc) {
       ticking = false;
     }
 
-    window.addEventListener('scroll', () => {
+    function handleScroll() {
       if (!ticking) {
-        window.requestAnimationFrame(handleScroll);
+        window.requestAnimationFrame(checkScrollState);
         ticking = true;
       }
+    }
+
+    // Listen for scroll events
+    window.addEventListener('scroll', handleScroll);
+
+    // Check state after all content (including images) is loaded
+    window.addEventListener('load', () => {
+      // Wait a brief moment for any final layout calculations
+      setTimeout(checkScrollState, 100);
     });
+
+    // Handle resize events which might change the need for scrolling
+    window.addEventListener('resize', handleScroll);
+
+    // Check state when DOM is ready but wait for images
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        // Initial check but also wait for images
+        setTimeout(checkScrollState, 100);
+      });
+    } else {
+      // If DOM is already ready, just do the check
+      setTimeout(checkScrollState, 100);
+    }
   })();
 }
