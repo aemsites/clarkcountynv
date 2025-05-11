@@ -14,7 +14,7 @@ export function getWindowSize() {
 
 export function getViewPort() {
   const { width } = getWindowSize();
-  if (width >= 991) {
+  if (width >= 990) {
     return 'desktop';
   }
   return 'mobile';
