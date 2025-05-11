@@ -896,7 +896,7 @@ header .nav-tools .nav-search .search-box .search-form-wrap .search-results {
   width: 100%;
  }
 
-@media (width >= 900px) {
+@media (width >= 991px) {
   header {
     border-bottom: 1px solid #fff;
   }

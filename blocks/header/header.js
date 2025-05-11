@@ -21,7 +21,7 @@ let rawkey = '';
 let searchIframe = '';
 
 // media query match that indicates mobile/tablet width
-const isDesktop = window.matchMedia('(min-width: 900px)');
+const isDesktop = window.matchMedia('(min-width: 991px)');
 const tracker = [];
 class Accordion {
   constructor(el) {
