@@ -633,6 +633,14 @@ function buildNavSections(navSections) {
   }
 }
 
+function updateBrandLink(brandImg) {
+  const brandImgLink = a();
+  brandImgLink.href = '/';
+  brandImgLink.title = 'Home';
+  brandImg.after(brandImgLink);
+  brandImgLink.appendChild(brandImg);
+}
+
 /**
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
@@ -656,6 +664,9 @@ export default async function decorate(block) {
   });
 
   const navBrand = nav.querySelector('.nav-brand');
+  navBrand.querySelectorAll('picture').forEach((pic) => {
+    updateBrandLink(pic);
+  });
   const brandLink = navBrand.querySelector('.button');
   if (brandLink) {
     brandLink.className = '';
