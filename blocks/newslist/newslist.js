@@ -19,7 +19,7 @@ class News {
   }
 }
 
-/* If date is between 8 march and 1 nov for day light saving */
+/* Check for Day Light Saving */
 function isDaylightSavingTime(date) {
   const start = new Date(date.getFullYear(), 2, 8);
   const end = new Date(date.getFullYear(), 10, 1);
