@@ -146,6 +146,7 @@ function popupEvent(url, startTime, endTime, allDay, backgroundColor, readMore) 
       readMoreAEl.setAttribute('target', '_blank');
       readMoreAEl.classList.remove('displayoff');
     } else {
+      readMoreAEl.setAttribute('href', '#');
       readMoreAEl.classList.add('displayoff');
     }
   }
