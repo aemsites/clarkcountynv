@@ -23,8 +23,8 @@ class News {
 function isDaylightSavingTime(date) {
   const start = new Date(date.getFullYear(), 2, 8);
   const end = new Date(date.getFullYear(), 10, 1);
-  start.setDate(1 + (7 - start.getDay()) % 7);
-  end.setDate(1 + (7 - end.getDay()) % 7);
+  start.setDate((1 + (7 - start.getDay())) % 7);
+  end.setDate((1 + (7 - end.getDay())) % 7);
   start.setHours(2, 0, 0);
   end.setHours(2, 0, 0);
   return date >= start && date < end;
