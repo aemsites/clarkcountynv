@@ -38,7 +38,7 @@ details[open] > ul {
 .accordion-ml details a {
     font-size: 14px;
     font-family: var(--heading-font-family);
-    padding: 15px 60px 15px 0;
+    padding: 15px 60px 15px 15px;
     white-space: nowrap;
 }
 
