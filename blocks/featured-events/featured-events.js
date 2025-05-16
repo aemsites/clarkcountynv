@@ -81,7 +81,7 @@ function popupEvent(url, startTime, endTime, duration, backgroundColor, readMore
     readMoreEle.href = readMore;
     modal.querySelector('.event-modal-footer').appendChild(readMoreEle);
     modal.querySelector('.event-modal-footer a').style.backgroundColor = backgroundColor;
-  } 
+  }
 
   // Listen for messages from iframe window
   window.addEventListener('message', (event) => {
