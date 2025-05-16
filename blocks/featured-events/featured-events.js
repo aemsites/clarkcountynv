@@ -77,8 +77,7 @@ function popupEvent(url, startTime, endTime, duration, backgroundColor, readMore
     modal.querySelectorAll('.event-modal-footer a').forEach((ele) => {
       ele.remove();
     });
-    const readMoreEle = a();
-    readMoreEle.textContent = 'Read More';
+    const readMoreEle = a('Read More');
     readMoreEle.href = readMore;
     modal.querySelector('.event-modal-footer').appendChild(readMoreEle);
     modal.querySelector('.event-modal-footer a').style.backgroundColor = backgroundColor;
