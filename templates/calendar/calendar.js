@@ -59,7 +59,7 @@ export async function fetchPlaceholders(prefix) {
 
   if (!loaded) {
     window.placeholders[`${TRANSLATION_KEY}-loaded`] = new Promise((resolve) => {
-      fetch(`/calendar/${prefix}.json?sheet=default&sheet=divisions`)
+      fetch(`/calendar/${prefix}.json?sheet=default&sheet=divisions&nocache=${Date.now()}`)
         .then((resp) => {
           if (resp.ok) {
             return resp.json();
