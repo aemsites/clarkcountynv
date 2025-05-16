@@ -67,7 +67,6 @@ function popupEvent(url, startTime, endTime, duration, backgroundColor, readMore
   modal.querySelector('.event-modal-date').style.backgroundColor = backgroundColor;
   modal.querySelector('.event-modal-time').style.backgroundColor = backgroundColor;
   modal.querySelector('.event-modal-footer button.close').style.backgroundColor = backgroundColor;
-  // modal.querySelector('.event-modal-footer a').style.backgroundColor = backgroundColor;
   modal.querySelector('.event-modal-footer').classList.add('off');
   modal.querySelector('.event-modal-date p:first-child').textContent = `${eventDate}`;
   modal.querySelector('.event-modal-date p:last-child').textContent = `${eventMonthName}`;
