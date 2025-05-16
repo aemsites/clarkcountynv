@@ -1,7 +1,7 @@
 import { getMetadata, toClassName } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 import {
-  div, img, span, a, button, details, summary, h2, iframe,li,
+  div, img, span, a, button, details, summary, h2, iframe,
 } from '../../scripts/dom-helpers.js';
 
 function normalizeImage(str) {
@@ -487,13 +487,13 @@ function decorateNavItemMobile(mainUL) {
 
     if (childUL) {
       $details.append($summary, childUL);
-      const parentLi = li();
+      const parentLi = document.createElement('li');
       parentLi.append($details);
       mainLI.replaceWith(parentLi);
       decorateNavItemMobile(childUL);
     } else {
       $details.append($summary);
-      const parentLi = li();
+      const parentLi = document.createElement('li');
       parentLi.append($details);
       mainLI.replaceWith(parentLi);
     }
