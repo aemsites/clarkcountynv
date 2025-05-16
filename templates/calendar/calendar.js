@@ -5,6 +5,7 @@ import {
 
 import { normalizeString, getWindowSize } from '../../scripts/utils.js';
 
+export const EDS_DOMAINS = ['main--clarkcountynv--aemsites.aem.page', 'main--clarkcountynv--aemsites.aem.live'];
 class Obj {
   // eslint-disable-next-line max-len
   constructor(title, start, end, allDay, daysOfWeek, startTime, endTime, url, backgroundColor, textColor, classNames, readMore, divisionid, excludeDates, duration, freq) {
@@ -142,8 +143,11 @@ function popupEvent(url, startTime, endTime, allDay, backgroundColor, readMore) 
   const readMoreAEl = modal.querySelector('.event-modal-footer a.footer-readmore');
   if (readMoreAEl) {
     if (readMore.length > 1) {
+      let newReadMoreUrl = readMore;
       const currentReadMoreUrl = new URL(readMore, window.location.origin);
-      const newReadMoreUrl = new URL(currentReadMoreUrl.pathname, window.location.origin);
+      if (EDS_DOMAINS.some((domain) => currentReadMoreUrl.origin.includes(domain))) {
+        newReadMoreUrl = new URL(currentReadMoreUrl.pathname, window.location.origin);
+      }
       readMoreAEl.setAttribute('href', newReadMoreUrl);
       readMoreAEl.setAttribute('target', '_blank');
       readMoreAEl.classList.remove('displayoff');
