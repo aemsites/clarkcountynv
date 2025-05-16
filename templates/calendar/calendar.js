@@ -142,7 +142,9 @@ function popupEvent(url, startTime, endTime, allDay, backgroundColor, readMore) 
   const readMoreAEl = modal.querySelector('.event-modal-footer a.footer-readmore');
   if (readMoreAEl) {
     if (readMore.length > 1) {
-      readMoreAEl.setAttribute('href', readMore);
+      const currentReadMoreUrl = new URL(readMore, window.location.origin);
+      const newReadMoreUrl = new URL(currentReadMoreUrl.pathname, window.location.origin);
+      readMoreAEl.setAttribute('href', newReadMoreUrl);
       readMoreAEl.setAttribute('target', '_blank');
       readMoreAEl.classList.remove('displayoff');
     } else {
