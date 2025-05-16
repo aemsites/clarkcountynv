@@ -83,13 +83,7 @@ function popupEvent(url, startTime, endTime, duration, backgroundColor, readMore
     readMoreEle.href = readMore;
     modal.querySelector('.event-modal-footer').appendChild(readMoreEle);
     modal.querySelector('.event-modal-footer a').style.backgroundColor = backgroundColor;
-    // modal.querySelector('.event-modal-footer a').href = readMore;
-    // modal.querySelector('.event-modal-footer a').classList.remove('displayoff');
   } 
-  
-  // else {
-  //   modal.querySelector('.event-modal-footer button:last-child').classList.add('displayoff');
-  // }
 
   // Listen for messages from iframe window
   window.addEventListener('message', (event) => {
