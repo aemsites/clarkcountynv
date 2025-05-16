@@ -1,7 +1,7 @@
 import { getMetadata, toClassName } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 import {
-  div, img, span, a, button, details, summary, h2, iframe,
+  div, img, span, a, button, details, summary, h2, iframe,li,
 } from '../../scripts/dom-helpers.js';
 
 function normalizeImage(str) {
@@ -30,7 +30,7 @@ class Accordion {
     // Store the <summary> element
     this.summary = el.querySelector('summary');
     // Store the parent <details> element
-    this.parent = el.parentElement.parentElement;
+    this.parent = el.parentElement.parentElement.parentElement;
     // Store the <div class="content"> element
     this.content = el.querySelector('.content');
 
@@ -487,11 +487,15 @@ function decorateNavItemMobile(mainUL) {
 
     if (childUL) {
       $details.append($summary, childUL);
-      mainLI.replaceWith($details);
+      const parentLi = li();
+      parentLi.append($details);
+      mainLI.replaceWith(parentLi);
       decorateNavItemMobile(childUL);
     } else {
       $details.append($summary);
-      mainLI.replaceWith($details);
+      const parentLi = li();
+      parentLi.append($details);
+      mainLI.replaceWith(parentLi);
     }
   }
 }
