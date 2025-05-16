@@ -74,12 +74,11 @@ function popupEvent(url, startTime, endTime, duration, backgroundColor, readMore
   modal.querySelector('.event-modal-time p').textContent = `${eventStartTime} - ${eventEndTime}`;
   modal.querySelector('iframe').src = url;
   modal.style.display = 'block';
-  modal.querySelector('.event-modal-footer a').style.display = 'block';
   if (readMore.length > 1) {
-    modal.querySelector('.event-modal-footer a').href = readMore;
-    modal.querySelector('.event-modal-footer a').classList.remove('displayoff');
+    modal.querySelector('.event-modal-footer button:last-child a').href = readMore;
+    modal.querySelector('.event-modal-footer button:last-child').classList.remove('displayoff');
   } else {
-    modal.querySelector('.event-modal-footer a').classList.add('displayoff');
+    modal.querySelector('.event-modal-footer button:last-child').classList.add('displayoff');
   }
 
   // Listen for messages from iframe window
@@ -201,7 +200,7 @@ function createModal(block) {
     }),
     div({ class: 'event-modal-date' }, p(), p()),
     div({ class: 'event-modal-time' }, p()),
-    div({ class: 'event-modal-footer' }, button({ class: 'close', onclick: () => { document.querySelector('.event-modal').style.display = 'none'; } }, 'Close'), a('Read More')),
+    div({ class: 'event-modal-footer' }, button({ class: 'close', onclick: () => { document.querySelector('.event-modal').style.display = 'none'; } }, 'Close'), button(a('Read More'))),
   ));
   block.append(modal);
 }

@@ -202,9 +202,9 @@
     background-color: rgba(0 0 0 / 40%);
 }
 
-.block.featured-events .event-modal .event-modal-footer a {
+/* .block.featured-events .event-modal .event-modal-footer a {
     padding: 8px 12px 6px;
-    display: none;
+    display: block;
     float: right;
     border-radius: 3px;
     margin-left: 5px;
@@ -212,7 +212,7 @@
     font-family: var(--heading-font-family);
     font-weight: 600 !important;
     line-height: 1 !important;
-}
+} */
 
 .block.featured-events div.event-modal a:any-link {
     color: white;
