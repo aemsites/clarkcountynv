@@ -204,7 +204,7 @@
 
 .block.featured-events .event-modal .event-modal-footer a {
     padding: 8px 12px 6px;
-    display: block;
+    display: none;
     float: right;
     border-radius: 3px;
     margin-left: 5px;

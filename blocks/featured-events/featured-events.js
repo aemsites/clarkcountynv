@@ -74,6 +74,7 @@ function popupEvent(url, startTime, endTime, duration, backgroundColor, readMore
   modal.querySelector('.event-modal-time p').textContent = `${eventStartTime} - ${eventEndTime}`;
   modal.querySelector('iframe').src = url;
   modal.style.display = 'block';
+  modal.querySelector('.event-modal-footer a').style.display = 'block';
   if (readMore.length > 1) {
     modal.querySelector('.event-modal-footer a').href = readMore;
     modal.querySelector('.event-modal-footer a').classList.remove('displayoff');
