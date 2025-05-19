@@ -501,6 +501,6 @@ export default async function decorate(block) {
     container.replaceWith(form);
     // create a spinner div
     const spinnerDiv = div({ class: 'spinner', style: 'display: none;' }, div({ class: 'circle-spinner' }));
-    form.append(spinnerDiv);
+    form.prepend(spinnerDiv);
   }
 }
