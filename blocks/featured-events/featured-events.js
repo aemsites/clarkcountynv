@@ -141,7 +141,7 @@ const resultParsers = {
       const divTitle = div({ class: 'title' }, h3(result.title));
       const divDescription = div({ class: 'description' }, result.eventdescription);
       // Regular expression to match URLs
-      const urlRegex = /(https?:\/\/[^\s]+)/g;
+      const urlRegex = /(https?:\/\/main[^\s]+)/g;
       // Remove URLs from the textContent
       divDescription.textContent = divDescription.textContent.replace(urlRegex, '').trim();
       const divPath = div({ class: 'path' }, result.path);
