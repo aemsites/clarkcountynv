@@ -285,6 +285,9 @@ function applyRuleEngine(htmlForm, form, captcha) {
       }
       if (element) {
         element.dispatch({ type: 'click' });
+        if (element?.properties?.['fd:buttonType'] === 'submit') {
+          document.querySelector('.form .spinner').style.display = 'block';
+        }
       }
     }
   });

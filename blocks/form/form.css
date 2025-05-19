@@ -833,3 +833,35 @@ main div.form-wrapper {
         line-height: 1.5em
     }
 }
+
+.form div.spinner {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    z-index: 20000; 
+    height:250px;
+    margin-top: 100px;
+}
+
+.form div.spinner div.circle-spinner {
+    width: 40px;
+    height: 40px;
+    background: conic-gradient(var(--default-button), var(--default-button), #fff);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    animation: rotate 2s ease-in-out infinite;
+}
+
+.form div.spinner div.circle-spinner::after {
+    content: "";
+    background: white;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transform: scale(0.7);
+}
