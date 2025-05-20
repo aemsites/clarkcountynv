@@ -33,7 +33,7 @@
 .newslist-hp.block .cards.block.newsitems {
     margin-top: 49px;
     width: 100%;
-    margin-bottom: 120px;
+    margin-bottom: 49px;
 }
 
 .newslist-hp.block .cards.block.newsitems ul {
@@ -50,6 +50,14 @@
     .newslist-hp.block .cards.block.newsitems ul {
         grid-template-columns: repeat(3, 30%);
     }
+}
+
+@media (width <=783px) {
+    .newslist-hp.block .cards.block.newsitems {
+    margin-top: 49px;
+    width: 100%;
+    margin-bottom: 150px;
+}
 }
 
 .newslist-hp.block .cards.block.newsitems ul li {
