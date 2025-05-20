@@ -287,7 +287,6 @@ function applyRuleEngine(htmlForm, form, captcha) {
         element.dispatch({ type: 'click' });
         if (element?.properties?.['fd:buttonType'] === 'submit') {
           document.querySelector('.spinner').style.display = 'block';
-          console.log(document.querySelector('.spinner'));
           document.querySelector('main .form form').style.display = 'none';
         }
       }
