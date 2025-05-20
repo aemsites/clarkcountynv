@@ -52,7 +52,7 @@
     }
 }
 
-@media (width <=783px) {
+@media (width <=600px) {
     .newslist-hp.block .cards.block.newsitems {
     margin-top: 49px;
     width: 100%;
