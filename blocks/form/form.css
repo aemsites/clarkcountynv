@@ -855,7 +855,7 @@ main div.form-wrapper {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    animation: rotate 1s ease-in-out infinite;
+    animation: rotate 2s ease-in-out infinite;
 }
 
 .form.block div.spinner div.circle-spinner::after {
@@ -865,4 +865,14 @@ main div.form-wrapper {
     height: 100%;
     border-radius: 50%;
     transform: scale(0.7);
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(720deg);
+    }
 }
