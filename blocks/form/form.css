@@ -843,7 +843,8 @@ main div.form-wrapper {
     padding: 20px;
     z-index: 20000; 
     height:250px;
-    margin: 48%;
+    margin-top: 30%;
+    margin-left: 48%;
 }
 
 .form.block div.spinner div.circle-spinner {
