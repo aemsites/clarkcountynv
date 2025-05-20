@@ -92,7 +92,7 @@ export const getSanitizedPath = (url) => {
   let path = url;
 
   [path] = path.split('#');
-  path = path.search('/revize/clarkcounty') != -1 ? path.replace('/revize/clarkcounty', '') : path;
+  path = path.search('/revize/clarkcounty') !== -1 ? path.replace('/revize/clarkcounty', '') : path;
   path = path.endsWith('.php') ? path.slice(0, -4) : path;
   path = path.replaceAll(/[,!]/g, '');
   const pathParts = path.split('/');
