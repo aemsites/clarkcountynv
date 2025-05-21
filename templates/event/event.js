@@ -56,6 +56,13 @@ export default async function decorate(doc) {
     }
   });
 
+  descriptionEl?.querySelectorAll('a').forEach((aEl) => {
+    if (!['jpg', 'jpeg', 'png', 'gif'].some((ext) => aEl.textContent.trim().endsWith(ext)) 
+        && EDS_DOMAINS.some((domain) => aEl.href.includes(domain))) {
+          aEl.setAttribute('target', '_blank');
+      }
+  });
+
   if (descriptionEl?.children?.length === 0) {
     descriptionEl.remove();
   }
