@@ -9,99 +9,44 @@
         <link href="css/form.css" rel="stylesheet" />
     </head>
     <body class="">
- 
-        <main class="main form">
+        <form id="reviewform">
                     <div class="form-container">
                         <div class="pageLabel" style="font-weight: 400;font-size: 16px;color: #666;">
                             <h1>Page review workflow</h1>
                         </div>
                             <div class="formbuilder-select-label">
                                 <form id="reviewForm" class="reviewForm">
-                                    <div class="pageUrl" style =" display: flex;
-                                    gap: 200px;
-                                    align-items: center;
-                                    margin-top: 5px;">
-                                        <label for="name" style="font-weight: var(--form-label-font-weight);
-                                        font-size: var(--form-label-font-size);
-                                        color: var(--form-label-color);">Page Url</label>
-
-                                    <label for="name" id="pageurl" style="font-weight: var(--form-label-font-weight);
-                                        font-size: var(--form-label-font-size);
-                                        color: var(--form-label-color);"></label>
+                                    <div class="pageUrl" style =" display: flex;gap: 200px;align-items: center;margin-top: 5px;">
+                                        <label for="name" style="font-weight: var(--form-label-font-weight);font-size: var(--form-label-font-size);color: var(--form-label-color);">Page Url</label>
+                                    <label for="name" id="pageurl" style="font-weight: var(--form-label-font-weight);font-size: var(--form-label-font-size);color: var(--form-label-color);"></label>
                                     </div>
-
-                                    <div class="formbuilder-select form-group field-whichemailaddress" style =" display: flex;
-                                    gap: 75px;
-                                    align-items: center;
-                                    margin-top: 5px;">
+                                    <div class="formbuilder-select form-group field-changeType" style =" display: flex;gap: 75px;align-items: center;margin-top: 5px;">
                                         <label class="formbuilder-select-label" style="font-weight: var(--form-label-font-weight);
-                                        font-size: var(--form-label-font-size);
-                                        color: var(--form-label-color);" for="whichemailaddress">Select a Change Type<span class="formbuilder-required">*</span></label>
-                                        <select id="whichemailaddress" class="form-control" name="whichemailaddress" required="required" aria-required="true" style=" background-color: var(--form-input-background-color);
-                                        border: var(--form-input-border-size) solid var(--form-input-border-color);
-                                        width: 100%;
-                                        height: 42px;
-                                        color: var(--form-label-color);
-                                        padding: var(--form-input-padding);
-                                        font-size: var(--form-input-font-size);
-                                        max-width: unset;
-                                        margin-top: .5rem;
-                                        margin-bottom: 1rem;
-                                        border-radius: 0.25rem;">
-                                        <option id="whichemailaddress-0" value="">Select a Change Type</option>
-                                        <option id="whichemailaddress-1" value="AOCustomerServiceRequests@clarkcountynv.gov">Minor Content Updates</option>
-                                        <option id="whichemailaddress-2" value="clerkem@ClarkcountyNV.gov">Medium Content Updates</option>
-                                        <option id="whichemailaddress-3" value="CHAP@ClarkCountyNV.gov">Structural Changes</option>
-                                        <option id="whichemailaddress-4" value="CHAP@ClarkCountyNV.gov">Major Format Changes</option>
-                                        <option id="whichemailaddress-5" value="ccdc@clarkcountynv.gov">Variations from Brand Standards</option>
-                                        <option id="whichemailaddress-6" value="pacenter@clarkcountynv.gov">Security Updates</option>
-                                        <option id="whichemailaddress-7" value="InTheWorks@clarkcountynv.gov">Moapa Town Advisory Board</option>
-                                        <option id="whichemailaddress-7" value="InTheWorks@clarkcountynv.gov">Legal Content Changes</option>
+                                        font-size: var(--form-label-font-size);color: var(--form-label-color);" for="changeType">Select a Change Type<span class="formbuilder-required">*</span></label>
+                                        <select id="changeType" class="form-control" name="changeType" required="required" aria-required="true" style=" background-color: var(--form-input-background-color);border: var(--form-input-border-size) solid var(--form-input-border-color);width: 100%;height: 42px;color: var(--form-label-color);padding: var(--form-input-padding);font-size: var(--form-input-font-size);max-width: unset;margin-top: .5rem;margin-bottom: 1rem;border-radius: 0.25rem;">
+                                        <option  value="">Select a Change Type</option>
+                                        <option  value="Minor Content Updates">Minor Content Updates</option>
+                                        <option  value="Medium Content Updates">Medium Content Updates</option>
+                                        <option  value="Structural Changes">Structural Changes</option>
+                                        <option  value="Major Format Changes">Major Format Changes</option>
+                                        <option  value="Variations from Brand Standards">Variations from Brand Standards</option>
+                                        <option  value="Security Updates">Security Updates</option>
+                                        <option  value="Moapa Town Advisory Board">Moapa Town Advisory Board</option>
+                                        <option  value="Legal Content Changes">Legal Content Changes</option>
                                         </select></div>
 
-                                    <div class="field-description" style =" display: flex;
-                                    gap: 160px;
-                                    align-items: center;
-                                    margin-top: 5px;">
-                                        <label for="message" style="font-weight: var(--form-label-font-weight);
-                                        font-size: var(--form-label-font-size);
-                                        color: var(--form-label-color);">Comments</label>
-                                        <textarea class="" id="message" style=" background-color: var(--form-input-background-color);
-                                        border: var(--form-input-border-size) solid var(--form-input-border-color);
-                                        width: 100%;
-                                        height: 150px;
-                                        color: var(--form-label-color);
-                                        padding: var(--form-input-padding);
-                                        font-size: var(--form-input-font-size);
-                                        max-width: unset;
-                                        margin-top: .5rem;
-                                        margin-bottom: 1rem;
-                                        border-radius: 0.25rem;" type="text" placeholder="Enter your message here." style="height: 10rem" data-sb-validations="required"></textarea>
+                                    <div class="field-description" style =" display: flex;gap: 160px;align-items: center;margin-top: 5px;">
+                                        <label for="message" style="font-weight: var(--form-label-font-weight);font-size: var(--form-label-font-size);color: var(--form-label-color);">Comments</label>
+                                        <textarea name ="message" class="message" id="message" style=" background-color: var(--form-input-background-color);border: var(--form-input-border-size) solid var(--form-input-border-color); width: 100%;height: 150px;color: var(--form-label-color);padding: var(--form-input-padding); font-size: var(--form-input-font-size); max-width: unset; margin-top: .5rem; margin-bottom: 1rem;border-radius: 0.25rem;" type="text" placeholder="Enter your message here." style="height: 10rem" data-sb-validations="required"></textarea>
                                     </div>
-                                            <div class="formbuilder-select form-group field-whichemailaddress" style =" display: flex;
-                                            gap: 170px;
-                                            align-items: center;
-                                            margin-top: 5px;">
-                                                <label class="formbuilder-select-label" style="font-weight: var(--form-label-font-weight);
-                                                font-size: var(--form-label-font-size);
-                                                color: var(--form-label-color);" for="whichemailaddress">Priority<span class="formbuilder-required">*</span></label>
-                                                <select id="whichemailaddress" class="form-control" name="whichemailaddress" required="required" aria-required="true" style=" background-color: var(--form-input-background-color);
-                                                border: var(--form-input-border-size) solid var(--form-input-border-color);
-                                                width: 100%;
-                                                height: 42px;
-                                                color: var(--form-label-color);
-                                                padding: var(--form-input-padding);
-                                                font-size: var(--form-input-font-size);
-                                                max-width: unset;
-                                                margin-top: .5rem;
-                                                margin-bottom: 1rem;
-                                                border-radius: 0.25rem;">
-                                                <option id="whichemailaddress-0" value="">Select a priority</option>
-                                                <option id="whichemailaddress-1" value="critical">Critical</option>
-                                                <option id="whichemailaddress-2" value="high">High</option>
-                                                <option id="whichemailaddress-3" value="Medium">Medium</option>
-                                                <option id="whichemailaddress-4" value="low">Low</option>
-                                    
+                                            <div class="formbuilder-select form-group field-priority" style =" display: flex; gap: 170px;align-items: center; margin-top: 5px;">
+                                                <label class="formbuilder-select-label" style="font-weight: var(--form-label-font-weight);font-size: var(--form-label-font-size); color: var(--form-label-color);" for="whichemailaddress">Priority<span class="formbuilder-required">*</span></label>
+                                                <select id="priority" class="form-control" name="priority" required="required" aria-required="true" style=" background-color: var(--form-input-background-color); border: var(--form-input-border-size) solid var(--form-input-border-color); width: 100%; height: 42px;color: var(--form-label-color); padding: var(--form-input-padding); font-size: var(--form-input-font-size);max-width: unset; margin-top: .5rem; margin-bottom: 1rem; border-radius: 0.25rem;">
+                                                <option  value="">Select a priority</option>
+                                                <option  value="critical">Critical</option>
+                                                <option  value="high">High</option>
+                                                <option  value="Medium">Medium</option>
+                                                <option  value="low">Low</option>                      
                                             </select>
 
                                             <div class="d-none" id="priorityMsg" hidden >
@@ -116,17 +61,13 @@
                                     <div class="d-none" id="submitErrorMessage" hidden >
                                         <div class="text-center text-danger mb-3">Error sending page for review!</div>
                                     </div>
-                                    <!-- Submit Button-->
-                                    <div class=""><button id="submitButton" style="color: var(--form-button-color);
-                                        background: var(--form-button-background-color);
-                                        border: var(--form-button-border);
-                                        padding: var(--form-button-padding);
-                                        font-size: var(--form-button-font-size);
-                                        border-radius: unset;" type="submit">Send for review</button></div>
+                                  
+                                    <div class=""><button id="submitButton" style="color: var(--form-button-color); background: var(--form-button-background-color);
+                                        border: var(--form-button-border);padding: var(--form-button-padding);font-size: var(--form-button-font-size);border-radius: unset;" type="submit">Send for review</button></div>
                                 </form>
                             </div>
                 </div>
-        </main>
+            </form>
         <script src="js/review.js"></script>
     </body>
 </html>
