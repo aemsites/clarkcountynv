@@ -611,6 +611,7 @@ function buildNavSections(navSections) {
             navSection.setAttribute('aria-expanded', 'false');
           }
         });
+        navSection.querySelector('a').setAttribute('role', 'menuitem');
       });
     } else {
       const mainUL = navSections.querySelector(':scope .default-content-wrapper > ul');
