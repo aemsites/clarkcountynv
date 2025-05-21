@@ -596,10 +596,6 @@ function buildNavSections(navSections) {
     navSections.setAttribute('role', 'navigation');
     const navSectionSearchItem = navSections.children[0]?.children[1];
     if (isDesktop.matches) {
-      navSections.querySelectorAll(':scope .default-content-wrapper > ul').forEach((ulEl) => {
-        ulEl.setAttribute('role', 'menu');
-      });
-
       navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
         if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
         decorateNavItem(navSection, navSectionSearchItem);
@@ -615,7 +611,6 @@ function buildNavSections(navSections) {
             navSection.setAttribute('aria-expanded', 'false');
           }
         });
-        navSection.querySelector('a').setAttribute('role', 'menuitem');
       });
     } else {
       const mainUL = navSections.querySelector(':scope .default-content-wrapper > ul');
