@@ -180,3 +180,10 @@ details[open] > ul {
         background: var(--dark-orange);
     }
 }
+
+@media (width <= 600px){
+    .accordion-ml.block{
+       overflow:visible;
+       height: 600px;
+    }
+}
