@@ -700,7 +700,7 @@ export default {
     const main = document.body;
     const results = [];
 
-    const newPagePath = getImportPagePath(params.originalURL);
+    const newPagePath = getImportPagePath(params.originalURL).replace('/revize/clarkcounty', '');
     setPageTitle(main, params);
     const leftNavAsideEl = main.querySelector('aside#freeform-left-box');
     const breadcrumbsEl = main.querySelector('#breadcrumbs');
