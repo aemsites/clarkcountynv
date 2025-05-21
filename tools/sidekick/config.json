@@ -16,7 +16,9 @@
         "passConfig": true,
         "passReferrer": true,
         "isPalette": true,
-        "event": "move-to-review"
+        "event": "move-to-review",
+        "includePaths": ["**.docx**"],
+        "environments": ["dev", "edit", "preview"]
       }
     ]
   }
