@@ -12,8 +12,8 @@
         "id": "review",
         "title": "SP Root",
         "environments": ["dev", "edit", "preview"],
-        "includePaths": ["**.docx**"],
-        "url": "https://clarkcountynv.sharepoint.com/teams/AEM/ClarkCountyNV/Forms/AllItems.aspx?id=%2Fteams%2FAEM%2FClarkCountyNV%2FWebsite&sortField=LinkFilename&isAscending=true&viewid=27318789%2D0ba5%2D496b%2Dbee6%2Dd7ad6081aa19&noAuthRedirect=1"
+        "url": "https://clarkcountynv.sharepoint.com/teams/AEM/ClarkCountyNV/Forms/AllItems.aspx?id=%2Fteams%2FAEM%2FClarkCountyNV%2FWebsite&sortField=LinkFilename&isAscending=true&viewid=27318789%2D0ba5%2D496b%2Dbee6%2Dd7ad6081aa19&noAuthRedirect=1",
+        "includePaths": ["**.docx**"]
       }
     ]
   }
