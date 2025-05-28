@@ -512,7 +512,6 @@ main .section.details-404 > .default-content-wrapper {
   .section > div {
     /* max-width: 1200px; */
     margin: auto;
-    position: relative;
   }
 
   main > div img {
