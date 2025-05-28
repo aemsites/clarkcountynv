@@ -493,8 +493,9 @@ header .nav-language-icon {
 
 header .menuul {
   position: fixed;
+  right: 110px;
   top: 100%;
-  margin: auto;
+  margin: 0;
   z-index: 210;
   display: none;
   width: 1134.66px;
@@ -1124,5 +1125,11 @@ header .nav-tools .nav-search .search-box .search-form-wrap .search-results {
 
   header .menuul {
     width: 1134.66px;
+  }
+}
+
+@media (width >= 2000px) {
+  header .menuul {
+    right: 20%;
   }
 }
