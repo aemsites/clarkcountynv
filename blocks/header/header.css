@@ -493,9 +493,8 @@ header .nav-language-icon {
 
 header .menuul {
   position: fixed;
-  right: 110px;
   top: 100%;
-  margin: 0;
+  margin: auto;
   z-index: 210;
   display: none;
   width: 1134.66px;
