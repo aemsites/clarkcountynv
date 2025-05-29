@@ -478,7 +478,7 @@ function createCalendar() {
               modal.querySelector('.event-modal-footer').classList.remove('off');
             }
           } catch (e) {
-            console.error('Unable to access iframe content (possible cross-origin issue)', e);
+            console.log('Unable to access iframe content (possible cross-origin issue)', e);
           }
         }, 1000); // 1000 ms = 1 second
       });
