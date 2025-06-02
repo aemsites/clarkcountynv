@@ -34,10 +34,51 @@ export function decorateLinks(element) {
   });
 }
 
+async function check404(url) {
+  try {
+    const response = await fetch(url);
+    if (response.ok) {
+      return url;
+    }
+    return null;
+  } catch (err) {
+    return null;
+  }
+}
+
+async function checkFragmentAccordionML() {
+  const baseUrl = window.location.origin;
+  const currentPath = window.location.pathname;
+
+  // Split current path into parts, excluding empty strings
+  const pathParts = currentPath.split('/').filter((part) => part);
+
+  for (let i = pathParts.length - 1; i >= 0; i -= 1) {
+    // Reconstruct the base path from deeper to root
+    const basePath = `/${pathParts.slice(0, i).join('/')}`;
+    const testUrl = `${baseUrl + basePath}/fragment/accordion-ml`;
+    console.log(`Checking URL: ${testUrl}`);
+    const fragPath = check404(testUrl);
+    if (fragPath) {
+      return fragPath;
+    }
+  }
+  return null;
+}
+
 export default async function decorate(doc) {
   const $main = doc.querySelector('main');
   const $leftsection = document.querySelector('.leftsection');
+
   if ($leftsection) {
+    if ($leftsection.querySelector('.accordion-ml.block')) {
+      console.log('Left section already contains accordion-ml.block, skipping decoration.');
+    } else {
+      console.log('Left section does not contain accordion-ml.block, get it from fragment.');
+      // check for the URL path segments from extreme right, presence of fragment folder
+      const fragPath = await checkFragmentAccordionML();
+      console.log(`Fragment path: ${fragPath}`);
+    }
     const $clickElement = $leftsection.querySelector('.default-content-wrapper > p');
     const $activeElement = $leftsection.querySelector('.accordion-ml.block');
 
