@@ -14,11 +14,6 @@ export function getWindowSize() {
   };
 }
 
-export function getPathSegments() {
-  return window.location.pathname.split('/')
-    .filter((segment) => segment);
-}
-
 export function getViewPort() {
   const { width } = getWindowSize();
   if (width >= 900) {
