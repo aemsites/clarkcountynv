@@ -38,11 +38,16 @@ export function decorateLinks(element) {
 async function check404(url) {
   try {
     const response = await fetch(url, { method: 'HEAD' });
+
+    // Return the URL only if the response is OK (status in 200–299)
     if (response.ok) {
       return url;
     }
+
+    // Do nothing (implicitly return null) if status is 404 or any non-OK
     return null;
-  } catch (err) {
+  } catch (error) {
+    // Catch network or fetch-related errors and return null
     return null;
   }
 }
@@ -54,7 +59,7 @@ async function checkFragmentAccordionML() {
   // Split current path into parts, excluding empty strings
   const pathParts = currentPath.split('/').filter((part) => part);
 
-  for (let i = pathParts.length - 1; i >= 0; i -= 1) {
+  for (let i = pathParts.length - 1; i >= 1; i -= 1) {
     // Reconstruct the base path from deeper to root
     const basePath = `/${pathParts.slice(0, i).join('/')}`;
     const testUrl = `${baseUrl + basePath}/fragment/accordion-ml`;
@@ -75,16 +80,18 @@ export default async function decorate(doc) {
     if (!$leftsection.querySelector('.accordion-ml.block')) {
       // check for the URL path segments from extreme right, presence of fragment folder
       const fragPath = await checkFragmentAccordionML();
-      const path = new URL(fragPath).pathname;
-      const leftFrag = await loadFragment(path);
-      const leftnav = leftFrag.querySelector('.accordion-ml-wrapper').cloneNode(true);
-      const startH2 = $leftsection.querySelector('h2');
-      // append leftnav just after startH2
-      if (startH2) {
-        startH2.after(leftnav);
-      } else {
-        // if no h2 found, append leftnav at the end of leftsection
-        $leftsection.append(leftnav);
+      if (fragPath) {
+        const path = new URL(fragPath).pathname;
+        const leftFrag = await loadFragment(path);
+        const leftnav = leftFrag.querySelector('.accordion-ml-wrapper').cloneNode(true);
+        const startH2 = $leftsection.querySelector('h2');
+        // append leftnav just after startH2
+        if (startH2) {
+          startH2.after(leftnav);
+        } else {
+          // if no h2 found, append leftnav at the end of leftsection
+          $leftsection.append(leftnav);
+        }
       }
     }
     const $clickElement = $leftsection.querySelector('.default-content-wrapper > p');
