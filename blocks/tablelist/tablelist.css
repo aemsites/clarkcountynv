@@ -119,6 +119,8 @@
   background: transparent;
   cursor: pointer;
   border: none;
+  font-size: var(--body-font-size-m);
+  font-weight: unset;
 }
 
 .tablelist-pagination-list li:nth-of-type(2) button {
