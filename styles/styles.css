@@ -20,6 +20,7 @@
   --dark-color: #ccc;
   --text-color: black;
   --white: #fff;
+  --primary-orange: #963821;
   --orange: #C54B2A;
   --dark-orange: #B54425;
   --height: x;
@@ -62,10 +63,10 @@
   --body-font-size-xs: 14px;
 
   /* heading sizes */
-  --heading-font-size-xxl: 36px;
-  --heading-font-size-xl: 32px;
-  --heading-font-size-l: 28px;
-  --heading-font-size-m: 21px;
+  --heading-font-size-xxl: 48px;
+  --heading-font-size-xl: 36px;
+  --heading-font-size-l: 24px;
+  --heading-font-size-m: 18px;
   --heading-font-size-s: 16px;
   --heading-font-size-xs: 14px;
 
@@ -80,16 +81,6 @@
   --spacing-xl: 48px;
 }
 
-@media (width >= 900px) {
-  :root {
-    --heading-font-size-xxl: 36px;
-    --heading-font-size-xl: 32px;
-    --heading-font-size-l: 28px;
-    --heading-font-size-m: 21px;
-    --heading-font-size-s: 16px;
-    --heading-font-size-xs: 14px;
-  }
-}
 
 body {
   font-size: var(--body-font-size-m);
@@ -121,11 +112,15 @@ body.appear {
 h1, h2, h3,
 h4, h5, h6 {
   font-family: var(--heading-font-family);
-  font-weight: 500;
+  font-weight: 700;
   line-height: 1.25;
   margin-top: 1em;
   margin-bottom: .5em;
   scroll-margin: calc(var(--nav-height) + 1em);
+
+  .title-color-primary & {
+    color: var(--primary-orange);
+  }
 }
 
 h1 { font-size: var(--heading-font-size-xxl) }
