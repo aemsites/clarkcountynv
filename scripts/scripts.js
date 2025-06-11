@@ -252,12 +252,14 @@ function buildAutoBlocks(main) {
  * @param {Element} element container element
  */
 export function decorateButtons(element) {
+  console.log("Inside Decorate Function!");
   element.querySelectorAll('a').forEach((a) => {
     if (!a.closest('.no-buttons')) {
       a.title = a.title || a.textContent;
       if (a.href !== a.textContent) {
         const up = a.parentElement;
         const twoup = a.parentElement.parentElement;
+        const threeup = a.parentElement?.parentElement?.parentElement;
         if (!a.querySelector('img')) {
           if (up.childNodes.length === 1 && (up.tagName === 'P' || up.tagName === 'DIV')) {
             a.className = 'button'; // default
@@ -281,6 +283,18 @@ export function decorateButtons(element) {
             a.className = 'button secondary';
             twoup.classList.add('button-container');
           }
+          if (
+            up.childNodes.length === 1
+            && up.tagName === 'EM'
+            && twoup.childNodes.length === 2
+            && twoup.tagName === 'STRONG'
+            && threeup.childNodes.length === 3
+            && threeup.tagName === 'P'
+          ) {
+            console.log('Inside');
+            const textNode = threeup.childNodes.filter((node) => node.nodeName === '#text');
+            console.log(textNode);
+          }
         }
       }
     }
@@ -294,6 +308,7 @@ export function decorateButtons(element) {
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main) {
   // hopefully forward compatible button decoration
+  console.log('HERE');
   decorateButtons(main);
   decorateIcons(main);
   buildAutoBlocks(main);
