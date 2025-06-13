@@ -49,12 +49,13 @@
   --table-head-background-color-green: #bfedd2;
 
   /* fonts */
-  --body-font-family: 'Open Sans',sans-serif;
+  --body-font-family: 'Neue Montreal', sans-serif;
   --heading-font-family: 'Neue Montreal', sans-serif;
   --icon-font-family: 'FontAwesome', sans-serif;
   --icon-fa-brands-font-family: 'FontAwesomeBrands', sans-serif;
   --font-weight-bold: 700;
   --font-weight-semi-bold: 600;
+  --font-weight-book: 400;
 
   /* body sizes */
   --body-font-size-m: 18px;
@@ -93,6 +94,7 @@
 
 body {
   font-size: var(--body-font-size-m);
+  font-weight: var(--font-weight-book);
   margin: 0;
   font-family: var(--body-font-family);
   line-height: 1.6;
