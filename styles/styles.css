@@ -15,6 +15,7 @@
   /* colors */
   --link-color: #035fe6;
   --link-hover-color: #136ff6;
+  --color-white: #fff;
   --background-color: white;
   --light-color: #eee;
   --dark-color: #ccc;
@@ -47,6 +48,7 @@
   --table-head-background-color7: #ced4d9;
   --table-head-background-color8: #34495e;
   --table-head-background-color-green: #bfedd2;
+  --primary-orange-900: #963821;
 
   /* fonts */
   --body-font-family: 'Open Sans',sans-serif;
@@ -55,6 +57,7 @@
   --icon-fa-brands-font-family: 'FontAwesomeBrands', sans-serif;
   --font-weight-bold: 700;
   --font-weight-semi-bold: 600;
+  --font-weight-book: 400;
 
   /* body sizes */
   --body-font-size-m: 18px;
