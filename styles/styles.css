@@ -20,7 +20,6 @@
   --dark-color: #ccc;
   --text-color: black;
   --white: #fff;
-  --orange: #C54B2A;
   --dark-orange: #B54425;
   --height: x;
   --original-height: y;
@@ -63,6 +62,7 @@
   --neutral-black-400: #c4c4c4;
   --neutral-black-200: #eee;
   --neutral-white: #fff;
+  --orange: var(--primary-orange-600);
 
 
   /* fonts */
