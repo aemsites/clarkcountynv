@@ -259,6 +259,7 @@ a.button:focus, button:focus  {
   background-color: var(--primary-orange-300);
   border-color: var(--primary-orange-600);
   cursor: pointer;
+  outline: 0;
 }
 
 a.button:active, button:active {

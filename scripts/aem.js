@@ -421,18 +421,19 @@ function decorateButtons(element) {
 }
 
 /**
-* Adds accessibility labels to anchors with icons only.
+* Adds accessibility labels to anchor elements with icons only.
 * @param {Element} [span] span element with icon classes
 * @param {Element} [iconName] icon name
 */
 function addAccessibilityToButtonIcons(span, iconName) {
-  const isPrevious = iconName.indexOf('arrow-left') > -1;
+  const isPrevious = iconName.indexOf('arrow-left') > -1 ? 'Previous' : 'Next';
   const anchor = span.parentElement;
   if (anchor) {
     anchor.classList.add('icon-only');
-    anchor.setAttribute('aria-label', isPrevious ? 'Previous' : 'Next');
+    anchor.setAttribute('aria-label', isPrevious);
+    anchor.setAttribute('title', isPrevious);
     span.setAttribute('role', 'img');
-    span.setAttribute('aria-label', isPrevious ? 'Previous' : 'Next');
+    span.setAttribute('aria-label', isPrevious);
   }
 }
 
