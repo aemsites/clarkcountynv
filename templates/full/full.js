@@ -2,10 +2,9 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 
 export default async function decorate(doc) {
   const aElems = doc.querySelectorAll('a.button');
-  // aElems.forEach((aElem) => {
-  //   console.log('REMOVING BUTTON CLASS');
-  //   aElem.classList.remove('button');
-  // });
+  aElems.forEach((aElem) => {
+    aElem.classList.remove('button');
+  });
 
   doc.querySelectorAll('a[href$=".jpg"], a[href$=".png"], a[href$=".jpeg"], a[href$=".gif"]').forEach((aEl) => {
     if (['jpg', 'jpeg', 'png', 'gif'].some((ext) => aEl.textContent.trim().endsWith(ext))) {

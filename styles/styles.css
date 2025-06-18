@@ -48,14 +48,17 @@
   --table-head-background-color8: #34495e;
   --table-head-background-color-green: #bfedd2;
   --primary-orange-900: #722922;
+  --primary-orange-900-rgb: 114, 41, 34;
   --primary-orange-600: #963821;
   --primary-orange-300: #C54B2A;
+  --primary-orange-300-rgb: 197, 75, 42;
   --primary-blue-900: #0093B2;
   --primary-blue-600: #76C5D6;
   --primary-blue-300: #BFDCE0;
   --secondary-blue-800: #243772;
   --secondary-blue-600: #365EA5;
   --secondary-orange-800: #B86125;
+  --secondary-orange-800-rgb: 184, 97, 37;
   --secondary-orange-600: #FFB434;
   --neutral-black: #232222;
   --neutral-black-800: #545454;
@@ -65,6 +68,12 @@
   --neutral-white: #fff;
   --orange: var(--primary-orange-600);
 
+  /* Opacity */
+  --opacity-80: 0.8;
+  --opacity-60: 0.6;
+  --opacity-40: 0.4;
+  --opacity-25: 0.25;
+  --opacity-15: 0.15;
 
   /* fonts */
   --body-font-family: 'Neue Montreal', sans-serif;
@@ -228,33 +237,88 @@ a.button:any-link, button {
   box-sizing: border-box;
   text-decoration: none;
   border: 2px solid transparent;
-  padding: 5px 30px;
+  padding: 5px 24px;
   text-align: center;
   font-style: normal;
-  font-weight: 600;
+  font-weight: var(--font-weight-bold);
   cursor: pointer;
   color: var(--background-color);
-  background-color: var(--link-color);
+  background-color: var(--primary-orange-600);
   margin: 16px 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-a.button:hover, a.button:focus, button:hover, button:focus  {
-  background-color: var(--link-hover-color);
+a.button:hover, button:hover {
+  background-color: var(--primary-orange-300);
   cursor: pointer;
 }
 
-button:disabled, button:disabled:hover {
-  background-color: var(--light-color);
+a.button:focus, button:focus  {
+  background-color: var(--primary-orange-300);
+  border-color: var(--primary-orange-600);
+  cursor: pointer;
+}
+
+a.button:active, button:active {
+  background-color: var(--primary-orange-900);
+  border-color: var(--primary-orange-900);
+}
+
+a.button.disabled,
+a.button.disabled:hover,
+button:disabled,
+button:disabled:hover {
+  background-color: var(--neutral-black-400);
+  border-color: var(--neutral-black-400);
   cursor: unset;
+  pointer-events: none;
+}
+
+a.button > .icon, button > .icon {
+  max-width: 18px;
+  max-height: 18px;
+  margin-right: 8px;
+  padding: 0;
+  vertical-align: text-top;
+}
+
+a.button > .icon img, button > .icon {
+  margin: 0;
+}
+
+a.button.icon-only > .icon, button.icon-only > .icon {
+  margin-right: 0;
 }
 
 a.button.secondary, button.secondary {
-  background-color: unset;
-  border: 2px solid currentcolor;
-  color: var(--text-color)
+  background-color: var(--neutral-white);
+  border: 2px solid var(--primary-orange-600);
+  color: var(--primary-orange-600)
+}
+
+a.button.secondary:hover, button.secondary:hover {
+  background-color: rgba(var(--secondary-orange-800-rgb), var(--opacity-15));
+}
+
+a.button.secondary:focus, button.secondary:focus {
+  box-shadow: 0px 0px 0px 4px rgba(var(--primary-orange-300-rgb), var(--opacity-25));
+}
+
+a.button.secondary:active, button.secondary:active {
+  background-color: rgba(var(--primary-orange-900-rgb), var(--opacity-15));
+  color: var(--primary-orange-900);
+  box-shadow: none;
+}
+
+a.button.secondary.disabled,
+a.button.secondary.disabled:hover,
+button.secondary:disabled,
+button.secondary:disabled:hover {
+  background-color: var(--neutral-white);
+  border-color: var(--neutral-black-400);
+  color: var(--neutral-black-400);
 }
 
 a:any-link.button.default {
