@@ -421,6 +421,23 @@ function decorateButtons(element) {
 }
 
 /**
+* Adds accessibility labels to anchor elements with icons only.
+* @param {Element} [span] span element with icon classes
+* @param {Element} [iconName] icon name
+*/
+function addAccessibilityToButtonIcons(span, iconName) {
+  const isPrevious = iconName.indexOf('arrow-left') > -1 ? 'Previous' : 'Next';
+  const anchor = span.parentElement;
+  if (anchor) {
+    anchor.classList.add('icon-only');
+    anchor.setAttribute('aria-label', isPrevious);
+    anchor.setAttribute('title', isPrevious);
+    span.setAttribute('role', 'img');
+    span.setAttribute('aria-label', isPrevious);
+  }
+}
+
+/**
  * Add <img> for icon, prefixed with codeBasePath and optional prefix.
  * @param {Element} [span] span element with icon classes
  * @param {string} [prefix] prefix to be added to icon src
@@ -436,6 +453,12 @@ function decorateIcon(span, prefix = '', alt = '') {
   img.alt = alt;
   img.loading = 'lazy';
   span.append(img);
+
+  // Check to see if anchor contains only an icon, if so add helper class for styling.
+  const anchor = span.parentElement;
+  if (anchor && anchor.classList.contains('button') && anchor.textContent === '') {
+    addAccessibilityToButtonIcons(span, iconName);
+  }
 }
 
 /**
