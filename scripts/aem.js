@@ -453,7 +453,7 @@ function decorateIcon(span, prefix = '', alt = '') {
   img.alt = alt;
   img.loading = 'lazy';
   span.append(img);
-  
+
   // Check to see if anchor contains only an icon, if so add helper class for styling.
   const anchor = span.parentElement;
   if (anchor && anchor.classList.contains('button') && anchor.textContent === '') {

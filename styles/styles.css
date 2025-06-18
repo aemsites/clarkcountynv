@@ -304,7 +304,7 @@ a.button.secondary:hover, button.secondary:hover {
 }
 
 a.button.secondary:focus, button.secondary:focus {
-  box-shadow: 0px 0px 0px 4px rgba(var(--primary-orange-300-rgb), var(--opacity-25));
+  box-shadow: 0 0 0 4px rgba(var(--primary-orange-300-rgb), var(--opacity-25));
 }
 
 a.button.secondary:active, button.secondary:active {
