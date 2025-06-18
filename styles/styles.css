@@ -20,7 +20,6 @@
   --dark-color: #ccc;
   --text-color: black;
   --white: #fff;
-  --orange: #C54B2A;
   --dark-orange: #B54425;
   --height: x;
   --original-height: y;
@@ -47,6 +46,24 @@
   --table-head-background-color7: #ced4d9;
   --table-head-background-color8: #34495e;
   --table-head-background-color-green: #bfedd2;
+  --primary-orange-900: #722922;
+  --primary-orange-600: #963821;
+  --primary-orange-300: #C54B2A;
+  --primary-blue-900: #0093B2;
+  --primary-blue-600: #76C5D6;
+  --primary-blue-300: #BFDCE0;
+  --secondary-blue-800: #243772;
+  --secondary-blue-600: #365EA5;
+  --secondary-orange-800: #B86125;
+  --secondary-orange-600: #FFB434;
+  --neutral-black: #232222;
+  --neutral-black-800: #545454;
+  --neutral-black-600: #828282;
+  --neutral-black-400: #c4c4c4;
+  --neutral-black-200: #eee;
+  --neutral-white: #fff;
+  --orange: var(--primary-orange-600);
+
 
   /* fonts */
   --body-font-family: 'Open Sans',sans-serif;
