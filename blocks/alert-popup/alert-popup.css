@@ -7,7 +7,7 @@
 .modal.alert-popup dialog {
   width: 100%;
   border: none;
-  background-color: var(--primary-orange-900);
+  background-color: var(--primary-orange-600);
 }
 
 .modal.alert-popup.popup dialog {
@@ -98,15 +98,23 @@
 /* Banner */
 .alert-popup.banner.warning {
   &.high {
-    background-color: var(--primary-orange-900);
+    background-color: var(--primary-orange-600);
     color: var(--color-white);
+
+    a {
+      color: var(--neutral-white);
+    }
   }
 
   &.low {
     background-color: var(--light-color);
 
     h3 {
-      color: var(--primary-orange-900);
+      color: var(--primary-orange-600);
+    }
+
+    a {
+      color: var(--primary-orange-600);
     }
   }
 }
@@ -115,12 +123,20 @@
   &.high {
     background-color: var(--secondary-blue-800);
     color: var(--color-white);
+
+    a {
+      color: var(--neutral-white);
+    }
   }
 
   &.low {
     background-color: var(--light-color);
 
     h3 {
+      color: var(--secondary-blue-800);
+    }
+
+    a {
       color: var(--secondary-blue-800);
     }
   }

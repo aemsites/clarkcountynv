@@ -67,6 +67,7 @@
   --neutral-black-200: #eee;
   --neutral-white: #fff;
   --orange: var(--primary-orange-600);
+  --link-focus-bg: #EADFDE;
 
   /* Opacity */
   --opacity-80: 0.8;
@@ -196,13 +197,35 @@ main pre {
 
 /* links */
 a:any-link {
-  color: var(--link-color);
-  text-decoration: none;
+  color: var(--primary-orange-900);
+  text-decoration-color: var(--neutral-white);
+  text-decoration-thickness: 6%;
+  text-underline-offset: 12%;
+}
+
+a:hover, a:focus, a:visited {
+  text-decoration: underline;
+  text-decoration-thickness: 6%;
+  text-underline-offset: 12%;
 }
 
 a:hover {
-  text-decoration: underline;
-  color: var(--link-hover-color);
+  color: var(--primary-orange-900);
+}
+
+a:focus {
+  color: var(--primary-orange-900);
+  background-color: var(--link-focus-bg);
+  outline: 0;
+}
+
+a:visited {
+  color: var(--neutral-black);
+}
+
+a.disabled {
+  color: var(--neutral-black-600);
+  text-decoration-color: var(--neutral-black-600);
 }
 
 div.top-arrow picture {
