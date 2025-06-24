@@ -1,162 +1,167 @@
-.faq-accordion .section {
-    margin: 10px 0;
+.faq-accordion .section:not(.section ~ .section) .section-title {
+    border-top: none;
 }
 
 .faq-accordion .section-title {
     font-family: var(--body-font-family);
-    font-size: var(--body-font-size-m);
+    font-size: var(--heading-font-size-l);
     font-weight: var(--font-weight-bold);
     color: var(--neutral-black-800);
     padding: 15px 15px 15px 40px;
-    border-bottom: 2px solid var(--neutral-black-400);
+    border-top: 2px solid var(--neutral-black-400);
     margin-bottom: 0;
     cursor: pointer;
     position: relative;
     line-height: 120%;
 }
 
+.faq-accordion .section-title.active {
+    color: var(--primary-orange-600);
+}
+
 .faq-accordion .section-title::before {
-    content: '\f077';
-    font-family: var(--icon-font-family);
-    font-weight: var(--font-weight-book) !important;
-    /* font-family: var(--icon-fa-brands-font-family);
-    font-weight: 900; */
+    content: '';
+    background: url('../../icons/chevron-up.svg') center center no-repeat;
+    width: 24px;
+    height: 24px;
+    display: inline-block;
     position: absolute;
-    left: 15px;
     top: 50%;
+    left: 8px;
     transform: translateY(-50%);
-    /* font-size: 24px; */
-    transition: transform 0.3s ease;
 }
 
 .faq-accordion .section-title.active::before {
-    transform: translateY(-50%) rotate(180deg);
+    background: url('../../icons/chevron-down.svg') center center no-repeat;
 }
 
-.faq-accordion {
-    .section {
-        /* margin: 10px 0; */
+.faq-accordion .section-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    font-family: var(--body-font-family);       
+}
 
-        /* .section-title {
-            font-size: var(--heading-font-size-m);
-            font-weight: 700;
-            padding: 15px 15px 15px 40px;
-            border-bottom: 1px solid #e0e0e0;
-            margin-bottom: 0;
-            cursor: pointer;
-            position: relative;
-            font-family: var(--body-font-family);
+.faq-accordion .section-content.show {
+    max-height: 20000px;
+}
 
-            &::before {
-                content: '›';
-                position: absolute;
-                left: 15px;
-                top: 50%;
-                transform: translateY(-50%);
-                font-size: 24px;
-                transition: transform 0.3s ease;
-            }
+.faq-accordion .search-container {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 4px;
+    margin: 0;
+}
 
-            &.active::before {
-                transform: translateY(-50%) rotate(90deg);
-            }
-        } */
+.faq-accordion .search-box {
+    font-family: var(--body-font-family);
+    font-size: var(--body-font-size-m);
+    color: var(--neutral-black-600);
+    border: 2px solid var(--neutral-black-800);
+    width: 100%;
+    height: 40px;
+    padding: 0 16px;
+}
 
-        .section-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.2s ease;
-            font-family: var(--body-font-family);
+.faq-accordion .search-box::-webkit-search-cancel-button {
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    background: url('../../icons/search-close.svg') center center no-repeat;
+    background-size: contain;
+}
 
-            &.show {
-                max-height: 20000px; /* Some pages have very long list /how-do-i */
-                padding-top: 20px;
-            }
+.faq-accordion .search-box:focus {
+    outline: 0;
+}
 
-            .question {
-                padding: 15px 15px 15px 40px;
-                font-weight: 600;
-                margin-bottom: 2px;
-                cursor: pointer;
-                position: relative;
-                font-size: 16px;
-                border-bottom: 1px solid #e0e0e0;
-                background: transparent;
+.faq-accordion .search-container .button {
+    font-size: var(--body-font-size-m);
+    margin: 0;
+    padding: 8px 20px;
+    text-overflow: unset;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    min-width: fit-content;
+    height: 40px;
+}
 
-                &::before {
-                    content: '›';
-                    position: absolute;
-                    left: 15px;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    font-size: 24px;
-                    transition: transform 0.3s ease;
-                }
+.faq-accordion .search-input-btn-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    gap: 12px;
+}
 
-                &.active::before {
-                    transform: translateY(-50%) rotate(90deg);
-                }
-            }
+.faq-accordion .search-results {
+    font-size: var(--body-font-size-m);
+    color: var(--neutral-black);
+    line-height: 1.7;
+    margin: 0;
+}
 
-            .answer {
-                padding: 0;
-                max-height: 0;
-                overflow: hidden;
-                transition: all 0.3s ease;
-                background: #fff;
-                font-size: 16px;
-                line-height: 1.5;
+.faq-accordion .question {
+    color: var(--neutral-black-800);
+    font-size: var(--body-font-size-s);
+    font-weight: var(--font-weight-bold);
+    padding: 10px 15px 10px 40px;
+    cursor: pointer;
+    position: relative;
+    border-top: 2px solid var(--neutral-black-400);
+}
 
-                &.show {
-                    padding: 15px;
-                    max-height: 20000px;
-                }
+.faq-accordion .question.active {
+    color: var(--primary-orange-600);
+}
 
-                p {
-                    margin: 0 0 15px;
-                }
-            }
-        }
-    }
+.faq-accordion .question::before {
+    content: '';
+    background: url('../../icons/chevron-up.svg') center center no-repeat;
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 8px;
+    transform: translateY(-50%);
+}
 
-    a:any-link {
-        color: var(--no-button-link);
-        background-color: transparent;
-        text-decoration: underline;
-        border: 0;
-        padding: 0;
-        margin: 0;
-    }
+.faq-accordion .question.active::before {
+    background: url('../../icons/chevron-down.svg') center center no-repeat;
+}
 
-    .search-container {
-        margin-bottom: 10px;
-        text-align: right;
+.faq-accordion .answer {
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    font-size: var(--body-font-size-m);
+}
 
-        .search-box {
-            width: 40%;
-            font-size: 12px;
-            border: 1px solid #193441;
-            border-radius: 3px;
-            font-family: var(--body-font-family);
-            height: 34px;
-            color: #193441;
-            padding: 0 15px;
-            margin-bottom: 5px;
+.faq-accordion .answer.show {
+    padding: 15px;
+    max-height: 20000px;
+}
 
+.faq-accordion .answer p {
+    line-height: 125%;
+    margin: 0 0 15px;
+    font-size: var(--body-font-size-s);
+}
 
-            &:focus {
-                outline: none;
-                border-color: #1a466b;
-            }
-        }
-
-        .search-results {
-            margin-top: 8px;
-            font-size: var(--body-font-size-m);
-            color: #000;
-            line-height: 1.7;
-        }
-    }
+.faq-accordion a:any-link {
+    color: var(--no-button-link);
+    background-color: transparent;
+    text-decoration: underline;
+    border: 0;
+    padding: 0;
+    margin: 0;
 }
 
 /* Table styles */
@@ -178,21 +183,12 @@
     font-weight: 600;
 }
 
-@media (width <= 768px) {
-    .faq-accordion {
-        padding: 15px;
-    }
-
-    .faq-accordion .section-title {
-        font-size: 24px;
-    }
-
+@media (width >= 900px) {
     .faq-accordion .question {
-        font-size: 15px;
-        padding: 15px 15px 15px 30px;
+        font-size: var(--body-font-size-m);
     }
 
-    .faq-accordion .question::before {
-        left: 10px;
+    .faq-accordion .answer p {
+        font-size: var(--body-font-size-m);
     }
 }

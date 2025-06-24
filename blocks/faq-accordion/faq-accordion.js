@@ -1,4 +1,4 @@
-import { div, input } from '../../scripts/dom-helpers.js';
+import { div, input, button, img } from '../../scripts/dom-helpers.js';
 import { createHashId, scrollWithHeaderOffset } from '../../scripts/utils.js';
 
 export default function decorate(block) {
@@ -33,12 +33,19 @@ export default function decorate(block) {
 
   const searchContainer = div({ class: 'search-container' });
   const searchBox = input({
-    type: 'text',
+    type: 'search',
     class: 'search-box',
-    placeholder: 'Search the FAQs...',
+    placeholder: 'Search',
+    name: 'search-results'
   });
+  const searchInputBtnContainer = div({ class: 'search-input-btn-container' });
   const searchResults = div({ class: 'search-results' });
-  searchContainer.append(searchBox, searchResults);
+  const searchBtn = button({ class: 'button primary', id: 'search-btn', type: 'button' }, 'Search');
+  const searchIcon = img({ src: '/icons/search-white.svg', alt: 'Search results icon' });
+  searchInputBtnContainer.append(searchBox);
+  searchBtn.prepend(searchIcon);
+  searchInputBtnContainer.append(searchBtn);
+  searchContainer.append(searchInputBtnContainer, searchResults);
   block.appendChild(searchContainer);
 
   const performSearch = () => {
@@ -79,7 +86,23 @@ export default function decorate(block) {
     }
   };
 
-  searchBox.addEventListener('input', performSearch);
+  searchBox.addEventListener('input', (event) => {
+    // If the user presses the 'X' clear button - reset
+    if (event.target.value === '') {
+      Object.values(sections).forEach((section) => {
+        const sectionContent = block.querySelector(`[data-section="${section.title}"]`);
+        const hiddenElements = Array.from(document.querySelectorAll('.question[style], .answer[style]')).filter(el =>
+          el.style.display === 'none'
+        );
+        if (hiddenElements.length) {
+          hiddenElements.forEach(el => el.style.display = '');
+          sectionContent.parentElement.style.display = '';
+          searchResults.textContent = '';
+        }
+      });
+    }
+  });
+  searchBtn.addEventListener('click', performSearch);
 
   Object.values(sections).forEach((section) => {
     const sectionContainer = div({ class: 'section' });
