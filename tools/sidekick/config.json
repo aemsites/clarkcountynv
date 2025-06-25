@@ -9,6 +9,21 @@
         "includePaths": ["**.docx**"]
       },
       {
+        "id": "move-to-review",
+        "title": "Move to Review",
+        "url": "/tools/review/review.html",
+        "paletteRect": "top: 50px; bottom: 10px; right: 10px; left: auto; width:800px; height: calc(100vh - 60px)",
+        "passConfig": true,
+        "passReferrer": true,
+        "isPalette": true,
+        "environments": [
+          "dev",
+          "edit",
+          "prod"
+        ],
+        "event": "move-to-review"
+      },
+      {
         "id": "asset-library",
         "title": "AEM Assets Library",
         "environments": [
