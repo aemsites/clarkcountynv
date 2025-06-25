@@ -1,5 +1,14 @@
-import { div, input, button, img } from '../../scripts/dom-helpers.js';
+import { div, input, button, img, p } from '../../scripts/dom-helpers.js';
 import { createHashId, scrollWithHeaderOffset } from '../../scripts/utils.js';
+
+// This will get the ID from the details HTML element and add as a hash to the url
+function handleToggleHash(event) {
+  if (event.target.hasAttribute('open')) {
+    window.history.pushState(null, '', `#${event.target.id}`);
+  } else {
+    window.history.pushState(null, '', window.location.pathname);
+  }
+}
 
 export default function decorate(block) {
   const sections = {};
@@ -31,6 +40,7 @@ export default function decorate(block) {
 
   block.textContent = '';
 
+  // Build search container
   const searchContainer = div({ class: 'search-container' });
   const searchBox = input({
     type: 'search',
@@ -48,6 +58,7 @@ export default function decorate(block) {
   searchContainer.append(searchInputBtnContainer, searchResults);
   block.appendChild(searchContainer);
 
+  // Filter results based on user query
   const performSearch = () => {
     const searchTerm = searchBox.value.toLowerCase();
     let matchCount = 0;
@@ -57,7 +68,7 @@ export default function decorate(block) {
       if (!sectionContent) return;
 
       section.items.forEach((item, index) => {
-        const questionEl = sectionContent.querySelector(`.question[data-index="${index}"]`);
+        const questionEl = sectionContent.querySelector(`summary[data-index="${index}"]`);
         const answerEl = questionEl?.nextElementSibling;
         if (!questionEl || !answerEl) return;
 
@@ -65,17 +76,16 @@ export default function decorate(block) {
         const answerText = item.answer.textContent.toLowerCase();
         const isMatch = questionText.includes(searchTerm) || answerText.includes(searchTerm);
 
-        questionEl.style.display = searchTerm && !isMatch ? 'none' : '';
-        answerEl.style.display = searchTerm && !isMatch ? 'none' : '';
+        questionEl.parentElement.style.display = searchTerm && !isMatch ? 'none' : '';
 
         if (isMatch && searchTerm) {
           matchCount += 1;
         }
       });
 
-      const hasVisibleQuestions = [...sectionContent.querySelectorAll('.question')]
+      const hasVisibleQuestions = [...sectionContent.querySelectorAll('details')]
         .some((q) => q.style.display !== 'none');
-      sectionContent.parentElement.style.display = hasVisibleQuestions ? '' : 'none';
+      sectionContent.style.display = hasVisibleQuestions ? '' : 'none';
     });
 
     // Update search results count
@@ -86,112 +96,79 @@ export default function decorate(block) {
     }
   };
 
+  // Click event listener for search button
+  searchBtn.addEventListener('click', performSearch);
+
+  // Event listener on search input
   searchBox.addEventListener('input', (event) => {
     // If the user presses the 'X' clear button - reset
     if (event.target.value === '') {
       Object.values(sections).forEach((section) => {
         const sectionContent = block.querySelector(`[data-section="${section.title}"]`);
-        const hiddenElements = Array.from(document.querySelectorAll('.question[style], .answer[style]')).filter(el =>
+        const hiddenElements = Array.from(document.querySelectorAll('details[style]')).filter(el =>
           el.style.display === 'none'
         );
         if (hiddenElements.length) {
           hiddenElements.forEach(el => el.style.display = '');
-          sectionContent.parentElement.style.display = '';
+          sectionContent.style.display = '';
           searchResults.textContent = '';
         }
       });
     }
   });
-  searchBtn.addEventListener('click', performSearch);
 
   Object.values(sections).forEach((section) => {
-    const sectionContainer = div({ class: 'section' });
-    const sectionTitle = div({
-      class: 'section-title active',
-      id: section.id,
-    }, section.title);
-    const sectionContent = div({
-      class: 'section-content show',
-      'data-section': section.title,
+
+    // decorate accordion item label
+    const summaryText = p(section.title);
+    const summary = document.createElement('summary');
+    summary.className = 'accordion-item-label';
+    summary.append(summaryText);
+
+    // decorate accordion item body
+    const body = div({ class: 'content', 'data-valign': 'middle' });
+
+    section.items.forEach((accordionItem, index) => {
+      const accordionDetail = document.createElement('details');
+      const accordionSummary = document.createElement('summary');
+      const accordionSummaryText = p(accordionItem.question);
+      const accordionContent = div({ class: 'content', 'data-valign': 'middle' });
+      accordionDetail.addEventListener('toggle', handleToggleHash);
+      accordionDetail.className = 'accordion-item';
+      accordionDetail.id = accordionItem.id;
+      accordionSummary.className = 'accordion-item-label';
+      accordionSummary.setAttribute('data-index', index);
+      accordionSummary.append(accordionSummaryText);
+      accordionContent.insertAdjacentHTML('beforeend', accordionItem.answer.innerHTML);
+      accordionDetail.append(accordionSummary, accordionContent);
+      body.append(accordionDetail);
     });
 
-    // Check if this section should be open based on hash
-    const shouldOpenSection = window.location.hash === `#${section.id}`;
-    if (shouldOpenSection) {
-      sectionTitle.classList.add('active');
-      sectionContent.classList.add('show');
-      setTimeout(() => scrollWithHeaderOffset(sectionTitle), 100);
-    }
+    // decorate accordion item
+    const details = document.createElement('details');
+    details.className = 'accordion-item';
+    details.setAttribute('data-section', section.title);
 
-    sectionTitle.addEventListener('click', () => {
-      sectionTitle.classList.toggle('active');
-      sectionContent.classList.toggle('show');
-      // Update URL hash when section is opened
-      if (sectionTitle.classList.contains('active')) {
-        window.history.pushState(null, '', `#${section.id}`);
-      }
-    });
+    const headingText = summary.textContent.trim();
+    const id = createHashId(headingText);
 
-    sectionContainer.appendChild(sectionTitle);
-    sectionContainer.appendChild(sectionContent);
+    details.id = id;
+    details.open = true;
+    details.append(summary, body);
 
-    section.items.forEach((item, index) => {
-      const questionEl = div({
-        class: 'question',
-        id: item.id,
-        'data-index': index,
-      }, item.question);
-      const answerEl = div({ class: 'answer' }, item.answer);
-
-      // Check if this question should be open based on hash
-      const shouldOpenQuestion = window.location.hash === `#${item.id}`;
-      if (shouldOpenQuestion) {
-        sectionTitle.classList.add('active');
-        sectionContent.classList.add('show');
-        questionEl.classList.add('active');
-        answerEl.classList.add('show');
-        setTimeout(() => scrollWithHeaderOffset(questionEl), 100);
-      }
-
-      questionEl.addEventListener('click', () => {
-        questionEl.classList.toggle('active');
-        answerEl.classList.toggle('show');
-        // Update URL hash when question is opened
-        if (questionEl.classList.contains('active')) {
-          window.history.pushState(null, '', `#${item.id}`);
-        }
-      });
-
-      sectionContent.appendChild(questionEl);
-      sectionContent.appendChild(answerEl);
-    });
-
-    block.appendChild(sectionContainer);
+    details.addEventListener('toggle', handleToggleHash);
+    block.append(details);
   });
 
-  // Handle hash changes
-  window.addEventListener('hashchange', () => {
-    const hash = window.location.hash.substring(1);
-    if (!hash) return;
-
-    // Find and open the target section or question
-    const targetEl = document.getElementById(hash);
-    if (targetEl) {
-      if (targetEl.classList.contains('section-title')) {
-        // Open section
-        targetEl.classList.add('active');
-        targetEl.nextElementSibling.classList.add('show');
-        scrollWithHeaderOffset(targetEl);
-      } else if (targetEl.classList.contains('question')) {
-        // Open section and question
-        const sectionContent = targetEl.closest('.section-content');
-        const sectionTitle = sectionContent.previousElementSibling;
-        sectionTitle.classList.add('active');
-        sectionContent.classList.add('show');
-        targetEl.classList.add('active');
-        targetEl.nextElementSibling.classList.add('show');
-        scrollWithHeaderOffset(targetEl);
-      }
+  // Check if this details element is being targeted by the URL hash
+  const hash = window.location.hash.substring(1);
+  if (hash) {
+    const foundDetail = block.querySelector(`details[id=${hash}]`);
+    if (foundDetail) {
+      foundDetail.setAttribute('open', '');
+      setTimeout(() => {
+        scrollWithHeaderOffset(foundDetail);
+      }, 100);
     }
-  });
+  }
 }

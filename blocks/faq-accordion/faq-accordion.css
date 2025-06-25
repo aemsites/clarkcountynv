@@ -1,49 +1,5 @@
-.faq-accordion .section:not(.section ~ .section) .section-title {
+.faq-accordion.accordion.nested > details:not(details ~ details) {
     border-top: none;
-}
-
-.faq-accordion .section-title {
-    font-family: var(--body-font-family);
-    font-size: var(--heading-font-size-l);
-    font-weight: var(--font-weight-bold);
-    color: var(--neutral-black-800);
-    padding: 15px 15px 15px 40px;
-    border-top: 2px solid var(--neutral-black-400);
-    margin-bottom: 0;
-    cursor: pointer;
-    position: relative;
-    line-height: 120%;
-}
-
-.faq-accordion .section-title.active {
-    color: var(--primary-orange-600);
-}
-
-.faq-accordion .section-title::before {
-    content: '';
-    background: url('../../icons/chevron-up.svg') center center no-repeat;
-    width: 24px;
-    height: 24px;
-    display: inline-block;
-    position: absolute;
-    top: 50%;
-    left: 8px;
-    transform: translateY(-50%);
-}
-
-.faq-accordion .section-title.active::before {
-    background: url('../../icons/chevron-down.svg') center center no-repeat;
-}
-
-.faq-accordion .section-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: all 0.2s ease;
-    font-family: var(--body-font-family);       
-}
-
-.faq-accordion .section-content.show {
-    max-height: 20000px;
 }
 
 .faq-accordion .search-container {
@@ -107,61 +63,33 @@
     margin: 0;
 }
 
-.faq-accordion .question {
-    color: var(--neutral-black-800);
-    font-size: var(--body-font-size-s);
-    font-weight: var(--font-weight-bold);
-    padding: 10px 15px 10px 40px;
-    cursor: pointer;
-    position: relative;
-    border-top: 2px solid var(--neutral-black-400);
+.faq-accordion.accordion.nested > details > summary p {
+    font-size: var(--heading-font-size-l);
 }
 
-.faq-accordion .question.active {
-    color: var(--primary-orange-600);
+.faq-accordion.accordion.nested > details > .content {
+    padding: 0;
 }
 
-.faq-accordion .question::before {
-    content: '';
+.faq-accordion.accordion details[open] > summary { 
+    transition: none;
+}
+
+.faq-accordion.accordion details[open] details:not([open]) summary::before {
     background: url('../../icons/chevron-up.svg') center center no-repeat;
-    width: 24px;
-    height: 24px;
-    display: inline-block;
-    position: absolute;
-    top: 50%;
-    left: 8px;
-    transform: translateY(-50%);
 }
 
-.faq-accordion .question.active::before {
-    background: url('../../icons/chevron-down.svg') center center no-repeat;
-}
-
-.faq-accordion .answer {
-    padding: 0;
-    max-height: 0;
-    overflow: hidden;
-    font-size: var(--body-font-size-m);
-}
-
-.faq-accordion .answer.show {
-    padding: 15px;
-    max-height: 20000px;
-}
-
-.faq-accordion .answer p {
-    line-height: 125%;
-    margin: 0 0 15px;
-    font-size: var(--body-font-size-s);
-}
-
-.faq-accordion a:any-link {
-    color: var(--no-button-link);
-    background-color: transparent;
-    text-decoration: underline;
-    border: 0;
-    padding: 0;
+.faq-accordion.accordion details[open] details:not([open]) summary p {
+    color: var(--neutral-black-800);
     margin: 0;
+}
+
+.faq-accordion.accordion details details[open] summary p {
+    margin: 0;
+}
+
+.faq-accordion.accordion details details:last-child {
+    border-bottom: 0;
 }
 
 /* Table styles */
@@ -192,3 +120,94 @@
         font-size: var(--body-font-size-m);
     }
 }
+
+/* .faq-accordion.block details {
+    border-top: 2px solid var(--neutral-black-400);
+}
+
+.faq-accordion.block details:last-child {
+    border-bottom: 2px solid var(--neutral-black-400);
+}
+
+.faq-accordion.block details summary {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    padding: 13px 0 13px 10px;
+    cursor: pointer;
+    transition: 0.4s;
+    list-style: none;
+}
+
+.faq-accordion.block details summary::before {
+    content: '';
+    background: url('../../icons/chevron-up.svg') center center no-repeat;
+    width: 24px;
+    height: 24px;
+}
+
+.faq-accordion.block details summary p {
+    color: var(--neutral-black-800);
+    font-weight: var(--font-weight-bold);
+    line-height: 120%;
+    margin: 0;
+}
+
+.faq-accordion.block details .content {
+    padding: 0 45px;
+    background: var(--background-color);
+    font-size: var(--body-font-size-m);
+}
+
+.faq-accordion.block details .content p {
+    margin: 0 0 20px;
+    line-height: 1.5;
+}
+
+.faq-accordion.block details[open] summary::before {
+    background: url('../../icons/chevron-down.svg') center center no-repeat;
+}
+
+.faq-accordion.block details[open] summary p {
+    color: var(--primary-orange-600);
+}
+
+.faq-accordion.block details[open] .content {
+    background-color: var(--background-color);
+}
+
+.faq-accordion.block table tr {
+    height: 30px;
+}
+
+.image-left img {
+    float: left;
+    padding-right: 10px;
+}
+
+.image-small img {
+    width: 7%;
+    padding-right: 10px;
+}
+
+.table-col1-50 table {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 85%;
+}
+
+.table-col1-50 table tbody tr td:nth-child(odd) {
+    width: 50%;
+}
+
+.faq-image img {
+    height: 275px;
+    width: auto;
+}
+
+@media (width >= 900px) {
+    .faq-accordion.block {
+        padding: 20px 0 50px;
+    }
+} */
