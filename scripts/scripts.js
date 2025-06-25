@@ -19,6 +19,8 @@ import { h1 } from './dom-helpers.js';
 
 import { getViewPort, externalLinks, ScrolltoTop } from './utils.js';
 
+import assetsInit from './aem-assets-plugin-support.js';
+
 const DEFAULT_BACKGROUND_IMAGE = `${window.location.origin}/assets/images/general/slide1.jpg`;
 
 const getPageTitle = async (url) => {
@@ -548,5 +550,7 @@ async function loadPage() {
 }
 
 ScrolltoTop();
+
+await assetsInit(); // This to be done before loadPage() function invocation
 
 loadPage();
