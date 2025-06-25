@@ -24,7 +24,6 @@
 .faq-accordion .search-box::-webkit-search-cancel-button {
     cursor: pointer;
     appearance: none;
-    -webkit-appearance: none;
     width: 18px;
     height: 18px;
     background: url('../../icons/search-close.svg') center center no-repeat;

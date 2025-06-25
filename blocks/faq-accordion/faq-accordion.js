@@ -1,4 +1,6 @@
-import { div, input, button, img, p } from '../../scripts/dom-helpers.js';
+import {
+  div, input, button, img, p,
+} from '../../scripts/dom-helpers.js';
 import { createHashId, scrollWithHeaderOffset } from '../../scripts/utils.js';
 
 // This will get the ID from the details HTML element and add as a hash to the url
@@ -46,7 +48,7 @@ export default function decorate(block) {
     type: 'search',
     class: 'search-box',
     placeholder: 'Search',
-    name: 'search-results'
+    name: 'search-results',
   });
   const searchInputBtnContainer = div({ class: 'search-input-btn-container' });
   const searchResults = div({ class: 'search-results' });
@@ -105,11 +107,11 @@ export default function decorate(block) {
     if (event.target.value === '') {
       Object.values(sections).forEach((section) => {
         const sectionContent = block.querySelector(`[data-section="${section.title}"]`);
-        const hiddenElements = Array.from(document.querySelectorAll('details[style]')).filter(el =>
-          el.style.display === 'none'
-        );
+        const hiddenElements = Array.from(document.querySelectorAll('details[style]')).filter((el) => el.style.display === 'none');
         if (hiddenElements.length) {
-          hiddenElements.forEach(el => el.style.display = '');
+          hiddenElements.forEach((el) => {
+            el.style.display = '';
+          });
           sectionContent.style.display = '';
           searchResults.textContent = '';
         }
@@ -118,7 +120,6 @@ export default function decorate(block) {
   });
 
   Object.values(sections).forEach((section) => {
-
     // decorate accordion item label
     const summaryText = p(section.title);
     const summary = document.createElement('summary');
