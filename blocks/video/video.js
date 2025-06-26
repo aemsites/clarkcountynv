@@ -80,7 +80,6 @@ function getVideoElement(source, autoplay, background) {
 }
 
 const loadVideoEmbed = (block, link, autoplay, background) => {
-  console.log('Here');
   if (block.dataset.embedLoaded === 'true') {
     return;
   }
@@ -119,7 +118,7 @@ function videoEnablement(block) {
     const details = block.querySelector('h4').textContent;
     detailsv1 = div({ class: 'text' }, `${details}`);
   }
-  // Test if no text is updated - should not affect existing videos with no text authored
+
   const parser = new DOMParser();
   const doc = parser.parseFromString(block.innerHTML, 'text/html');
   const textElements = doc.body && doc.body.children.length && doc.body.children.length > 1 ? doc.body.children[1] : '';
