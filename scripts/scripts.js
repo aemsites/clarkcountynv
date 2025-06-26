@@ -12,7 +12,7 @@ import {
   loadCSS,
   sampleRUM,
   getMetadata,
-  createOptimizedPicture, fetchPlaceholders,
+  createOptimizedPicture as libCreateOptimizedPicture, fetchPlaceholders,
 } from './aem.js';
 
 import { h1 } from './dom-helpers.js';
@@ -297,38 +297,69 @@ function appendQueryParams(url, params) {
   return url.toString();
 }
 
-/*
-  * Decorates external images with a picture element
-  * @param {Element} ele The element
-  * @param {string} deliveryMarker The marker for external images
-  * @private
-  * @example
-  * decorateExternalImages(main, '//External Image//');
-  */
-function decorateExternalImages(ele, deliveryMarker) {
-  const extImages = ele.querySelectorAll('a');
-  extImages.forEach((extImage) => {
-    if (isExternalImage(extImage, deliveryMarker)) {
-      const extImageSrc = createOptimizedSrc(extImage.getAttribute('href'));
-      const extPicture = createOptimizedPicture(extImageSrc);
 
-      /* copy query params from link to img */
-      const extImageUrl = new URL(extImageSrc);
-      const { searchParams } = extImageUrl;
-      extPicture.querySelectorAll('source, img').forEach((child) => {
-        if (child.tagName === 'SOURCE') {
-          const srcset = child.getAttribute('srcset');
-          if (srcset) {
-            child.setAttribute('srcset', appendQueryParams(new URL(srcset, extImageSrc), searchParams));
-          }
-        } else if (child.tagName === 'IMG') {
-          const src = child.getAttribute('src');
-          if (src) {
-            child.setAttribute('src', appendQueryParams(new URL(src, extImageSrc), searchParams));
-          }
-        }
-      });
-      extImage.parentNode.replaceChild(extPicture, extImage);
+export function createOptimizedPicture(src, alt = '', eager = false, breakpoints = [{ media: '(min-width: 600px)', width: '2000' }, { width: '750' }]) {
+  const isAbsoluteUrl = /^https?:\/\//i.test(src);
+
+  // Fallback to createOptimizedPicture if src is not an absolute URL
+  if (!isAbsoluteUrl) return libCreateOptimizedPicture(src, alt, eager, breakpoints);
+
+  const url = new URL(src);
+  const picture = document.createElement('picture');
+  const { pathname } = url;
+  const ext = pathname.substring(pathname.lastIndexOf('.') + 1);
+
+  // webp
+  breakpoints.forEach((br) => {
+    const source = document.createElement('source');
+    if (br.media) source.setAttribute('media', br.media);
+    source.setAttribute('type', 'image/webp');
+    const searchParams = new URLSearchParams({ width: br.width, format: 'webply' });
+    source.setAttribute('srcset', appendQueryParams(url, searchParams));
+    picture.appendChild(source);
+  });
+
+  // fallback
+  breakpoints.forEach((br, i) => {
+    const searchParams = new URLSearchParams({ width: br.width, format: ext });
+
+    if (i < breakpoints.length - 1) {
+      const source = document.createElement('source');
+      if (br.media) source.setAttribute('media', br.media);
+      source.setAttribute('srcset', appendQueryParams(url, searchParams));
+      picture.appendChild(source);
+    } else {
+      const img = document.createElement('img');
+      img.setAttribute('loading', eager ? 'eager' : 'lazy');
+      img.setAttribute('alt', alt);
+      picture.appendChild(img);
+      img.setAttribute('src', appendQueryParams(url, searchParams));
+    }
+  });
+
+  return picture;
+}
+
+/**
+ * Decorates all images in a container element and replace media urls with delivery urls.
+ * @param {Element} main The container element
+ */
+function decorateDeliveryImages(main) {
+  const pictureElements = main.querySelectorAll('picture');
+  [...pictureElements].forEach((pictureElement) => {
+    const imgElement = pictureElement.querySelector('img');
+    const alt = imgElement.getAttribute('alt');
+    try {
+      const deliveryObject = JSON.parse(decodeURIComponent(alt));
+      const { deliveryUrl, altText } = deliveryObject;
+      if (!deliveryUrl) {
+        return;
+      }
+
+      const newPictureElement = createOptimizedPicture(deliveryUrl, altText);
+      pictureElement.parentElement.replaceChild(newPictureElement, pictureElement);
+    } catch (error) {
+      // Do nothing
     }
   });
 }
@@ -394,10 +425,20 @@ export function decorateButtons(element) {
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main) {
 
-    decorateExternalImages(main, '//External Image//');
+    if (window.hlx.aemassets.decorateExternalImages) {
+    // decorate external images with explicit external image marker
+    window.hlx.aemassets.decorateExternalImages(main, '//External Image//');
 
-  // decorate external images with implicit external image marker
-  decorateExternalImages(main);
+    // decorate external images with implicit external image marker
+    window.hlx.aemassets.decorateExternalImages(main);
+  }
+
+  if (window.hlx.aemassets.decorateImagesFromAlt) {
+    window.hlx.aemassets.decorateImagesFromAlt(main);
+  }
+
+  // decorate images with delivery url and correct alt text
+  decorateDeliveryImages(main);
   // hopefully forward compatible button decoration
   decorateButtons(main);
   decorateIcons(main);
