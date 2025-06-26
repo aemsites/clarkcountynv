@@ -9,7 +9,7 @@ import {
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-function embedYoutube(url, autoplay, background) {
+function embedYoutube(url, autoplay, background, hasAlignment) {
   const usp = new URLSearchParams(url.search);
   let suffix = '';
   if (background || autoplay) {
@@ -30,14 +30,14 @@ function embedYoutube(url, autoplay, background) {
   }
 
   const temp = document.createElement('div');
-  temp.innerHTML = `<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;">
+  temp.innerHTML = `<div class="video-player" style="left: 0; width: 100%; position: relative; ${!hasAlignment ? 'height: 0; padding-bottom: 56.25%;' : ''}">
       <iframe src="https://www.youtube.com${vid ? `/embed/${vid}?rel=0&v=${vid}${suffix}` : embed}" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" 
       allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope; picture-in-picture" allowfullscreen="" scrolling="no" title="Content from Youtube" loading="lazy"></iframe>
     </div>`;
   return temp.children.item(0);
 }
 
-function embedVimeo(url, autoplay, background) {
+function embedVimeo(url, autoplay, background, hasAlignment) {
   const [, video] = url.pathname.split('/');
   let suffix = '';
   if (background || autoplay) {
@@ -48,7 +48,7 @@ function embedVimeo(url, autoplay, background) {
     suffix = `?${Object.entries(suffixParams).map(([k, v]) => `${k}=${encodeURIComponent(v)}`).join('&')}`;
   }
   const temp = document.createElement('div');
-  temp.innerHTML = `<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;">
+  temp.innerHTML = `<div style="left: 0; width: 100%; position: relative; ${!hasAlignment ? 'height: 0; padding-bottom: 56.25%;' : ''}">
       <iframe src="https://player.vimeo.com/video/${video}${suffix}" 
       style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" 
       frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen  
@@ -80,6 +80,7 @@ function getVideoElement(source, autoplay, background) {
 }
 
 const loadVideoEmbed = (block, link, autoplay, background) => {
+  console.log('Here');
   if (block.dataset.embedLoaded === 'true') {
     return;
   }
@@ -87,15 +88,16 @@ const loadVideoEmbed = (block, link, autoplay, background) => {
 
   const isYoutube = link.includes('youtube') || link.includes('youtu.be');
   const isVimeo = link.includes('vimeo');
+  const hasAlignment = block.classList.contains('left-align') || block.classList.contains('right-align');
 
   if (isYoutube) {
-    const embedWrapper = embedYoutube(url, autoplay, background);
+    const embedWrapper = embedYoutube(url, autoplay, background, hasAlignment);
     block.append(embedWrapper);
     embedWrapper.querySelector('iframe').addEventListener('load', () => {
       block.dataset.embedLoaded = true;
     });
   } else if (isVimeo) {
-    const embedWrapper = embedVimeo(url, autoplay, background);
+    const embedWrapper = embedVimeo(url, autoplay, background, hasAlignment);
     block.append(embedWrapper);
     embedWrapper.querySelector('iframe').addEventListener('load', () => {
       block.dataset.embedLoaded = true;
@@ -117,7 +119,15 @@ function videoEnablement(block) {
     const details = block.querySelector('h4').textContent;
     detailsv1 = div({ class: 'text' }, `${details}`);
   }
+  // Test if no text is updated - should not affect existing videos with no text authored
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(block.innerHTML, 'text/html');
+  const textElements = doc.body && doc.body.children.length && doc.body.children.length > 1 ? doc.body.children[1] : '';
   block.textContent = '';
+  if (textElements) {
+    textElements.classList.add('video-content');
+    block.append(textElements);
+  }
   if (detailsv1) {
     block.append(detailsv1);
   }
