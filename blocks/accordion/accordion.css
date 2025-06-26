@@ -1,76 +1,69 @@
-.accordion.block {
-    @media (width >= 900px) {
-        padding: 20px 0 50px;
-    }
-
-    details {
-        summary {
-            padding: 11px 55px;
-            cursor: pointer;
-            position: relative;
-            border: 1px solid #ddd;
-            margin: 3px 0 0;
-            background: #f9f9f9 url("/icons/arrow-down.png") no-repeat 20px center;
-            transition: 0.4s;
-            backface-visibility: hidden;
-            font-size: 14px;
-            line-height: 1.5;
-            color: #333;
-            list-style: none;
-
-            p {
-                padding: unset;
-                margin: unset;
-            }
-        }
-
-        .content {
-            padding: 20px;
-            margin: 0 0 3px;
-            background: #fff;
-            border: 1px solid #C54B2A;
-            border-top-style: none;
-            font-size: var(--body-font-size-m);
-
-            p {
-                margin: 0 0 20px;
-                line-height: 1.5;
-            }
-        }
-    }
-
-    details[open] {
-        summary {
-            border-color: #C54B2A;
-            background: #C54B2A url("/icons/arrow-up.png") no-repeat 20px center;
-
-            p {
-                color: #fff;
-            }
-        }
-
-        .content {
-            border-top: 1px solid #dadada;
-            background-color: var(--background-color);
-        }
-    }
-
-    table tr {
-        height: 30px;
-    }
+.accordion.block details {
+    border-top: 2px solid var(--neutral-black-400);
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
-.accordion details + details {
-    margin-top: 3px;
+.accordion.block details:last-child {
+    border-bottom: 2px solid var(--neutral-black-400);
 }
 
-.image-left img{
+.accordion.block details summary {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    padding: 13px 0 13px 10px;
+    cursor: pointer;
+    transition: 0.4s;
+    list-style: none;
+}
+
+.accordion.block details summary::before {
+    content: '';
+    background: url('../../icons/chevron-up.svg') center center no-repeat;
+    width: 24px;
+    height: 24px;
+}
+
+.accordion.block details summary p {
+    color: var(--neutral-black-800);
+    font-weight: var(--font-weight-bold);
+    line-height: 120%;
+    margin: 0;
+}
+
+.accordion.block details .content {
+    padding: 0 45px;
+    background: var(--background-color);
+    font-size: var(--body-font-size-m);
+}
+
+.accordion.block details .content p {
+    margin: 0 0 20px;
+    line-height: 1.5;
+}
+
+.accordion.block details[open] summary::before {
+    background: url('../../icons/chevron-down.svg') center center no-repeat;
+}
+
+.accordion.block details[open] summary p {
+    color: var(--primary-orange-600);
+}
+
+.accordion.block details[open] .content {
+    background-color: var(--background-color);
+}
+
+.accordion.block table tr {
+    height: 30px;
+}
+
+.image-left img {
     float: left;
     padding-right: 10px;
 }
 
-.image-small img{
+.image-small img {
     width: 7%;
     padding-right: 10px;
 }
@@ -79,17 +72,19 @@
     padding-top: 10px;
     padding-bottom: 10px;
     width: 85%;
-
-    tbody tr td:nth-child(odd){
-        width: 50%;
-    }
 }
 
-.faq-image {
-    img {
-        height: 275px;
-        width: auto;
-    }
+.table-col1-50 table tbody tr td:nth-child(odd) {
+    width: 50%;
 }
 
+.faq-image img {
+    height: 275px;
+    width: auto;
+}
 
+@media (width >= 900px) {
+    .accordion.block {
+        padding: 20px 0 50px;
+    }
+}
