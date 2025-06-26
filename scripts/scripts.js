@@ -236,47 +236,7 @@ function autolinkModals(element) {
   });
 }
 
-function getUrlExtension(url) {
-  return url.split(/[#?]/)[0].split('.').pop().trim();
-}
 
-export function createOptimizedSrc(src) {
-  const isDMOpenAPIUrl = /^(https?:\/\/delivery-p[0-9]+-e[0-9-cmstg]+\.adobeaemcloud\.com\/(.*))/gm.test(src);
-  const srcUrl = new URL(src);
-  if (isDMOpenAPIUrl) {
-    srcUrl.searchParams.delete('accept-experimental');
-    srcUrl.searchParams.delete('width');
-    srcUrl.searchParams.delete('height');
-    srcUrl.pathname = srcUrl.pathname.replace('/original/', '/');
-  }
-  return srcUrl.toString();
-}
-
-/**
- * Checks if an element is an external image.
- * @param {Element} element The element
- * @param {string} externalImageMarker The marker for external images
- * @returns {boolean} Whether the element is an external image
- * @private
- */
-function isExternalImage(element, externalImageMarker) {
-  // if the element is not an anchor, it's not an external image
-  if (element.tagName !== 'A') return false;
-
-  // if the element is an anchor with the external image marker as text content,
-  // it's an external image
-  if (element.textContent.trim() === externalImageMarker) {
-    return true;
-  }
-
-  // if the element is an anchor with the href as text content and the href has
-  // an image extension, it's an external image
-  if (element.textContent.trim() === element.getAttribute('href')) {
-    const ext = getUrlExtension(element.getAttribute('href'));
-    return ext && ['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext.toLowerCase());
-  }
-  return false;
-}
 
 /*
   * Appends query params to a URL
