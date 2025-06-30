@@ -3,6 +3,9 @@
  * Recreate a table
  * https://www.hlx.live/developer/block-collection/table
  */
+import {
+  div, button, img, waitForElement,
+} from '../../scripts/dom-helpers.js';
 
 function buildCell(rowIndex) {
   const cell = rowIndex ? document.createElement('td') : document.createElement('th');
@@ -22,6 +25,20 @@ function getMaxColumns(block) {
   });
 
   return maxColumns;
+}
+
+function getScrollAmount(table) {
+  const tableWidth = table.offsetWidth;
+  const columns = table.querySelectorAll('th').length;
+  const avgColumnWidth = tableWidth / columns;
+  return Math.max(avgColumnWidth, 100);
+}
+
+function updateButtonStates(tableContainer, scrollLeftBtn, scrollRightBtn) {
+  const scrollLeft = tableContainer.scrollLeft;
+  const maxScroll = tableContainer.scrollWidth - tableContainer.clientWidth;  
+  scrollLeftBtn.disabled = scrollLeft <= 0;
+  scrollRightBtn.disabled = scrollLeft >= maxScroll;
 }
 
 export default async function decorate(block) {
@@ -75,6 +92,43 @@ export default async function decorate(block) {
     }
   });
 
+  const tableContainer = div({ class: 'table-wrapper' });
+  const tableNav = div({ class: 'table-controls' });
+  const scrollLeftBtn = button({ class: 'button primary', type: 'button' });
+  const scrollRightBtn = button({ class: 'button primary', type: 'button' });
+  const scrollLeftBtnImg = img({ src: '/icons/arrow-left-white.svg', alt: 'Scroll left arrow icon' });
+  const scrollRightBtnImg = img({ src: '/icons/arrow-right-white.svg', alt: 'Scroll right arrow icon' });
+  scrollLeftBtn.append(scrollLeftBtnImg);
+  scrollRightBtn.append(scrollRightBtnImg);
+  tableNav.append(scrollLeftBtn, scrollRightBtn);
+
+  tableContainer.addEventListener('scroll', () => updateButtonStates(tableContainer, scrollLeftBtn, scrollRightBtn));
+
+  scrollLeftBtn.addEventListener('click', () => {
+    const scrollAmount = getScrollAmount(table);
+    tableContainer.scrollBy({
+        left: -scrollAmount,
+        behavior: 'smooth'
+    });
+  });
+
+  scrollRightBtn.addEventListener('click', () => {
+    const scrollAmount = getScrollAmount(table);
+    tableContainer.scrollBy({
+        left: scrollAmount,
+        behavior: 'smooth'
+    });
+  });
+
+  updateButtonStates(tableContainer, scrollLeftBtn, scrollRightBtn);
+
+  tableContainer.append(table);
+
   block.innerHTML = '';
-  block.append(table);
+  block.append(tableContainer);
+  block.append(tableNav);
+
+  setTimeout(() => {
+    updateButtonStates(tableContainer, scrollLeftBtn, scrollRightBtn);
+  }, 100);
 }
