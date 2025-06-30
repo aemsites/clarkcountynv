@@ -1,6 +1,6 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import {
-  ul, li, a, div, img, h4, i, br,
+  ul, li, a, div, img, h4, br,
 } from '../../scripts/dom-helpers.js';
 
 export default function decorate(block) {
@@ -100,21 +100,23 @@ export default function decorate(block) {
       const imgSrc = row.children[0].querySelector('img')?.src;
       const altText = imgSrc?.split('/').pop().split('?')[0];
       const name = row.children[1].textContent;
-      const title = row.children[2];
-      const pageLink = row.children[3].querySelector('a')?.href;
-      const phone = row.children[4].querySelector('a[title="phone"]')?.href;
-      const email = row.children[4].querySelector('a[title="email"]')?.href;
-      const facebookSrc = row.children[4].querySelector('a[title="facebook"]')?.href;
-      const youtubeSrc = row.children[4].querySelector('a[title="youtube"]')?.href;
-      const twitterSrc = row.children[4].querySelector('a[title="twitter"]')?.href;
-      const instagramSrc = row.children[4].querySelector('a[title="instagram"]')?.href;
+      const district = row.children[2];
+      const title = row.children[3];
+      const pageLink = row.children[4].querySelector('a')?.href;
+      const phone = row.children[5].querySelector('a[title="phone"]')?.href;
+      const email = row.children[5].querySelector('a[title="email"]')?.href;
+      const facebookSrc = row.children[5].querySelector('a[title="facebook"]')?.href;
+      const youtubeSrc = row.children[5].querySelector('a[title="youtube"]')?.href;
+      const twitterSrc = row.children[5].querySelector('a[title="twitter"]')?.href;
+      const instagramSrc = row.children[5].querySelector('a[title="instagram"]')?.href;
 
       $ul.append(
         li(
           a(
             { href: pageLink || '', class: 'tile-detail', style: pageLink ? '' : 'pointer-events: none;' },
             div({ class: 'staff-tile-img-box' }, img({ src: imgSrc, alt: altText || '' })),
-            h4({ class: 'staff-tile-name' }, `${name.split('-')[0]} - `, br(), name.split('-')[1]),
+            h4({ class: 'staff-tile-name' }, `${name.split('-')[0]}`, br(), name.split('-')[1]),
+            div({ class: 'staff-tile-district' }, district),
             div({ class: 'staff-tile-title' }, title),
           ),
           div(
