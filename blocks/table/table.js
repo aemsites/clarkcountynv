@@ -126,6 +126,7 @@ export default async function decorate(block) {
   tableNav.append(scrollLeftBtn, scrollRightBtn);
 
   tableContainer.addEventListener('scroll', () => debounce(updateButtonStates(tableContainer, scrollLeftBtn, scrollRightBtn, tableFadeLeft, tableFadeRight)), 100);
+  window.addEventListener('resize', () => debounce(updateButtonStates(tableContainer, scrollLeftBtn, scrollRightBtn, tableFadeLeft, tableFadeRight)), 100);
 
   scrollLeftBtn.addEventListener('click', () => {
     const scrollAmount = getScrollAmount(table);

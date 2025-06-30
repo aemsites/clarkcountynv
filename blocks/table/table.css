@@ -12,7 +12,6 @@
   width: 100%;
   max-width: 100%;
   border-collapse: collapse;
-  font-size: var(--body-font-size-xs);
 }
 
 /* Adding Table head background color */
@@ -52,12 +51,6 @@
 
 .table.thbc9 thead {
     background-color: var(--table-head-background-color-green);
-}
-
-@media (width >= 600px) {
-  .table table {
-    font-size: var(--body-font-size-s);
-  }
 }
 
 @media (width >= 900px) {
@@ -151,6 +144,17 @@
 .table .table-controls .button {
     margin: 24px 0 0;
     padding: 8px 24px;
+}
+
+@media (width >= 600px) {
+    .table table {
+        font-size: var(--body-font-size-s);
+    }
+
+    .table .scroll-fade,
+    .table .table-controls {
+        display: none;
+    }
 }
 
 /* no header variant */
