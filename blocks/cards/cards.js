@@ -98,6 +98,7 @@ export default function decorate(block) {
       );
     } else if (block.classList.contains('staff')) {
       const imgSrc = row.children[0].querySelector('img')?.src;
+      const defaultImgSrc = '/images/staff-img-placeholder.svg';
       const altText = imgSrc?.split('/').pop().split('?')[0];
       const name = row.children[1].textContent;
       const district = row.children[2];
@@ -114,7 +115,7 @@ export default function decorate(block) {
         li(
           a(
             { href: pageLink || '', class: 'tile-detail', style: pageLink ? '' : 'pointer-events: none;' },
-            div({ class: 'staff-tile-img-box' }, img({ src: imgSrc, alt: altText || '' })),
+            div({ class: 'staff-tile-img-box' }, img({ src: imgSrc || defaultImgSrc, alt: altText || '' })),
             h4({ class: 'staff-tile-name' }, `${name.split('-')[0]}`, br(), name.split('-')[1]),
             div({ class: 'staff-tile-district' }, district),
             div({ class: 'staff-tile-title' }, title),

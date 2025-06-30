@@ -263,6 +263,14 @@
     margin: 24px 50px;
 }
 
+.cards.staff .staff-tile-img-placeholder {
+    width: 136px;
+    height: 136px;
+    margin: 24px 50px;
+    background-color: var(--neutral-black-img-placeholder);
+    border-radius: 50%;
+}
+
 .cards.staff .staff-tile-name {
     color: var(--neutral-black);
     font-size: var(--heading-font-size-m);
