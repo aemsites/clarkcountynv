@@ -121,27 +121,27 @@ export default function decorate(block) {
             { class: 'staff-tile-contacts' },
             phone ? a(
               { href: phone, class: 'staff-tile-contact-icon' },
-              i({ class: 'fa fa-phone' }),
+              img({ src: '/icons/phone-icon-white.svg', alt: 'Phone icon' }),
             ) : null,
             email ? a(
               { href: email, class: 'staff-tile-contact-icon' },
-              i({ class: 'fa fa-envelope' }),
+              img({ src: '/icons/email-icon-white.svg', alt: 'Email icon' }),
             ) : null,
             facebookSrc ? a(
               { href: facebookSrc, class: 'staff-tile-contact-icon' },
-              i({ class: 'fa fa-facebook' }),
+              img({ src: '/icons/facebook-icon-white.svg', alt: 'Facebook icon' }),
             ) : null,
             youtubeSrc ? a(
               { href: youtubeSrc, class: 'staff-tile-contact-icon' },
-              i({ class: 'fa fa-youtube' }),
+              img({ src: '/icons/facebook-icon-white.svg', alt: 'Youtube icon' }),
             ) : null,
             twitterSrc ? a(
               { href: twitterSrc, class: 'staff-tile-contact-icon' },
-              i({ class: 'fa fa-x-twitter' }),
+              img({ src: '/icons/twitter-icon-white.svg', alt: 'Twitter icon' }),
             ) : null,
             instagramSrc ? a(
               { href: instagramSrc, class: 'staff-tile-contact-icon' },
-              i({ class: 'fa fa-instagram' }),
+              img({ src: '/icons/instagram-icon-white.svg', alt: 'Instagram icon' }),
             ) : null,
           ),
         ),
