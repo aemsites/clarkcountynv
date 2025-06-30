@@ -156,7 +156,7 @@ export function replaceClickableImageLinkWithImage(element) {
 
 export function debounce(func, delay) {
   let timeoutId;
-  return function(...args) {
+  return (...args) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => {
       func.apply(this, args);

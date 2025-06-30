@@ -36,25 +36,25 @@ function getScrollAmount(table) {
 }
 
 function updateButtonStates(tableContainer, scrollLeftBtn, scrollRightBtn, fadeLeft, fadeRight) {
-  const scrollLeft = tableContainer.scrollLeft;
-  const maxScroll = tableContainer.scrollWidth - tableContainer.clientWidth;  
+  const { scrollLeft } = tableContainer;
+  const maxScroll = tableContainer.scrollWidth - tableContainer.clientWidth;
   scrollLeftBtn.disabled = scrollLeft <= 0;
   scrollRightBtn.disabled = scrollLeft >= maxScroll;
 
   // Show left fade if we can scroll left (not at the beginning)
   if (scrollLeft > 5) {
-      fadeLeft.classList.remove('hidden');
+    fadeLeft.classList.remove('hidden');
   } else {
-      fadeLeft.classList.add('hidden');
+    fadeLeft.classList.add('hidden');
   }
-  
+
   // Show right fade if we can scroll right (not at the end)
   if (scrollLeft < maxScroll - 5) {
     fadeRight.classList.remove('hidden');
   } else {
     fadeRight.classList.add('hidden');
   }
-  
+
   // Hide both fades if table doesn't need scrolling
   if (maxScroll <= 0) {
     fadeLeft.classList.add('hidden');
@@ -131,16 +131,16 @@ export default async function decorate(block) {
   scrollLeftBtn.addEventListener('click', () => {
     const scrollAmount = getScrollAmount(table);
     tableContainer.scrollBy({
-        left: -scrollAmount,
-        behavior: 'smooth'
+      left: -scrollAmount,
+      behavior: 'smooth',
     });
   });
 
   scrollRightBtn.addEventListener('click', () => {
     const scrollAmount = getScrollAmount(table);
     tableContainer.scrollBy({
-        left: scrollAmount,
-        behavior: 'smooth'
+      left: scrollAmount,
+      behavior: 'smooth',
     });
   });
 
@@ -151,6 +151,12 @@ export default async function decorate(block) {
   block.append(tableNav);
 
   setTimeout(() => {
-    updateButtonStates(tableContainer, scrollLeftBtn, scrollRightBtn, tableFadeLeft, tableFadeRight);
+    updateButtonStates(
+      tableContainer,
+      scrollLeftBtn,
+      scrollRightBtn,
+      tableFadeLeft,
+      tableFadeRight,
+    );
   }, 100);
 }

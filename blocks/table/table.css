@@ -71,12 +71,12 @@
 
 .table .scroll-fade-left {
     left: 0;
-    background: linear-gradient(to right, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 100%);
+    background: linear-gradient(to right, rgba(255 255 255 / 90%) 0%, rgba(255 255 255 / 50%) 50%, rgba(255 255 255 / 0%) 100%);
 }
 
 .table .scroll-fade-right {
     right: 0;
-    background: linear-gradient(to left, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 100%);
+    background: linear-gradient(to left, rgba(255 255 255 / 90%) 0%, rgba(255 255 255 / 50%) 50%, rgba(255 255 255 / 0%) 100%);
 }
 
 .table .scroll-fade.hidden {
