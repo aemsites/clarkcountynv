@@ -228,71 +228,106 @@
     }
 }
 
-.cards.staff.block {
-    ul {
-        margin: unset;
+/* Cards - Staff */
+.cards.staff ul {
+    display: grid;
+    gap: 26px;
+    max-width: 1340px;
+    margin: 0 26px;
+    list-style: none;
+    grid-template-columns: 1fr;
+    justify-items: center;
+}
+
+.cards.staff ul > li {
+    width: 100%;
+    margin: 0;
+    border: 2px solid var(--neutral-black-400);
+}
+
+.cards.staff ul > li > a {
+    display: inline-block;
+    text-decoration: none;
+}
+
+.cards.staff ul > li:hover {
+    background-color: var(--neutral-black-200);
+}
+
+.cards.staff .staff-tile-img-box img {
+    display: inline-block;
+    width: 136px;
+    height: 136px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 24px 50px;
+}
+
+.cards.staff .staff-tile-name {
+    color: var(--neutral-black);
+    font-size: var(--heading-font-size-m);
+    line-height: 125%;
+    margin: 8px 0;
+}
+
+.cards.staff .staff-tile-title {
+    color: var(--neutral-black);
+    font-size: var(--heading-font-size-m);
+    line-height: 125%;
+    margin: 8px 0 32px;
+}
+
+.cards.staff .staff-tile-title p {
+    margin: 0;
+}
+
+.cards.staff .staff-tile-district {
+    color: var(--neutral-black);
+}
+
+.cards.staff .staff-tile-district p {
+    margin: 0;
+}
+
+.cards.staff .staff-tile-contacts {
+    background: var(--primary-orange-600);
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 12px 0;
+}
+
+.cards.staff .staff-tile-contacts a {
+    text-decoration: none;
+    display: inline-flex;
+}
+
+.cards.staff .staff-tile-contacts img {
+    width: 24px;
+    height: 24px;
+}
+
+@media (width >= 600px) {
+    .cards.staff ul {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        margin: 0 26px;
     }
+}
 
-    li:nth-of-type(4n) {
-        margin-right: 0;
+@media (width >= 900px) {
+    .cards.staff ul {
+        grid-template-columns: repeat(3, 1fr);
+        gap: clamp(1rem, 10vw, 127px);
     }
+}
 
-    li:hover {
-        background: none;
-    }
-
-    .staff-tile-img-box {
-        margin-top: 20px;
-
-        img {
-            display: inline-block;
-            min-width: 162px;
-            width: 162px;
-            height: 162px;
-            object-fit: cover;
-            border-radius: 50%
-        }
-    }
-
-    .staff-tile-name {
-        font: 700 18px 'Open Sans', sans-serif;
-        color: #000;
-        margin: 20px 0 10px;
-    }
-
-    .staff-tile-title {
-        font: 400 18px 'Open Sans', sans-serif;
-        color: #000;
-        margin-bottom: 15px;
-    }
-
-    .staff-tile-contacts {
-        background: #C54B2A;
-        text-align: center;
-        padding: 5px 15px;
-
-        a {
-            margin: 0 10px
-        }
-
-        i.fa {
-            color: #FFF;
-            font-family: var(--icon-font-family);
-            font-style: normal;
-        }
-    }
-
-    @media screen and (width <= 1200px) and (width > 767px) {
-        li {
-            flex: 1 1 calc(40% - 20px);
-            max-width: calc(50% - 20px);
-        }
-    }
-
-    @media only screen and (width <= 767px) {
-        ul li {
-            width: 100%;
-        }
+@media (width >= 1200px) {
+    .cards.staff ul {
+        grid-template-columns: repeat(4, 1fr);
+        margin: 0 auto;
     }
 }
 
