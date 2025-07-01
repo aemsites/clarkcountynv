@@ -121,9 +121,7 @@ export default async function decorate(block) {
   const scrollRightBtn = button({ class: 'button primary', type: 'button' });
   const scrollLeftBtnImg = img({ src: '/icons/arrow-left-white.svg', alt: 'Scroll left arrow icon' });
   const scrollRightBtnImg = img({ src: '/icons/arrow-right-white.svg', alt: 'Scroll right arrow icon' });
-  scrollLeftBtn.append(scrollLeftBtnImg);
-  scrollRightBtn.append(scrollRightBtnImg);
-  tableNav.append(scrollLeftBtn, scrollRightBtn);
+  const isNavigableTable = !block.classList.contains('agenda');
 
   tableContainer.addEventListener('scroll', () => debounce(updateButtonStates(tableContainer, scrollLeftBtn, scrollRightBtn, tableFadeLeft, tableFadeRight)), 100);
   window.addEventListener('resize', () => debounce(updateButtonStates(tableContainer, scrollLeftBtn, scrollRightBtn, tableFadeLeft, tableFadeRight)), 100);
@@ -144,11 +142,16 @@ export default async function decorate(block) {
     });
   });
 
-  tableContainer.append(tableFadeLeft, tableFadeRight, table);
+  isNavigableTable ? tableContainer.append(tableFadeLeft, tableFadeRight, table) : tableContainer.append(table);
 
   block.innerHTML = '';
   block.append(tableContainer);
-  block.append(tableNav);
+  if (isNavigableTable) {
+    scrollLeftBtn.append(scrollLeftBtnImg);
+    scrollRightBtn.append(scrollRightBtnImg);
+    tableNav.append(scrollLeftBtn, scrollRightBtn);
+    block.append(tableNav);
+  }
 
   setTimeout(() => {
     updateButtonStates(

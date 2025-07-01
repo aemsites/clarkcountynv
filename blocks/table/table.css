@@ -90,7 +90,7 @@
 
 .table th {
     font-weight: var(--font-weight-bold);
-    padding: 6px 0 6px 10px;
+    padding: 6px;
 }
 
 .table:not(:has('center')) table th,
@@ -159,7 +159,7 @@
 
 /* no header variant */
 .table.no-header table tbody tr {
-  border-top: 1px solid #dadada;
+  border-top: 2px solid var(--neutral-black-400);
 }
 
 /* striped variant */
@@ -377,51 +377,40 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
 }
 
 .table.agenda {
-  table {
-      font-size: var(--body-font-size-xs);
+    table {
+        font-size: var(--body-font-size-xs);
 
-      td {
-          padding: 0;
+        td {
+            &:nth-child(1) {
+                width: 40%;
+            }
 
-          &:nth-child(1) {
-              width: 40%;
-          }
+            &:nth-child(2) {
+                width: 15%;
+            }
 
-          &:nth-child(2) {
-              width: 10%;
-          }
+            &:nth-child(3) {
+                width: 15%;
+            }
 
-          &:nth-child(3) {
-              width: 10%;
-          }
+            &:nth-child(4) {
+                width: 15%;
+            }
 
-          &:nth-child(4) {
-              width: 10%;
-          }
+            &:nth-child(5) {
+                width: 15%;
+            }
+        }
 
-          &:nth-child(5) {
-              width: 10%;
-          }
-
-          &:nth-child(6) {
-              width: 10%;
-          }
-
-          &:nth-child(7) {
-              width: 10%;
-          }
-      }
-
-      a {
-          font-weight: 400;
-          padding: 0;
-          margin: 0;
-          color: var(--no-button-link);
-          background-color: transparent;
-          text-decoration: underline;
-          border: 0;
-      }
-  }
+        a {
+            font-weight: 400;
+            padding: 0;
+            margin: 0;
+            color: var(--primary-orange-900);
+            background-color: transparent;
+            border: 0;
+        }
+    }
 }
 
 .table.align-top table td{
@@ -729,9 +718,9 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
 
 /* CSS for left-aligned text */
 .table.left-align table th,
-                  table td {
-padding: 0.5em;
-text-align: left;
+table td {
+    padding: 6px;
+    text-align: left;
 }
 
 /* Mobile view adjustments */
