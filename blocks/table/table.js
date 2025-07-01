@@ -142,7 +142,11 @@ export default async function decorate(block) {
     });
   });
 
-  isNavigableTable ? tableContainer.append(tableFadeLeft, tableFadeRight, table) : tableContainer.append(table);
+  if (isNavigableTable) {
+    tableContainer.append(tableFadeLeft, tableFadeRight, table);
+  } else {
+    tableContainer.append(table);
+  }
 
   block.innerHTML = '';
   block.append(tableContainer);
