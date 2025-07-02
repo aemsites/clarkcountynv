@@ -44,19 +44,19 @@ export default async function decorate(block) {
   const defaultContentEl = footerMiddle?.children.length && footerMiddle?.children[0];
   if (defaultContentEl) {
     const headers = Array.from(defaultContentEl.querySelectorAll('h5'));
-    const fragment = document.createDocumentFragment();
+    const fragmentEl = document.createDocumentFragment();
     headers?.forEach((header, index) => {
       const sectionWrapper = div({ class: `${index === 0 ? 'middle-left' : 'middle-right'}` });
       sectionWrapper.appendChild(header.cloneNode(true));
       let sibling = header.nextElementSibling;
       while (sibling && sibling.tagName !== 'H5') {
-          sectionWrapper.appendChild(sibling.cloneNode(true));
-          sibling = sibling.nextElementSibling;
+        sectionWrapper.appendChild(sibling.cloneNode(true));
+        sibling = sibling.nextElementSibling;
       }
-      fragment.appendChild(sectionWrapper);
+      fragmentEl.appendChild(sectionWrapper);
     });
     defaultContentEl.innerHTML = '';
-    defaultContentEl.appendChild(fragment);
+    defaultContentEl.appendChild(fragmentEl);
   }
 
   block.append(footer);
