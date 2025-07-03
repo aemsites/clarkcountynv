@@ -25,7 +25,11 @@ export default async function decorate(block) {
   replaceClickableImageLinkWithImage(footerLeft);
 
   footerLeft?.querySelectorAll('.button-container')?.forEach((container, index) => {
-    index === 0 ? container.classList.add('footer-desktop-logo') : container.classList.add('footer-mobile-logo');
+    if (index === 0) {
+      container.classList.add('footer-desktop-logo');
+    } else {
+      container.classList.add('footer-mobile-logo');
+    }
   });
 
   footer.querySelectorAll('.footer-right a').forEach((aEl, index) => {
