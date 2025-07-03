@@ -73,6 +73,14 @@ footer {
     margin: 0;
 }
 
+.footer .footer-desktop-logo {
+    display: none;
+}
+
+.footer .footer-mobile-logo img {
+    max-width: 300px;
+}
+
 /* Footer Middle */
 .footer .footer-middle {
     width: 100%;
@@ -161,6 +169,10 @@ footer {
         margin: 0;
     }
 
+    .footer .footer-mobile-logo img {
+        max-width: none;
+    }
+
     .footer .footer-middle {
         width: 75%;
     }
@@ -180,6 +192,14 @@ footer {
 @media (width >= 900px) {
     .footer .footer-left {
         width: 25%;
+    }
+
+    .footer .footer-desktop-logo {
+        display: block;
+    }
+
+    .footer .footer-mobile-logo {
+        display: none;
     }
 
     .footer .footer-left img {

@@ -21,7 +21,12 @@ export default async function decorate(block) {
   const newsletterLink = footer.querySelector('.newsletter a');
   newsletterLink?.classList?.remove('button');
 
-  replaceClickableImageLinkWithImage(footer.querySelector('.footer-left'));
+  const footerLeft = footer.querySelector('.footer-left');
+  replaceClickableImageLinkWithImage(footerLeft);
+
+  footerLeft?.querySelectorAll('.button-container')?.forEach((container, index) => {
+    index === 0 ? container.classList.add('footer-desktop-logo') : container.classList.add('footer-mobile-logo');
+  });
 
   footer.querySelectorAll('.footer-right a').forEach((aEl, index) => {
     // set unique aria label for each link
