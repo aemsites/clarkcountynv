@@ -235,3 +235,95 @@ main .section.rightsection.no-button .columns.alert a:any-link {
         }
     }
 }
+
+/* Columns (Contact Card) */
+.section.columns-container {
+  margin-bottom: 40px;
+}
+
+.columns.contact-card {
+  width: 100%;
+  max-width: 1340px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.columns.contact-card > div {
+  gap: 0;
+}
+
+.columns.contact-card .column1 {
+  flex: 0 0 262px;
+  position: relative;
+  width: 100%;
+  height: 262px;
+}
+
+.columns.contact-card .column2 {
+  background-color: var(--neutral-black-200);
+  align-self: stretch;
+  padding: 16px;
+}
+
+.columns.contact-card .column2 h3 {
+  margin: 0 0 16px;
+  color: var(--primary-orange-600);
+}
+
+.columns.contact-card .column2 p {
+  margin: 0 0 10px;
+  font-size: var(--body-font-size-s);
+}
+
+.columns.contact-card .column2 p:last-child {
+  margin-bottom: 0;
+}
+
+.columns.contact-card .column2 a {
+  color: var(--neutral-black);
+  text-decoration-color: var(--neutral-black);
+  word-wrap: break-word;
+}
+
+.columns.contact-card .column2 strong {
+  font-weight: var(--font-weight-bold);
+}
+
+.columns.contact-card iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@media (width >= 600px) {
+  .columns.contact-card .column1 {
+    flex: 0 0 342px;
+  }
+}
+
+@media (width >= 900px) {
+  .columns.contact-card {
+    padding: 0;
+  }
+
+  .columns.contact-card .column1 {
+    flex: 0 0 400px;
+    position: relative;
+    width: 400px;
+    height: 306px;
+  }
+
+  .columns.contact-card .column2 {
+    padding: 24px;
+  }
+
+  .columns.contact-card .column2 h3 {
+    margin: 0 0 25px;
+  }
+
+  .columns.contact-card .column2 p {
+    font-size: var(--body-font-size-m);
+  }
+}
