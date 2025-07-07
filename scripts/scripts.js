@@ -180,7 +180,7 @@ function decorateSectionsWithBackgrounds(element) {
       } else {
         section.classList.add('with-background-image');
       }
-      const backgroundPic = createOptimizedPicture(background);
+      const backgroundPic = libCreateOptimizedPicture(background);
       backgroundPic.classList.add('background-image');
       section.append(backgroundPic);
     }
@@ -236,8 +236,6 @@ function autolinkModals(element) {
   });
 }
 
-
-
 /*
   * Appends query params to a URL
   * @param {string} url The URL to append query params to
@@ -256,7 +254,6 @@ function appendQueryParams(url, params) {
   url.search = searchParams.toString();
   return url.toString();
 }
-
 
 export function createOptimizedPicture(src, alt = '', eager = false, breakpoints = [{ media: '(min-width: 600px)', width: '2000' }, { width: '750' }]) {
   const isAbsoluteUrl = /^https?:\/\//i.test(src);
@@ -324,7 +321,6 @@ function decorateDeliveryImages(main) {
   });
 }
 
-
 /**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
@@ -384,19 +380,15 @@ export function decorateButtons(element) {
  */
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main) {
-
-    if (window.hlx.aemassets.decorateExternalImages) {
+  if (window.hlx.aemassets.decorateExternalImages) {
     // decorate external images with explicit external image marker
     window.hlx.aemassets.decorateExternalImages(main, '//External Image//');
-
     // decorate external images with implicit external image marker
     window.hlx.aemassets.decorateExternalImages(main);
   }
-
   if (window.hlx.aemassets.decorateImagesFromAlt) {
     window.hlx.aemassets.decorateImagesFromAlt(main);
   }
-
   // decorate images with delivery url and correct alt text
   decorateDeliveryImages(main);
   // hopefully forward compatible button decoration
