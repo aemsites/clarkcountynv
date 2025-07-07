@@ -1,5 +1,6 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { a, i, iframe } from '../../scripts/dom-helpers.js';
+import { replaceClickableImageLinkWithImage } from '../../scripts/utils.js';
 
 function enablePlaybutton(col, pic, redirectURL) {
   const playButton = a({ class: 'explore-video-play' }, i({ class: 'play-button' }));
@@ -128,5 +129,11 @@ export default function decorate(block) {
       );
       mapLink.parentElement.replaceWith(map);
     }
+  }
+
+  // 2 Column Image Layout
+  const isTwoColImgLayout = block.classList.contains('two-column-image');
+  if (isTwoColImgLayout) {
+    replaceClickableImageLinkWithImage(block);
   }
 }
