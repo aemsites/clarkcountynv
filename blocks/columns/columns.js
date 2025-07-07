@@ -1,5 +1,5 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
-import { a, i } from '../../scripts/dom-helpers.js';
+import { a, i, iframe } from '../../scripts/dom-helpers.js';
 
 function enablePlaybutton(col, pic, redirectURL) {
   const playButton = a({ class: 'explore-video-play' }, i({ class: 'play-button' }));
@@ -110,4 +110,20 @@ export default function decorate(block) {
       }
     });
   });
+
+  // Contact Card (Map Embed)
+  const isContactCard = block.classList.contains('contact-card');
+  if (isContactCard) {
+    const firstCol = block.querySelector('.column1');
+    console.log(firstCol);
+    const mapLink = firstCol?.querySelector('a');
+    console.log(mapLink);
+    const hasEmbedCode = mapLink?.href.indexOf('www.google.com/maps/embed') > -1;
+    console.log(hasEmbedCode);
+    if (hasEmbedCode) {
+      const map = iframe({src: mapLink, allowFullscreen: true, frameBorder: 0, class: 'map-embed'});
+      console.log(mapLink.parentElement);
+      mapLink.parentElement.replaceWith(map);
+    }
+  }
 }

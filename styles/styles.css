@@ -812,16 +812,6 @@ main .section.details-404 > .default-content-wrapper {
 
   }
 
-  .columns > div > div.column2 p strong:first-of-type{
-    font: 500 45px 'Neue Montreal', sans-serif;
-
-  }
-
-  .row2cols > div > div.column2 p strong:first-of-type{
-    font: 600 18px 'Neue Montreal', sans-serif;
-
-  }
-
   .column1-paragraph{
     margin:0;
 
