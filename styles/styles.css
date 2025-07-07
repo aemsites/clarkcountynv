@@ -87,11 +87,14 @@
   --font-weight-book: 400;
 
   /* body sizes */
+  --body-font-size-xl: 36px;
+  --body-font-size-l: 24px;
   --body-font-size-m: 18px;
   --body-font-size-s: 16px;
   --body-font-size-xs: 14px;
 
   /* heading sizes */
+  --heading-font-size-xxxl: 48px;
   --heading-font-size-xxl: 36px;
   --heading-font-size-xl: 24px;
   --heading-font-size-l: 18px;
@@ -112,6 +115,7 @@
 
 @media (width >= 900px) {
   :root {
+    --heading-font-size-xxxl: 64px;
     --heading-font-size-xxl: 48px;
     --heading-font-size-xl: 36px;
     --heading-font-size-l: 24px;
