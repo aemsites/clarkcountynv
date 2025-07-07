@@ -115,14 +115,17 @@ export default function decorate(block) {
   const isContactCard = block.classList.contains('contact-card');
   if (isContactCard) {
     const firstCol = block.querySelector('.column1');
-    console.log(firstCol);
     const mapLink = firstCol?.querySelector('a');
-    console.log(mapLink);
     const hasEmbedCode = mapLink?.href.indexOf('www.google.com/maps/embed') > -1;
-    console.log(hasEmbedCode);
     if (hasEmbedCode) {
-      const map = iframe({src: mapLink, allowFullscreen: true, frameBorder: 0, class: 'map-embed'});
-      console.log(mapLink.parentElement);
+      const map = iframe(
+        {
+          src: mapLink,
+          allowFullscreen: true,
+          frameBorder: 0,
+          class: 'map-embed',
+        },
+      );
       mapLink.parentElement.replaceWith(map);
     }
   }
