@@ -105,16 +105,6 @@
     display: none;
 }
 
-.tabs-container h2 {
-    background-color: white;
-    margin: 0;
-    color: var(--orange);
-    padding: 38px 0 0 3vw;
-    width: 100%;
-    font: 650 34px var(--body-font-family);
-    padding-bottom: 30px;
-}
-
 .section.top-topics-container div.default-content-wrapper:last-child {
     display: flex;
     justify-content: flex-start;
@@ -151,12 +141,7 @@
     .top-topics {
         flex-direction: row;
         max-width: 1440px;
-    } 
-
-    /* .top-topics p {
-        padding-right: 160px;
-        padding-left: 0;
-    } */
+    }
 
     .top-topics .tabs-list {
         width: 100%;
@@ -169,11 +154,6 @@
         background-color: var(--light-color);
     }
 
-    .top-topics-container h2 {
-        background-color: rgb(238 238 238);
-        width: 40%;
-    }
-
     .top-topics .tabs-panel[aria-hidden="false"] {
         width: 100%;
         max-width: none;
@@ -181,14 +161,11 @@
         min-height: 500px;
     }
 
-    .top-topics .tabs-panel > div p {
-        display: block;
+    .top-topics .tabs-panel h2 {
         color: var(--primary-orange-600);
-        font-size: var(--heading-font-size-xl);
         font-style: normal;
-        font-weight: var(--font-weight-bold);
         line-height: 120%;
-        margin-bottom: 50px;
+        margin: 0 0 50px;
     }  
 
     .top-topics .tabs-panel[aria-hidden="true"] {
@@ -219,36 +196,19 @@
         color: var(--neutral-white);
     }
 
-    /* .top-topics .tabs-list button[aria-selected="true"]::after {
-        transform: translateY(-50%) rotate(-360deg);
-    } */
-
-    .section.top-topics-container div.default-content-wrapper:last-child {
-        display: flex;
-        justify-content: flex-start;
-        background-color: var(--light-color);
-        width: 40%;
-        align-items: center;
-        font: 400 18px var(--body-font-family);
-        margin-left: 0;
+    .top-topics .tab-search {
+        padding: 10px 50px;
     }
 
-    .section.top-topics-container div.default-content-wrapper:last-child p {
-        padding-top : 5vh;
-        padding-bottom: 8vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 2.5vw;
-        flex-direction: row;
-        border-top: 2.5px solid #000;
-        padding-left: 0;
-        margin-left: 3vw;
+    .top-topics .tab-search p {
+        border-top: 2px solid var(--primary-orange-600);
+        margin-top: 14px;
+        padding-top: 24px;
     }
 
-    .section.top-topics-container div.default-content-wrapper:last-child p:last-child picture {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    .top-topics .tab-search a {
+        margin: 0;
+        padding: 10px 24px;
+
     }
 }

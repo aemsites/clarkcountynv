@@ -95,6 +95,17 @@ export default async function decorate(block) {
   });
 
   block.prepend(tablist);
+
+  const search = block.querySelector('.tab-search');
+  if (search) {
+    const anchor = search.querySelector('a');
+    anchor?.classList.add('button', 'secondary');
+    const img = search.querySelector('img');
+    if (img && !img.alt) {
+      img.alt = 'Top topics search icon';
+    }
+  }
+
   function resizeAction() {
     const viewPort = getViewPort();
     if (viewPort === 'desktop') {
