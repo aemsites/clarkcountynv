@@ -12,6 +12,6 @@ export default async function assetsInit() {
     codeBasePath,
     blocks,
     loadBlock,
-    createOptimizedPicture
+    createOptimizedPicture,
   };
 }
