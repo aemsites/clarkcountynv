@@ -11,6 +11,7 @@ export default async function assetsInit() {
   window.hlx.aemassets = {
     codeBasePath,
     blocks,
-    loadBlock
+    loadBlock,
+    createOptimizedPicture
   };
 }
