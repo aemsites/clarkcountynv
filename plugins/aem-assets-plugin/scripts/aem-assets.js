@@ -90,7 +90,7 @@ async function loadCSS(href) {
  * @returns {Element} The picture element
  *
  */
-export function createOptimizedPicture(src, alt = '', eager = false, breakpoints = [{ media: '(min-width: 600px)', width: '2000' }, { width: '750' }]) {
+export function createOptimizedPictureDM(src, alt = '', eager = false, breakpoints = [{ media: '(min-width: 600px)', width: '2000' }, { width: '750' }]) {
   const url = new URL(src);
   const picture = document.createElement('picture');
   const { pathname } = url;
@@ -259,7 +259,7 @@ export function decorateExternalImages(ele, deliveryMarker) {
       }
 
       const extImageSrc = extImage.getAttribute('href');
-      const extPicture = createOptimizedPicture(extImageSrc);
+      const extPicture = createOptimizedPictureDM(extImageSrc);
 
       /* copy query params from link to img */
       const extImageUrl = new URL(extImageSrc);
@@ -300,7 +300,7 @@ export function decorateImagesFromAlt(ele = document) {
 
       const newPictureElement = isDMOpenAPIUrl(deliveryUrl)
         ? createOptimizedPictureWithSmartcrop(deliveryUrl, altText)
-        : createOptimizedPicture(deliveryUrl, altText);
+        : createOptimizedPictureDM(deliveryUrl, altText);
       pictureElement.parentElement.replaceChild(newPictureElement, pictureElement);
     } catch (error) {
       // Do nothing
