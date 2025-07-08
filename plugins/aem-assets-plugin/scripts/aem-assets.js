@@ -259,7 +259,7 @@ export function decorateExternalImages(ele, deliveryMarker) {
       }
 
       const extImageSrc = extImage.getAttribute('href');
-      const extPicture = createOptimizedPictureDM(extImageSrc);
+      const extPicture = createOptimizedPicture(extImageSrc);
 
       /* copy query params from link to img */
       const extImageUrl = new URL(extImageSrc);
@@ -300,7 +300,7 @@ export function decorateImagesFromAlt(ele = document) {
 
       const newPictureElement = isDMOpenAPIUrl(deliveryUrl)
         ? createOptimizedPictureWithSmartcrop(deliveryUrl, altText)
-        : createOptimizedPictureDM(deliveryUrl, altText);
+        : createOptimizedPicture(deliveryUrl, altText);
       pictureElement.parentElement.replaceChild(newPictureElement, pictureElement);
     } catch (error) {
       // Do nothing
