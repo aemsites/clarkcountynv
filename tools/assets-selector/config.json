@@ -107,6 +107,9 @@
         "groupKey": "LanguageGroup"
       }
     ],
+    "assetDomainMapping": {
+    	  "delivery-p154411-e1620520.adobeaemcloud.com":"www.clarkcountynv.gov"
+ 	  },
     "consent": {
       "consentHtml": "<div id=\"consentInline\" style=\"padding: 10px; background-color: #f9f9f9; border-radius: 8px; margin-top: 20px;\">\n    <p style=\"margin: 0 0 10px 0;font-size: medium;\">The assets displayed in the Asset Selector are subject to restricted and limited usage as governed by specific Asset's rights & license terms. Ensure you understand the terms before consuming assets from the Asset Selector.</p>\n    <p style=\"margin: 0 0 10px 0;font-size: medium;\">Some assets may have specific terms or rights that restrict their use or limit usage to certain locations. By proceeding, you acknowledge that you have reviewed the applicable usage restrictions and rights management policies.</p>\n</div>",
       "cookieName": "consentGiven",
