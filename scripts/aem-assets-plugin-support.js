@@ -6,12 +6,12 @@ const blocks = ['video'];
 
 // Initialize the aem-assets-plugin.
 export default async function assetsInit() {
-  const { loadBlock, createOptimizedPictureDM } = await import(`${codeBasePath}/scripts/aem-assets.js`);
+  const { loadBlock, createOptimizedPicture } = await import(`${codeBasePath}/scripts/aem-assets.js`);
   window.hlx = window.hlx || {};
   window.hlx.aemassets = {
     codeBasePath,
     blocks,
     loadBlock,
-    createOptimizedPictureDM
+    createOptimizedPicture
   };
 }
