@@ -1,12 +1,56 @@
 {
     "project": "ClarkCountyNV",
     "plugins": [
-      {
-        "id": "library",
-        "title": "Library",
-        "environments": ["dev", "edit", "preview"],
-        "url": "/tools/sidekick/library.html",
-        "includePaths": ["**.docx**"]
-      }
+        {
+            "id": "library",
+            "title": "Library",
+            "environments": [
+                "dev",
+                "edit",
+                "preview"
+            ],
+            "url": "/tools/sidekick/library.html",
+            "includePaths": [
+                "**.docx**"
+            ]
+        },
+        {
+            "id": "asset-library",
+            "title": "AEM Assets Library",
+            "environments": [
+                "edit",
+                "prod",
+                "dev"
+            ],
+            "url": "https://experience.adobe.com/solutions/CQ-assets-selectors/static-assets/resources/franklin/asset-selector.html?rail=false&extConfigUrl=https://raw.githubusercontent.com/aemsites/clarkcountynv/refs/heads/sidekick-asset-integration/tools/assets-selector/config.json",
+            "isPalette": true,
+            "passConfig": true,
+            "includePaths": [
+                "**.docx**"
+            ],
+             "copyMode": [
+                 {
+          "mimeType": "image/*",
+          "value": "reference"
+             }
+            ],
+            "filterSchema": [
+        {
+          "header": "Assets Tags",
+          "groupKey": "AssetTagsGroup",
+          "fields": [
+            {
+              "element": "taggroup",
+              "name": "property=metadata.application.xcm:keywords.id",
+              "columns": 3
+            }
+          ]
+        }
+      ],
+      "assetDomainMapping": {
+    	  "delivery-p154411-e1620520.adobeaemcloud.com":"www.clarkcountynv.gov"
+ 	  },
+            "paletteRect": "top: 50px; bottom: 10px; right: 10px; left: auto; width:800px; height: calc(100vh - 60px)"
+        }
     ]
-  }
+}
