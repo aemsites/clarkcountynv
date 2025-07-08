@@ -83,4 +83,14 @@ async function loadAnalyticsScripts() {
   }
 }
 
+async function loadPodcastStreamingAudio() {
+  const uniquePaths = '/residents/family_services/divisions/foster_care/';
+  if (window.location.pathname.endsWith(uniquePaths)) {
+    const s1 = document.createElement('script');
+    s1.setAttribute('src', 'https://tag.simpli.fi/sifitag/e034192a-8d69-47a6-9208-aaec57cf81d7');
+    (document.body || document.head).appendChild(s1);
+  }
+}
+
 loadAnalyticsScripts();
+loadPodcastStreamingAudio();
