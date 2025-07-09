@@ -139,6 +139,7 @@
         max-width: none;
         padding: 50px;
         min-height: 500px;
+        background-color: var(--neutral-white);
     }
 
     .top-topics .tabs-panel h2 {
@@ -158,9 +159,22 @@
         padding: 0;
     }
 
-    .top-topics .tabs-list button::after {
-        background: url('../../icons/chevron-right-white.svg') center center no-repeat;
+    .top-topics .tabs-panel[aria-hidden="false"] a:any-link {
+        color: var(--primary-orange-600);
+        text-decoration: underline;
+    }
+
+    .top-topics .tabs-panel[aria-hidden="false"] li {
+        margin-bottom: 8px;
+    }
+
+    .top-topics .tabs-list button[aria-selected="false"]::after {
         opacity: 0;
+    }
+
+    .top-topics .tabs-list button[aria-selected="true"]::after {
+        background: url('../../icons/chevron-right-white.svg') center center no-repeat;
+        opacity: 1;
     }
 
     .top-topics .tabs-list button[aria-selected="true"] {
