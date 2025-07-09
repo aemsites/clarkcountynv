@@ -22,7 +22,7 @@
                 "prod",
                 "dev"
             ],
-            "url": "https://experience.adobe.com/solutions/CQ-assets-selectors/static-assets/resources/franklin/asset-selector.html?rail=false&extConfigUrl=https://raw.githubusercontent.com/aemsites/clarkcountynv/refs/heads/main/tools/assets-selector/config.json",
+            "url": "https://experience.adobe.com/solutions/CQ-assets-selectors/static-assets/resources/franklin/asset-selector.html?hideTreeNav=false&rail=false&extConfigUrl=https://raw.githubusercontent.com/aemsites/clarkcountynv/refs/heads/main/tools/assets-selector/config.json",
             "isPalette": true,
             "passConfig": true,
             "includePaths": [
@@ -47,7 +47,7 @@
           ]
         }
       ],
-       "paletteRect": "top: 50px; bottom: 10px; right: 10px; left: auto; width:800px; height: calc(100vh - 60px)"
+       "paletteRect": "top: 50px; bottom: 10px; right: 10px; left: auto; width:1800px; height: calc(100vh - 60px)"
         }
     ]
 }
