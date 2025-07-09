@@ -2,15 +2,13 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    padding: 0 24px;
 }
 
 .top-topics .tabs-list {
     width: 100%;
     padding: 0 0 33px;
-}
-
-.top-topics .tabs-tab {
-    width: 100%;
+    background-color: var(--neutral-black-200);
 }
 
 .top-topics .tabs-list button {
@@ -22,50 +20,48 @@
     cursor: pointer;
     position: relative;
     border: none;
+    background-color: transparent;
 }
 
 .top-topics .tabs-list button::after {
     content: '';
     position: absolute;
-    right: 0;
+    right: 8px;
     top: 50%;
     transform: translateY(-50%);
-    background: url('../../icons/chevron-right-white.svg') center center no-repeat;
+    background: url('../../icons/chevron-down.svg') center center no-repeat;
     width: 24px;
     height: 24px;
-    opacity: 0;
+}
+
+.top-topics .tabs-list button[aria-selected="true"] {
+    background-color: var(--primary-orange-600);
+    -webkit-tap-highlight-color: transparent; 
+}
+
+.top-topics .tabs-list button[aria-selected="true"] p {
+    color: var(--neutral-white);
 }
 
 .top-topics .tabs-list button[aria-selected="true"]::after {
     opacity: 1;
+    background: url('../../icons/chevron-up-white.svg') center center no-repeat;
 }
 
-/* .top-topics .tabs-list button[aria-selected="true"] {
-    cursor: pointer;
-} */
-
-/* .top-topics .tabs-list button[aria-selected="false"]:hover,
-.top-topics .tabs-list button[aria-selected="false"]:focus {
-    background-color: var(--dark-color);
-} */
-
 .top-topics .tabs-panel[aria-hidden="false"] {
-    /* margin-top: -1px; */
     padding: 0 16px;
-    /* height: var(--tab-height); */
-    /* transition: height .5s ease-in; */
+    background-color: var(--primary-orange-600);
+}
+
+.top-topics .tabs-panel[aria-hidden="false"] a:any-link {
+    color: var(--neutral-white);
+    text-decoration: none;
 }
 
 .top-topics .tabs-panel[aria-hidden="true"] {
     height: 0;
     overflow: hidden;
     transition: height .5s ease-in;
-}
-
-.top-topics a {
-    display: inline-block;
-    font: 400 18px var(--body-font-family);
-    color: #000;
 }
 
 .top-topics .tabs-panel ul > li > a {
@@ -80,9 +76,9 @@
 }
 
 .top-topics .tabs-panel ul {
-    column-count: 2;
-    column-gap: 10vw;
+    column-count: 1;
     list-style: none;
+    margin:0;
 }
 
 .top-topics p {
@@ -92,7 +88,6 @@
     font-weight: var(--font-weight-bold);
     line-height: 110%;
     cursor: pointer;
-    /* transition: all 300ms; */
     position: relative;
     margin: 0;
 }
@@ -105,42 +100,23 @@
     display: none;
 }
 
-.section.top-topics-container div.default-content-wrapper:last-child {
-    display: flex;
-    justify-content: flex-start;
-    background-color: white;
-    width: 100%;
-    align-items: center;
-    font: 400 18px var(--body-font-family);
+.top-topics .tab-search {
+    text-align: center;
 }
 
-.section.top-topics-container div.default-content-wrapper:last-child img {
-    height: auto;
+.top-topics .tab-search a {
+    background-color: transparent;
 }
 
-.section.top-topics-container div.default-content-wrapper:last-child p {
-    padding-top : 5vh;
-    padding-bottom: 8vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2.5vw;
-    flex-direction: row;
-    border-top: 2.5px solid #000;
-    padding-left: 0;
-    margin-left: 3vw;
-}
-
-.section.top-topics-container div.default-content-wrapper:last-child p:last-child picture {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.top-topics .tabs-panel h2 {
+    display: none;
 }
 
 @media (width >= 900px) {
     .top-topics {
         flex-direction: row;
         max-width: 1440px;
+        padding: 0;        
     }
 
     .top-topics .tabs-list {
@@ -148,6 +124,10 @@
         max-width: 350px;
         background-color: var(--light-color);
         padding: 50px 0;
+    }
+
+    .top-topics .tabs-panel ul {
+        column-count: 2;
     }
 
     .top-topics .tabs-list button {
@@ -166,6 +146,7 @@
         font-style: normal;
         line-height: 120%;
         margin: 0 0 50px;
+        display: block;
     }  
 
     .top-topics .tabs-panel[aria-hidden="true"] {
@@ -178,14 +159,8 @@
     }
 
     .top-topics .tabs-list button::after {
-        content: '';
-        position: absolute;
-        right: 8px;
-        top: 50%;
-        transform: translateY(-50%); 
         background: url('../../icons/chevron-right-white.svg') center center no-repeat;
-        width: 24px;
-        height: 24px;
+        opacity: 0;
     }
 
     .top-topics .tabs-list button[aria-selected="true"] {
@@ -198,6 +173,7 @@
 
     .top-topics .tab-search {
         padding: 10px 50px;
+        text-align: left;
     }
 
     .top-topics .tab-search p {
@@ -209,6 +185,5 @@
     .top-topics .tab-search a {
         margin: 0;
         padding: 10px 24px;
-
     }
 }

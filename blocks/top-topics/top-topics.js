@@ -114,13 +114,5 @@ export default async function decorate(block) {
       });
     }
   }
-  // if ((block.parentNode.nextSibling.querySelector('p').textContent).includes('search') && (block.parentNode.nextSibling.querySelector('picture'))) {
-  //   const searchImg = block.parentNode.nextSibling.querySelector('picture');
-  //   const searchImgLink = a();
-  //   searchImgLink.href = '/search';
-  //   searchImgLink.title = 'Search';
-  //   searchImg.after(searchImgLink);
-  //   searchImgLink.append(searchImg);
-  // }
   window.addEventListener('resize', resizeAction);
 }
