@@ -1,8 +1,6 @@
-.top-topics {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 0 24px;
+/* Top Topics */
+.top-topics .top-topics-desktop {
+    display: none;
 }
 
 .top-topics .tabs-list {
@@ -15,7 +13,7 @@
     display: block;
     width: 100%;
     margin: 0;
-    padding: 10px 50px;
+    padding: 12px 16px;
     text-align: left;
     cursor: pointer;
     position: relative;
@@ -23,7 +21,15 @@
     background-color: transparent;
 }
 
-.top-topics .tabs-list button::after {
+.top-topics .top-topics-mobile {
+    padding: 0 24px;
+}
+
+.top-topics .top-topics-mobile .search-btn {
+    text-align: center;
+}
+
+.top-topics .tabs-list button[aria-selected="false"]::after {
     content: '';
     position: absolute;
     right: 8px;
@@ -36,7 +42,7 @@
 
 .top-topics .tabs-list button[aria-selected="true"] {
     background-color: var(--primary-orange-600);
-    -webkit-tap-highlight-color: transparent; 
+    -webkit-tap-highlight-color: transparent;
 }
 
 .top-topics .tabs-list button[aria-selected="true"] p {
@@ -44,8 +50,15 @@
 }
 
 .top-topics .tabs-list button[aria-selected="true"]::after {
+    content: '';
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
     opacity: 1;
     background: url('../../icons/chevron-up-white.svg') center center no-repeat;
+    width: 24px;
+    height: 24px;
 }
 
 .top-topics .tabs-panel[aria-hidden="false"] {
@@ -78,7 +91,12 @@
 .top-topics .tabs-panel ul {
     column-count: 1;
     list-style: none;
-    margin:0;
+    margin: 0;
+    padding: 0 0 0 24px;
+}
+
+.top-topics .tabs-tab p {
+    pointer-events: none;
 }
 
 .top-topics p {
@@ -113,13 +131,27 @@
 }
 
 @media (width >= 900px) {
-    .top-topics {
+    /* .top-topics {
         flex-direction: row;
         max-width: 1440px;
-        padding: 0;        
+        padding: 0;
+    } */
+
+    .top-topics .top-topics-desktop {
+        display: flex;
+        width: 100%;
+        max-width: 1440px;
     }
 
-    .top-topics .tabs-list {
+    .top-topics .top-topics-desktop .main-content {
+        width: 100%;
+    }
+
+    .top-topics .top-topics-mobile {
+        display: none;
+    }
+
+    .top-topics .sidenav {
         width: 100%;
         max-width: 350px;
         background-color: var(--light-color);
@@ -128,6 +160,7 @@
 
     .top-topics .tabs-panel ul {
         column-count: 2;
+        padding: 0;
     }
 
     .top-topics .tabs-list button {
@@ -173,6 +206,13 @@
     }
 
     .top-topics .tabs-list button[aria-selected="true"]::after {
+        content: '';
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 24px;
+        height: 24px;
         background: url('../../icons/chevron-right-white.svg') center center no-repeat;
         opacity: 1;
     }
