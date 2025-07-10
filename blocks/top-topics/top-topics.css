@@ -146,7 +146,6 @@
 }
 
 @media (width >= 900px) {
-
     .top-topics .top-topics-desktop {
         display: flex;
         width: 100%;
@@ -170,6 +169,7 @@
 
     .top-topics .tabs-panel ul {
         column-count: 2;
+        margin: 0;
         padding: 0;
     }
 
@@ -238,11 +238,6 @@
 
     .top-topics .tabs-panel[aria-hidden="true"] {
         display: none;
-    }
-
-    .top-topics .tabs-panel ul {
-        margin: 0;
-        padding: 0;
     }
 
     .top-topics .tabs-panel[aria-hidden="false"] a:any-link {

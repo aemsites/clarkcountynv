@@ -18,7 +18,7 @@ class AccordionTabs {
     this.allNavigableElements = [...this.tabs, this.searchLink];
     this.currentIndex = 0;
     this.isMobileViewport = getViewPort() === 'mobile';
-    
+
     this.init();
   }
 
@@ -27,17 +27,17 @@ class AccordionTabs {
     this.tabList.addEventListener('keydown', (e) => this.handleKeyDown(e));
     this.tabList.addEventListener('click', (e) => this.handleClick(e));
     this.mobileTabList.addEventListener('click', (e) => this.handleClick(e));
-    
+
     // Add hover listeners to tabs
     this.tabs.forEach((tab, index) => {
       tab.addEventListener('mouseenter', () => this.handleTabHover(index));
     });
-    
+
     // Add tab navigation to panels
     this.panels.forEach((panel, index) => {
       panel.addEventListener('keydown', (e) => this.handlePanelKeyDown(e, index));
     });
-    
+
     // Set initial state
     this.setActiveTab(0);
   }
@@ -48,25 +48,24 @@ class AccordionTabs {
   }
 
   // Get all focusable elements within a panel
-  getFocusableElements(panel) {
+  static getFocusableElements(panel) {
     return Array.from(panel.querySelectorAll('a[href]'));
   }
 
   // Handle keyboard navigation within tab panels
   handlePanelKeyDown(event, panelIndex) {
     if (event.key !== 'Tab') return;
-    
+
     const panel = this.panels[panelIndex];
-    const focusableElements = this.getFocusableElements(panel);
-    
+    const focusableElements = AccordionTabs.getFocusableElements(panel);
+
     if (focusableElements.length === 0) return;
-    
+
     const currentElement = document.activeElement;
     const currentElementIndex = focusableElements.indexOf(currentElement);
-    
-    // If we're on the last focusable element and pressing Tab (forward)
-    if (!event.shiftKey && currentElementIndex === focusableElements.length - 1) {      
 
+    // If we're on the last focusable element and pressing Tab (forward)
+    if (!event.shiftKey && currentElementIndex === focusableElements.length - 1) {
       // If this is the last tab, move to search link
       if (panelIndex === this.tabs.length - 1) {
         event.preventDefault();
@@ -78,17 +77,15 @@ class AccordionTabs {
         this.setActiveTab(nextTabIndex);
         this.tabs[nextTabIndex].focus();
       }
-    }
-    // If we're on the first focusable element and pressing Shift+Tab (backward)
-    else if (event.shiftKey && currentElementIndex === 0) {
+    } else if (event.shiftKey && currentElementIndex === 0) {
+      // If we're on the first focusable element and pressing Shift+Tab (backward)
       // Move to previous tab
       const prevTabIndex = panelIndex === 0 ? this.tabs.length - 1 : panelIndex - 1;
       event.preventDefault();
       this.setActiveTab(prevTabIndex);
       this.tabs[prevTabIndex].focus();
-    }
-    // If we're on the panel itself (no focusable elements focused) and pressing Shift+Tab
-    else if (event.shiftKey && currentElement === panel) {
+    } else if (event.shiftKey && currentElement === panel) {
+      // If we're on the panel itself (no focusable elements focused) and pressing Shift+Tab
       // Move to current tab
       event.preventDefault();
       this.tabs[panelIndex].focus();
@@ -109,7 +106,9 @@ class AccordionTabs {
         break;
       case 'ArrowLeft':
         event.preventDefault();
-        newIndex = currentElementIndex === 0 ? this.allNavigableElements.length - 1 : currentElementIndex - 1;
+        newIndex = currentElementIndex === 0 ? (
+          this.allNavigableElements.length - 1
+        ) : currentElementIndex - 1;
         this.focusNavigableElement(newIndex);
         break;
       case 'Home':
@@ -134,16 +133,15 @@ class AccordionTabs {
         if (!event.shiftKey && this.tabs.includes(currentElement)) {
           const tabIndex = this.tabs.indexOf(currentElement);
           const activePanel = this.panels[tabIndex];
-          const focusableElements = this.getFocusableElements(activePanel);
-          
+          const focusableElements = AccordionTabs.getFocusableElements(activePanel);
+
           if (focusableElements.length > 0) {
             event.preventDefault();
             focusableElements[0].focus();
           }
         }
-        return;
+        break;
       default:
-        return;
     }
   }
 
@@ -152,10 +150,10 @@ class AccordionTabs {
     this.allNavigableElements.forEach((element, i) => {
       element.setAttribute('tabindex', i === index ? '0' : '-1');
     });
-    
+
     // Focus the element
     this.allNavigableElements[index].focus();
-    
+
     // If it's a tab, make it active
     if (this.tabs.includes(this.allNavigableElements[index])) {
       const tabIndex = this.tabs.indexOf(this.allNavigableElements[index]);
@@ -192,7 +190,7 @@ class AccordionTabs {
       this.panels.forEach((panel, i) => {
         const isActive = i === index;
         panel.setAttribute('aria-hidden', !isActive);
-        
+
         // Set tabindex for panel content navigation
         panel.setAttribute('tabindex', isActive ? '0' : '-1');
       });
@@ -200,6 +198,7 @@ class AccordionTabs {
       this.mobileTabs.forEach((tab, i) => {
         const isActive = i === index;
         tab.setAttribute('aria-selected', isEventUndefined ? false : isActive);
+        // eslint-disable-next-line no-nested-ternary
         tab.setAttribute('tabindex', isEventUndefined ? '-1' : (isActive ? '0' : '-1'));
       });
 
@@ -207,8 +206,9 @@ class AccordionTabs {
       this.mobilePanels.forEach((panel, i) => {
         const isActive = i === index;
         panel.setAttribute('aria-hidden', isEventUndefined ? true : !isActive);
-        
+
         // Set tabindex for panel content navigation
+        // eslint-disable-next-line no-nested-ternary
         panel.setAttribute('tabindex', isEventUndefined ? '-1' : (isActive ? '0' : '-1'));
       });
     }
@@ -222,7 +222,6 @@ class AccordionTabs {
 }
 
 export default async function decorate(block) {
-
   const isMobileViewport = getViewPort() === 'mobile';
   const desktopLayout = div({ class: 'top-topics-desktop' });
   const desktopSideNav = div({ class: 'sidenav' });
@@ -237,21 +236,21 @@ export default async function decorate(block) {
   const mobileTabList = div({ class: 'tabs-list', role: 'tablist' });
 
   [...block.children].forEach((row, rowIndex) => {
-
     // tab
     const tab = row.firstElementChild;
     const id = toClassName(tab.textContent);
     const isNotSearchTab = id.indexOf('try-searching') === -1;
     const tabBtn = button(
-      { 
+      {
         class: isNotSearchTab ? 'tabs-tab' : 'search-btn',
         type: 'button',
         role: isNotSearchTab ? 'tab' : 'none',
         ...(isNotSearchTab && { id: `tab-${id}` }),
-        ...(isNotSearchTab && { 'aria-selected': (isMobileViewport ? false : (rowIndex === 0))}),
+        ...(isNotSearchTab && { 'aria-selected': (isMobileViewport ? false : (rowIndex === 0)) }),
         ...(isNotSearchTab && { 'aria-controls': `tabpanel-${id}` }),
-        ...(isNotSearchTab && { 'tabindex': `${(isMobileViewport ? -1 : (rowIndex === 0 ? 0 : -1))}` }),
-      }
+        // eslint-disable-next-line no-nested-ternary
+        ...(isNotSearchTab && { tabindex: `${(isMobileViewport ? -1 : (rowIndex === 0 ? 0 : -1))}` }),
+      },
     );
 
     const searchBtn = tab.querySelector('a');
@@ -262,7 +261,7 @@ export default async function decorate(block) {
         img.alt = 'Top topics search icon';
       }
     }
-    
+
     tabBtn.innerHTML = tab.innerHTML;
     desktopTabList.append(tabBtn);
     mobileTabList.append(tabBtn.cloneNode(true));
@@ -276,18 +275,18 @@ export default async function decorate(block) {
         role: isNotSearchTab ? 'tabpanel' : 'none',
         ...(isNotSearchTab && { 'aria-hidden': (isMobileViewport ? true : (rowIndex !== 0)) }),
         ...(isNotSearchTab && { 'aria-labelledby': `tab-${id}` }),
-        ...(isNotSearchTab && { 'tabindex': `${(isMobileViewport ? -1 : (rowIndex === 0 ? 0 : -1))}` }),
-      }
+        // eslint-disable-next-line no-nested-ternary
+        ...(isNotSearchTab && { tabindex: `${(isMobileViewport ? -1 : (rowIndex === 0 ? 0 : -1))}` }),
+      },
     );
 
     tabPanel.append(content);
     desktopContentFrag.append(tabPanel);
     mobileContentFrag.append(tabPanel.cloneNode(true));
     mobileTabList.append(mobileContentFrag);
-
   });
 
-  // Desktop 
+  // Desktop
   desktopSideNav.append(desktopTabList);
   desktopMainContent.append(desktopContentFrag);
   desktopLayout.append(desktopSideNav, desktopMainContent);
