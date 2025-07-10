@@ -29,6 +29,18 @@
     text-align: center;
 }
 
+.top-topics .top-topics-mobile .search-btn a {
+    background-color: transparent;
+}
+
+.top-topics .top-topics-mobile .search-btn a:hover {
+    background-color: rgba(var(--secondary-orange-800-rgb), var(--opacity-15));
+}
+
+.top-topics .top-topics-mobile .search-btn a:focus {
+    box-shadow: 0 0 0 4px rgba(var(--primary-orange-300-rgb), var(--opacity-25));
+}
+
 .top-topics .tabs-list button[aria-selected="false"]::after {
     content: '';
     position: absolute;
@@ -95,6 +107,10 @@
     padding: 0 0 0 24px;
 }
 
+.top-topics .top-topics-mobile .tabs-panel li {
+    margin-bottom: 8px;
+}
+
 .top-topics .tabs-tab p {
     pointer-events: none;
 }
@@ -105,7 +121,6 @@
     font-style: normal;
     font-weight: var(--font-weight-bold);
     line-height: 110%;
-    cursor: pointer;
     position: relative;
     margin: 0;
 }
@@ -131,11 +146,6 @@
 }
 
 @media (width >= 900px) {
-    /* .top-topics {
-        flex-direction: row;
-        max-width: 1440px;
-        padding: 0;
-    } */
 
     .top-topics .top-topics-desktop {
         display: flex;
@@ -165,6 +175,35 @@
 
     .top-topics .tabs-list button {
         background-color: var(--light-color);
+    }
+
+    .top-topics .top-topics-desktop button {
+        padding: 10px 50px;
+    }
+
+    .top-topics .top-topics-desktop .search-btn {
+        padding: 26px 50px;
+        cursor: default;
+    }
+
+    .top-topics .top-topics-desktop .search-btn p {
+        width: 100%;
+        max-width: 260px;
+        border-top: 2px solid var(--primary-orange-600);
+    }
+
+    .top-topics .top-topics-desktop .search-btn a {
+        margin-top: 24px;
+        background-color: transparent;
+        padding: 8px 24px;
+    }
+
+    .top-topics .top-topics-desktop .search-btn a:hover {
+        background-color: rgba(var(--secondary-orange-800-rgb), var(--opacity-15));
+    }
+
+    .top-topics .top-topics-desktop .search-btn a:focus {
+        box-shadow: 0 0 0 4px rgba(var(--primary-orange-300-rgb), var(--opacity-25));
     }
 
     .top-topics .tabs-panel[aria-hidden="false"] {
