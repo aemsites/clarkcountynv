@@ -258,7 +258,8 @@ export function decorateExternalImages(ele, deliveryMarker) {
         return;
       }
 
-      const extImageSrc = extImage.getAttribute('href');
+      //const extImageSrc = extImage.getAttribute('href');
+      const extImageSrc = extImage.href;
       const extPicture = createOptimizedPicture(extImageSrc);
 
       /* copy query params from link to img */
