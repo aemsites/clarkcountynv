@@ -181,6 +181,11 @@
         padding: 10px 50px;
     }
 
+    .top-topics .top-topics-desktop button:focus {
+        outline: 2px solid #007acc;
+        outline-offset: -2px;
+    }
+
     .top-topics .top-topics-desktop .search-btn {
         padding: 26px 50px;
         cursor: default;
@@ -220,7 +225,12 @@
         line-height: 120%;
         margin: 0 0 50px;
         display: block;
-    }  
+    }
+
+    .top-topics .top-topics-desktop .tabs-panel a:focus {
+        outline: 2px solid #007acc;
+        outline-offset: -2px;
+    }
 
     .top-topics .tabs-panel[aria-hidden="true"] {
         display: none;
