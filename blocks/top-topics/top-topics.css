@@ -191,6 +191,10 @@
         cursor: default;
     }
 
+    .top-topics .top-topics-desktop .search-btn:focus {
+        outline: 0;
+    }
+
     .top-topics .top-topics-desktop .search-btn p {
         width: 100%;
         max-width: 260px;
