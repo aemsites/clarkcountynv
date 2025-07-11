@@ -331,6 +331,118 @@
     }
 }
 
+/* Cards - Icon Cards */
+.cards.clickable-icon {
+    display: block;
+}
+
+.cards.clickable-icon .card-wrapper {
+    height: 100%;
+}
+
+.cards.clickable-icon .card-content {
+    padding: 20px 20px 40px;
+    height: 100%;
+}
+
+.cards.clickable-icon .card-link {
+    height: 100%;
+    width: 100%;
+}
+
+.cards.clickable-icon .card-img {
+    margin-bottom: 16px;
+}
+
+.cards.clickable-icon .card-title {
+    color: var(--neutral-black);
+    font-size: var(--body-font-size-m);
+    font-weight: var(--font-weight-bold);
+    line-height: 125%;
+    margin-bottom: 32px;
+}
+
+.cards.clickable-icon .card-description {
+    color: var(--neutral-black);
+    font-size: var(--body-font-size-m);
+    font-weight: var(--font-weight-book);
+    line-height: 125%;
+}
+
+.cards.clickable-icon ul {
+    display: grid;
+    gap: 26px;
+    max-width: 1340px;
+    margin: 0 26px;
+    list-style: none;
+    grid-template-columns: 1fr;
+    justify-items: center;
+}
+
+.cards.clickable-icon ul > li {
+    width: 100%;
+    min-height: 373px;
+    margin: 0;
+    border: 2px solid var(--neutral-black-400);
+}
+
+.cards.clickable-icon ul > li:hover {
+    background-color: unset;
+}
+
+.cards.clickable-icon ul > li .card-link:hover,
+.cards.clickable-icon ul > li .card-link:focus {
+    background-color: var(--primary-orange-600);
+}
+
+.cards.clickable-icon ul > li .card-link:hover p,
+.cards.clickable-icon ul > li .card-link:focus p {
+    color: var(--neutral-white);
+}
+
+.cards.clickable-icon ul > li .card-link:hover img,
+.cards.clickable-icon ul > li .card-link:focus img {
+    filter: brightness(0) invert(1);
+}
+
+.cards.clickable-icon ul > li a {
+    height: 100%;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.cards.clickable-icon p {
+    margin: 0;
+}
+
+.cards.clickable-icon .icon {
+    width: 120px;
+    height: 120px;
+    padding: 0;
+}
+
+@media (width >= 600px) {
+    .cards.clickable-icon ul {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        margin: 0 26px;
+    }
+}
+
+@media (width >= 900px) {
+    .cards.clickable-icon ul {
+        grid-template-columns: repeat(3, 1fr);
+        gap: clamp(1rem, 10vw, 127px);
+    }
+}
+
+@media (width >= 1200px) {
+    .cards.clickable-icon ul {
+        grid-template-columns: repeat(4, 1fr);
+        margin: 0 auto;
+    }
+}
+
 .cards.staff.block.min-height-3-title .staff-tile-title{
     display: block;
     min-height: calc(1.2em * 3);
