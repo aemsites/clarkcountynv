@@ -1,6 +1,6 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import {
-  ul, li, a, div, img, h4, br,
+  ul, li, a, div, img, h4, br, p,
 } from '../../scripts/dom-helpers.js';
 
 export default function decorate(block) {
@@ -146,6 +146,34 @@ export default function decorate(block) {
               { href: instagramSrc, class: 'staff-tile-contact-icon' },
               img({ src: '/icons/instagram-icon-white.svg', alt: 'Instagram icon' }),
             ) : null,
+          ),
+        ),
+      );
+    } else if (block.classList.contains('clickable-icon')) {
+      const img = row.children[0];
+      const content = row.children[1];
+      const cardTitle = content.children[0];
+      const cardDesc = content.children[1];
+      const cardLink = content.querySelector('a');
+      const { href, title, target } = cardLink ?? {};
+      $ul.append(
+        li(
+          div(
+            { class: 'card-wrapper' },
+            cardLink ? a(
+              { class: 'card-link', href, title, target },
+              div(
+                { class: 'card-content' },
+                img ? div({ class: 'card-img' }, img ) : null,
+                cardTitle ? p({ class: 'card-title' }, cardTitle): null,
+                cardDesc ? p({ class: 'card-description' }, cardDesc): null,
+              ),
+            ) : div(
+              { class: 'card-content' },
+              img ? div({ class: 'card-img' }, img ) : null,
+              cardTitle ? p({ class: 'card-title' }, cardTitle): null,
+              cardDesc ? p({ class: 'card-description' }, cardDesc): null,
+            ),
           ),
         ),
       );
