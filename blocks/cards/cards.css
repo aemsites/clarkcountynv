@@ -390,15 +390,18 @@
     background-color: unset;
 }
 
-.cards.clickable-icon ul > li .card-link:hover {
+.cards.clickable-icon ul > li .card-link:hover,
+.cards.clickable-icon ul > li .card-link:focus {
     background-color: var(--primary-orange-600);
 }
 
-.cards.clickable-icon ul > li .card-link:hover p {
+.cards.clickable-icon ul > li .card-link:hover p,
+.cards.clickable-icon ul > li .card-link:focus p {
     color: var(--neutral-white);
 }
 
-.cards.clickable-icon ul > li .card-link:hover img {
+.cards.clickable-icon ul > li .card-link:hover img,
+.cards.clickable-icon ul > li .card-link:focus img {
     filter: brightness(0) invert(1);
 }
 

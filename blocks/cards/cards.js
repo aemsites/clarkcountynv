@@ -150,7 +150,7 @@ export default function decorate(block) {
         ),
       );
     } else if (block.classList.contains('clickable-icon')) {
-      const img = row.children[0];
+      const iconImg = row.children[0];
       const content = row.children[1];
       const cardTitle = content.children[0];
       const cardDesc = content.children[1];
@@ -161,18 +161,20 @@ export default function decorate(block) {
           div(
             { class: 'card-wrapper' },
             cardLink ? a(
-              { class: 'card-link', href, title, target },
+              {
+                class: 'card-link', href, title, target,
+              },
               div(
                 { class: 'card-content' },
-                img ? div({ class: 'card-img' }, img ) : null,
-                cardTitle ? p({ class: 'card-title' }, cardTitle): null,
-                cardDesc ? p({ class: 'card-description' }, cardDesc): null,
+                img ? div({ class: 'card-img' }, iconImg) : null,
+                cardTitle ? p({ class: 'card-title' }, cardTitle) : null,
+                cardDesc ? p({ class: 'card-description' }, cardDesc) : null,
               ),
             ) : div(
               { class: 'card-content' },
-              img ? div({ class: 'card-img' }, img ) : null,
-              cardTitle ? p({ class: 'card-title' }, cardTitle): null,
-              cardDesc ? p({ class: 'card-description' }, cardDesc): null,
+              img ? div({ class: 'card-img' }, iconImg) : null,
+              cardTitle ? p({ class: 'card-title' }, cardTitle) : null,
+              cardDesc ? p({ class: 'card-description' }, cardDesc) : null,
             ),
           ),
         ),
