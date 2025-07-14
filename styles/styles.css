@@ -379,19 +379,11 @@ main img {
   height: 30px;
   width: 30px;
   padding: 2px 2px 0 0;
-  
 }
 
 .icon img {
   height: 100%;
   width: 100%;
-  
-}
-
-.hero {
-  position: relative;
-  padding: 32px;
-  min-height: 300px;
 }
 
 main .section-top {
