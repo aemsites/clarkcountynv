@@ -60,10 +60,18 @@
           {
             "element": "taggroup",
             "name": "property=metadata.application.xcm:keywords.id",
-            "defaultValue": [],
-            "options": [],
-            "columns": 3
-          }
+            "options":[
+              {
+                "label": "Employee",
+                "value": "asset-type:photo/employee"                  
+              },
+              {
+                "label": "Manager",
+                "value": "asset-type:photo/manager"                  
+              }
+            ],
+              "columns": 3
+            } 
         ]
       },
       {
