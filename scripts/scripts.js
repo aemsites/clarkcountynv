@@ -155,6 +155,7 @@ function decorateSectionsWithBackgrounds(element) {
     const bgImageDesktop = section.getAttribute('data-bg-image-desktop');
     const bgImageMobile = section.getAttribute('data-bg-image-mobile');
     const bgImageTablet = section.getAttribute('data-bg-image-tablet');
+    const hasMobileClass = section.classList.contains('mobile');
 
     if (!(bgImage || bgImageDesktop || bgImageMobile || bgImageTablet)) {
       section.setAttribute('data-bg-image', DEFAULT_BACKGROUND_IMAGE);
@@ -178,7 +179,7 @@ function decorateSectionsWithBackgrounds(element) {
       } else {
         section.classList.add('with-background-image');
       }
-      const backgroundPic = createOptimizedPicture(background);
+      const backgroundPic = createOptimizedPicture(background, `${hasMobileClass ? 'Mobile' : 'Desktop'} hero image`);
       backgroundPic.classList.add('background-image');
       section.append(backgroundPic);
     }
