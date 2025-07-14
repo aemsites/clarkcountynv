@@ -63,11 +63,11 @@
             "options":[
               {
                 "label": "Employee",
-                "value": "asset-type:photo/employee"                  
+                "value": "clrkcnty:asset-type/image/photo"                  
               },
               {
                 "label": "Manager",
-                "value": "asset-type:photo/manager"                  
+                "value": "clrkcnty:department/marketing"                  
               }
             ],
               "columns": 3
