@@ -89,8 +89,29 @@
         "fields": [
           {
             "element": "taggroup",
-            "name": "clrkcnty:department",
-            "columns": 3
+            "name": "property=clrkcnty:department",
+            "options": [
+            {
+              "label": "Approved",
+              "value": "approved"
+            }
+          ]
+            } 
+        ]
+      },
+      {
+        "header": "Department1",
+        "groupKey": "DepartmentGroup",
+        "fields": [
+          {
+            "element": "taggroup",
+            "name": "property=metadata.embedded.clrkcnty:department",
+            "options": [
+            {
+              "label": "Approved",
+              "value": "approved"
+            }
+          ]
             } 
         ]
       },
