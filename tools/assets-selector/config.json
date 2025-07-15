@@ -78,18 +78,8 @@
         "fields": [
           {
             "element": "taggroup",
-            "name": "property=metadata.application.xcm:keywords.id",
-            "options":[
-              {
-                "label": "Employee",
-                "value": "clrkcnty:asset-type/image/photo"                  
-              },
-              {
-                "label": "Manager",
-                "value": "clrkcnty:department/marketing"                  
-              }
-            ],
-              "columns": 3
+            "name": "property=xcm:keywords.id=",
+            "columns": 3
             } 
         ]
       },
