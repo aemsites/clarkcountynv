@@ -5,12 +5,11 @@
 main .mainmenu {
     display: flex; 
     flex-direction: column; 
-    padding: 34px;
+    padding: 24px;
 }
 
 main .mainmenu .leftsection {
-    /* padding: 33px 15px 15px; */
-    color: white;
+    background-color: var(--primary-orange-600);
 }
 
 main .mainmenu .rightsection.no-underline a:hover {
@@ -21,16 +20,38 @@ main .mainmenu .leftsection > .default-content-wrapper > h2 {
     display: none;
 }
 
-main .mainmenu .leftsection>.default-content-wrapper>p {
+main .mainmenu .leftsection > .default-content-wrapper > button {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    margin: 0;
-    padding: 15px;
-    font: 700 18px var(--heading-font-family);
-    background: #C54B2A;
-    color: #fff;
+    color: var(--neutral-white);
+    font-size: var(--heading-font-size-xs);
+    font-style: normal;
+    font-weight: var(--font-weight-bold);
+    line-height: 120%;
+    letter-spacing: 0.7px;
     text-transform: uppercase;
     cursor: pointer;
+    padding: 10px 16px;
+    margin: 0;
+    width: 100%;
+}
+
+main .mainmenu .leftsection > .default-content-wrapper > button .icon {
+    max-width: none;
+    max-height: none;
+}
+
+main .mainmenu .leftsection > .default-content-wrapper > button .icon-close-white {
+    display: none;
+}
+
+main .mainmenu .leftsection > .default-content-wrapper > button.active .icon-menu-white {
+    display: none;
+}
+
+main .mainmenu .leftsection > .default-content-wrapper > button.active .icon-close-white {
+    display: block;
 }
 
 body > main .section.rightsection.biography {
@@ -116,13 +137,11 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
     }
 
     main .mainmenu .leftsection {
-        /* padding: 33px 15px 15px; */
-        flex: 0 0 22%;
-        max-width: 400px;
-        background-color: var(--orange);
+        flex: 0 0 350px;
+        max-width: 350px;
     }
 
-    main .mainmenu .leftsection > .default-content-wrapper > p {
+    main .mainmenu .leftsection > .default-content-wrapper > button {
         display: none;
     }
 
