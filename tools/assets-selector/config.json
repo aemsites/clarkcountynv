@@ -54,6 +54,25 @@
         ]
       },
       {
+      "fields": [
+        {
+          "columns": 1,
+          "defaultValue": ["approved"],
+          "element": "checkbox",
+          "name": "dam:assetStatus",
+          "options": [
+            {
+              "label": "Approved",
+              "value": "approved"
+            }
+          ],
+          "orientation": "horizontal"
+        }
+      ],
+      "groupKey": "ApprovalStatusGroup",
+      "header": "Approval Status"
+    },
+      {
         "header": "Assets Tags",
         "groupKey": "AssetTagsGroup",
         "fields": [
