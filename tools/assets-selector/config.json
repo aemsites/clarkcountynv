@@ -78,7 +78,7 @@
         "fields": [
           {
             "element": "taggroup",
-            "name": "property=xcm:keywords.id=",
+            "name": "property=xcm:keywords.id",
             "columns": 3
             } 
         ]
