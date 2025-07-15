@@ -23,9 +23,6 @@
         "value": "reference"
       }
     ],
-    "assetDomainMapping": {
-      "delivery-p154411-e1620520.adobeaemcloud.com": "www.clarkcountynv.gov"
-    },
     "filterSchema": [
       {
         "header": "File Types",
