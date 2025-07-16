@@ -78,8 +78,9 @@
         "fields": [
           {
             "element": "taggroup",
-            "name": "property=xcm:keywords.id",
-            "columns": 3
+            "name": "property=xcm:keywords.id=",
+            "columns": 3,
+              "label": "Tags"
             } 
         ]
       },
@@ -90,28 +91,28 @@
           {
             "element": "taggroup",
             "name": "property=clrkcnty:department",
-            "options": [
-            {
-              "label": "Approved",
-              "value": "approved"
-            }
-          ]
+             "label": "Tags"
             } 
         ]
       },
       {
         "header": "Department1",
-        "groupKey": "DepartmentGroup",
+        "groupKey": "DepartmentGroup1",
         "fields": [
           {
             "element": "taggroup",
-            "name": "property=metadata.embedded.clrkcnty:department",
-            "options": [
-            {
-              "label": "Approved",
-              "value": "approved"
-            }
-          ]
+            "name": "clrkcnty:department",
+              "label": "Tags"
+            } 
+        ]
+      },
+      {
+        "header": "Department2",
+        "groupKey": "DepartmentGroup2",
+        "fields": [
+          {
+            "element": "taggroup",
+            "name": "property=metadata.embedded.clrkcnty:department"
             } 
         ]
       },
