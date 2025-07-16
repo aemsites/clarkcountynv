@@ -80,12 +80,6 @@
             "element": "taggroup",
             "name": "property=clrkcnty.asset-type",
             "defaultValue": ["clrkcnty:asset-type/image/photo"],
-            "options": [
-            {
-              "label": "Photo",
-              "value": "clrkcnty:asset-type/image/photo"
-            }
-          ],
             "columns": 3            
           } 
         ]
@@ -98,12 +92,6 @@
             "element": "taggroup",
             "name": "property=xcm:keywords.id=",
             "defaultValue": ["clrkcnty:asset-type/image/photo"],
-            "options": [
-            {
-              "label": "Photo",
-              "value": "clrkcnty:asset-type/image/photo"
-            }
-          ],
             "columns": 3            
           } 
         ]
@@ -116,12 +104,6 @@
             "element": "taggroup",
             "name": "clrkcnty.asset-type",
             "defaultValue": ["clrkcnty:asset-type/image/photo"],
-            "options": [
-            {
-              "label": "Photo",
-              "value": "clrkcnty:asset-type/image/photo"
-            }
-          ],
             "columns": 3            
           } 
         ]
