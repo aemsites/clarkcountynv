@@ -78,42 +78,52 @@
         "fields": [
           {
             "element": "taggroup",
+            "name": "property=clrkcnty.asset-type",
+            "defaultValue": ["clrkcnty:asset-type/image/photo"],
+            "options": [
+            {
+              "label": "Photo",
+              "value": "clrkcnty:asset-type/image/photo"
+            }
+          ],
+            "columns": 3            
+          } 
+        ]
+      },
+      {
+        "header": "Asset Type",
+        "groupKey": "AssetTypeGroup",
+        "fields": [
+          {
+            "element": "taggroup",
             "name": "property=xcm:keywords.id=",
-            "columns": 3,
-              "label": "Tags"
-            } 
+            "defaultValue": ["clrkcnty:asset-type/image/photo"],
+            "options": [
+            {
+              "label": "Photo",
+              "value": "clrkcnty:asset-type/image/photo"
+            }
+          ],
+            "columns": 3            
+          } 
         ]
       },
-      {
-        "header": "Department",
-        "groupKey": "DepartmentGroup",
+       {
+        "header": "Asset Type New",
+        "groupKey": "AssetTypeGroupNew",
         "fields": [
           {
             "element": "taggroup",
-            "name": "property=clrkcnty:department",
-             "label": "Tags"
-            } 
-        ]
-      },
-      {
-        "header": "Department1",
-        "groupKey": "DepartmentGroup1",
-        "fields": [
-          {
-            "element": "taggroup",
-            "name": "clrkcnty:department",
-              "label": "Tags"
-            } 
-        ]
-      },
-      {
-        "header": "Department2",
-        "groupKey": "DepartmentGroup2",
-        "fields": [
-          {
-            "element": "taggroup",
-            "name": "property=metadata.embedded.clrkcnty:department"
-            } 
+            "name": "clrkcnty.asset-type",
+            "defaultValue": ["clrkcnty:asset-type/image/photo"],
+            "options": [
+            {
+              "label": "Photo",
+              "value": "clrkcnty:asset-type/image/photo"
+            }
+          ],
+            "columns": 3            
+          } 
         ]
       },
       {
