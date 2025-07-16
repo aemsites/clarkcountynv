@@ -102,7 +102,7 @@
         "fields": [
           {
             "element": "taggroup",
-            "name": "property=clrkcnty.asset-type",
+            "name": "clrkcnty:asset-type",
             "defaultValue": ["clrkcnty:asset-type/image/photo"],
             "columns": 3            
           } 
