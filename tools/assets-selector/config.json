@@ -1,4 +1,11 @@
 {
+  "repoNames": [
+      "author-p154411-e1620520.adobeaemcloud.com",
+      "delivery-p154411-e1620520.adobeaemcloud.com"
+    ],
+   "aemTierType": [
+        "author"
+    ],
     "blockName": [
       {
         "mimeType": "video/*",
@@ -78,7 +85,7 @@
         "fields": [
           {
             "element": "taggroup",
-            "name": "property=metadata.application:clrkcnty:department",
+            "name": "property=xcm:keywords.id=",
             "columns": 3            
           } 
         ]
