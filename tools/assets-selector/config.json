@@ -91,42 +91,6 @@
         ]
       },
       {
-        "header": "Asset Type",
-        "groupKey": "AssetTypeGroup",
-        "fields": [
-          {
-            "element": "taggroup",
-            "name": "property=xcm:keywords.id=",
-            "defaultValue": ["clrkcnty:asset-type/image/photo"],
-            "options": [
-            {
-              "label": "Photo",
-              "value": "clrkcnty:asset-type/image/photo"
-            }
-          ],
-            "columns": 3            
-          } 
-        ]
-      },
-       {
-        "header": "Asset Type New",
-        "groupKey": "AssetTypeGroupNew",
-        "fields": [
-          {
-            "element": "taggroup",
-            "name": "clrkcnty.asset-type",
-            "defaultValue": ["clrkcnty:asset-type/image/photo"],
-            "options": [
-            {
-              "label": "Photo",
-              "value": "clrkcnty:asset-type/image/photo"
-            }
-          ],
-            "columns": 3            
-          } 
-        ]
-      },
-      {
         "fields": [
           {
             "element": "checkbox",
