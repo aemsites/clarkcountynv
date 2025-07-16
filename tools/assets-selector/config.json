@@ -1,8 +1,4 @@
 {
-  "repoNames": ["author-p154411-e1620520.adobeaemcloud.com"],
-  "repositories": ["author-p154411-e1620520.adobeaemcloud.com"],
-  "rootPath": "/content/dam/departments",
-  "featureSet":[ ],
     "blockName": [
       {
         "mimeType": "video/*",
@@ -83,7 +79,6 @@
           {
             "element": "taggroup",
             "name": "property=clrkcnty.asset-type",
-            "defaultValue": ["clrkcnty:asset-type/image/photo"],
             "options": [
             {
               "label": "Photo",
