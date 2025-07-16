@@ -78,13 +78,7 @@
         "fields": [
           {
             "element": "taggroup",
-            "name": "property=clrkcnty.asset-type",
-            "options": [
-            {
-              "label": "Photo",
-              "value": "clrkcnty:asset-type/image/photo"
-            }
-          ],
+            "name": "property=metadata.application:clrkcnty:department",
             "columns": 3            
           } 
         ]
