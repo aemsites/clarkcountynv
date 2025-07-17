@@ -1,11 +1,4 @@
 {
-  "repoNames": [
-      "author-p154411-e1620520.adobeaemcloud.com",
-      "delivery-p154411-e1620520.adobeaemcloud.com"
-    ],
-   "aemTierType": [
-        "author"
-    ],
     "blockName": [
       {
         "mimeType": "video/*",
@@ -79,17 +72,6 @@
       "groupKey": "ApprovalStatusGroup",
       "header": "Approval Status"
     },
-      {
-        "header": "Assets Tags",
-        "groupKey": "AssetTagsGroup",
-        "fields": [
-          {
-            "element": "taggroup",
-            "name": "property=xcm:keywords.id=",
-            "columns": 3            
-          } 
-        ]
-      },
       {
         "fields": [
           {
