@@ -23,14 +23,16 @@
         "value": "reference"
       }
     ],
+    "assetDomainMapping": {
+      "delivery-p154411-e1620520.adobeaemcloud.com": "www.clarkcountynv.gov"
+    },
     "filterSchema": [
       {
         "header": "File Types",
         "groupKey": "TopGroup",
         "fields": [
           {
-            "defaultValue": ["image/*", "video/*"],
-            "excludeTags": ["image/*", "video/*", "application/pdf"],
+            "defaultValue": ["image/*"],
             "element": "checkbox",
             "name": "type",
             "options": [
@@ -52,18 +54,24 @@
         ]
       },
       {
-        "header": "Assets Tags",
-        "groupKey": "AssetTagsGroup",
-        "fields": [
-          {
-            "element": "taggroup",
-            "name": "property=metadata.application.xcm:keywords.id",
-            "defaultValue": [],
-            "options": [],
-            "columns": 3
-          }
-        ]
-      },
+      "fields": [
+        {
+          "columns": 1,
+          "defaultValue": ["approved"],
+          "element": "checkbox",
+          "name": "dam:assetStatus",
+          "options": [
+            {
+              "label": "Approved",
+              "value": "approved"
+            }
+          ],
+          "orientation": "horizontal"
+        }
+      ],
+      "groupKey": "ApprovalStatusGroup",
+      "header": "Approval Status"
+    },
       {
         "fields": [
           {
@@ -106,10 +114,5 @@
         "header": "Language",
         "groupKey": "LanguageGroup"
       }
-    ],
-    "consent": {
-      "consentHtml": "<div id=\"consentInline\" style=\"padding: 10px; background-color: #f9f9f9; border-radius: 8px; margin-top: 20px;\">\n    <p style=\"margin: 0 0 10px 0;font-size: medium;\">The assets displayed in the Asset Selector are subject to restricted and limited usage as governed by specific Asset's rights & license terms. Ensure you understand the terms before consuming assets from the Asset Selector.</p>\n    <p style=\"margin: 0 0 10px 0;font-size: medium;\">Some assets may have specific terms or rights that restrict their use or limit usage to certain locations. By proceeding, you acknowledge that you have reviewed the applicable usage restrictions and rights management policies.</p>\n</div>",
-      "cookieName": "consentGiven",
-      "cookieExpiryDays": "365"
-    }
+    ]
   }
