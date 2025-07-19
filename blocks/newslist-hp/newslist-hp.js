@@ -1,9 +1,9 @@
 import ffetch from '../../scripts/ffetch.js';
 import {
-  div, a, img,
+  div, a, img, h4, h6, span,
 } from '../../scripts/dom-helpers.js';
 import {
-  buildBlock, decorateBlock, loadBlock, createOptimizedPicture,
+  buildBlock, decorateBlock, loadBlock, createOptimizedPicture, readBlockConfig,
 } from '../../scripts/aem.js';
 
 class News {
@@ -50,9 +50,45 @@ const resultParsers = {
     });
     return blockContents;
   },
+  columns: (results) => {
+    const blockContents = [];
+    results.forEach((result) => {
+      const leftColumnFrag = document.createDocumentFragment();
+      const rightColumnFrag = document.createDocumentFragment();
+      if (result.newsImage) {
+        const cardImage = createOptimizedPicture(result.newsImage);
+        leftColumnFrag.append(cardImage);
+      }
+      if (result.newsCategory) {
+        const category = h6({ class: 'newslist-category' }, result.newsCategory);
+        rightColumnFrag.append(category);
+      }
+      if (result.newsTitle) {
+        const title = h4({ class: 'newslist-title' }, result.newsTitle);
+        rightColumnFrag.append(title);
+      }
+      if (result.newsPath) {
+        const newsPath = a(
+          { class: 'newslist-link', href: result.newsPath, target: '_self' },
+          'Learn more',
+          span(
+            { class: 'icon icon-arrow-right-orange' },
+            img(
+              { src: '/icons/arrow-right-orange.svg', alt: 'Learn more about this news event' },
+            ),
+          ),
+        );
+        rightColumnFrag.append(newsPath);
+      }
+      const row = [];
+      row.push(leftColumnFrag, rightColumnFrag);
+      blockContents.push(row);
+    });
+    return blockContents;
+  },
 };
 
-const loadresults = async (jsonDataNews, resultsDiv) => {
+const loadresults = async (jsonDataNews, resultsDiv, numberOfCards) => {
   const newsResults = [];
   jsonDataNews.forEach((news) => {
     // eslint-disable-next-line max-len
@@ -61,10 +97,11 @@ const loadresults = async (jsonDataNews, resultsDiv) => {
   });
   newsResults.sort((x, y) => y.newsPublished - x.newsPublished);
 
-  const blockType = 'cards';
+  const blockType = 'columns';
+  const numCards = typeof numberOfCards !== 'undefined' ? parseInt(numberOfCards, 10) : 6;
 
   // eslint-disable-next-line max-len
-  const curPage = [...newsResults].slice(0, 6);
+  const curPage = [...newsResults].slice(0, numCards);
 
   const blockContents = resultParsers[blockType](curPage);
   const builtBlock = buildBlock(blockType, blockContents);
@@ -73,35 +110,28 @@ const loadresults = async (jsonDataNews, resultsDiv) => {
     builtBlock,
   );
 
-  const newsTop = div({ class: 'news-top' }, div({ class: 'date' }));
-
-  // Get today's date along with sufgfix
-  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const today = new Date();
-  const day = today.getDate();
-  const month = today.getMonth(); // Months are zero-based
-  const year = today.getFullYear();
-  const suffix = ['th', 'st', 'nd', 'rd'][((day % 10) < 4 && ((day % 100) - (day % 10)) !== 10) ? day % 10 : 0];
-  const formattedDate = `${monthNames[month]} ${day}${suffix} ${year}`;
-  newsTop.querySelector('.date').textContent = formattedDate;
-
-  resultsDiv.append(newsTop, parentDiv);
+  resultsDiv.append(parentDiv);
   decorateBlock(builtBlock);
   await loadBlock(builtBlock);
   builtBlock.classList.add('newsitems');
   builtBlock.querySelectorAll(':scope > div').forEach((newsitem) => {
+    Array.from(newsitem.children).forEach((column, index) => {
+      if (index === 0) column.classList.add('column1');
+      else column.classList.add('column2');
+    });
     newsitem.classList.add('news');
   });
 };
 
-async function getCategories(block) {
+async function getCategories(block, numberOfCards) {
   const jsonDataNews = await ffetch('/news/query-index.json')
     .chunks(1000)
     .all();
-  loadresults(jsonDataNews, block);
+  loadresults(jsonDataNews, block, numberOfCards);
 }
 
 export default async function decorate(block) {
+  const { numberofcards } = readBlockConfig(block);
   block.innerHTML = '';
-  await getCategories(block);
+  await getCategories(block, numberofcards);
 }
