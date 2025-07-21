@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars,no-empty-function
 import {
   div,
+  button,
 } from '../../scripts/dom-helpers.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { loadFragment } from '../../blocks/fragment/fragment.js';
@@ -95,11 +96,14 @@ export default async function decorate(doc) {
       }
     }
     const $clickElement = $leftsection.querySelector('.default-content-wrapper > p');
-    const $activeElement = $leftsection.querySelector('.accordion-ml.block');
+    const $activeElement = $leftsection.querySelector('.left-nav.block');
+    const sectionMenuBtn = button({ class: 'section-menu-btn', type: 'button' });
+    sectionMenuBtn.innerHTML = $clickElement.innerHTML;
+    $clickElement.replaceWith(sectionMenuBtn);
 
-    $clickElement.addEventListener('click', () => {
-      $clickElement.classList.toggle('active');
-      $activeElement.classList.toggle('active');
+    sectionMenuBtn.addEventListener('click', () => {
+      sectionMenuBtn.classList.toggle('active');
+      $activeElement?.classList.toggle('active');
       const height = document.querySelector(':root');
       const originalHeight = height.style.getPropertyValue('--original-height');
       height.style.setProperty('--height', `${originalHeight}`);
