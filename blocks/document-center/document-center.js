@@ -6,7 +6,7 @@
 
 import { Accordion } from '../accordion-ml/accordion-ml.js';
 import {
-  button, details, div, h2, input, label, p, small, span, summary, ul,
+  button, details, div, img, input, p, span, summary, ul, h4,
 } from '../../scripts/dom-helpers.js';
 import { createHashId, scrollWithHeaderOffset } from '../../scripts/utils.js';
 
@@ -67,7 +67,6 @@ function searchDocuments(searchValue) {
     }
   });
 
-  document.querySelector('.doc-reset-button').style.display = 'block';
   const searchResults = document.querySelector('.doc-search-results');
   searchResults.innerHTML = '';
 
@@ -93,28 +92,35 @@ function searchFile() {
   }
 }
 
-function clearSearch(element) {
-  document.querySelector('.doc-search-input').value = '';
-  slideUp(document.querySelector('.doc-search-results'));
-  slideDown(document.querySelector('.documents-wrap'));
-  element.style.display = 'none';
-  oldSearch = '';
-}
+const handleSearchInputClear = (event) => {
+  if (event.target.value === '') {
+    const block = event.target.closest('.document-center.block');
+    if (block) {
+      const searchResults = block.querySelector('.doc-search-results');
+      const documentsWrap = block.querySelector('.documents-wrap');
+      if (searchResults.style.display !== '' && searchResults.style.display !== 'none') {
+        slideUp(searchResults);
+        slideDown(documentsWrap);
+      }
+    }
+  }
+};
 
 function createFileSearchForm(block) {
-  const searchLabel = label({ class: 'doc-search-label', for: 'file-search' }, h2('Search for file name:'));
   const searchInput = input({
-    class: 'doc-search-input', type: 'text', placeholder: 'search here', onkeypress: (e) => { if (e.key === 'Enter') searchFile(); },
+    class: 'doc-search-input', type: 'search', name: 'document-center-input', placeholder: 'Search', onkeypress: (e) => { if (e.key === 'Enter') searchFile(); },
   });
-  const searchButton = button({ class: 'doc-search-button', onclick: () => searchFile() }, 'Search');
-  const resetButton = button({ class: 'doc-reset-button', onclick(e) { clearSearch(this, e); } }, 'RESET');
+  searchInput.addEventListener('input', handleSearchInputClear);
+  const searchButton = button({ class: 'button primary doc-search-button', id: 'search-btn', type: 'button', onclick: () => searchFile() }, 'Search');
+  const searchIcon = img({ src: '/icons/search-white.svg', alt: 'Search results icon' });
+  searchButton.prepend(searchIcon);
+
   const searchForm = div(
     { class: 'doc-search-form' },
-    searchLabel,
     searchInput,
     searchButton,
-    resetButton,
   );
+
   block.insertBefore(searchForm, block.firstChild);
 }
 
@@ -175,8 +181,8 @@ export default function decorate(block) {
 
           const sectionSummary = summary(
             { class: 'accordion-item-label-inner' },
-            p(sectionTitle),
-            small({ class: 'doc-center-counter-inner' }, `${numOfDocs} documents`),
+            h4({ class: 'summary-title' }, sectionTitle),
+            p({ class: 'doc-center-counter-inner' }, `${numOfDocs} documents`),
           );
 
           if (nestedList) {
@@ -206,14 +212,15 @@ export default function decorate(block) {
 
     body = contentContainer;
 
+    fileGroupTitle.classList.add('summary-title');
     const titleText = fileGroupTitle.textContent.trim();
     const id = createHashId(titleText);
     const mainSummaryEl = summary(
       { class: 'accordion-item-label' },
       fileGroupTitle,
-      small(
+      p(
         { class: 'doc-center-counter' },
-        `${body.querySelectorAll('.file-item').length} documents`,
+        `${body.querySelectorAll('.file-item').length} Documents`,
       ),
     );
 
