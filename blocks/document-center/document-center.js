@@ -111,7 +111,12 @@ function createFileSearchForm(block) {
     class: 'doc-search-input', type: 'search', name: 'document-center-input', placeholder: 'Search', onkeypress: (e) => { if (e.key === 'Enter') searchFile(); },
   });
   searchInput.addEventListener('input', handleSearchInputClear);
-  const searchButton = button({ class: 'button primary doc-search-button', id: 'search-btn', type: 'button', onclick: () => searchFile() }, 'Search');
+  const searchButton = button({
+    class: 'button primary doc-search-button',
+    id: 'search-btn',
+    type: 'button',
+    onclick: () => searchFile(),
+  }, 'Search');
   const searchIcon = img({ src: '/icons/search-white.svg', alt: 'Search results icon' });
   searchButton.prepend(searchIcon);
 
