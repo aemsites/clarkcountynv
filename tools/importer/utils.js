@@ -31,7 +31,7 @@ export const createMetadata = (main, document, params) => {
   if (desc) {
     meta.Description = desc.content;
   }
-
+  
   if (params.preProcessMetadata && Object.keys(params.preProcessMetadata).length) {
     Object.assign(meta, params.preProcessMetadata);
   }
