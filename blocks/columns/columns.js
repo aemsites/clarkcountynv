@@ -116,6 +116,8 @@ export default function decorate(block) {
   const isContactCard = block.classList.contains('contact-card');
   if (isContactCard) {
     const firstCol = block.querySelector('.column1');
+    const secondCol = block.querySelector('.column2');
+    const title = `${secondCol?.querySelector('h3').textContent} map` || 'Google map embed';
     const mapLink = firstCol?.querySelector('a');
     const hasEmbedCode = mapLink?.href.indexOf('www.google.com/maps/embed') > -1;
     if (hasEmbedCode) {
@@ -125,6 +127,7 @@ export default function decorate(block) {
           allowFullscreen: true,
           frameBorder: 0,
           class: 'map-embed',
+          title,
         },
       );
       mapLink.parentElement.replaceWith(map);

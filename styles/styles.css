@@ -601,7 +601,13 @@ main .section.details-404 > .default-content-wrapper {
     }
 }
 
+.rightsection > .columns-wrapper {
+  margin-bottom: 40px;
+}
 
+.columns-container {
+  margin-bottom: 40px;
+}
 
 @media (width >= 991px) {
   .desktop {
@@ -613,7 +619,6 @@ main .section.details-404 > .default-content-wrapper {
   }
 
   .section > div {
-    /* max-width: 1200px; */
     margin: auto;
   }
 
@@ -690,11 +695,6 @@ main .section.details-404 > .default-content-wrapper {
     display: inline-block;
     position: relative;
     width: 100%;
-    padding: 26px 34px 24px;
-  }
-
-  .columns-container {
-    margin-bottom: 25px;
   }
 
   .coulum1 {

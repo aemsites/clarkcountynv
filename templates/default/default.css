@@ -157,7 +157,7 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
     main .mainmenu .rightsection {
         width: 100%;
         flex: 100%;
-        padding: 50px 70px 50px 50px;
+        padding: 50px;
         box-sizing: border-box;
     }
 
