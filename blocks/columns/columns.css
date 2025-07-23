@@ -237,10 +237,6 @@ main .section.rightsection.no-button .columns.alert a:any-link {
 }
 
 /* Columns (Contact Card) */
-.section.columns-container {
-  margin-bottom: 40px;
-}
-
 .columns.contact-card {
   width: 100%;
   max-width: 1340px;
@@ -248,12 +244,16 @@ main .section.rightsection.no-button .columns.alert a:any-link {
   padding: 0 24px;
 }
 
+.rightsection .columns.contact-card {
+  max-width: none;
+  padding: 0;
+}
+
 .columns.contact-card > div {
   gap: 0;
 }
 
 .columns.contact-card .column1 {
-  flex: 0 0 262px;
   position: relative;
   width: 100%;
   height: 262px;
@@ -282,7 +282,7 @@ main .section.rightsection.no-button .columns.alert a:any-link {
 .columns.contact-card .column2 a {
   color: var(--neutral-black);
   text-decoration-color: var(--neutral-black);
-  word-wrap: break-word;
+  word-break: break-all;
 }
 
 .columns.contact-card .column2 strong {
@@ -304,15 +304,23 @@ main .section.rightsection.no-button .columns.alert a:any-link {
 }
 
 @media (width >= 900px) {
+  .rightsection .columns.contact-card > div {
+    flex-flow: column nowrap;
+  }
+
   .columns.contact-card {
     padding: 0;
   }
 
   .columns.contact-card .column1 {
-    flex: 0 0 400px;
-    position: relative;
     width: 400px;
-    height: 306px;
+    height: auto;
+    align-self: stretch;
+    position: relative;
+  }
+
+  .rightsection .columns.contact-card .column1 {
+    width: 100%;
   }
 
   .columns.contact-card .column2 {
@@ -325,6 +333,12 @@ main .section.rightsection.no-button .columns.alert a:any-link {
 
   .columns.contact-card .column2 p {
     font-size: var(--body-font-size-m);
+  }
+}
+
+@media (width >= 1200px) {
+  .rightsection .columns.contact-card > div {
+    flex-flow: row nowrap;
   }
 }
 
