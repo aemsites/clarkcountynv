@@ -409,6 +409,7 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
             color: var(--primary-orange-900);
             background-color: transparent;
             border: 0;
+            display: inline;
         }
     }
 }
