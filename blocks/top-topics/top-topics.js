@@ -331,7 +331,8 @@ export default async function decorate(block) {
       {
         class: isNotSearchTab ? 'tabs-tab' : 'search-btn',
         type: 'button',
-        role: isNotSearchTab ? 'tab' : 'none',
+        //role: isNotSearchTab ? 'tab' : 'none',
+        ...(isNotSearchTab && { role: 'tab' }),
         ...(isNotSearchTab && { id: `tab-${id}` }),
         ...(isNotSearchTab && { 'aria-selected': (isMobileViewport ? false : (rowIndex === 0)) }),
         ...(isNotSearchTab && { 'aria-controls': `tabpanel-${id}` }),
@@ -382,7 +383,7 @@ export default async function decorate(block) {
     mobileContentFrag.append(tabPanel.cloneNode(true));
     mobileTabList.append(mobileContentFrag);
   });
-
+ 
   // Desktop
   desktopSideNav.append(desktopTabList);
   desktopMainContent.append(desktopContentFrag);
@@ -391,6 +392,17 @@ export default async function decorate(block) {
   // Mobile
   mobileLayout.append(mobileTabList);
   contentFragmentWrapper.append(desktopLayout, mobileLayout);
+
+  // Rearrange search button for desktop/mobile
+  // CHANGE BUTTON TO DIV
+  const searchBtnWrapper = div({ class: 'search-btn' });
+  const desktopSearchBtn = desktopLayout.querySelector('.search-btn');
+  const mobileSearchBtn = mobileLayout.querySelector('.search-btn');
+  searchBtnWrapper.innerHTML = desktopLayout.querySelector('.search-btn')?.innerHTML;
+  desktopSearchBtn?.remove();
+  mobileSearchBtn?.remove();
+  desktopSideNav.append(searchBtnWrapper);
+  mobileLayout.append(searchBtnWrapper.cloneNode(true));
 
   block.innerHTML = '';
   block.append(contentFragmentWrapper);

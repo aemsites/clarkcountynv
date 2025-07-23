@@ -5,7 +5,7 @@
 
 .top-topics .tabs-list {
     width: 100%;
-    padding: 0 0 33px;
+    padding: 0 0 25px;
     background-color: var(--neutral-black-200);
 }
 
@@ -22,16 +22,24 @@
     text-wrap: auto;
 }
 
+.top-topics .search-btn-wrapper {
+    padding: 0 50px;
+}
+
 .top-topics .top-topics-mobile {
     padding: 0 24px;
 }
 
 .top-topics .top-topics-mobile .search-btn {
     text-align: center;
+    background-color: var(--neutral-black-200);
 }
 
 .top-topics .top-topics-mobile .search-btn a {
     background-color: transparent;
+    padding: 8px 24px;
+    font-size: var(--body-font-size-s);
+    margin-top: 0;
 }
 
 .top-topics .top-topics-mobile .search-btn a:hover {
@@ -194,8 +202,7 @@
     }
 
     .top-topics .top-topics-desktop .search-btn {
-        padding: 26px 50px;
-        cursor: default;
+        padding: 0 50px;
     }
 
     .top-topics .top-topics-desktop .search-btn:focus {
