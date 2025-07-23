@@ -32,7 +32,6 @@
         "groupKey": "TopGroup",
         "fields": [
           {
-            "defaultValue": ["image/*","application/pdf","video/*"],
             "element": "checkbox",
             "name": "type",
             "options": [
