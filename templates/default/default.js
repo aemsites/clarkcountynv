@@ -134,7 +134,7 @@ export default async function decorate(doc) {
   // change all image anchor links to img tag
   $rightsection.querySelectorAll('a[href*=".jpg"], a[href*=".png"], a[href*=".jpeg"], a[href*=".gif"]').forEach((aEl) => {
     if (['jpg', 'jpeg', 'png', 'gif'].some((ext) => {
-      const pathname = new URL(aEl.href, window.location.origin).pathname;
+      const { pathname } = new URL(aEl.href, window.location.origin);
       return pathname.toLowerCase().endsWith(`.${ext}`);
     })) {
       const picture = createOptimizedPicture(aEl.href, aEl.href.split('/').pop());
