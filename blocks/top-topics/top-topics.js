@@ -27,6 +27,7 @@ class AccordionTabs {
     this.tabList.addEventListener('keydown', (e) => this.handleKeyDown(e));
     this.tabList.addEventListener('click', (e) => this.handleClick(e));
     this.mobileTabList.addEventListener('click', (e) => this.handleClick(e));
+    this.mobileTabList.addEventListener('keydown', (e) => this.handleMobileKeyDown(e));
 
     // Add hover listeners to tabs
     this.tabs.forEach((tab, index) => {
@@ -89,6 +90,72 @@ class AccordionTabs {
       // Move to current tab
       event.preventDefault();
       this.tabs[panelIndex].focus();
+    }
+  }
+
+  handleMobileKeyDown(event) {
+    const { key } = event;
+    const currentElement = document.activeElement;
+    const currentElementIndex = this.mobileTabs.indexOf(currentElement);
+
+    if (currentElementIndex === -1) return;
+
+    switch (key) {
+      case 'ArrowDown':
+      case 'ArrowRight': {
+        event.preventDefault();
+        const nextIndex = (currentElementIndex + 1) % this.mobileTabs.length;
+        this.mobileTabs[nextIndex].focus();
+        break;
+      }
+      case 'ArrowUp':
+      case 'ArrowLeft': {
+        event.preventDefault();
+        const prevIndex = currentElementIndex === 0
+          ? this.mobileTabs.length - 1 : currentElementIndex - 1;
+        this.mobileTabs[prevIndex].focus();
+        break;
+      }
+      case 'Home':
+        event.preventDefault();
+        this.mobileTabs[0].focus();
+        break;
+      case 'End':
+        event.preventDefault();
+        this.mobileTabs[this.mobileTabs.length - 1].focus();
+        break;
+      case 'Enter':
+      case ' ':
+        event.preventDefault();
+        this.toggleMobileTab(currentElementIndex, event);
+        break;
+      default:
+    }
+  }
+
+  toggleMobileTab(index, event) {
+    if (getViewPort() !== 'mobile') return;
+    
+    const isCurrentlyActive = this.mobileTabs[index].getAttribute('aria-selected') === 'true';
+    
+    if (isCurrentlyActive) {
+      // Close the active tab by setting all tabs to inactive
+      this.mobileTabs.forEach((tab) => {
+        tab.setAttribute('aria-selected', 'false');
+      });
+      
+      this.mobilePanels.forEach((panel) => {
+        panel.setAttribute('aria-hidden', 'true');
+        panel.setAttribute('tabindex', '-1');
+        
+        const focusableElements = AccordionTabs.getFocusableElements(panel);
+        focusableElements.forEach((element) => {
+          element.setAttribute('tabindex', '-1');
+        });
+      });
+    } else {
+      // Open the tab normally
+      this.setActiveTab(index, event);
     }
   }
 
@@ -165,9 +232,15 @@ class AccordionTabs {
     const clickedTab = event.target.closest('[role="tab"]');
     if (!clickedTab) return;
 
-    const newIndex = getViewPort() !== 'mobile' ? this.tabs.indexOf(clickedTab) : this.mobileTabs.indexOf(clickedTab);
+    const isMobile = getViewPort() === 'mobile';
+    const newIndex = isMobile ? this.mobileTabs.indexOf(clickedTab) : this.tabs.indexOf(clickedTab);
+    
     if (newIndex !== -1) {
-      this.setActiveTab(newIndex, event);
+      if (isMobile) {
+        this.toggleMobileTab(newIndex, event);
+      } else {
+        this.setActiveTab(newIndex, event);
+      }
     }
   }
 
@@ -198,8 +271,8 @@ class AccordionTabs {
       this.mobileTabs.forEach((tab, i) => {
         const isActive = i === index;
         tab.setAttribute('aria-selected', isEventUndefined ? false : isActive);
-        // eslint-disable-next-line no-nested-ternary
-        tab.setAttribute('tabindex', isEventUndefined ? '-1' : (isActive ? '0' : '-1'));
+        // Make all mobile tab buttons focusable by default
+        tab.setAttribute('tabindex', '0');
       });
 
       // Update panels - both visibility and accessibility
@@ -207,9 +280,23 @@ class AccordionTabs {
         const isActive = i === index;
         panel.setAttribute('aria-hidden', isEventUndefined ? true : !isActive);
 
-        // Set tabindex for panel content navigation
-        // eslint-disable-next-line no-nested-ternary
-        panel.setAttribute('tabindex', isEventUndefined ? '-1' : (isActive ? '0' : '-1'));
+        // Set tabindex for panel content navigation and hide/show focusable elements
+        let panelTabindex = '-1';
+        if (!isEventUndefined) {
+          panelTabindex = isActive ? '0' : '-1';
+        }
+        panel.setAttribute('tabindex', panelTabindex);
+        // Hide focusable elements in inactive panels
+        const focusableElements = AccordionTabs.getFocusableElements(panel);
+        focusableElements.forEach((element) => {
+          if (isEventUndefined) {
+            // During initialization, all mobile panels should have no focusable elements
+            element.setAttribute('tabindex', '-1');
+          } else {
+            // During user interaction, only active panels should have focusable elements
+            element.setAttribute('tabindex', isActive ? '0' : '-1');
+          }
+        });
       });
     }
   }
@@ -248,8 +335,13 @@ export default async function decorate(block) {
         ...(isNotSearchTab && { id: `tab-${id}` }),
         ...(isNotSearchTab && { 'aria-selected': (isMobileViewport ? false : (rowIndex === 0)) }),
         ...(isNotSearchTab && { 'aria-controls': `tabpanel-${id}` }),
-        // eslint-disable-next-line no-nested-ternary
-        ...(isNotSearchTab && { tabindex: `${(isMobileViewport ? -1 : (rowIndex === 0 ? 0 : -1))}` }),
+        ...(isNotSearchTab && (() => {
+          let tabIndex = '-1';
+          if (!isMobileViewport) {
+            tabIndex = rowIndex === 0 ? '0' : '-1';
+          }
+          return { tabindex: tabIndex };
+        })()),
       },
     );
 
@@ -275,8 +367,13 @@ export default async function decorate(block) {
         role: isNotSearchTab ? 'tabpanel' : 'none',
         ...(isNotSearchTab && { 'aria-hidden': (isMobileViewport ? true : (rowIndex !== 0)) }),
         ...(isNotSearchTab && { 'aria-labelledby': `tab-${id}` }),
-        // eslint-disable-next-line no-nested-ternary
-        ...(isNotSearchTab && { tabindex: `${(isMobileViewport ? -1 : (rowIndex === 0 ? 0 : -1))}` }),
+        ...(isNotSearchTab && (() => {
+          let tabIndex = '-1';
+          if (!isMobileViewport) {
+            tabIndex = rowIndex === 0 ? '0' : '-1';
+          }
+          return { tabindex: tabIndex };
+        })()),
       },
     );
 
