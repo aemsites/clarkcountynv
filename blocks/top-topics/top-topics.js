@@ -135,19 +135,19 @@ class AccordionTabs {
 
   toggleMobileTab(index, event) {
     if (getViewPort() !== 'mobile') return;
-    
+
     const isCurrentlyActive = this.mobileTabs[index].getAttribute('aria-selected') === 'true';
-    
+
     if (isCurrentlyActive) {
       // Close the active tab by setting all tabs to inactive
       this.mobileTabs.forEach((tab) => {
         tab.setAttribute('aria-selected', 'false');
       });
-      
+
       this.mobilePanels.forEach((panel) => {
         panel.setAttribute('aria-hidden', 'true');
         panel.setAttribute('tabindex', '-1');
-        
+
         const focusableElements = AccordionTabs.getFocusableElements(panel);
         focusableElements.forEach((element) => {
           element.setAttribute('tabindex', '-1');
@@ -234,7 +234,7 @@ class AccordionTabs {
 
     const isMobile = getViewPort() === 'mobile';
     const newIndex = isMobile ? this.mobileTabs.indexOf(clickedTab) : this.tabs.indexOf(clickedTab);
-    
+
     if (newIndex !== -1) {
       if (isMobile) {
         this.toggleMobileTab(newIndex, event);
@@ -331,7 +331,6 @@ export default async function decorate(block) {
       {
         class: isNotSearchTab ? 'tabs-tab' : 'search-btn',
         type: 'button',
-        //role: isNotSearchTab ? 'tab' : 'none',
         ...(isNotSearchTab && { role: 'tab' }),
         ...(isNotSearchTab && { id: `tab-${id}` }),
         ...(isNotSearchTab && { 'aria-selected': (isMobileViewport ? false : (rowIndex === 0)) }),
@@ -383,7 +382,7 @@ export default async function decorate(block) {
     mobileContentFrag.append(tabPanel.cloneNode(true));
     mobileTabList.append(mobileContentFrag);
   });
- 
+
   // Desktop
   desktopSideNav.append(desktopTabList);
   desktopMainContent.append(desktopContentFrag);
@@ -394,7 +393,6 @@ export default async function decorate(block) {
   contentFragmentWrapper.append(desktopLayout, mobileLayout);
 
   // Rearrange search button for desktop/mobile
-  // CHANGE BUTTON TO DIV
   const searchBtnWrapper = div({ class: 'search-btn' });
   const desktopSearchBtn = desktopLayout.querySelector('.search-btn');
   const mobileSearchBtn = mobileLayout.querySelector('.search-btn');
