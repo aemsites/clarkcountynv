@@ -51,7 +51,7 @@ main .hero.text.homepage div div a {
 }
 
 @media (width >= 900px) {
-  .hero.text {
+  main .hero.text {
     padding: 11px 51px;
   }
 
