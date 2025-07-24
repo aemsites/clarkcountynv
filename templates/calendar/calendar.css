@@ -73,9 +73,9 @@ body.calendar main section.fc-search .fc-calendar-filters > a {
     transition: all .3s;
 }
 
-body.calendar main section.fc-search .fc-calendar-filters {
+/* body.calendar main section.fc-search .fc-calendar-filters {
     position: relative;
-}
+} */
 
 body.calendar main section.fc-search .fc-calendar-filters ul {
     height: 0;
@@ -148,12 +148,12 @@ body.calendar main section.fc-search .fc-calendar-filters ul li.active a {
     color: #fff;
 }
 
-body.calendar main section.fc-search form {
+/* body.calendar main section.fc-search form {
     display: flex;
     flex-direction: row;
-}
+} */
 
-body.calendar main section.fc-search form input[type="text"] {
+/* body.calendar main section.fc-search form input[type="text"] {
     border: 1px solid #e9eaec;
     padding: 10px 14px;
     outline: none;
@@ -167,9 +167,9 @@ body.calendar main section.fc-search form input[type="text"] {
     box-shadow: none;
     width: 100%;
     height: 33.5px;
-}
+} */
 
-body.calendar main section.fc-search form button {
+/* body.calendar main section.fc-search form button {
     background-image: url('https://main--clarkcountynv--aemsites.aem.page/assets/images/media_180bc9aa9af6580104021cf184bb4df296a6f38e4.png');
     color: white;
     font-size: 17px;
@@ -180,7 +180,7 @@ body.calendar main section.fc-search form button {
     margin: 0;
     width: 38.5px;
     padding: 0;
-}
+} */
 
 body.calendar .event-modal .event-modal-footer a.displayoff {
     display: none;
@@ -295,16 +295,16 @@ body.calendar .event-modal .event-modal-footer button {
     }
 }
 
-body.calendar main section .fc {
+/* body.calendar main section .fc {
     padding: 0 1vw 5vw;
     font-family: var(--heading-font-family);
     height: 507px;
-}
+} */
 
-body.calendar main section.fc-search {
+/* body.calendar main section.fc-search {
     padding: 0 1vw 5vw;
     font-family: var(--heading-font-family);
-}
+} */
 
 body.calendar main section .fc .fc-button {
     border-radius: 0;
@@ -370,14 +370,14 @@ body.calendar main section .fc .fc-header-toolbar > .fc-toolbar-chunk:last-child
         overflow: hidden !important;
     }
     
-    body.calendar main section .fc {
+    /* body.calendar main section .fc {
         padding: 0 1vw 5vw;
         height: 1280px;
-    }
+    } */
     
-    body.calendar main section.fc-search {
+    /* body.calendar main section.fc-search {
         padding: 5vh 1vw 1vw;
-    }
+    } */
 
     body.calendar main div.spinner {
         height: 1141px;
@@ -421,6 +421,75 @@ body.calendar main section .fc .fc-header-toolbar > .fc-toolbar-chunk:last-child
     }
 }
 
+/* Calendar Styles - New */
+.calendar .fc-calendar-search {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 50px;
+}
 
+.calendar .fc-search {
+  margin-bottom: 64px;
+}
 
+.calendar .fc-search-form {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px;
+}
 
+.calendar .fc-search input {
+  border: 2px solid var(--neutral-black-800);
+  color: var(--neutral-black-800);
+  font-size: var(--body-font-size-m);
+  margin: 0;
+  width: 100%;
+  height: 40px;
+  outline: none;
+  padding: 9px 16px;
+}
+
+.calendar .fc-search .fc-search-btn {
+  font-size: var(--body-font-size-m);
+  margin: 0;
+  padding: 8px 20px;
+  text-overflow: unset;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  min-width: fit-content;
+  height: 40px;
+}
+
+.calendar .fc-search input::-webkit-search-cancel-button {
+  cursor: pointer;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: url('../../icons/search-close.svg') center center no-repeat;
+  background-size: contain;
+}
+
+.calendar .fc-search-helper-text {
+  color: var(--neutral-black);
+  font-size: var(--body-font-size-m);
+  font-style: normal;
+  font-weight: var(--font-weight-book);
+  line-height: 125%;
+  margin: 8px 0;
+}
+
+.calendar .fc-search .fc-calendar-filters {
+  display: none;
+}
+
+.calendar .fc {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 50px;
+}

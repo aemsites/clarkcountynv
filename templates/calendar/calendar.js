@@ -359,6 +359,7 @@ function createEventList(importedData, eventsList) {
       }
     });
   });
+  console.log('Events List', eventsList);
   createEvents(eventsList);
   return eventsList;
 }
@@ -432,10 +433,11 @@ function createCalendar() {
     initialView: getView(),
     dayMaxEventRows: mobilecheck() ? 1 : 6,
     views: {
-      listMonth: { buttonText: 'list' },
+      listMonth: { buttonText: 'List View' },
+      dayGridMonth: { buttonText: 'Calendar View' },
     },
     headerToolbar: {
-      left: 'prev,next,today dayGridMonth,timeGridWeek,timeGridDay,listMonth',
+      left: 'dayGridMonth,listMonth prev,next,today',
       center: '',
       right: 'title',
     },
@@ -697,9 +699,13 @@ export default async function decorate(doc) {
   });
   const searchDiv = div();
   searchDiv.innerHTML = `
-    <form class="fc-search">
-        <input type="text" id="eventform" name="event" placeholder="Search for Events...">
-        <button type="submit" class="fc-search"><i class="fc-search"></i></button>
+    <p class="fc-search-helper-text">Search by keyword.</p>
+    <form class="fc-search-form">
+        <input type="search" id="eventform" name="event" placeholder="Search">
+        <button type="button" class="fc-search-btn">
+          <img src="/icons/search-white.svg" alt="Calendar search icon button" />
+          Search
+        </button>
     </form>
     `;
   const bottomDiv = div({ class: 'fc-calendar-search' });
