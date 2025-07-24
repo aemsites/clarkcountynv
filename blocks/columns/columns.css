@@ -259,6 +259,10 @@ main .section.rightsection.no-button .columns.alert a:any-link {
   height: 262px;
 }
 
+.columns.contact-card .column1.no-embed {
+  flex: 0;
+}
+
 .columns.contact-card .column2 {
   background-color: var(--neutral-black-200);
   align-self: stretch;

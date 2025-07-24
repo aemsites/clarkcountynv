@@ -130,7 +130,9 @@ export default function decorate(block) {
           title,
         },
       );
-      mapLink.parentElement.replaceWith(map);
+      mapLink?.parentElement.replaceWith(map);
+    } else {
+      firstCol?.classList.add('no-embed');
     }
   }
 
