@@ -3,7 +3,7 @@ import {
   div, iframe, section, p, button, a, ul, li,
 } from '../../scripts/dom-helpers.js';
 
-import { normalizeString, getWindowSize } from '../../scripts/utils.js';
+import { normalizeString, getWindowSize, getViewPort } from '../../scripts/utils.js';
 
 export const EDS_DOMAINS = ['main--clarkcountynv--aemsites.aem.page', 'main--clarkcountynv--aemsites.aem.live'];
 class Obj {
@@ -276,11 +276,8 @@ function createEvents(eventsList) {
           duration: eventDuration,
           exdate: event.excludeDates,
           url: event.url,
-          backgroundColor: event.backgroundColor,
-          textColor: event.textColor,
           classNames: event.classNames,
           groupId: event.divisionid,
-          borderColor: event.backgroundColor,
           extendedProps: { readMore: event.readMore },
           id: `${event.divisionid}-${event.title.length}${event.start.length}`,
         });
@@ -297,11 +294,8 @@ function createEvents(eventsList) {
           },
           duration: eventDuration,
           url: event.url,
-          backgroundColor: event.backgroundColor,
-          textColor: event.textColor,
           classNames: event.classNames,
           groupId: event.divisionid,
-          borderColor: event.backgroundColor,
           extendedProps: { readMore: event.readMore },
           id: `${event.divisionid}-${event.title.length}${event.start.length}`,
         });
@@ -313,12 +307,9 @@ function createEvents(eventsList) {
         end: event.end,
         allDay: event.allDay,
         url: event.url,
-        backgroundColor: event.backgroundColor,
-        textColor: event.textColor,
         classNames: event.classNames,
         groupId: event.divisionid,
         extendedProps: { readMore: event.readMore },
-        borderColor: event.backgroundColor,
         id: `${event.divisionid}-${event.title.length}${event.start.length}`,
       });
     }
@@ -359,7 +350,6 @@ function createEventList(importedData, eventsList) {
       }
     });
   });
-  console.log('Events List', eventsList);
   createEvents(eventsList);
   return eventsList;
 }
@@ -405,53 +395,69 @@ function getInfo(view) {
 
 /* get the view and accordingly target the calendar */
 function getView() {
-  const windowHref = window.location.href;
-  if (windowHref.includes('?')) {
-    const url = new URL(windowHref);
-    const view = url.searchParams.get('view');
-    if (view === 'month') {
+  const isMobileViewport = getViewPort() === 'mobile';
+  if (isMobileViewport) {
+    return 'listMonth';
+  } else {
+    const url = new URL(window.location.href);
+    if (url.searchParams.size) {
+      const searchParams = new URLSearchParams(url.searchParams);
+      const view = searchParams.get('view');
+      // Default to calendar month view
+      if (view === 'month' || view === null) {
+        return 'dayGridMonth';
+      } else {
+        return 'listMonth';
+      }
+    } else {
       return 'dayGridMonth';
     }
-    if (view === 'week') {
-      return 'timeGridWeek';
-    }
-    if (view === 'day') {
-      return 'timeGridDay';
-    }
-    if (view === 'list') {
-      return 'listMonth';
-    }
   }
-  return 'dayGridMonth';
 }
 
 function createCalendar() {
   // eslint-disable-next-line no-undef
   calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: getView(),
     timeZone: 'local',
     fixedWeekCount: false,
-    initialView: getView(),
-    dayMaxEventRows: mobilecheck() ? 1 : 6,
+    dayMaxEventRows: mobilecheck() ? 1 : 3,
+    height: 'auto',
     views: {
       listMonth: { buttonText: 'List View' },
       dayGridMonth: { buttonText: 'Calendar View' },
     },
     headerToolbar: {
-      left: 'dayGridMonth,listMonth prev,next,today',
-      center: '',
-      right: 'title',
+      left: 'dayGridMonth,listMonth',
+      center: 'title',
+      right: 'prev,next,today',
+    },
+    dayHeaderFormat: {
+      weekday: 'long',
+    },
+    buttonText: {
+      today: 'Today',
+    },
+    moreLinkContent: (arg) => { return { html: `+${arg.num} more events` } },
+    windowResize: ({ view }) => {
+      if (window.innerWidth < 900 && view.type !== 'listMonth') {
+        view.calendar.changeView('listMonth');
+      }
     },
     eventDisplay: 'block',
-    navLinks: true, // can click day/week names to navigate views
+    navLinks: false,
     editable: true,
-    selectable: true,
     datesSet: (dateInfo) => {
       getInfo(dateInfo.view);
     },
-    // events: importedData,
-    eventTimeFormat: { hour: 'numeric', minute: '2-digit' },
+    eventTimeFormat: { hour: 'numeric', minute: '2-digit', omitZeroMinute: true, },
     eventDidMount: (info) => {
       info.el.setAttribute('id', info.event.id);
+    },
+    viewDidMount: ({ view }) => {
+      if (window.innerWidth < 900 && view.type === 'dayGridMonth') {
+        view.calendar.changeView('listMonth');
+      }
     },
     eventClick: async (info) => {
       info.jsEvent.preventDefault(); // don't let the browser navigate
