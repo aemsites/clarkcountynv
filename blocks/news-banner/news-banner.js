@@ -13,10 +13,9 @@ function setMetaTag(name, content) {
 export default function decorate(block) {
   const placeholder = block.querySelector('picture');
   if (placeholder) {
-    const image = placeholder.querySelectorAll("source")[0].srcset;
+    const image = placeholder.querySelectorAll('source')[0].srcset;
     setMetaTag('bannerurl', image);
   }
   const currentUL = block.querySelector('div');
   currentUL.parentElement.parentElement.remove();
 }
-
