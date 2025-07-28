@@ -1,13 +1,3 @@
-export default function decorate(block) {
-  const placeholder = block.querySelector('picture');
-    if(placeholder){
-      const image = placeholder.querySelectorAll("source")[0].srcset;
-      setMetaTag("bannerurl",image);
-    }
-    const currentUL = block.querySelector('div');
-    currentUL.parentElement.parentElement.remove();
-}
-
 function setMetaTag(name, content) {
   let meta = document.querySelector(`meta[name="${name}"]`);
   if (meta) {
@@ -19,3 +9,14 @@ function setMetaTag(name, content) {
     document.head.appendChild(meta);
   }
 }
+
+export default function decorate(block) {
+  const placeholder = block.querySelector('picture');
+  if (placeholder) {
+    const image = placeholder.querySelectorAll("source")[0].srcset;
+    setMetaTag('bannerurl', image);
+  }
+  const currentUL = block.querySelector('div');
+  currentUL.parentElement.parentElement.remove();
+}
+
