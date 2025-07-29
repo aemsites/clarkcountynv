@@ -1,7 +1,8 @@
 /* global rrule */
 import {
-  div, iframe, section, p, button, a, ul, li,
+  div, img, iframe, section, p, button, a, ul, li, h3,
 } from '../../scripts/dom-helpers.js';
+import { createModal } from '../../blocks/modal/modal.js';
 
 import { normalizeString, getWindowSize, getViewPort } from '../../scripts/utils.js';
 
@@ -82,71 +83,113 @@ export async function fetchPlaceholders(prefix) {
   return window.placeholders;
 }
 
-function createModal(doc) {
+const handleCloseModal = () => {
+  const modal = document.querySelector('.event-modal');
+  const currentEvent = document.querySelector('.current-event');
+  if (modal) {
+    modal.style.display = 'none';
+  }
+  if (currentEvent) {
+    console.log('Removed current event');
+    currentEvent.remove();
+  }
+};
+
+/*function createModal(doc) {
   const modal = div({ class: 'event-modal' }, div(
     { class: 'event-modal-content' },
-    iframe({
-      id: 'event-iframe',
-      width: '100%',
-      height: '100%',
-    }),
-    div({ class: 'event-modal-date' }, p(), p()),
-    div({ class: 'event-modal-time' }, p()),
-    div({ class: 'event-modal-footer' }, button({ class: 'close', onclick: () => { document.querySelector('.event-modal').style.display = 'none'; } }, 'Close'), a({ class: 'footer-readmore' }, 'Read More')),
+    button({ class: 'button close', type: 'button', onclick: () => handleCloseModal() },
+      img({ src: '/icons/search-close.svg', alt: 'Close event modal' })
+    ),
+    div({ class: 'event-modal-img' }),
+    div({ class: 'event-modal-title' }, h3()),
+    div({ class: 'event-modal-description' }, p()),
+    //div({ class: 'event-modal-time' }, p()),
+    //div({ class: 'event-modal-location' }, p()),
+    div({ class: 'event-modal-map-embed' }),
+    //div({ class: 'event-modal-details' }, p()),
+    div({ class: 'event-modal-footer' },
+      button({ class: 'close', onclick: () => handleCloseModal() }, 'Close Window'),
+      a({ class: 'footer-readmore' }, 'Read More')
+    ),
   ));
   doc.body.append(modal);
-}
+}*/
 
-function tConv24(time24) {
-  let ts = time24;
-  const H = +ts.substr(0, 2);
-  let h = (H % 12) || 12;
-  h = (h < 10) ? (`0${h}`) : h; // leading 0 at the left for 1 digit hours
-  const ampm = H < 12 ? ' AM' : ' PM';
-  ts = h + ts.substr(2, 3) + ampm;
-  return ts;
-}
+// function tConv24(time24) {
+//   let ts = time24;
+//   const H = +ts.substr(0, 2);
+//   let h = (H % 12) || 12;
+//   h = (h < 10) ? (`0${h}`) : h; // leading 0 at the left for 1 digit hours
+//   const ampm = H < 12 ? ' AM' : ' PM';
+//   ts = h + ts.substr(2, 3) + ampm;
+//   return ts;
+// }
 
-function popupEvent(url, startTime, endTime, allDay, backgroundColor, readMore, textColor) {
-  const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUNE',
-    'JULY', 'AUG', 'SEPT', 'OCT', 'NOV', 'DEC'];
-  let eventDate = startTime.getDate();
-  if (eventDate < 10) {
-    eventDate = `0${eventDate}`;
+const extractEventDetails = (html) => {
+  setTimeout(() => {
+    const eventImg = html.querySelector('.section.hero picture');
+    const eventTitle = html.querySelector('.section.title h2')?.textContent;
+    const eventDescription = html.querySelector('.section.description > .default-content-wrapper');
+    const eventMapEmbed = html.querySelector('.section.map-embed-container');
+    const details = {
+      image: eventImg || null,
+      title: eventTitle || null,
+      description: eventDescription || null,
+      map: eventMapEmbed || null,
+    };
+    return details;
+  }, 100);
+};
+
+const getEventModalHtml = (details) => {
+  console.log(details);
+  const { image, title, description, map } = details;
+  const container = div({ class: 'event-modal-container' },
+    button({ class: 'event-modal-close', type: 'button' },
+      img({ src: '/icons/search-close.svg', alt: 'Close modal button' }),
+    ),
+    div({ class: 'event-modal-img' },
+      img({ src: image, alt: `${title} event image` }),
+    ),
+    h3({ class: 'event-modal-title' }, title),
+    div({ class: 'event-modal-description' }, description),
+    div({ class: 'event-modal-map-embed' }, map),
+    div({ class: 'event-modal-footer' },
+      button({ class: 'button secondary', type: 'button' }, 'Close Window'),
+      a({ class: 'button primary' }, 'Read More'),
+    ),
+  );
+  return container;
+};
+
+const handleEventIframeLoad = async (pageIframe) => {
+  const eventPageRenderedHtml = pageIframe.contentDocument || iframeElement.contentWindow.document;
+  const eventDetails = await extractEventDetails(eventPageRenderedHtml.body);
+  if (Object.keys(eventDetails).length) {
+    const eventModalHtml = getEventModalHtml(eventDetails);
+    return eventModalHtml;
   }
-  const eventMonth = startTime.getMonth();
-  const eventStartHours = startTime.toString().split(' ')[4].split(':')[0];
-  const eventStartMinutes = startTime.toString().split(' ')[4].split(':')[1];
-  const eventStartTime = tConv24(`${eventStartHours}:${eventStartMinutes}`);
+};
 
-  let eventEndTime;
-  if (endTime) { // for allDay event, endTime is not mandatory
-    const eventEndHours = endTime.toString().split(' ')[4].split(':')[0];
-    const eventEndMinutes = endTime.toString().split(' ')[4].split(':')[1];
-    eventEndTime = tConv24(`${eventEndHours}:${eventEndMinutes}`);
-  }
-
-  // convert number into Month name
-  const eventMonthName = months[eventMonth];
+async function popupEvent(url, startTime, endTime, allDay, backgroundColor, readMore, textColor) {
+  const pageIframe = iframe({ src: url, class: 'current-event' });
+  pageIframe.style.display = "none";
+  document.body.append(pageIframe);
+  pageIframe.addEventListener('load', async () => {
+    const response = await handleEventIframeLoad(pageIframe);
+    console.log('Response', response);
+    const { showModal } = await createModal(Array.from(response));
+    showModal();
+  });
 
   const modal = document.querySelector('.event-modal');
-  modal.querySelector('.event-modal-date').style.backgroundColor = backgroundColor;
-  modal.querySelector('.event-modal-date').style.color = textColor;
-  modal.querySelector('.event-modal-time').style.backgroundColor = backgroundColor;
-  modal.querySelector('.event-modal-time').style.color = textColor;
-  modal.querySelector('.event-modal-footer button.close').style.backgroundColor = backgroundColor;
-  modal.querySelector('.event-modal-footer button.close').style.color = textColor;
-  modal.querySelector('.event-modal-footer a').style.backgroundColor = backgroundColor;
-  modal.querySelector('.event-modal-footer').classList.add('off');
-  modal.querySelector('.event-modal-date p:first-child').textContent = `${eventDate}`;
-  modal.querySelector('.event-modal-date p:last-child').textContent = `${eventMonthName}`;
-  modal.querySelector('.event-modal-time p').textContent = allDay ? 'All Day' : `${eventStartTime} - ${eventEndTime}`;
-  modal.querySelector('iframe').src = url;
+  /*
+  // Display event modal
   modal.style.display = 'block';
   const readMoreAEl = modal.querySelector('.event-modal-footer a.footer-readmore');
   if (readMoreAEl) {
     if (readMore.length > 1) {
-      readMoreAEl.style.color = textColor;
       let newReadMoreUrl = readMore;
       const currentReadMoreUrl = new URL(readMore, window.location.origin);
       if (EDS_DOMAINS.some((domain) => currentReadMoreUrl.origin.includes(domain))) {
@@ -158,7 +201,7 @@ function popupEvent(url, startTime, endTime, allDay, backgroundColor, readMore, 
     } else {
       readMoreAEl.classList.add('displayoff');
     }
-  }
+  }*/
 
   // Listen for messages from iframe window
   window.addEventListener('message', (event) => {
@@ -415,6 +458,38 @@ function getView() {
   }
 }
 
+const handleEventModal = (info) => {
+  if (info.event.url) {
+    const windowHref = window.location.href;
+    const url = new URL(windowHref);
+    if (URLSearchParams && !url.searchParams.get('id')) {
+      url.searchParams.append('id', info.event.id);
+      window.history.pushState({}, '', url);
+    } else {
+      url.searchParams.set('id', info.event.id);
+      window.history.pushState({}, '', url);
+    }
+    // eslint-disable-next-line max-len
+    popupEvent(info.event.url, info.event.start, info.event.end, info.event.allDay, info.event.backgroundColor, info.event.extendedProps.readMore, info.event.textColor);
+  }
+  // Check the height of the event iframe & then enable / disable event footer display
+  /*const eventIframe = document.querySelector('#event-iframe');
+  eventIframe.addEventListener('load', () => {
+    // Wait 1 second after the iframe loads
+    setTimeout(() => {
+      try {
+        const { scrollHeight } = eventIframe.contentWindow.document.body;
+        const modal = document.querySelector('.event-modal');
+        if (scrollHeight < 750) {
+          modal.querySelector('.event-modal-footer').classList.remove('off');
+        }
+      } catch (e) {
+        console.log('Unable to access iframe content (possible cross-origin issue)', e);
+      }
+    }, 1000); // 1000 ms = 1 second
+  });*/
+};
+
 function createCalendar() {
   // eslint-disable-next-line no-undef
   calendar = new FullCalendar.Calendar(calendarEl, {
@@ -461,35 +536,7 @@ function createCalendar() {
     },
     eventClick: async (info) => {
       info.jsEvent.preventDefault(); // don't let the browser navigate
-      if (info.event.url) {
-        const windowHref = window.location.href;
-        const url = new URL(windowHref);
-        if (URLSearchParams && !url.searchParams.get('id')) {
-          url.searchParams.append('id', info.event.id);
-          window.history.pushState({}, '', url);
-        } else {
-          url.searchParams.set('id', info.event.id);
-          window.history.pushState({}, '', url);
-        }
-        // eslint-disable-next-line max-len
-        popupEvent(info.event.url, info.event.start, info.event.end, info.event.allDay, info.event.backgroundColor, info.event.extendedProps.readMore, info.event.textColor);
-      }
-      // Check the height of the event iframe & then enable / disable event footer display
-      const eventIframe = document.querySelector('#event-iframe');
-      eventIframe.addEventListener('load', () => {
-        // Wait 1 second after the iframe loads
-        setTimeout(() => {
-          try {
-            const { scrollHeight } = eventIframe.contentWindow.document.body;
-            const modal = document.querySelector('.event-modal');
-            if (scrollHeight < 750) {
-              modal.querySelector('.event-modal-footer').classList.remove('off');
-            }
-          } catch (e) {
-            console.log('Unable to access iframe content (possible cross-origin issue)', e);
-          }
-        }, 1000); // 1000 ms = 1 second
-      });
+      handleEventModal(info);
     },
   });
   /* The Below code is for when the URL is loaded with a specific date */
@@ -729,7 +776,7 @@ export default async function decorate(doc) {
   $calendarSection.append(calDiv);
   $main.append($calendarSection);
   // loadrrule() is loaded after 3 seconds via the delayed.js script for improving page performance
-  createModal(doc);
+  //createModal(doc);
   calendarList.querySelectorAll('.fc-calendar-list-item').forEach((divisionLi, _, parent) => {
     // get path from url
     const path = window.location.pathname.split('/');
