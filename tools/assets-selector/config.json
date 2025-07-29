@@ -1,0 +1,117 @@
+{
+    "blockName": [
+      {
+        "mimeType": "video/*",
+        "value": "Video"
+      }
+    ],
+    "headerStyle": [
+      {
+        "mimeType": "video/*",
+        "value": "background-color:#f5680a;color:#fff"
+      }
+    ],
+    "blockTemplate": [
+      {
+        "mimeType": "video/*",
+        "value": "<table border='1' style=\"width:100%\">\n  <tr>\n        <td style=\"background-color:#f5680a;color:#fff\">${blockName}</td>\n      </tr>\n      <tr>\n        <td>\n        <img src=\"${posterUrl}\" alt=\"${name}\">\n        <br/>\n        <a href=\"${videoUrl}\">${name}</a>\n        </td>\n      </tr>   </table>"
+      }
+    ],
+    "copyMode": [
+      {
+        "mimeType": "image/*",
+        "value": "reference"
+      }
+    ],
+    "assetDomainMapping": {
+      "delivery-p154411-e1620520.adobeaemcloud.com": "www.clarkcountynv.gov"
+    },
+    "filterSchema": [
+      {
+        "header": "File Types",
+        "groupKey": "TopGroup",
+        "fields": [
+          {
+            "element": "checkbox",
+            "name": "type",
+            "options": [
+              {
+                "label": "Images",
+                "value": "image/*"
+              },
+              {
+                "label": "Videos",
+                "value": "video/*"
+              },
+              {
+                "label": "PDFs",
+                "value": "application/pdf"
+              }
+            ],
+            "columns": 2
+          }
+        ]
+      },
+      {
+      "fields": [
+        {
+          "columns": 1,
+          "defaultValue": ["approved"],
+          "element": "checkbox",
+          "name": "dam:assetStatus",
+          "options": [
+            {
+              "label": "Approved",
+              "value": "approved"
+            }
+          ],
+          "orientation": "horizontal"
+        }
+      ],
+      "groupKey": "ApprovalStatusGroup",
+      "header": "Approval Status"
+    },
+      {
+        "fields": [
+          {
+            "element": "checkbox",
+            "name": "expiredAsset",
+            "options": [
+              {
+                "label": "Expired",
+                "value": "expired"
+              }
+            ],
+            "orientation": "horizontal",
+            "columns": 2
+          },
+          {
+            "element": "DateRange",
+            "name": "property=pur:expirationDate",
+            "position": "top",
+            "label": "Expiration Duration",
+            "orientation": "horizontal"
+          }
+        ],
+        "header": "Expiration Status",
+        "groupKey": "ExpirationGroup"
+      },
+      {
+        "fields": [
+          {
+            "element": "drop-down",
+            "name": "property=metadata.embedded.dc:language",
+            "orientation": "vertical",
+            "options": [
+              {
+                "label": "English",
+                "value": "en"
+              }             
+            ]
+          }
+        ],
+        "header": "Language",
+        "groupKey": "LanguageGroup"
+      }
+    ]
+  }

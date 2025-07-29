@@ -91,7 +91,7 @@ async function loadCSS(href) {
  *
  */
 export function createOptimizedPicture(src, alt = '', eager = false, breakpoints = [{ media: '(min-width: 600px)', width: '2000' }, { width: '750' }]) {
-  const url = new URL(src);
+  const url = new URL(src, window.location.href);
   const picture = document.createElement('picture');
   const { pathname } = url;
   const ext = pathname.substring(pathname.lastIndexOf('.') + 1);
@@ -127,6 +127,113 @@ export function createOptimizedPicture(src, alt = '', eager = false, breakpoints
   return picture;
 }
 
+/**
+ * Creates an optimized picture element for an image
+ * leveraging smartcrop config from 'window.hlx.aemassets.smartCrops'.
+ * @param {string} src The image source URL
+ * @param {string} alt The image alt text
+ * @param {boolean} eager Whether to load the image eagerly
+ * @param {object[]} breakpoints The breakpoints to use
+ * @returns {Element} The picture element
+ */
+export function createOptimizedPictureWithSmartcrop(src, alt = '', eager = false, breakpoints = []) {
+  const isAbsoluteUrl = /^https?:\/\//i.test(src);
+
+  // initialise breakpoint to project level smartcrop config unless needed to customise
+  const smartcropBreakpoints = breakpoints.length !== 0 ? breakpoints
+    : Object.entries(window.hlx.aemassets?.smartCrops).map(
+      ([name, { minWidth, maxWidth }]) => ({
+        media: `(min-width: ${minWidth}px) and (max-width: ${maxWidth}px)`,
+        smartcrop: name,
+      }),
+    );
+
+  const url = isAbsoluteUrl ? new URL(src) : new URL(src, window.location.href);
+  const picture = document.createElement('picture');
+  const { pathname } = url;
+  const ext = pathname.substring(pathname.lastIndexOf('.') + 1);
+
+  // webp
+  smartcropBreakpoints.forEach((br) => {
+    const source = document.createElement('source');
+    if (br.media) source.setAttribute('media', br.media);
+    source.setAttribute('type', 'image/webp');
+    const searchParams = new URLSearchParams({ smartcrop: br.smartcrop, format: 'webply' });
+    source.setAttribute('srcset', appendQueryParams(url, searchParams));
+    picture.appendChild(source);
+  });
+
+  // fallback for non-webp
+  smartcropBreakpoints.forEach((br) => {
+    const searchParams = new URLSearchParams({ smartcrop: br.smartcrop, format: ext });
+    const source = document.createElement('source');
+    if (br.media) source.setAttribute('media', br.media);
+    source.setAttribute('srcset', appendQueryParams(url, searchParams));
+    picture.appendChild(source);
+  });
+
+  // append the default image eliminating smartcrop query param if present
+  const img = document.createElement('img');
+  img.setAttribute('loading', eager ? 'eager' : 'lazy');
+  img.setAttribute('alt', alt);
+  picture.appendChild(img);
+  url.searchParams.delete('smartcrop');
+  img.setAttribute('src', url.toString());
+
+  picture.classList.add('smartcrop');
+  return picture;
+}
+
+/**
+ * to check if given src is a DM OpenAPI URL
+ */
+function isDMOpenAPIUrl(src) {
+  return /^(https?:\/\/(.*)\/adobe\/assets\/urn:aaid:aem:(.*))/gm.test(src);
+}
+
+/**
+ * to check if the page contains meta tag for smartcrop rendering
+ */
+function hasImageSmartcropMeta() {
+  const metaTags = document.getElementsByTagName('meta');
+  const matchingMeta = Array.from(metaTags).find((meta) => meta.name === 'smartcrop' && meta.content === 'true');
+  return !!matchingMeta;
+}
+
+/**
+ * to mark all the external images with smart crop on the page and set data-smartcrop-status=loading
+ * if the image is a DM OpenAPI URL
+ */
+function markSmartCropImages(ele = document) {
+  // Early return if smartcrop config is missing
+  if (window.hlx?.aemassets?.smartCrops === undefined) {
+    return;
+  }
+
+  // Collect all external images into an array
+  const extImages = [];
+
+  if (hasImageSmartcropMeta()) {
+    // If smartcrop is enabled at page level, collect all <a> tags
+    extImages.push(...ele.querySelectorAll('a'));
+  } else {
+    // if not enabled at page level, collect all <a> tags within block and section elements
+    extImages.push(...ele.querySelectorAll('.smartcrop a'));
+    ele.querySelectorAll('.section-metadata > div > div').forEach((sectionMeta) => {
+      if (sectionMeta.innerText === 'smartcrop') {
+        extImages.push(...sectionMeta.closest('.section-metadata').parentElement.querySelectorAll('a'));
+      }
+    });
+  }
+
+  // Apply the data-smartcrop-status attribute to all collected images if a DM OpenAPI URL
+  extImages.forEach((extImage) => {
+    if (isDMOpenAPIUrl(extImage.getAttribute('href'))) {
+      extImage.setAttribute('data-smartcrop-status', 'loading');
+    }
+  });
+}
+
 /*
   * Decorates external images with a picture element
   * @param {Element} ele The element
@@ -136,10 +243,22 @@ export function createOptimizedPicture(src, alt = '', eager = false, breakpoints
   * decorateExternalImages(main, '//External Image//');
   */
 export function decorateExternalImages(ele, deliveryMarker) {
+  // apply data-smartcrop-status=loading to all potential <a> tags
+  markSmartCropImages(ele);
+
   const extImages = ele.querySelectorAll('a');
   extImages.forEach((extImage) => {
     if (isExternalImage(extImage, deliveryMarker)) {
-      const extImageSrc = extImage.getAttribute('href');
+      // check if needs to render smartcrop
+      const renderSmartCrop = extImage.getAttribute('data-smartcrop-status');
+      if (renderSmartCrop === 'loading') {
+        const extPicture = createOptimizedPictureWithSmartcrop(extImage.getAttribute('href'));
+        extPicture.setAttribute('data-smartcrop-status', 'loaded');
+        extImage.parentNode.replaceChild(extPicture, extImage);
+        return;
+      }
+
+      const extImageSrc = extImage.href;
       const extPicture = createOptimizedPicture(extImageSrc);
 
       /* copy query params from link to img */
@@ -165,10 +284,10 @@ export function decorateExternalImages(ele, deliveryMarker) {
 
 /**
  * Decorates all images in a container element and replace media urls with delivery urls.
- * @param {Element} main The container element
+ * @param {Element} ele The container element
  */
-export function decorateImagesFromAlt(main) {
-  const pictureElements = main.querySelectorAll('picture');
+export function decorateImagesFromAlt(ele = document) {
+  const pictureElements = ele.querySelectorAll('picture');
   [...pictureElements].forEach((pictureElement) => {
     const imgElement = pictureElement.querySelector('img');
     const alt = imgElement.getAttribute('alt');
@@ -179,7 +298,9 @@ export function decorateImagesFromAlt(main) {
         return;
       }
 
-      const newPictureElement = createOptimizedPicture(deliveryUrl, altText);
+      const newPictureElement = isDMOpenAPIUrl(deliveryUrl)
+        ? createOptimizedPictureWithSmartcrop(deliveryUrl, altText)
+        : createOptimizedPicture(deliveryUrl, altText);
       pictureElement.parentElement.replaceChild(newPictureElement, pictureElement);
     } catch (error) {
       // Do nothing
@@ -230,6 +351,7 @@ export async function loadBlock(block) {
 // Create an object with the test functions
 const testFunctions = {
   appendQueryParams,
+  decorateImagesFromAlt,
 };
 
 // Export the object
