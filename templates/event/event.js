@@ -68,6 +68,11 @@ export default async function decorate(doc) {
     descriptionEl.remove();
   }
 
+  const eventFooter = doc.querySelector('.event-footer');
+  if (eventFooter && eventFooter.children.length === 0) {
+    eventFooter.classList.add('hidden');
+  }
+
   // Configuring a POST Message on scrolling to send the event title to the parent window
   (() => {
     let lastState = { eventtop: null, eventfooter: null };

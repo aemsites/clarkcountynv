@@ -585,7 +585,7 @@ function decorateNavItem(parent, navSectionSearchItem) {
   }
 
   const navBottom = div({ class: 'nav-bottom' });
-  navBottom.append(navSectionSearchItem.cloneNode(true));
+  navBottom?.append(navSectionSearchItem?.cloneNode(true));
 
   navIn.append(navBottom);
 

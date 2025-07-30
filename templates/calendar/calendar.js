@@ -1,9 +1,10 @@
 /* global rrule */
 import {
-  div, iframe, section, p, button, a, ul, li,
+  div, iframe, section, button, a, ul, li,
 } from '../../scripts/dom-helpers.js';
-
-import { normalizeString, getWindowSize } from '../../scripts/utils.js';
+import { normalizeString, getWindowSize, getViewPort } from '../../scripts/utils.js';
+// eslint-disable-next-line import/no-cycle
+import { createModal } from '../../blocks/modal/modal.js';
 
 export const EDS_DOMAINS = ['main--clarkcountynv--aemsites.aem.page', 'main--clarkcountynv--aemsites.aem.live'];
 class Obj {
@@ -82,115 +83,57 @@ export async function fetchPlaceholders(prefix) {
   return window.placeholders;
 }
 
-function createModal(doc) {
-  const modal = div({ class: 'event-modal' }, div(
-    { class: 'event-modal-content' },
-    iframe({
-      id: 'event-iframe',
-      width: '100%',
-      height: '100%',
-    }),
-    div({ class: 'event-modal-date' }, p(), p()),
-    div({ class: 'event-modal-time' }, p()),
-    div({ class: 'event-modal-footer' }, button({ class: 'close', onclick: () => { document.querySelector('.event-modal').style.display = 'none'; } }, 'Close'), a({ class: 'footer-readmore' }, 'Read More')),
-  ));
-  doc.body.append(modal);
-}
-
-function tConv24(time24) {
-  let ts = time24;
-  const H = +ts.substr(0, 2);
-  let h = (H % 12) || 12;
-  h = (h < 10) ? (`0${h}`) : h; // leading 0 at the left for 1 digit hours
-  const ampm = H < 12 ? ' AM' : ' PM';
-  ts = h + ts.substr(2, 3) + ampm;
-  return ts;
-}
-
-function popupEvent(url, startTime, endTime, allDay, backgroundColor, readMore, textColor) {
-  const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUNE',
-    'JULY', 'AUG', 'SEPT', 'OCT', 'NOV', 'DEC'];
-  let eventDate = startTime.getDate();
-  if (eventDate < 10) {
-    eventDate = `0${eventDate}`;
+const handleModalClose = () => {
+  const url = new URL(window.location.href);
+  if (url.searchParams.size > 0 && url.searchParams.has('id')) {
+    url.searchParams.delete('id');
+    window.history.pushState({}, '', url.href);
   }
-  const eventMonth = startTime.getMonth();
-  const eventStartHours = startTime.toString().split(' ')[4].split(':')[0];
-  const eventStartMinutes = startTime.toString().split(' ')[4].split(':')[1];
-  const eventStartTime = tConv24(`${eventStartHours}:${eventStartMinutes}`);
-
-  let eventEndTime;
-  if (endTime) { // for allDay event, endTime is not mandatory
-    const eventEndHours = endTime.toString().split(' ')[4].split(':')[0];
-    const eventEndMinutes = endTime.toString().split(' ')[4].split(':')[1];
-    eventEndTime = tConv24(`${eventEndHours}:${eventEndMinutes}`);
+  const modal = document.querySelector('.event-modal-block');
+  if (modal) {
+    const closeButton = modal.querySelector('.close-button');
+    closeButton?.click();
   }
+};
 
-  // convert number into Month name
-  const eventMonthName = months[eventMonth];
+async function popupEvent(url, readMore) {
+  const eventModalContent = document.createDocumentFragment();
+  const pageIframe = iframe({ src: url });
+  const eventFooter = div({ class: 'event-modal-footer hidden' });
+  const closeWindowBtn = button({ class: `button close-modal-btn ${readMore.length === 1 ? 'primary' : 'secondary'}` }, 'Close Window');
+  eventFooter.append(closeWindowBtn);
+  if (readMore.length > 1) {
+    const readMoreBtn = a({ href: readMore, class: `${readMore ? 'button primary' : ''}`, target: '_blank' }, 'Read More');
+    eventFooter.append(readMoreBtn);
+  }
+  eventModalContent.append(pageIframe, eventFooter);
+  const { showModal, block: eventModal } = await createModal([eventModalContent]);
+  eventModal.classList.add('event-modal-block');
+  showModal();
 
-  const modal = document.querySelector('.event-modal');
-  modal.querySelector('.event-modal-date').style.backgroundColor = backgroundColor;
-  modal.querySelector('.event-modal-date').style.color = textColor;
-  modal.querySelector('.event-modal-time').style.backgroundColor = backgroundColor;
-  modal.querySelector('.event-modal-time').style.color = textColor;
-  modal.querySelector('.event-modal-footer button.close').style.backgroundColor = backgroundColor;
-  modal.querySelector('.event-modal-footer button.close').style.color = textColor;
-  modal.querySelector('.event-modal-footer a').style.backgroundColor = backgroundColor;
-  modal.querySelector('.event-modal-footer').classList.add('off');
-  modal.querySelector('.event-modal-date p:first-child').textContent = `${eventDate}`;
-  modal.querySelector('.event-modal-date p:last-child').textContent = `${eventMonthName}`;
-  modal.querySelector('.event-modal-time p').textContent = allDay ? 'All Day' : `${eventStartTime} - ${eventEndTime}`;
-  modal.querySelector('iframe').src = url;
-  modal.style.display = 'block';
-  const readMoreAEl = modal.querySelector('.event-modal-footer a.footer-readmore');
-  if (readMoreAEl) {
-    if (readMore.length > 1) {
-      readMoreAEl.style.color = textColor;
-      let newReadMoreUrl = readMore;
-      const currentReadMoreUrl = new URL(readMore, window.location.origin);
-      if (EDS_DOMAINS.some((domain) => currentReadMoreUrl.origin.includes(domain))) {
-        newReadMoreUrl = new URL(currentReadMoreUrl.pathname, window.location.origin);
+  pageIframe.addEventListener('load', () => {
+    const iframeDocument = pageIframe.contentDocument || pageIframe.contentWindow.document;
+    const iframeBody = iframeDocument?.body;
+    const eventFooterSection = iframeBody?.querySelector('.section.event-footer');
+    if (eventFooterSection && eventFooterSection.children.length === 0) {
+      eventFooterSection.append(eventFooter.cloneNode(true));
+      const footerEl = eventFooterSection.querySelector('.event-modal-footer');
+      if (footerEl && footerEl.classList.contains('hidden')) {
+        footerEl.classList.remove('hidden');
       }
-      readMoreAEl.setAttribute('href', newReadMoreUrl);
-      readMoreAEl.setAttribute('target', '_blank');
-      readMoreAEl.classList.remove('displayoff');
+      const closeBtn = footerEl.querySelector('.close-modal-btn');
+      closeBtn?.addEventListener('click', handleModalClose);
+      const modalEl = pageIframe.closest('.event-modal-block');
+      const topCloseBtn = modalEl?.querySelector('.close-button');
+      topCloseBtn?.addEventListener('click', handleModalClose);
     } else {
-      readMoreAEl.classList.add('displayoff');
-    }
-  }
-
-  // Listen for messages from iframe window
-  window.addEventListener('message', (event) => {
-    const { data } = event;
-
-    if (!data) return;
-
-    const dateEl = modal.querySelector('.event-modal-date');
-    const timeEl = modal.querySelector('.event-modal-time');
-    const footerEl = modal.querySelector('.event-modal-footer');
-
-    if (data.eventtop !== undefined && dateEl && timeEl) {
-      const showTop = data.eventtop === 'on';
-      dateEl.classList.toggle('off', !showTop);
-      timeEl.classList.toggle('off', !showTop);
-    }
-
-    if (data.eventfooter !== undefined && footerEl) {
-      const showFooter = data.eventfooter === 'on';
-      footerEl.classList.toggle('off', !showFooter);
+      const modalContentEl = pageIframe.closest('.modal-content');
+      const eventModalFooterEl = modalContentEl?.querySelector('.event-modal-footer');
+      if (eventModalFooterEl && eventModalFooterEl.classList.contains('hidden')) {
+        eventModalFooterEl.classList.remove('hidden');
+      }
     }
   });
-
-  window.onclick = (event) => {
-    if (event.target === modal) {
-      modal.style.display = 'none';
-      const windowHref = window.location.href;
-      const urlObj = new URL(windowHref);
-      urlObj.searchParams.delete('id');
-      window.history.pushState({}, '', urlObj);
-    }
-  };
 }
 
 function disableSpinner() {
@@ -208,13 +151,15 @@ function disableRightClick() {
 
 async function getfromDOM(element) {
   const currentURL = element.href;
-  const resp = await fetch(currentURL);
-  const htmlBody = await resp.text();
-  const parser = new DOMParser();
-  const dom = parser.parseFromString(htmlBody, 'text/html');
-  const readMoreMeta = dom.querySelector('meta[name="readmore"]');
-  if (readMoreMeta) {
-    element.href = readMoreMeta.content;
+  if (currentURL) {
+    const resp = await fetch(currentURL);
+    const htmlBody = await resp.text();
+    const parser = new DOMParser();
+    const dom = parser.parseFromString(htmlBody, 'text/html');
+    const readMoreMeta = dom.querySelector('meta[name="readmore"]');
+    if (readMoreMeta) {
+      element.href = readMoreMeta.content;
+    }
   }
 }
 
@@ -276,11 +221,8 @@ function createEvents(eventsList) {
           duration: eventDuration,
           exdate: event.excludeDates,
           url: event.url,
-          backgroundColor: event.backgroundColor,
-          textColor: event.textColor,
           classNames: event.classNames,
           groupId: event.divisionid,
-          borderColor: event.backgroundColor,
           extendedProps: { readMore: event.readMore },
           id: `${event.divisionid}-${event.title.length}${event.start.length}`,
         });
@@ -297,11 +239,8 @@ function createEvents(eventsList) {
           },
           duration: eventDuration,
           url: event.url,
-          backgroundColor: event.backgroundColor,
-          textColor: event.textColor,
           classNames: event.classNames,
           groupId: event.divisionid,
-          borderColor: event.backgroundColor,
           extendedProps: { readMore: event.readMore },
           id: `${event.divisionid}-${event.title.length}${event.start.length}`,
         });
@@ -313,12 +252,9 @@ function createEvents(eventsList) {
         end: event.end,
         allDay: event.allDay,
         url: event.url,
-        backgroundColor: event.backgroundColor,
-        textColor: event.textColor,
         classNames: event.classNames,
         groupId: event.divisionid,
         extendedProps: { readMore: event.readMore },
-        borderColor: event.backgroundColor,
         id: `${event.divisionid}-${event.title.length}${event.start.length}`,
       });
     }
@@ -404,84 +340,91 @@ function getInfo(view) {
 
 /* get the view and accordingly target the calendar */
 function getView() {
-  const windowHref = window.location.href;
-  if (windowHref.includes('?')) {
-    const url = new URL(windowHref);
-    const view = url.searchParams.get('view');
-    if (view === 'month') {
+  const isMobileViewport = getViewPort() === 'mobile';
+  if (isMobileViewport) {
+    return 'listMonth';
+  }
+
+  const url = new URL(window.location.href);
+  if (url.searchParams.size) {
+    const searchParams = new URLSearchParams(url.searchParams);
+    const view = searchParams.get('view');
+    // Default to calendar month view
+    if (view === 'month' || view === null) {
       return 'dayGridMonth';
     }
-    if (view === 'week') {
-      return 'timeGridWeek';
-    }
-    if (view === 'day') {
-      return 'timeGridDay';
-    }
-    if (view === 'list') {
-      return 'listMonth';
-    }
+    return 'listMonth';
   }
   return 'dayGridMonth';
 }
 
+const handleEventModal = async (info) => {
+  if (info.event.url) {
+    const windowHref = window.location.href;
+    const url = new URL(windowHref);
+    if (URLSearchParams && !url.searchParams.get('id')) {
+      url.searchParams.append('id', info.event.id);
+      window.history.pushState({}, '', url);
+    } else {
+      url.searchParams.set('id', info.event.id);
+      window.history.pushState({}, '', url);
+    }
+    try {
+      await popupEvent(info.event.url, info.event.extendedProps.readMore);
+    } catch (error) {
+      console.error('Error displaying event modal:', error);
+    }
+  }
+};
+
 function createCalendar() {
   // eslint-disable-next-line no-undef
   calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: getView(),
     timeZone: 'local',
     fixedWeekCount: false,
-    initialView: getView(),
-    dayMaxEventRows: mobilecheck() ? 1 : 6,
+    dayMaxEventRows: mobilecheck() ? 1 : 3,
+    height: 'auto',
     views: {
-      listMonth: { buttonText: 'list' },
+      listMonth: { buttonText: 'List View' },
+      dayGridMonth: { buttonText: 'Calendar View' },
     },
     headerToolbar: {
-      left: 'prev,next,today dayGridMonth,timeGridWeek,timeGridDay,listMonth',
-      center: '',
-      right: 'title',
+      left: 'dayGridMonth,listMonth',
+      center: 'title',
+      right: 'prev,next,today',
+    },
+    dayHeaderFormat: {
+      weekday: 'long',
+    },
+    buttonText: {
+      today: 'Today',
+    },
+    moreLinkClick: 'listDay',
+    moreLinkContent: ({ num }) => (`+${num} more events`),
+    windowResize: ({ view }) => {
+      if (window.innerWidth < 900 && view.type !== 'listMonth') {
+        view.calendar.changeView('listMonth');
+      }
     },
     eventDisplay: 'block',
-    navLinks: true, // can click day/week names to navigate views
+    navLinks: false,
     editable: true,
-    selectable: true,
     datesSet: (dateInfo) => {
       getInfo(dateInfo.view);
     },
-    // events: importedData,
-    eventTimeFormat: { hour: 'numeric', minute: '2-digit' },
+    eventTimeFormat: { hour: 'numeric', minute: '2-digit', omitZeroMinute: true },
     eventDidMount: (info) => {
       info.el.setAttribute('id', info.event.id);
     },
+    viewDidMount: ({ view }) => {
+      if (window.innerWidth < 900 && view.type === 'dayGridMonth') {
+        view.calendar.changeView('listMonth');
+      }
+    },
     eventClick: async (info) => {
       info.jsEvent.preventDefault(); // don't let the browser navigate
-      if (info.event.url) {
-        const windowHref = window.location.href;
-        const url = new URL(windowHref);
-        if (URLSearchParams && !url.searchParams.get('id')) {
-          url.searchParams.append('id', info.event.id);
-          window.history.pushState({}, '', url);
-        } else {
-          url.searchParams.set('id', info.event.id);
-          window.history.pushState({}, '', url);
-        }
-        // eslint-disable-next-line max-len
-        popupEvent(info.event.url, info.event.start, info.event.end, info.event.allDay, info.event.backgroundColor, info.event.extendedProps.readMore, info.event.textColor);
-      }
-      // Check the height of the event iframe & then enable / disable event footer display
-      const eventIframe = document.querySelector('#event-iframe');
-      eventIframe.addEventListener('load', () => {
-        // Wait 1 second after the iframe loads
-        setTimeout(() => {
-          try {
-            const { scrollHeight } = eventIframe.contentWindow.document.body;
-            const modal = document.querySelector('.event-modal');
-            if (scrollHeight < 750) {
-              modal.querySelector('.event-modal-footer').classList.remove('off');
-            }
-          } catch (e) {
-            console.log('Unable to access iframe content (possible cross-origin issue)', e);
-          }
-        }, 1000); // 1000 ms = 1 second
-      });
+      handleEventModal(info);
     },
   });
   /* The Below code is for when the URL is loaded with a specific date */
@@ -494,10 +437,6 @@ function createCalendar() {
   const ricksDate = new Date(year, month - 1, day);
   if (view === 'month') {
     calendar.changeView('dayGridMonth');
-  } else if (view === 'week') {
-    calendar.changeView('timeGridWeek');
-  } else if (view === 'day') {
-    calendar.changeView('timeGridDay');
   } else if (view === 'list') {
     calendar.changeView('listMonth');
   }
@@ -673,6 +612,13 @@ function getName(divisionId) {
   return divisionName;
 }
 
+const handleSearchInput = (event) => {
+  if (event.target.value === '') {
+    calendar.destroy();
+    initializeCalendar();
+  }
+};
+
 export default async function decorate(doc) {
   changeURL();
   doc.body.classList.add('calendar');
@@ -697,9 +643,13 @@ export default async function decorate(doc) {
   });
   const searchDiv = div();
   searchDiv.innerHTML = `
-    <form class="fc-search">
-        <input type="text" id="eventform" name="event" placeholder="Search for Events...">
-        <button type="submit" class="fc-search"><i class="fc-search"></i></button>
+    <p class="fc-search-helper-text">Search events by keyword.</p>
+    <form class="fc-search-form">
+        <input type="search" id="eventform" name="event" placeholder="Search">
+        <button type="submit" class="fc-search-btn">
+          <img src="/icons/search-white.svg" alt="Calendar search icon button" />
+          Search
+        </button>
     </form>
     `;
   const bottomDiv = div({ class: 'fc-calendar-search' });
@@ -711,13 +661,12 @@ export default async function decorate(doc) {
   calendarfilters.appendChild(calendarList);
   $searchSection.appendChild(calendarfilters);
   $searchSection.appendChild(bottomDiv);
-
   $main.appendChild($searchSection);
   const calDiv = div({ id: 'calendar' });
   $calendarSection.append(calDiv);
   $main.append($calendarSection);
+  document.getElementById('eventform')?.addEventListener('input', handleSearchInput);
   // loadrrule() is loaded after 3 seconds via the delayed.js script for improving page performance
-  createModal(doc);
   calendarList.querySelectorAll('.fc-calendar-list-item').forEach((divisionLi, _, parent) => {
     // get path from url
     const path = window.location.pathname.split('/');

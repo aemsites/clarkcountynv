@@ -3,7 +3,7 @@
  * Include content on a page as a fragment.
  * https://www.aem.live/developer/block-collection/fragment
  */
-
+// eslint-disable-next-line import/no-cycle
 import {
   decorateMain,
 } from '../../scripts/scripts.js';
