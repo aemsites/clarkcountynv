@@ -1,5 +1,6 @@
 // add delayed functionality here
 import { loadScript, sampleRUM } from './aem.js';
+// eslint-disable-next-line import/no-cycle
 import { loadrrule } from '../templates/calendar/calendar.js';
 
 // Core Web Vitals RUM collection

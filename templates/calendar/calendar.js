@@ -1,11 +1,10 @@
 /* global rrule */
 import {
-  div, img, iframe, section, p, button, a, ul, li, h3,
+  div, iframe, section, button, a, ul, li,
 } from '../../scripts/dom-helpers.js';
-import { createModal } from '../../blocks/modal/modal.js';
-import { createOptimizedPicture } from '../../scripts/aem.js';
-
 import { normalizeString, getWindowSize, getViewPort } from '../../scripts/utils.js';
+// eslint-disable-next-line import/no-cycle
+import { createModal } from '../../blocks/modal/modal.js';
 
 export const EDS_DOMAINS = ['main--clarkcountynv--aemsites.aem.page', 'main--clarkcountynv--aemsites.aem.live'];
 class Obj {
@@ -84,44 +83,12 @@ export async function fetchPlaceholders(prefix) {
   return window.placeholders;
 }
 
-/*function createModal(doc) {
-  const modal = div({ class: 'event-modal' }, div(
-    { class: 'event-modal-content' },
-    button({ class: 'button close', type: 'button', onclick: () => handleCloseModal() },
-      img({ src: '/icons/search-close.svg', alt: 'Close event modal' })
-    ),
-    div({ class: 'event-modal-img' }),
-    div({ class: 'event-modal-title' }, h3()),
-    div({ class: 'event-modal-description' }, p()),
-    //div({ class: 'event-modal-time' }, p()),
-    //div({ class: 'event-modal-location' }, p()),
-    div({ class: 'event-modal-map-embed' }),
-    //div({ class: 'event-modal-details' }, p()),
-    div({ class: 'event-modal-footer' },
-      button({ class: 'close', onclick: () => handleCloseModal() }, 'Close Window'),
-      a({ class: 'footer-readmore' }, 'Read More')
-    ),
-  ));
-  doc.body.append(modal);
-}*/
-
-// function tConv24(time24) {
-//   let ts = time24;
-//   const H = +ts.substr(0, 2);
-//   let h = (H % 12) || 12;
-//   h = (h < 10) ? (`0${h}`) : h; // leading 0 at the left for 1 digit hours
-//   const ampm = H < 12 ? ' AM' : ' PM';
-//   ts = h + ts.substr(2, 3) + ampm;
-//   return ts;
-// }
-
-
 const handleModalClose = () => {
   const url = new URL(window.location.href);
-  if (url.searchParams.size > 0  && url.searchParams.has('id')) {
+  if (url.searchParams.size > 0 && url.searchParams.has('id')) {
     url.searchParams.delete('id');
     window.history.pushState({}, '', url.href);
-  } 
+  }
   const modal = document.querySelector('.event-modal-block');
   if (modal) {
     const closeButton = modal.querySelector('.close-button');
@@ -129,15 +96,14 @@ const handleModalClose = () => {
   }
 };
 
-async function popupEvent(url, startTime, endTime, allDay, backgroundColor, readMore, textColor) {
+async function popupEvent(url, readMore) {
   const eventModalContent = document.createDocumentFragment();
   const pageIframe = iframe({ src: url });
   const eventFooter = div({ class: 'event-modal-footer hidden' });
-  const closeWindowBtn = button({ class: `button close-modal-btn ${readMore.length === 1 ? 'primary': 'secondary'}`}, 'Close Window');
-  closeWindowBtn.addEventListener('click', handleEventModal);
+  const closeWindowBtn = button({ class: `button close-modal-btn ${readMore.length === 1 ? 'primary' : 'secondary'}` }, 'Close Window');
   eventFooter.append(closeWindowBtn);
   if (readMore.length > 1) {
-    const readMoreBtn = a({ href: readMore, class: `${readMore ? 'button primary': ''}`, target: '_blank' }, 'Read More')
+    const readMoreBtn = a({ href: readMore, class: `${readMore ? 'button primary' : ''}`, target: '_blank' }, 'Read More');
     eventFooter.append(readMoreBtn);
   }
   eventModalContent.append(pageIframe, eventFooter);
@@ -145,7 +111,7 @@ async function popupEvent(url, startTime, endTime, allDay, backgroundColor, read
   eventModal.classList.add('event-modal-block');
   showModal();
 
-  pageIframe.addEventListener('load', () => {    
+  pageIframe.addEventListener('load', () => {
     const iframeDocument = pageIframe.contentDocument || pageIframe.contentWindow.document;
     const iframeBody = iframeDocument?.body;
     const eventFooterSection = iframeBody?.querySelector('.section.event-footer');
@@ -377,21 +343,19 @@ function getView() {
   const isMobileViewport = getViewPort() === 'mobile';
   if (isMobileViewport) {
     return 'listMonth';
-  } else {
-    const url = new URL(window.location.href);
-    if (url.searchParams.size) {
-      const searchParams = new URLSearchParams(url.searchParams);
-      const view = searchParams.get('view');
-      // Default to calendar month view
-      if (view === 'month' || view === null) {
-        return 'dayGridMonth';
-      } else {
-        return 'listMonth';
-      }
-    } else {
+  }
+
+  const url = new URL(window.location.href);
+  if (url.searchParams.size) {
+    const searchParams = new URLSearchParams(url.searchParams);
+    const view = searchParams.get('view');
+    // Default to calendar month view
+    if (view === 'month' || view === null) {
       return 'dayGridMonth';
     }
+    return 'listMonth';
   }
+  return 'dayGridMonth';
 }
 
 const handleEventModal = async (info) => {
@@ -406,7 +370,7 @@ const handleEventModal = async (info) => {
       window.history.pushState({}, '', url);
     }
     try {
-      await popupEvent(info.event.url, info.event.start, info.event.end, info.event.allDay, info.event.backgroundColor, info.event.extendedProps.readMore, info.event.textColor);
+      await popupEvent(info.event.url, info.event.extendedProps.readMore);
     } catch (error) {
       console.error('Error displaying event modal:', error);
     }
@@ -437,7 +401,7 @@ function createCalendar() {
       today: 'Today',
     },
     moreLinkClick: 'listDay',
-    moreLinkContent: (arg) => { return { html: `+${arg.num} more events` } },
+    moreLinkContent: ({ num }) => (`+${num} more events`),
     windowResize: ({ view }) => {
       if (window.innerWidth < 900 && view.type !== 'listMonth') {
         view.calendar.changeView('listMonth');
@@ -449,7 +413,7 @@ function createCalendar() {
     datesSet: (dateInfo) => {
       getInfo(dateInfo.view);
     },
-    eventTimeFormat: { hour: 'numeric', minute: '2-digit', omitZeroMinute: true, },
+    eventTimeFormat: { hour: 'numeric', minute: '2-digit', omitZeroMinute: true },
     eventDidMount: (info) => {
       info.el.setAttribute('id', info.event.id);
     },
@@ -619,7 +583,6 @@ function filterMatches(tokenizedSearchWords) {
 function implementSearch(searchDiv) {
   const response = document.getElementById('eventform');
   searchDiv.querySelector('form').addEventListener('submit', async (web) => {
-    console.log('Submit');
     web.preventDefault();
     const rawdata = response.value;
     const tokenizedSearchWords = searchItems(rawdata);
@@ -652,7 +615,7 @@ function getName(divisionId) {
 const handleSearchInput = (event) => {
   if (event.target.value === '') {
     calendar.destroy();
-    initializeCalendar()
+    initializeCalendar();
   }
 };
 
@@ -704,7 +667,6 @@ export default async function decorate(doc) {
   $main.append($calendarSection);
   document.getElementById('eventform')?.addEventListener('input', handleSearchInput);
   // loadrrule() is loaded after 3 seconds via the delayed.js script for improving page performance
-  //createModal(doc);
   calendarList.querySelectorAll('.fc-calendar-list-item').forEach((divisionLi, _, parent) => {
     // get path from url
     const path = window.location.pathname.split('/');
@@ -756,5 +718,5 @@ export default async function decorate(doc) {
     calendarList.classList.remove('expanded');
     closeButton.classList.remove('expanded');
   });
-  implementSearch(searchDiv); 
+  implementSearch(searchDiv);
 }

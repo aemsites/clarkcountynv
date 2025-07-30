@@ -193,7 +193,7 @@ body.modal-open {
 
 .modal.event-modal-block .close-button:focus {
   border: 2px solid var(--primary-orange-600);
-  box-shadow: 0 0 0 4px rgba(197, 75, 42, 0.25);
+  box-shadow: 0 0 0 4px rgba(197 75 42 / 25%);
 }
 
 .modal.event-modal-block .modal-content {
@@ -214,14 +214,6 @@ body.modal-open {
   align-items: center;
   gap: 12px;
   padding: 0 24px;
-}
-
-.modal.event-modal-block .event-modal-footer {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 12px;
   margin-top: 40px;
 }
 
