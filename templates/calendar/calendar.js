@@ -3,6 +3,7 @@ import {
   div, img, iframe, section, p, button, a, ul, li, h3,
 } from '../../scripts/dom-helpers.js';
 import { createModal } from '../../blocks/modal/modal.js';
+import { createOptimizedPicture } from '../../scripts/aem.js';
 
 import { normalizeString, getWindowSize, getViewPort } from '../../scripts/utils.js';
 
@@ -83,18 +84,6 @@ export async function fetchPlaceholders(prefix) {
   return window.placeholders;
 }
 
-const handleCloseModal = () => {
-  const modal = document.querySelector('.event-modal');
-  const currentEvent = document.querySelector('.current-event');
-  if (modal) {
-    modal.style.display = 'none';
-  }
-  if (currentEvent) {
-    console.log('Removed current event');
-    currentEvent.remove();
-  }
-};
-
 /*function createModal(doc) {
   const modal = div({ class: 'event-modal' }, div(
     { class: 'event-modal-content' },
@@ -126,114 +115,59 @@ const handleCloseModal = () => {
 //   return ts;
 // }
 
-const extractEventDetails = (html) => {
-  setTimeout(() => {
-    const eventImg = html.querySelector('.section.hero picture');
-    const eventTitle = html.querySelector('.section.title h2')?.textContent;
-    const eventDescription = html.querySelector('.section.description > .default-content-wrapper');
-    const eventMapEmbed = html.querySelector('.section.map-embed-container');
-    const details = {
-      image: eventImg || null,
-      title: eventTitle || null,
-      description: eventDescription || null,
-      map: eventMapEmbed || null,
-    };
-    return details;
-  }, 100);
-};
 
-const getEventModalHtml = (details) => {
-  console.log(details);
-  const { image, title, description, map } = details;
-  const container = div({ class: 'event-modal-container' },
-    button({ class: 'event-modal-close', type: 'button' },
-      img({ src: '/icons/search-close.svg', alt: 'Close modal button' }),
-    ),
-    div({ class: 'event-modal-img' },
-      img({ src: image, alt: `${title} event image` }),
-    ),
-    h3({ class: 'event-modal-title' }, title),
-    div({ class: 'event-modal-description' }, description),
-    div({ class: 'event-modal-map-embed' }, map),
-    div({ class: 'event-modal-footer' },
-      button({ class: 'button secondary', type: 'button' }, 'Close Window'),
-      a({ class: 'button primary' }, 'Read More'),
-    ),
-  );
-  return container;
-};
-
-const handleEventIframeLoad = async (pageIframe) => {
-  const eventPageRenderedHtml = pageIframe.contentDocument || iframeElement.contentWindow.document;
-  const eventDetails = await extractEventDetails(eventPageRenderedHtml.body);
-  if (Object.keys(eventDetails).length) {
-    const eventModalHtml = getEventModalHtml(eventDetails);
-    return eventModalHtml;
+const handleModalClose = () => {
+  const url = new URL(window.location.href);
+  if (url.searchParams.size > 0  && url.searchParams.has('id')) {
+    url.searchParams.delete('id');
+    window.history.pushState({}, '', url.href);
+  } 
+  const modal = document.querySelector('.event-modal-block');
+  if (modal) {
+    const closeButton = modal.querySelector('.close-button');
+    closeButton?.click();
   }
 };
 
 async function popupEvent(url, startTime, endTime, allDay, backgroundColor, readMore, textColor) {
-  const pageIframe = iframe({ src: url, class: 'current-event' });
-  pageIframe.style.display = "none";
-  document.body.append(pageIframe);
-  pageIframe.addEventListener('load', async () => {
-    const response = await handleEventIframeLoad(pageIframe);
-    console.log('Response', response);
-    const { showModal } = await createModal(Array.from(response));
-    showModal();
-  });
+  const eventModalContent = document.createDocumentFragment();
+  const pageIframe = iframe({ src: url });
+  const eventFooter = div({ class: 'event-modal-footer hidden' });
+  const closeWindowBtn = button({ class: `button close-modal-btn ${readMore.length === 1 ? 'primary': 'secondary'}`}, 'Close Window');
+  closeWindowBtn.addEventListener('click', handleEventModal);
+  eventFooter.append(closeWindowBtn);
+  if (readMore.length > 1) {
+    const readMoreBtn = a({ href: readMore, class: `${readMore ? 'button primary': ''}`, target: '_blank' }, 'Read More')
+    eventFooter.append(readMoreBtn);
+  }
+  eventModalContent.append(pageIframe, eventFooter);
+  const { showModal, block: eventModal } = await createModal([eventModalContent]);
+  eventModal.classList.add('event-modal-block');
+  showModal();
 
-  const modal = document.querySelector('.event-modal');
-  /*
-  // Display event modal
-  modal.style.display = 'block';
-  const readMoreAEl = modal.querySelector('.event-modal-footer a.footer-readmore');
-  if (readMoreAEl) {
-    if (readMore.length > 1) {
-      let newReadMoreUrl = readMore;
-      const currentReadMoreUrl = new URL(readMore, window.location.origin);
-      if (EDS_DOMAINS.some((domain) => currentReadMoreUrl.origin.includes(domain))) {
-        newReadMoreUrl = new URL(currentReadMoreUrl.pathname, window.location.origin);
+  pageIframe.addEventListener('load', () => {    
+    const iframeDocument = pageIframe.contentDocument || pageIframe.contentWindow.document;
+    const iframeBody = iframeDocument?.body;
+    const eventFooterSection = iframeBody?.querySelector('.section.event-footer');
+    if (eventFooterSection && eventFooterSection.children.length === 0) {
+      eventFooterSection.append(eventFooter.cloneNode(true));
+      const footerEl = eventFooterSection.querySelector('.event-modal-footer');
+      if (footerEl && footerEl.classList.contains('hidden')) {
+        footerEl.classList.remove('hidden');
       }
-      readMoreAEl.setAttribute('href', newReadMoreUrl);
-      readMoreAEl.setAttribute('target', '_blank');
-      readMoreAEl.classList.remove('displayoff');
+      const closeBtn = footerEl.querySelector('.close-modal-btn');
+      closeBtn?.addEventListener('click', handleModalClose);
+      const modalEl = pageIframe.closest('.event-modal-block');
+      const topCloseBtn = modalEl?.querySelector('.close-button');
+      topCloseBtn?.addEventListener('click', handleModalClose);
     } else {
-      readMoreAEl.classList.add('displayoff');
-    }
-  }*/
-
-  // Listen for messages from iframe window
-  window.addEventListener('message', (event) => {
-    const { data } = event;
-
-    if (!data) return;
-
-    const dateEl = modal.querySelector('.event-modal-date');
-    const timeEl = modal.querySelector('.event-modal-time');
-    const footerEl = modal.querySelector('.event-modal-footer');
-
-    if (data.eventtop !== undefined && dateEl && timeEl) {
-      const showTop = data.eventtop === 'on';
-      dateEl.classList.toggle('off', !showTop);
-      timeEl.classList.toggle('off', !showTop);
-    }
-
-    if (data.eventfooter !== undefined && footerEl) {
-      const showFooter = data.eventfooter === 'on';
-      footerEl.classList.toggle('off', !showFooter);
+      const modalContentEl = pageIframe.closest('.modal-content');
+      const eventModalFooterEl = modalContentEl?.querySelector('.event-modal-footer');
+      if (eventModalFooterEl && eventModalFooterEl.classList.contains('hidden')) {
+        eventModalFooterEl.classList.remove('hidden');
+      }
     }
   });
-
-  window.onclick = (event) => {
-    if (event.target === modal) {
-      modal.style.display = 'none';
-      const windowHref = window.location.href;
-      const urlObj = new URL(windowHref);
-      urlObj.searchParams.delete('id');
-      window.history.pushState({}, '', urlObj);
-    }
-  };
 }
 
 function disableSpinner() {
@@ -251,13 +185,15 @@ function disableRightClick() {
 
 async function getfromDOM(element) {
   const currentURL = element.href;
-  const resp = await fetch(currentURL);
-  const htmlBody = await resp.text();
-  const parser = new DOMParser();
-  const dom = parser.parseFromString(htmlBody, 'text/html');
-  const readMoreMeta = dom.querySelector('meta[name="readmore"]');
-  if (readMoreMeta) {
-    element.href = readMoreMeta.content;
+  if (currentURL) {
+    const resp = await fetch(currentURL);
+    const htmlBody = await resp.text();
+    const parser = new DOMParser();
+    const dom = parser.parseFromString(htmlBody, 'text/html');
+    const readMoreMeta = dom.querySelector('meta[name="readmore"]');
+    if (readMoreMeta) {
+      element.href = readMoreMeta.content;
+    }
   }
 }
 
@@ -458,7 +394,7 @@ function getView() {
   }
 }
 
-const handleEventModal = (info) => {
+const handleEventModal = async (info) => {
   if (info.event.url) {
     const windowHref = window.location.href;
     const url = new URL(windowHref);
@@ -469,25 +405,12 @@ const handleEventModal = (info) => {
       url.searchParams.set('id', info.event.id);
       window.history.pushState({}, '', url);
     }
-    // eslint-disable-next-line max-len
-    popupEvent(info.event.url, info.event.start, info.event.end, info.event.allDay, info.event.backgroundColor, info.event.extendedProps.readMore, info.event.textColor);
+    try {
+      await popupEvent(info.event.url, info.event.start, info.event.end, info.event.allDay, info.event.backgroundColor, info.event.extendedProps.readMore, info.event.textColor);
+    } catch (error) {
+      console.error('Error displaying event modal:', error);
+    }
   }
-  // Check the height of the event iframe & then enable / disable event footer display
-  /*const eventIframe = document.querySelector('#event-iframe');
-  eventIframe.addEventListener('load', () => {
-    // Wait 1 second after the iframe loads
-    setTimeout(() => {
-      try {
-        const { scrollHeight } = eventIframe.contentWindow.document.body;
-        const modal = document.querySelector('.event-modal');
-        if (scrollHeight < 750) {
-          modal.querySelector('.event-modal-footer').classList.remove('off');
-        }
-      } catch (e) {
-        console.log('Unable to access iframe content (possible cross-origin issue)', e);
-      }
-    }, 1000); // 1000 ms = 1 second
-  });*/
 };
 
 function createCalendar() {
@@ -513,6 +436,7 @@ function createCalendar() {
     buttonText: {
       today: 'Today',
     },
+    moreLinkClick: 'listDay',
     moreLinkContent: (arg) => { return { html: `+${arg.num} more events` } },
     windowResize: ({ view }) => {
       if (window.innerWidth < 900 && view.type !== 'listMonth') {
@@ -549,10 +473,6 @@ function createCalendar() {
   const ricksDate = new Date(year, month - 1, day);
   if (view === 'month') {
     calendar.changeView('dayGridMonth');
-  } else if (view === 'week') {
-    calendar.changeView('timeGridWeek');
-  } else if (view === 'day') {
-    calendar.changeView('timeGridDay');
   } else if (view === 'list') {
     calendar.changeView('listMonth');
   }
@@ -699,6 +619,7 @@ function filterMatches(tokenizedSearchWords) {
 function implementSearch(searchDiv) {
   const response = document.getElementById('eventform');
   searchDiv.querySelector('form').addEventListener('submit', async (web) => {
+    console.log('Submit');
     web.preventDefault();
     const rawdata = response.value;
     const tokenizedSearchWords = searchItems(rawdata);
@@ -728,6 +649,13 @@ function getName(divisionId) {
   return divisionName;
 }
 
+const handleSearchInput = (event) => {
+  if (event.target.value === '') {
+    calendar.destroy();
+    initializeCalendar()
+  }
+};
+
 export default async function decorate(doc) {
   changeURL();
   doc.body.classList.add('calendar');
@@ -752,10 +680,10 @@ export default async function decorate(doc) {
   });
   const searchDiv = div();
   searchDiv.innerHTML = `
-    <p class="fc-search-helper-text">Search by keyword.</p>
+    <p class="fc-search-helper-text">Search events by keyword.</p>
     <form class="fc-search-form">
         <input type="search" id="eventform" name="event" placeholder="Search">
-        <button type="button" class="fc-search-btn">
+        <button type="submit" class="fc-search-btn">
           <img src="/icons/search-white.svg" alt="Calendar search icon button" />
           Search
         </button>
@@ -770,11 +698,11 @@ export default async function decorate(doc) {
   calendarfilters.appendChild(calendarList);
   $searchSection.appendChild(calendarfilters);
   $searchSection.appendChild(bottomDiv);
-
   $main.appendChild($searchSection);
   const calDiv = div({ id: 'calendar' });
   $calendarSection.append(calDiv);
   $main.append($calendarSection);
+  document.getElementById('eventform')?.addEventListener('input', handleSearchInput);
   // loadrrule() is loaded after 3 seconds via the delayed.js script for improving page performance
   //createModal(doc);
   calendarList.querySelectorAll('.fc-calendar-list-item').forEach((divisionLi, _, parent) => {
@@ -828,5 +756,5 @@ export default async function decorate(doc) {
     calendarList.classList.remove('expanded');
     closeButton.classList.remove('expanded');
   });
-  implementSearch(searchDiv);
+  implementSearch(searchDiv); 
 }
