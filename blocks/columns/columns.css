@@ -540,11 +540,11 @@ main .section.rightsection.no-button .columns.alert a:any-link {
 
 .columns.highlight > div > div.column2 p {
   font-size: var(--body-font-size-m);
-  margin: 0;
+  margin: 0 0 40px;
 }
 
 .columns.highlight > div > div.column2 p:last-child {
-  margin: 24px 0 0;
+  margin: 0;
 }
 
 .columns.highlight .column2 p:last-child a {
@@ -571,9 +571,5 @@ main .section.rightsection.no-button .columns.alert a:any-link {
   .columns.highlight .column1 picture {
     display: inline;
     height: auto;
-  }
-
-  .columns.highlight .column1 img {
-    object-fit: none;
   }
 }
