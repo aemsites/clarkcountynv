@@ -2,6 +2,7 @@ import {
   div, input, button, img, p,
 } from '../../scripts/dom-helpers.js';
 import { createHashId, scrollWithHeaderOffset } from '../../scripts/utils.js';
+import { loadCSS } from '../../scripts/aem.js';
 
 // This will get the ID from the details HTML element and add as a hash to the url
 function handleToggleHash(event) {
@@ -172,4 +173,7 @@ export default function decorate(block) {
       }, 100);
     }
   }
+
+  // Styles are shared for reusability
+  loadCSS(`${window.hlx.codeBasePath}/blocks/accordion/accordion.css`);
 }
