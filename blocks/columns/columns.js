@@ -118,7 +118,7 @@ export default function decorate(block) {
     const firstCol = block.querySelector('.column1');
     const secondCol = block.querySelector('.column2');
     const secondColFirstEl = secondCol?.firstElementChild;
-    const isTitleHeader = secondColFirstEl && (secondColFirstEl.tagName === 'H2' || secondColFirstEl.tagName === 'H3')
+    const isTitleHeader = secondColFirstEl && (secondColFirstEl.tagName === 'H2' || secondColFirstEl.tagName === 'H3');
     const title = `${isTitleHeader.textContent} map` || 'Google map embed';
     const mapLink = firstCol?.querySelector('a');
     const hasEmbedCode = mapLink?.href.indexOf('www.google.com/maps/embed') > -1;
