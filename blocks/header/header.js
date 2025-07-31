@@ -518,17 +518,13 @@ function decorateNavItem(parent, navSectionSearchItem) {
   const navIn = div({ class: 'nav-in' });
   const navContent = div({ class: 'nav-content' });
   const navContentIn = div({ class: 'nav-content-in' });
-  const navPageTitle = h2();
-  navPageTitle.className = 'nav-page-title';
-  navPageTitle.textContent = parent.querySelector('strong').textContent;
-  const closeSpan = span();
-  closeSpan.className = 'nav-close';
-  closeSpan.innerText = 'close';
-  closeSpan.addEventListener('click', () => {
+  const closeBtn = button({ class: 'button secondary nav-close', type: 'button' },
+    img({ src: '/icons/mega-menu-close.svg', alt: 'Close mega menu' }),
+  );
+  closeBtn.addEventListener('click', () => {
     parent.setAttribute('aria-expanded', 'false');
   });
-  navContentIn.append(navPageTitle);
-  navContentIn.append(closeSpan);
+  navContentIn.append(closeBtn);
   navContent.append(navContentIn);
   navIn.append(navContent);
   menuUl.append(navIn);
@@ -583,12 +579,6 @@ function decorateNavItem(parent, navSectionSearchItem) {
     });
     tablist.append($button);
   }
-
-  const navBottom = div({ class: 'nav-bottom' });
-  //navBottom.append(navSectionSearchItem.cloneNode(true));
-
-  navIn.append(navBottom);
-
   parent.children[1].remove();
 }
 
