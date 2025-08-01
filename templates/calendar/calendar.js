@@ -96,9 +96,53 @@ const handleModalClose = () => {
   }
 };
 
-async function popupEvent(url, readMore) {
+// Need to add title attribute to nested iframe for accessibility requirement
+function waitForNestedIframe(maxAttempts = 50, interval = 100) {
+  return new Promise((resolve, reject) => {
+    let attempts = 0;
+
+    const checkForIframe = () => {
+      attempts += 1;
+
+      // Try to find the nested iframe
+      const outerIframe = document.querySelector('.event-modal-block iframe');
+      if (outerIframe && outerIframe.contentDocument) {
+        const innerIframe = outerIframe.contentDocument.querySelector('iframe.map-embed');
+        if (innerIframe) {
+          resolve(innerIframe);
+          return;
+        }
+      }
+
+      if (attempts >= maxAttempts) {
+        reject(new Error('Nested iframe not found after maximum attempts'));
+        return;
+      }
+
+      setTimeout(checkForIframe, interval);
+    };
+
+    checkForIframe();
+  });
+}
+
+const checkForNestedIframe = () => {
+  // Wait for Google Maps to initialize
+  setTimeout(() => {
+    waitForNestedIframe()
+      .then((nestedIframe) => {
+        nestedIframe.setAttribute('title', 'Google Maps - Interactive map');
+      })
+      .catch((error) => {
+        console.error('Failed to add title to nested iframe:', error);
+      });
+  }, 1000);
+};
+
+async function popupEvent(url, readMore, eventData) {
+  const { _def: { title } } = eventData;
   const eventModalContent = document.createDocumentFragment();
-  const pageIframe = iframe({ src: url });
+  const pageIframe = iframe({ src: url, title });
   const eventFooter = div({ class: 'event-modal-footer hidden' });
   const closeWindowBtn = button({ class: `button close-modal-btn ${readMore.length === 1 ? 'primary' : 'secondary'}` }, 'Close Window');
   eventFooter.append(closeWindowBtn);
@@ -110,29 +154,30 @@ async function popupEvent(url, readMore) {
   const { showModal, block: eventModal } = await createModal([eventModalContent]);
   eventModal.classList.add('event-modal-block');
   showModal();
+  eventModal.querySelector('.modal-content')?.setAttribute('tabindex', '0');
 
   pageIframe.addEventListener('load', () => {
+    const modalClose = pageIframe.parentElement.previousElementSibling;
+    if (modalClose && modalClose.classList.contains('close-button')) {
+      modalClose.addEventListener('click', handleModalClose);
+    }
     const iframeDocument = pageIframe.contentDocument || pageIframe.contentWindow.document;
     const iframeBody = iframeDocument?.body;
-    const eventFooterSection = iframeBody?.querySelector('.section.event-footer');
-    if (eventFooterSection && eventFooterSection.children.length === 0) {
-      eventFooterSection.append(eventFooter.cloneNode(true));
-      const footerEl = eventFooterSection.querySelector('.event-modal-footer');
-      if (footerEl && footerEl.classList.contains('hidden')) {
-        footerEl.classList.remove('hidden');
+    setTimeout(() => {
+      const eventFooterSection = iframeBody?.querySelector('.section.event-footer');
+      if (eventFooterSection) {
+        eventFooterSection.innerHTML = '';
+        eventFooterSection.append(eventFooter.cloneNode(true));
+        const footerEl = eventFooterSection.querySelector('.event-modal-footer');
+        const closeBtn = footerEl.querySelector('.close-modal-btn');
+        if (footerEl && footerEl.classList.contains('hidden')) {
+          footerEl.classList.remove('hidden');
+        }
+        closeBtn?.addEventListener('click', handleModalClose);
       }
-      const closeBtn = footerEl.querySelector('.close-modal-btn');
-      closeBtn?.addEventListener('click', handleModalClose);
-      const modalEl = pageIframe.closest('.event-modal-block');
-      const topCloseBtn = modalEl?.querySelector('.close-button');
-      topCloseBtn?.addEventListener('click', handleModalClose);
-    } else {
-      const modalContentEl = pageIframe.closest('.modal-content');
-      const eventModalFooterEl = modalContentEl?.querySelector('.event-modal-footer');
-      if (eventModalFooterEl && eventModalFooterEl.classList.contains('hidden')) {
-        eventModalFooterEl.classList.remove('hidden');
-      }
-    }
+    }, 250);
+
+    checkForNestedIframe();
   });
 }
 
@@ -370,7 +415,7 @@ const handleEventModal = async (info) => {
       window.history.pushState({}, '', url);
     }
     try {
-      await popupEvent(info.event.url, info.event.extendedProps.readMore);
+      await popupEvent(info.event.url, info.event.extendedProps.readMore, info.event);
     } catch (error) {
       console.error('Error displaying event modal:', error);
     }
@@ -418,6 +463,24 @@ function createCalendar() {
       info.el.setAttribute('id', info.event.id);
     },
     viewDidMount: ({ view }) => {
+      const calendarElement = view.calendar?.el;
+      if (!calendarElement) return;
+
+      const prevNextButtonConfigs = [
+        { selector: '.fc-next-button', label: 'Next month' },
+        { selector: '.fc-prev-button', label: 'Previous month' },
+      ];
+
+      prevNextButtonConfigs.forEach(({ selector, label }) => {
+        const buttonEl = calendarElement.querySelector(selector);
+        if (!buttonEl) return;
+
+        const icon = buttonEl.querySelector('[role="img"]');
+        if (icon && !icon.hasAttribute('aria-label')) {
+          icon.setAttribute('aria-label', label);
+        }
+      });
+
       if (window.innerWidth < 900 && view.type === 'dayGridMonth') {
         view.calendar.changeView('listMonth');
       }
@@ -619,6 +682,17 @@ const handleSearchInput = (event) => {
   }
 };
 
+// Function to handle when a .fc-more-link element is found
+function handleMoreLinkAdded(element) {
+  if (element.hasAttribute('aria-expanded')) {
+    element.removeAttribute('aria-expanded');
+  }
+  element.addEventListener('click', () => {
+    const search = document.querySelector('.fc-search');
+    search?.scrollIntoView({ behavior: 'smooth' });
+  });
+}
+
 export default async function decorate(doc) {
   changeURL();
   doc.body.classList.add('calendar');
@@ -719,4 +793,38 @@ export default async function decorate(doc) {
     closeButton.classList.remove('expanded');
   });
   implementSearch(searchDiv);
+
+  // Create a MutationObserver to watch for .fc-more-link elements
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      // Check if nodes were added
+      if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+        mutation.addedNodes.forEach((node) => {
+          // Skip text nodes and other non-element nodes
+          if (node.nodeType !== Node.ELEMENT_NODE) return;
+
+          // Check if the added node itself has the target class
+          if (node.classList && node.classList.contains('fc-more-link')) {
+            handleMoreLinkAdded(node);
+          }
+
+          // Check if any descendants of the added node have the target class
+          const moreLinks = node.querySelectorAll('.fc-more-link');
+          moreLinks?.forEach((link) => {
+            handleMoreLinkAdded(link);
+          });
+        });
+      }
+    });
+  });
+
+  // Start observing the document for changes
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+    attributes: false,
+    attributeOldValue: false,
+    characterData: false,
+    characterDataOldValue: false,
+  });
 }
