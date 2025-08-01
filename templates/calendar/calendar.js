@@ -1,6 +1,6 @@
 /* global rrule */
 import {
-  div, iframe, section, button, a, ul, li, waitForElement,
+  div, iframe, section, button, a, ul, li,
 } from '../../scripts/dom-helpers.js';
 import { normalizeString, getWindowSize, getViewPort } from '../../scripts/utils.js';
 // eslint-disable-next-line import/no-cycle
@@ -100,10 +100,10 @@ const handleModalClose = () => {
 function waitForNestedIframe(maxAttempts = 50, interval = 100) {
   return new Promise((resolve, reject) => {
     let attempts = 0;
-    
+
     const checkForIframe = () => {
-      attempts++;
-      
+      attempts += 1;
+
       // Try to find the nested iframe
       const outerIframe = document.querySelector('.event-modal-block iframe');
       if (outerIframe && outerIframe.contentDocument) {
@@ -113,15 +113,15 @@ function waitForNestedIframe(maxAttempts = 50, interval = 100) {
           return;
         }
       }
-      
+
       if (attempts >= maxAttempts) {
         reject(new Error('Nested iframe not found after maximum attempts'));
         return;
       }
-      
+
       setTimeout(checkForIframe, interval);
     };
-    
+
     checkForIframe();
   });
 }
@@ -130,10 +130,10 @@ const checkForNestedIframe = () => {
   // Wait for Google Maps to initialize
   setTimeout(() => {
     waitForNestedIframe()
-      .then(nestedIframe => {
+      .then((nestedIframe) => {
         nestedIframe.setAttribute('title', 'Google Maps - Interactive map');
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Failed to add title to nested iframe:', error);
       });
   }, 1000);
@@ -176,7 +176,7 @@ async function popupEvent(url, readMore, eventData) {
         closeBtn?.addEventListener('click', handleModalClose);
       }
     }, 250);
-    
+
     checkForNestedIframe();
   });
 }
@@ -468,14 +468,14 @@ function createCalendar() {
 
       const prevNextButtonConfigs = [
         { selector: '.fc-next-button', label: 'Next month' },
-        { selector: '.fc-prev-button', label: 'Previous month' }
+        { selector: '.fc-prev-button', label: 'Previous month' },
       ];
 
       prevNextButtonConfigs.forEach(({ selector, label }) => {
-        const button = calendarElement.querySelector(selector);
-        if (!button) return;
+        const buttonEl = calendarElement.querySelector(selector);
+        if (!buttonEl) return;
 
-        const icon = button.querySelector('[role="img"]');
+        const icon = buttonEl.querySelector('[role="img"]');
         if (icon && !icon.hasAttribute('aria-label')) {
           icon.setAttribute('aria-label', label);
         }
@@ -682,6 +682,17 @@ const handleSearchInput = (event) => {
   }
 };
 
+// Function to handle when a .fc-more-link element is found
+function handleMoreLinkAdded(element) {
+  if (element.hasAttribute('aria-expanded')) {
+    element.removeAttribute('aria-expanded');
+  }
+  element.addEventListener('click', () => {
+    const search = document.querySelector('.fc-search');
+    search?.scrollIntoView({ behavior: 'smooth' });
+  });
+}
+
 export default async function decorate(doc) {
   changeURL();
   doc.body.classList.add('calendar');
@@ -791,12 +802,12 @@ export default async function decorate(doc) {
         mutation.addedNodes.forEach((node) => {
           // Skip text nodes and other non-element nodes
           if (node.nodeType !== Node.ELEMENT_NODE) return;
-          
+
           // Check if the added node itself has the target class
           if (node.classList && node.classList.contains('fc-more-link')) {
             handleMoreLinkAdded(node);
           }
-          
+
           // Check if any descendants of the added node have the target class
           const moreLinks = node.querySelectorAll('.fc-more-link');
           moreLinks?.forEach((link) => {
@@ -806,17 +817,6 @@ export default async function decorate(doc) {
       }
     });
   });
-
-  // Function to handle when a .fc-more-link element is found
-  function handleMoreLinkAdded(element) {
-    if (element.hasAttribute('aria-expanded')) {
-      element.removeAttribute('aria-expanded');
-    }
-    element.addEventListener('click', (e) => {
-      const search = document.querySelector('.fc-search');
-      search?.scrollIntoView({ behavior: 'smooth' });
-    });
-  }
 
   // Start observing the document for changes
   observer.observe(document.body, {
