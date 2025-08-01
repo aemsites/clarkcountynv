@@ -313,7 +313,7 @@ body.calendar main section .fc .fc-daygrid-day.fc-day-today {
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 24px 35px;
 }
 
 .calendar .fc-calendar-search {
@@ -324,7 +324,7 @@ body.calendar main section .fc .fc-daygrid-day.fc-day-today {
 }
 
 .calendar .fc-search {
-  margin-bottom: 64px;
+  margin-bottom: 40px;
 }
 
 .calendar .fc-search-form {
@@ -383,9 +383,9 @@ body.calendar main section .fc .fc-daygrid-day.fc-day-today {
 
 .calendar .fc-header-toolbar.fc-toolbar {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column wrap;
+  align-items: flex-start;
   justify-content: flex-start;
-  column-gap: 40px;
   margin-bottom: 24px;
 }
 
@@ -397,6 +397,10 @@ body.calendar main section .fc .fc-daygrid-day.fc-day-today {
 .calendar .fc-header-toolbar .fc-toolbar-chunk:first-child button {
   padding: 16px 24px;
   display: none;
+}
+
+.calendar .fc-header-toolbar .fc-toolbar-chunk:last-child {
+  margin-top: 8px;
 }
 
 .calendar .fc-header-toolbar .fc-toolbar-chunk:last-child button {
@@ -443,15 +447,10 @@ body.calendar main section .fc .fc-daygrid-day.fc-day-today {
   border-color: var(--primary-orange-300);
 }
 
+.calendar .fc-header-toolbar .fc-button.fc-button-active:active,
 .calendar .fc-header-toolbar .fc-button.fc-button-active:focus {
-  background-color: var(--primary-orange-300);
+  background-color: var(--primary-orange-600);
   border-color: var(--primary-orange-600);
-  box-shadow: none;
-}
-
-.calendar .fc-header-toolbar .fc-button.fc-button-active:active {
-  background-color: var(--primary-orange-900);
-  border-color: var(--primary-orange-900);
   box-shadow: none;
 }
 
@@ -653,7 +652,11 @@ body.calendar main section .fc .fc-daygrid-day.fc-day-today {
 
 @media (width >= 900px) {
   .calendar .fc {
-    padding: 0 50px;
+    padding: 0 50px 35px;
+  }
+
+  .calendar .fc-search {
+    margin-bottom: 64px;
   }
 
   .calendar .fc-calendar-search {
@@ -667,6 +670,9 @@ body.calendar main section .fc .fc-daygrid-day.fc-day-today {
   }
 
   .calendar .fc-header-toolbar.fc-toolbar {
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: center;
     gap: 40px;
   }
 
