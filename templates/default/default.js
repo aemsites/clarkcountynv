@@ -63,7 +63,7 @@ async function checkFragmentAccordionML() {
   for (let i = pathParts.length - 1; i >= 1; i -= 1) {
     // Reconstruct the base path from deeper to root
     const basePath = `/${pathParts.slice(0, i).join('/')}`;
-    const testUrl = `${baseUrl + basePath}/fragment/accordion-ml`;
+    const testUrl = `${baseUrl + basePath}/fragment/left-nav`;
     // eslint-disable-next-line no-await-in-loop
     const fragPath = await check404(testUrl);
     if (fragPath) {
@@ -78,13 +78,13 @@ export default async function decorate(doc) {
   const $leftsection = document.querySelector('.leftsection');
 
   if ($leftsection) {
-    if (!$leftsection.querySelector('.accordion-ml.block')) {
+    if (!$leftsection.querySelector('.left-nav.block')) {
       // check for the URL path segments from extreme right, presence of fragment folder
       const fragPath = await checkFragmentAccordionML();
       if (fragPath) {
         const path = new URL(fragPath).pathname;
         const leftFrag = await loadFragment(path);
-        const leftnav = leftFrag.querySelector('.accordion-ml-wrapper').cloneNode(true);
+        const leftnav = leftFrag.querySelector('.left-nav-wrapper').cloneNode(true);
         const startH2 = $leftsection.querySelector('h2');
         // append leftnav just after startH2
         if (startH2) {
