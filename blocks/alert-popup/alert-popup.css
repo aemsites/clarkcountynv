@@ -101,6 +101,10 @@
     background-color: var(--primary-orange-600);
     color: var(--color-white);
 
+    h3 {
+      color: var(--color-white);
+    }
+
     a {
       color: var(--neutral-white);
     }
@@ -123,6 +127,10 @@
   &.high {
     background-color: var(--secondary-blue-800);
     color: var(--color-white);
+
+    h3 {
+      color: var(--color-white);
+    }
 
     a {
       color: var(--neutral-white);
