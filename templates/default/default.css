@@ -313,7 +313,7 @@ main .mainmenu .rightsection.image-center picture img {
 }
 
 main .mainmenu .rightsection.no-button a:any-link:not(.cards a, .cards * a, .hotline a, .newslist a, .newslist-ens a, .document-center a) {
-    color: var(--no-button-link);
+    color: var(--primary-orange-900);
     background-color: transparent;
     text-decoration: underline;
     border: 0;
