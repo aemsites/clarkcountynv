@@ -609,6 +609,16 @@ main .section.details-404 > .default-content-wrapper {
   margin-bottom: 40px;
 }
 
+.section > .default-content-wrapper {
+  padding: 0 24px;
+}
+
+@media (width >= 900px) {
+  .section > .default-content-wrapper {
+    padding: 0 50px;
+  }
+}
+
 @media (width >= 991px) {
   .desktop {
     display: block;
