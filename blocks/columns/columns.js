@@ -91,6 +91,7 @@ export default function decorate(block) {
   for (let counter = 0; counter < cols.length; counter += 1) {
     cols[counter].classList.add(`column${counter + 1}`);
     [...cols[counter].children].forEach((child) => {
+      console.log(child);
       child.classList.remove('button-container');
       child.classList.add('columns-paragraph');
       child.classList.add(`column${counter + 1}-paragraph`);
