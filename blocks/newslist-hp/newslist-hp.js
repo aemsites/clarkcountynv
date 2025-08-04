@@ -3,7 +3,7 @@ import {
   div, a, img, h4, h6, span,
 } from '../../scripts/dom-helpers.js';
 import {
-  buildBlock, decorateBlock, loadBlock, createOptimizedPicture, readBlockConfig,fetchPlaceholders,
+  buildBlock, decorateBlock, loadBlock, createOptimizedPicture, readBlockConfig,fetchPlaceholders, 
 } from '../../scripts/aem.js';
 
 const placeholders = await fetchPlaceholders();
