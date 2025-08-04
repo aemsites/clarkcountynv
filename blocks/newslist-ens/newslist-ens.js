@@ -8,6 +8,9 @@ import {
   buildBlock, decorateBlock, loadBlock, createOptimizedPicture,
 } from '../../scripts/aem.js';
 
+const placeholders = await fetchPlaceholders();
+const CLARKLOGO = placeholders.clarkcountylogo;
+
 class News {
   // eslint-disable-next-line max-len
   constructor(newsTitle, newsDescription, newsPath, newsPublished, newsImage, newsCategory, newsYear) {
@@ -35,7 +38,7 @@ const resultParsers = {
         const cardImage = createOptimizedPicture(result.newsImage);
         cardleft.append(cardImage);
       } else {
-        const cardImage = createOptimizedPicture('/news/media_1cd00e6d663e3a8f17a6a71845a2d09cc41f55b6d.png');
+        const cardImage = createOptimizedPicture(CLARKLOGO);
         cardleft.append(cardImage);
       }
       const cardright = div({ class: 'card-right' });

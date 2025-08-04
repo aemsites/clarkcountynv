@@ -21,7 +21,9 @@ import { getViewPort, externalLinks, ScrolltoTop } from './utils.js';
 
 import assetsInit from './aem-assets-plugin-support.js';
 
-const DEFAULT_BACKGROUND_IMAGE = `${window.location.origin}/assets/images/general/slide1.jpg`;
+const placeholders = await fetchPlaceholders();
+
+const DEFAULT_BACKGROUND_IMAGE = placeholders.defaultherobanner;
 
 const getPageTitle = async (url) => {
   // TODO: check if URL is valid, shouldn't be empty or null or need trailing slash
@@ -72,9 +74,8 @@ async function buildBreadcrumbsFromNavTree(nav, currentUrl) {
   }
 
   // TODO: needs placeholders file
-  const placeholders = await fetchPlaceholders();
-  const homePlaceholder = placeholders.breadcrumbsHomeLabel || 'Home';
-
+    const homePlaceholder = placeholders.breadcrumbsHomeLabel || 'Home';
+console.log("homePlaceholder>",homePlaceholder);
   crumbs.unshift({ title: homePlaceholder, url: homeUrl });
 
   // last link is current page and should not be linked
