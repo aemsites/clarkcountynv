@@ -4,7 +4,7 @@ import {
 } from '../../scripts/dom-helpers.js';
 
 import {
-  createOptimizedPicture, buildBlock, decorateBlock, loadBlock, 
+  createOptimizedPicture, buildBlock, decorateBlock, loadBlock,
   fetchPlaceholders as defaultFetchPlaceholders,
 } from '../../scripts/aem.js';
 
