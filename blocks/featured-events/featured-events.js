@@ -4,7 +4,7 @@ import {
 } from '../../scripts/dom-helpers.js';
 
 import {
-  createOptimizedPicture, buildBlock, decorateBlock, loadBlock,
+  createOptimizedPicture, buildBlock, decorateBlock, loadBlock,fetchPlaceholders as defaultFetchPlaceholders
 } from '../../scripts/aem.js';
 
 import { normalizeString } from '../../scripts/utils.js';
@@ -12,9 +12,9 @@ import { normalizeString } from '../../scripts/utils.js';
 const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEPT', 'OCT', 'NOV', 'DEC'];
 let divisions = [];
 
-const placeholders = await fetchPlaceholders();
-const CLARKLOGO = placeholders.clarkcountylogo;
-const WHITEARROW = placeholders.whitearrow;
+const defaultplaceholders = await defaultFetchPlaceholders();
+const CLARKLOGO = defaultplaceholders.clarkcountylogo;
+const WHITEARROW = defaultplaceholders.whitearrow;
 
 function tConv24(time24) {
   let ts = time24;
@@ -127,7 +127,6 @@ const resultParsers = {
         const columnImage = createOptimizedPicture(result.image);
         divLeft.appendChild(columnImage);
       } else {
-       
         const columnImage = createOptimizedPicture(CLARKLOGO);
         divLeft.appendChild(columnImage);
       }

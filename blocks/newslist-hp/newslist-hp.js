@@ -3,13 +3,12 @@ import {
   div, a, img, h4, h6, span,
 } from '../../scripts/dom-helpers.js';
 import {
-  buildBlock, decorateBlock, loadBlock, createOptimizedPicture, readBlockConfig,
+  buildBlock, decorateBlock, loadBlock, createOptimizedPicture, readBlockConfig,fetchPlaceholders,
 } from '../../scripts/aem.js';
 
 const placeholders = await fetchPlaceholders();
 const CLARKLOGO = placeholders.clarkcountylogo;
 const WHITEARROW = placeholders.whitearrow;
-
 
 class News {
   constructor(newsTitle, newsDescription, newsPath, newsPublished, newsImage, newsCategory) {

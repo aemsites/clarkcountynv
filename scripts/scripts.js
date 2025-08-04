@@ -74,8 +74,7 @@ async function buildBreadcrumbsFromNavTree(nav, currentUrl) {
   }
 
   // TODO: needs placeholders file
-    const homePlaceholder = placeholders.breadcrumbsHomeLabel || 'Home';
-console.log("homePlaceholder>",homePlaceholder);
+  const homePlaceholder = placeholders.breadcrumbsHomeLabel || 'Home';
   crumbs.unshift({ title: homePlaceholder, url: homeUrl });
 
   // last link is current page and should not be linked
