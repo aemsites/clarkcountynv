@@ -104,6 +104,7 @@
 
   /* nav height */
   --nav-height: 154px;
+  --nav-height-mobile: 119px;
 
   /* spacing */
   --spacing-xs: 8px;

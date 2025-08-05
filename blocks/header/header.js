@@ -21,7 +21,7 @@ let rawkey = '';
 let searchIframe = '';
 
 // media query match that indicates mobile/tablet width
-const isDesktop = window.matchMedia('(min-width: 991px)');
+const isDesktop = window.matchMedia('(min-width: 900px)');
 const tracker = [];
 class Accordion {
   constructor(el) {
@@ -171,9 +171,14 @@ function decorateSearchBox(searchBox) {
   searchBox.innerHTML = `<div class="search-top">
   <div class="searchHeaderBtn">
               </div>
-              <div class="search-top-left">What would you like to search?</div>
-              <div class="search-top-right"><span class="close-search">Close</span></div>
-            </div><!--/#search-top-->
+              <h2 class="search-menu-header">Search</h2>
+              <p class="search-menu-helper-text">Search for a page, department, or by keyword.</p>
+              <div class="search-top-right">
+                <button type="button" class="button secondary search-close">
+                  <img src="/icons/mega-menu-close.svg" alt="Close search menu" />
+                </button>
+              </div>
+            </div>
             <div class="search-form-wrap">
               <form class="search-form" method="GET" action="search" role="search" aria-label="sitewide">
                 <label for="search-input"><span class="sr-only">Search</span></label>
@@ -181,27 +186,22 @@ function decorateSearchBox(searchBox) {
                 <button>Go</button>
               </form>
               <div class="search-results off" style="">
-                <ul class="search-nav clearfix">
-                  <li class="close-curated"><i class="fa fa-close"></i></li>
-                  <li><a id="search-3" href="#search-3">All of Clark County</a></li>
-                </ul>
                 <div class="tab-content clearfix">
                   <div class="tab-pane off" id="search-3">
-                    <h2>All of Clark County</h2>
+                    <h3 class="search-results-all-header">All of Clark County</h3>
                     <div class="g-search-wrap">
                     </div>
                   </div>
-                </div><!--/.tab-content-->
+                </div>
               </div>
-            <!--/#search-results-->
-            </div><!--/#search-form-wrap-->
+            </div>
             <div class="search-middle">
               <div class="search-middle-left">
               <div class="searchHeaderBtn">
               </div>
-                <h2>Popular Searches</h2>
-              </div><!--/#search-middle-left-->
-            </div><!--/#search-middle-->`;
+                <h3 class="search-menu-popular-header">Popular Search Terms</h3>
+              </div>
+            </div>`;
 }
 
 function showSearch(ele, tabContent) {
@@ -253,33 +253,17 @@ function handleNavTools(navWrapper, expandElement) {
     const languageTool = tools[2];
     const nav = document.querySelector('.nav-wrapper nav');
     const searchDiv = div({ class: 'nav-search' });
-    const searchIcon = img({ class: 'nav-search-icon' });
-    searchIcon.src = '/icons/search-white.svg';
-    searchIcon.alt = 'Search Icon';
-    searchDiv.appendChild(searchIcon);
-    const searchText = span();
-    searchText.textContent = searchTool.innerText;
-    searchDiv.appendChild(searchText);
+    const searchButton = button({ type: 'button', class: 'nav-search-button' }, searchTool.innerText);
+    const searchButtonIcon = img({ src: '/icons/search-white.svg', class: 'nav-search-icon', alt: 'Search Icon' });
+    searchButton.prepend(searchButtonIcon);
+    searchDiv.append(searchButton);
     const searchBox = div({ class: 'search-box' });
     decorateSearchBox(searchBox);
     searchBox.querySelector('.search-middle-left').appendChild(searchPopularList);
     searchPopularList.classList.add('popular-searches-list');
     searchBox.classList.add('hidden');
     searchDiv.appendChild(searchBox);
-    searchIcon.addEventListener('click', () => {
-      if (searchBox.classList.contains('hidden')) {
-        searchBox.classList.remove('hidden');
-        searchBox.querySelector('input').value = '';
-        searchBox.querySelector('.search-results').classList.add('off');
-        searchBox.querySelector('.tab-pane').classList.add('off');
-      } else {
-        searchBox.classList.add('hidden');
-        searchBox.querySelector('input').value = '';
-        searchBox.querySelector('.search-results').classList.add('off');
-        searchBox.querySelector('.tab-pane').classList.add('off');
-      }
-    });
-    searchText.addEventListener('click', () => {
+    searchButton.addEventListener('click', () => {
       if (searchBox.classList.contains('hidden')) {
         searchBox.classList.remove('hidden');
         searchBox.querySelector('input').value = '';
@@ -297,12 +281,6 @@ function handleNavTools(navWrapper, expandElement) {
       searchBox.classList.add('hidden');
     });
 
-    // print the value of input element the moment the user types
-    // searchBox.querySelector('input').addEventListener('input', (key) => {
-    //   key.preventDefault();
-    //   console.log(key.target.value);
-    // });
-
     searchBox.querySelector('input').addEventListener('input', (key) => {
       key.preventDefault();
       rawkey = key.target.value;
@@ -314,6 +292,7 @@ function handleNavTools(navWrapper, expandElement) {
         const tab = tabContent.querySelector('.tab-pane');
         const addIframe = iframe();
         addIframe.src = `/search-header?q=${rawkey}`;
+        addIframe.title = 'Clark County Search Results';
         if (!searchIframe) {
           tab.querySelector('.g-search-wrap').appendChild(addIframe);
           searchIframe = tab.querySelector('.g-search-wrap').querySelector('iframe');
@@ -321,12 +300,6 @@ function handleNavTools(navWrapper, expandElement) {
           searchIframe.src = `/search-header?q=${rawkey}`;
         }
       }
-    });
-
-    searchBox.querySelector('.close-curated').addEventListener('click', () => {
-      searchBox.querySelector('.search-results').classList.add('off');
-      searchBox.querySelector('.tab-pane').classList.add('off');
-      searchBox.querySelector('input').value = '';
     });
 
     searchBox.querySelector('form').addEventListener('submit', (event) => {
@@ -338,6 +311,7 @@ function handleNavTools(navWrapper, expandElement) {
         const tab = tabContent.querySelector('.tab-pane');
         const addIframe = iframe();
         addIframe.src = `/search-header?q=${rawkey}`;
+        addIframe.title = 'Clark County Search Results';
         if (!searchIframe) {
           tab.querySelector('.g-search-wrap').appendChild(addIframe);
           searchIframe = tab.querySelector('.g-search-wrap').querySelector('iframe');
@@ -348,6 +322,7 @@ function handleNavTools(navWrapper, expandElement) {
     });
 
     const languageDiv = div({ class: 'nav-language' });
+    //const languageDivMobile = div({ class: 'nav-language-mobile' });
     languageDiv.setAttribute('id', 'google-translate-wrap');
     const languageDiv1 = div({ class: 'google-translate' });
     languageDiv1.setAttribute('id', 'google_translate_element');
@@ -543,7 +518,9 @@ function decorateNavItem(parent, navSectionSearchItem) {
   let i = 0;
   while (i < listLen) {
     const tabInfo = list.item(i);
-    const id = toClassName(tabInfo.querySelector('a').textContent);
+    const tabPanelItemText = tabInfo.querySelector('a').textContent;
+    const tabPanelHeader = h2({ class: 'tabs-panel-header' }, tabPanelItemText);
+    const id = toClassName(tabPanelItemText);
 
     const tabpanel = div();
     navInMenuWrap.append(tabpanel);
@@ -555,6 +532,7 @@ function decorateNavItem(parent, navSectionSearchItem) {
     tabpanel.setAttribute('role', 'tabpanel');
     const tabpanelItems = tabInfo.querySelector('ul');
     if (tabpanelItems !== null) {
+      tabpanel.append(tabPanelHeader);
       tabpanel.append(tabpanelItems);
     }
     i += 1;
@@ -766,10 +744,16 @@ export default async function decorate(block) {
 
   // hamburger for mobile
   const hamburger = div({ class: 'nav-hamburger' });
+  const menuClose = div({ class: 'nav-menu-close' });
   hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="Open navigation">
-      <span class="nav-hamburger-icon"></span>
+      <img src="/icons/menu-white.svg" class="nav-hamburger-icon" alt="Open navigation" />
     </button>`;
+  menuClose.innerHTML = `<button type="button" aria-controls="nav" aria-label="Close navigation">
+    <img src="/icons/close-white.svg" class="nav-close-icon" alt="Close navigation" />
+  </button>`;
   hamburger.addEventListener('click', () => toggleMenu(nav, navSections));
+  menuClose.addEventListener('click', () => toggleMenu(nav, navSections));
+  nav.prepend(menuClose);
   nav.prepend(hamburger);
   nav.setAttribute('aria-expanded', 'false');
   // prevent mobile nav behavior on window resize
