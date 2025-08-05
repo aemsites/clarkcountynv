@@ -5,6 +5,7 @@ import {
 } from '../../scripts/dom-helpers.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { loadFragment } from '../../blocks/fragment/fragment.js';
+import { AccessibleLeftNav } from '../../blocks/left-nav/left-nav.js';
 
 /** allow for link attributes to be added by authors
  * example usage = Text [class:button,target:_blank,title:Title goes here]
@@ -38,7 +39,7 @@ export function decorateLinks(element) {
 
 async function check404(url) {
   try {
-    const response = await fetch(url, { method: 'HEAD' });
+    const response = await fetch(url, { method: 'GET' });
 
     // Return the URL only if the response is OK (status in 200–299)
     if (response.ok) {
@@ -92,6 +93,8 @@ export default async function decorate(doc) {
         } else {
           // if no h2 found, append leftnav at the end of leftsection
           $leftsection.append(leftnav);
+          const leftNavBlock = leftnav.querySelector('.left-nav.block');
+          new AccessibleLeftNav(leftNavBlock);
         }
       }
     }
