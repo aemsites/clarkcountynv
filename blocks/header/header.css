@@ -12,15 +12,26 @@ header nav {
   max-width: 1440px;
   margin: 0 auto;
   position: relative;
-  display: flex;
+  /* display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
+  align-items: center; */
+
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: auto auto auto;
+  grid-template-areas: 
+      "brand language menu-buttons"
+      "sections sections sections"
+      "search search search";
   align-items: center;
 }
 
 header nav .nav-sections {
   justify-content: center;
   align-items: center;
+  grid-area: sections;
+  display: none;
 }
 
 header nav .nav-sections > div {
@@ -56,6 +67,11 @@ header.mobile + main {
   top: 0;
 }
 
+header nav .nav-menu-buttons {
+  grid-area: menu-buttons;
+  justify-self: end;
+}
+
 header nav .nav-brand img {
   width: 100%;
   height: 100%;
@@ -84,9 +100,6 @@ header nav .nav-menu-close {
   height: auto;
   display: flex;
   align-items: center;
-  /* position: absolute;
-  top: 45px;
-  right: 24px; */
   order: 3;
 }
 
@@ -117,6 +130,8 @@ header .nav-search {
   justify-content: flex-start;
   align-items: center;
   padding: 10px 24px;
+  grid-area: search;
+  display: none;
 }
 
 header .nav-search-button {
@@ -138,6 +153,11 @@ header .nav-search-button {
   text-transform: uppercase;
 }
 
+header nav[aria-expanded="true"] .nav-sections {
+  display: block;
+  border-top: 1px solid var(--neutral-white);
+}
+
 header nav[aria-expanded="false"] .nav-menu-close {
   display: none;
 }
@@ -146,9 +166,9 @@ header nav[aria-expanded="true"] .nav-hamburger {
   display: none;
 }
 
-header nav[aria-expanded="true"] .nav-brand {
+/* header nav[aria-expanded="true"] .nav-brand {
   border-bottom: 1px solid var(--neutral-white);
-}
+} */
 
 header .nav-search span {
   padding: 15px;
@@ -182,7 +202,11 @@ header nav .nav-language {
   align-items: center;
   margin: 15px;
   flex-direction: column;
-  order: 2;
+  /* order: 2; */
+
+  position: relative;
+  grid-area: language;
+  justify-self: center;
 }
 
 header nav .nav-language .google-translate {
@@ -195,8 +219,13 @@ header nav .nav-language picture {
 
 header .nav-brand {
   grid-area: brand;
+  justify-self: start;
   padding: 7px 24px;
-  order: 1;
+  /* order: 1; */
+}
+
+header nav[aria-expanded="true"] .nav-search {
+  display: block;
 }
 
 header nav[aria-expanded="true"] .nav-sections {
@@ -271,7 +300,7 @@ header .nav-tools .nav-language ul {
   transition: opacity .5s ease-out;
 }
 
-header .nav-tools .nav-language ul.show {
+header .nav-language ul.show {
   opacity: 1;
 }
 
@@ -283,7 +312,7 @@ header nav .nav-sections:has(details[open]) .default-content-wrapper details ul 
   padding: 0 0 0 40px;
 }
 
-header .nav-tools .nav-language ul:not(.show) {
+header .nav-language ul:not(.show) {
   display: none;
 }
 
@@ -451,10 +480,6 @@ header .nav-tools button.translate-button img {
   border-radius: 50%;
   box-shadow: 0 2px 15px 0 rgba(0 0 0 / 20%);
   object-fit: cover;
-}
-
-header .nav-tools .nav-language {
-  position: relative;
 }
 
 header .nav-search-icon {
@@ -898,6 +923,7 @@ header .nav-tools .nav-search .search-box .search-form-wrap .search-results {
     background-color: transparent;
     padding: 0;
     position: static;
+    display: block;
   }
 
   header .nav-tools .nav-search .search-box {
@@ -960,11 +986,12 @@ header .nav-tools .nav-search .search-box .search-form-wrap .search-results {
     display: block;
     visibility: visible;
     white-space: nowrap;
-  }
-
-  header nav .section.nav-sections {
     border-bottom: none;
   }
+
+  /* header nav .section.nav-sections {
+    border-bottom: none;
+  } */
 
   header nav[aria-expanded="true"] .nav-sections {
     align-self: unset;

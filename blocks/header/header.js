@@ -240,7 +240,7 @@ function enableTabbing(searchBox) {
   });
 }
 
-function handleNavTools(navWrapper, expandElement) {
+function handleNavTools(navWrapper) {
   let buttonInnerText = 'English';
   let imgSrc = normalizeImage('english');
   const tools = [];
@@ -322,7 +322,6 @@ function handleNavTools(navWrapper, expandElement) {
     });
 
     const languageDiv = div({ class: 'nav-language' });
-    //const languageDivMobile = div({ class: 'nav-language-mobile' });
     languageDiv.setAttribute('id', 'google-translate-wrap');
     const languageDiv1 = div({ class: 'google-translate' });
     languageDiv1.setAttribute('id', 'google_translate_element');
@@ -348,11 +347,13 @@ function handleNavTools(navWrapper, expandElement) {
     languageButton.addEventListener('click', () => {
       languageTool.classList.toggle('show');
     });
-    const navToolsDiv = div({ class: 'nav-tools' });
-    navToolsDiv.appendChild(searchDiv);
-    navToolsDiv.appendChild(languageDiv);
-    expandElement.appendChild(navToolsDiv);
-    nav.appendChild(expandElement);
+    // const navToolsDiv = div({ class: 'nav-tools' });
+    // navToolsDiv.appendChild(searchDiv);
+    // navToolsDiv.appendChild(languageDiv);
+    // expandElement.appendChild(navToolsDiv);
+    //nav.appendChild(expandElement);
+    nav.appendChild(searchDiv);
+    nav.appendChild(languageDiv);
     navWrapper.querySelector('nav .nav-tools').remove();
   }
 }
@@ -732,9 +733,10 @@ export default async function decorate(block) {
   }
 
   // expand element for nav-sections & nav-tools
-  const expandElement = div({ class: 'expanddiv' });
-  expandElement.appendChild(navSections);
-  nav.appendChild(expandElement);
+  // const expandElement = div({ class: 'expanddiv' });
+  // expandElement.appendChild(navSections);
+  // nav.appendChild(expandElement);
+  nav.appendChild(navSections);
 
   function resizeFunction() {
     resizeNavSections(navSections, navSectionsBackUp.cloneNode(true), expandElement);
@@ -743,6 +745,7 @@ export default async function decorate(block) {
   window.addEventListener('resize', resizeFunction);
 
   // hamburger for mobile
+  const navMenuButtons = div({ class: 'nav-menu-buttons' });
   const hamburger = div({ class: 'nav-hamburger' });
   const menuClose = div({ class: 'nav-menu-close' });
   hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="Open navigation">
@@ -753,8 +756,10 @@ export default async function decorate(block) {
   </button>`;
   hamburger.addEventListener('click', () => toggleMenu(nav, navSections));
   menuClose.addEventListener('click', () => toggleMenu(nav, navSections));
-  nav.prepend(menuClose);
-  nav.prepend(hamburger);
+  navMenuButtons.append(hamburger, menuClose);
+  // nav.prepend(menuClose);
+  // nav.prepend(hamburger);
+  nav.append(navMenuButtons);
   nav.setAttribute('aria-expanded', 'false');
   // prevent mobile nav behavior on window resize
   toggleMenu(nav, navSections, isDesktop.matches);
@@ -774,7 +779,8 @@ export default async function decorate(block) {
       header.classList.remove('scrolled');
     }
   });
-  handleNavTools(navWrapper, expandElement);
+  //handleNavTools(navWrapper, expandElement);
+  handleNavTools(navWrapper);
   // improve accessibility
   document.querySelectorAll('#nav > div.section.nav-sections > div > ul > li').forEach((li) => {
     li.removeAttribute('role');
