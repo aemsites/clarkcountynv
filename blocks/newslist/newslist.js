@@ -5,7 +5,7 @@ import {
   h3,
 } from '../../scripts/dom-helpers.js';
 import {
-  buildBlock, decorateBlock, loadBlock, createOptimizedPicture, fetchPlaceholders
+  buildBlock, decorateBlock, loadBlock, createOptimizedPicture, fetchPlaceholders,
 } from '../../scripts/aem.js';
 
 const placeholders = await fetchPlaceholders();
