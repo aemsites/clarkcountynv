@@ -168,40 +168,42 @@ function letsTranslate(ele) {
 /* Search Implementation */
 
 function decorateSearchBox(searchBox) {
-  searchBox.innerHTML = `<div class="search-top">
-  <div class="searchHeaderBtn">
-              </div>
-              <h2 class="search-menu-header">Search</h2>
-              <p class="search-menu-helper-text">Search for a page, department, or by keyword.</p>
-              <div class="search-top-right">
-                <button type="button" class="button secondary search-close">
-                  <img src="/icons/mega-menu-close.svg" alt="Close search menu" />
-                </button>
-              </div>
+  searchBox.innerHTML = `
+    <div class="search-top">
+      <div class="searchHeaderBtn"></div>
+      <h2 class="search-menu-header">Search</h2>
+      <p class="search-menu-helper-text">Search for a page, department, or by keyword.</p>
+      <div class="search-top-right">
+        <button type="button" class="button secondary search-close">
+          <img src="/icons/mega-menu-close.svg" alt="Close search menu" />
+        </button>
+      </div>
+    </div>
+    <div class="search-form-wrap">
+      <form class="search-form" method="GET" action="search" role="search" aria-label="sitewide">
+        <label for="search-input"><span class="sr-only">Search</span></label>
+        <input name="q" class="form-control search-input" placeholder="Search" type="search" id="search-input">
+        <button type="button" class="search-btn">
+          <img src="/icons/search-white.svg" alt="Search button icon"/>
+          Search
+        </button>
+      </form>
+      <div class="search-results off" style="">
+        <div class="tab-content clearfix">
+          <div class="tab-pane off" id="search-3">
+            <h3 class="search-results-all-header">All of Clark County</h3>
+            <div class="g-search-wrap">
             </div>
-            <div class="search-form-wrap">
-              <form class="search-form" method="GET" action="search" role="search" aria-label="sitewide">
-                <label for="search-input"><span class="sr-only">Search</span></label>
-                <input name="q" class="form-control search-input" placeholder="Search" type="search" id="search-input">
-                <button>Go</button>
-              </form>
-              <div class="search-results off" style="">
-                <div class="tab-content clearfix">
-                  <div class="tab-pane off" id="search-3">
-                    <h3 class="search-results-all-header">All of Clark County</h3>
-                    <div class="g-search-wrap">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="search-middle">
-              <div class="search-middle-left">
-              <div class="searchHeaderBtn">
-              </div>
-                <h3 class="search-menu-popular-header">Popular Search Terms</h3>
-              </div>
-            </div>`;
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="search-middle">
+      <div class="search-middle-left">
+        <div class="searchHeaderBtn"></div>
+        <h3 class="search-menu-popular-header">Popular Search Terms</h3>
+      </div>
+    </div>`;
 }
 
 function showSearch(ele, tabContent) {
@@ -264,6 +266,7 @@ function handleNavTools(navWrapper) {
     searchBox.classList.add('hidden');
     searchDiv.appendChild(searchBox);
     searchButton.addEventListener('click', () => {
+      searchButton.classList.add('active');
       if (searchBox.classList.contains('hidden')) {
         searchBox.classList.remove('hidden');
         searchBox.querySelector('input').value = '';
@@ -279,6 +282,9 @@ function handleNavTools(navWrapper) {
     searchBox.querySelector('.search-top-right').addEventListener('click', () => {
       searchBox.querySelector('input').value = '';
       searchBox.classList.add('hidden');
+      if (searchButton.classList.contains('active')) {
+        searchButton.classList.remove('active');
+      }
     });
 
     searchBox.querySelector('input').addEventListener('input', (key) => {
@@ -408,14 +414,16 @@ function toggleAllNavSections(sections, expanded = false) {
  * @param {*} forceExpanded Optional param to force nav expand behavior when not null
  */
 function toggleMenu(nav, navSections, forceExpanded = null) {
-  navSections.querySelectorAll('details[open]').forEach((detail) => {
-    detail.removeAttribute('open');
-  });
+  // navSections.querySelectorAll('details[open]').forEach((detail) => {
+  //   detail.removeAttribute('open');
+  // });
+  console.log('Here');
   const expanded = forceExpanded !== null ? !forceExpanded : nav.getAttribute('aria-expanded') === 'true';
   const $button = nav.querySelector('.nav-hamburger button');
   // document.body.style.overflowY = (expanded || isDesktop.matches) ? '' : 'hidden';
   nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-  toggleAllNavSections(navSections, expanded || isDesktop.matches ? 'false' : 'true');
+  //toggleAllNavSections(navSections, expanded || isDesktop.matches ? 'false' : 'true');
+  toggleAllNavSections(navSections, expanded || false);
   $button.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
   // enable nav dropdown keyboard accessibility
   const navDrops = navSections.querySelectorAll('.nav-drop');
@@ -448,9 +456,12 @@ function decorateNavItemMobile(mainUL) {
   const header = document.querySelector('header');
   header.classList.add('mobile');
   const mainLIs = mainUL.children;
+  //console.log('In decorate - mainLIs', mainLIs);
   for (let i = 0; i < mainLIs.length; i += 1) {
     const mainLI = mainLIs[i];
+    //console.log('mainLI', mainLI);
     const mainA = mainLI.querySelector('a');
+    //console.log('mainA', mainA);
 
     const $details = details({ class: 'accordion-item' });
 
@@ -461,13 +472,14 @@ function decorateNavItemMobile(mainUL) {
     $summary.append(lablDiv);
 
     const childUL = mainLI.querySelector('ul');
-
     if (childUL) {
       $details.append($summary, childUL);
       const parentLi = document.createElement('li');
       parentLi.append($details);
       mainLI.replaceWith(parentLi);
-      decorateNavItemMobile(childUL);
+      console.log('mainLI', mainLI);
+      //console.log('details', $details);
+      //decorateNavItemMobile(childUL);
     } else {
       $details.append($summary);
       const parentLi = document.createElement('li');
@@ -489,6 +501,11 @@ function findLevel(element) {
   return level;
 }
 
+const handleMobileTabClick = (e) => {
+  e.preventDefault();
+  console.log('clicked');
+}
+
 function decorateNavItem(parent, navSectionSearchItem) {
   const menuUl = div({ class: 'menuul' });
   const navIn = div({ class: 'nav-in' });
@@ -507,12 +524,16 @@ function decorateNavItem(parent, navSectionSearchItem) {
   parent.append(menuUl);
 
   const navInMenuWrap = div({ class: 'nav-in-menu-wrap' });
+  const navInMenuWrapMobile = div({ class: 'nav-in-menu-wrap-mobile' });
   navIn.append(navInMenuWrap);
+  navIn.append(navInMenuWrapMobile);
 
   const tablist = div({ class: 'tabs-list' });
   tablist.setAttribute('role', 'tablist');
 
   navInMenuWrap.append(tablist);
+  navInMenuWrapMobile.append(tablist.cloneNode(true));
+  const mobileTabList = navInMenuWrapMobile.querySelector('.tabs-list');
 
   const list = parent.children[1].nodeName === 'UL' ? parent.children[1].children : null;
   const listLen = list !== null ? list.length : 0;
@@ -528,7 +549,7 @@ function decorateNavItem(parent, navSectionSearchItem) {
     // decorate tabpanel
     tabpanel.className = 'tabs-panel';
     tabpanel.id = `tabpanel-${id}`;
-    tabpanel.setAttribute('aria-hidden', !!i);
+    tabpanel.setAttribute('aria-hidden', !isDesktop.matches ? 'true' : !!i);
     tabpanel.setAttribute('aria-labelledby', `tab-${id}`);
     tabpanel.setAttribute('role', 'tabpanel');
     const tabpanelItems = tabInfo.querySelector('ul');
@@ -543,7 +564,7 @@ function decorateNavItem(parent, navSectionSearchItem) {
     $button.id = `tab-${id}`;
     $button.innerHTML = tabInfo.innerHTML;
     $button.setAttribute('aria-controls', `tabpanel-${id}`);
-    $button.setAttribute('aria-selected', !i);
+    $button.setAttribute('aria-selected', !isDesktop.matches ? 'false' : (i === 1 ? true : !i));
     $button.setAttribute('role', 'tab');
     $button.setAttribute('type', 'button');
     $button.addEventListener('mouseover', () => {
@@ -557,6 +578,8 @@ function decorateNavItem(parent, navSectionSearchItem) {
       $button.setAttribute('aria-selected', true);
     });
     tablist.append($button);
+    //$button.addEventListener('click', handleMobileTabClick);
+    mobileTabList.append($button.cloneNode(true), tabpanel.cloneNode(true));
   }
   parent.children[1].remove();
 }
@@ -565,44 +588,83 @@ function buildNavSections(navSections) {
   if (navSections) {
     navSections.setAttribute('role', 'navigation');
     const navSectionSearchItem = navSections.children[0]?.children[1];
-    if (isDesktop.matches) {
-      navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
-        if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
-        decorateNavItem(navSection, navSectionSearchItem);
-        navSection.addEventListener('mouseover', () => {
-          if (isDesktop.matches) {
-            toggleAllNavSections(navSections);
-            navSection.setAttribute('aria-expanded', 'true');
-          }
-        });
-        navSection.addEventListener('mouseout', () => {
-          if (isDesktop.matches) {
-            toggleAllNavSections(navSections);
-            navSection.setAttribute('aria-expanded', 'false');
-          }
-        });
+    navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
+      if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
+      decorateNavItem(navSection, navSectionSearchItem);
+      navSection.addEventListener('mouseover', () => {
+        if (isDesktop.matches) {
+          toggleAllNavSections(navSections);
+          navSection.setAttribute('aria-expanded', 'true');
+        }
       });
-    } else {
-      const mainUL = navSections.querySelector(':scope .default-content-wrapper > ul');
-      decorateNavItemMobile(mainUL);
-      mainUL.querySelectorAll('details').forEach((detail) => {
-        detail.addEventListener('toggle', (event) => {
-          if (event.target.open) {
-            const value = findLevel(event.target);
-            event.target.querySelector('ul').querySelectorAll(':scope > details').forEach((ele) => {
-              ele.querySelector('summary').classList.add(`itemcolor${value + 1}`);
-              ele.querySelector('summary').classList.add(`child${value + 1}`);
-              ele.classList.add(`parent${value + 1}`);
-            });
-            detail.parentElement.querySelectorAll('details').forEach((ele) => {
-              if (ele !== event.target) {
-                ele.removeAttribute('open');
-              }
-            });
-          }
-        });
+      navSection.addEventListener('mouseout', () => {
+        if (isDesktop.matches) {
+          toggleAllNavSections(navSections);
+          navSection.setAttribute('aria-expanded', 'false');
+        }
       });
-    }
+      navSection.addEventListener('click', (e) => {
+        if (!isDesktop.matches) {
+          const targetEl = e.target;
+          console.log('clicked', targetEl);
+          if (targetEl.classList.contains('nav-drop')) {
+            const isExpanded = navSection.getAttribute('aria-expanded');
+            navSection.setAttribute('aria-expanded', isExpanded === 'true' ? 'false' : 'true');
+          }
+          if (targetEl.classList.contains('tabs-tab')) {
+            targetEl.closest('.tabs-list')?.querySelectorAll('.tabs-tab')?.forEach((button) => {
+              button.setAttribute('aria-selected', 'false');
+            });
+            targetEl.closest('.tabs-list')?.querySelectorAll('.tabs-panel')?.forEach((panel) => {
+              panel.setAttribute('aria-hidden', 'true');
+            });
+
+            const targetPanel = targetEl.nextElementSibling;
+            targetEl.setAttribute('aria-selected', 'true');
+            targetPanel?.setAttribute('aria-hidden', 'false');
+          }
+        }
+      });
+    });
+    // if (isDesktop.matches) {
+    //   navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
+    //     if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
+    //     decorateNavItem(navSection, navSectionSearchItem);
+    //     navSection.addEventListener('mouseover', () => {
+    //       if (isDesktop.matches) {
+    //         toggleAllNavSections(navSections);
+    //         navSection.setAttribute('aria-expanded', 'true');
+    //       }
+    //     });
+    //     navSection.addEventListener('mouseout', () => {
+    //       if (isDesktop.matches) {
+    //         toggleAllNavSections(navSections);
+    //         navSection.setAttribute('aria-expanded', 'false');
+    //       }
+    //     });
+    //   });
+    // } 
+    // else {
+    //   const mainUL = navSections.querySelector(':scope .default-content-wrapper > ul');
+    //   decorateNavItemMobile(mainUL);
+    //   mainUL.querySelectorAll('details').forEach((detail) => {
+    //     detail.addEventListener('toggle', (event) => {
+    //       if (event.target.open) {
+    //         const value = findLevel(event.target);
+    //         event.target.querySelector('ul').querySelectorAll(':scope > details').forEach((ele) => {
+    //           ele.querySelector('summary').classList.add(`itemcolor${value + 1}`);
+    //           ele.querySelector('summary').classList.add(`child${value + 1}`);
+    //           ele.classList.add(`parent${value + 1}`);
+    //         });
+    //         detail.parentElement.querySelectorAll('details').forEach((ele) => {
+    //           if (ele !== event.target) {
+    //             ele.removeAttribute('open');
+    //           }
+    //         });
+    //       }
+    //     });
+    //   });
+    // }
     if (navSectionSearchItem) {
       navSectionSearchItem.remove();
     }
@@ -655,7 +717,8 @@ export default async function decorate(block) {
 
   // Logic for resizing nav sections
 
-  function resizeNavSections(navSec, navSecBackUp, expandElement) {
+  function resizeNavSections(navSec, navSecBackUp) {
+    console.log('Resize', isDesktop.matches);
     if (navSecBackUp) {
       const navSectionSearchItem = navSecBackUp.children[0]?.children[1];
       if (isDesktop.matches && navSec.querySelector('details')) {
@@ -663,9 +726,9 @@ export default async function decorate(block) {
         if (header.classList.contains('mobile')) {
           header.classList.remove('mobile');
         }
-        navSections.remove();
+        //navSections.remove();
         navSections = navSecBackUp.cloneNode(true);
-        navSections.querySelector('p').remove();
+        //navSections.querySelector('p').remove();
         navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
           if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
           decorateNavItem(navSection, navSectionSearchItem);
@@ -682,40 +745,39 @@ export default async function decorate(block) {
             }
           });
         });
-        expandElement.prepend(navSections);
-        navBrand.after(expandElement);
+        //expandElement.prepend(navSections);
+        //navBrand.after(expandElement);
       }
       if (!isDesktop.matches && navSec.querySelector('li') && navSec.querySelector('li').classList.contains('nav-drop')) {
+        console.log('Here');
         const header = document.querySelector('header');
         if (!header.classList.contains('mobile')) {
           header.classList.add('mobile');
         }
-        navSections.remove();
+        //navSections.remove();
+        console.log('Nav Sections', navSections);
         navSections = navSecBackUp.cloneNode(true);
-        navSections.querySelector('p').remove();
+        //navSections.querySelector('p').remove();
         const mainUL = navSections.querySelector(':scope .default-content-wrapper > ul');
-        decorateNavItemMobile(mainUL);
-        mainUL.querySelectorAll('details').forEach((detail) => {
-          detail.addEventListener('toggle', (event) => {
-            if (event.target.open) {
-              const value = findLevel(event.target);
-              event.target.querySelector('ul').querySelectorAll(':scope > details').forEach((ele) => {
-                ele.querySelector('summary').classList.add(`itemcolor${value + 1}`);
-              });
-              detail.parentElement.querySelectorAll('details').forEach((ele) => {
-                if (ele !== event.target) {
-                  ele.removeAttribute('open');
-                }
-              });
-            }
-          });
-        });
-        expandElement.prepend(navSections);
-        navBrand.after(expandElement);
-        nav.querySelectorAll('details').forEach((el) => {
-          const detailObject = new Accordion(el);
-          tracker.push(detailObject);
-        });
+        console.log('mainUL', mainUL);
+        //decorateNavItemMobile(mainUL);
+        // mainUL.querySelectorAll('details').forEach((detail) => {
+        //   detail.addEventListener('toggle', (event) => {
+        //     if (event.target.open) {
+        //       detail.parentElement.querySelectorAll('details').forEach((ele) => {
+        //         if (ele !== event.target) {
+        //           ele.removeAttribute('open');
+        //         }
+        //       });
+        //     }
+        //   });
+        // });
+        //expandElement.prepend(navSections);
+        //navBrand.after(expandElement);
+        // nav.querySelectorAll('details').forEach((el) => {
+        //   const detailObject = new Accordion(el);
+        //   tracker.push(detailObject);
+        // });
         tracker.forEach((t) => {
           t.el.addEventListener('click', () => {
             tracker.forEach((t2) => {
@@ -739,7 +801,7 @@ export default async function decorate(block) {
   nav.appendChild(navSections);
 
   function resizeFunction() {
-    resizeNavSections(navSections, navSectionsBackUp.cloneNode(true), expandElement);
+    resizeNavSections(navSections, navSectionsBackUp.cloneNode(true));
   }
 
   window.addEventListener('resize', resizeFunction);
