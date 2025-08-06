@@ -5,12 +5,17 @@ import {
 
 import {
   createOptimizedPicture, buildBlock, decorateBlock, loadBlock,
+  fetchPlaceholders as defaultFetchPlaceholders,
 } from '../../scripts/aem.js';
 
 import { normalizeString } from '../../scripts/utils.js';
 
 const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEPT', 'OCT', 'NOV', 'DEC'];
 let divisions = [];
+
+const defaultplaceholders = await defaultFetchPlaceholders();
+const CLARKLOGO = defaultplaceholders.clarkcountylogo;
+const WHITEARROW = defaultplaceholders.whitearrow;
 
 function tConv24(time24) {
   let ts = time24;
@@ -123,7 +128,7 @@ const resultParsers = {
         const columnImage = createOptimizedPicture(result.image);
         divLeft.appendChild(columnImage);
       } else {
-        const columnImage = createOptimizedPicture('/assets/images/general/media_1777f18b0073109f55dbd10b12552b5115288e89b.png');
+        const columnImage = createOptimizedPicture(CLARKLOGO);
         divLeft.appendChild(columnImage);
       }
       const divRight = div({ class: 'event-body' });
@@ -229,7 +234,7 @@ export default async function decorate(block) {
   const blockContents = resultParsers.columns(yesArray.slice(0, 4));
   const builtBlock = buildBlock('columns', blockContents);
   block.appendChild(builtBlock);
-  const seeMoreButton = div({ class: 'see-more' }, a({ href: '/calendar' }, 'Discover More', img({ src: '/assets/images/general/white-arrow-right.png', alt: 'more' })));
+  const seeMoreButton = div({ class: 'see-more' }, a({ href: '/calendar' }, 'Discover More', img({ src: WHITEARROW, alt: 'more' })));
   block.appendChild(seeMoreButton);
   decorateBlock(builtBlock);
   await loadBlock(builtBlock);
