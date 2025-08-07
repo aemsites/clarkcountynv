@@ -7,6 +7,7 @@ import {
 // TODO:
 // Accessibility
 // prevent scrolling when menu is active? L302
+// Delete unused functions decorateNavItemMobile/findLevel
 
 function normalizeImage(str) {
   const imagePath = '/assets/images/google-translations/';
@@ -265,14 +266,24 @@ function closeOnEscape(e) {
 }
 
 function openOnKeydown(e) {
+  console.log('openOnKeydown');
   const focused = document.activeElement;
+  const desktopMenu = document.querySelector('.nav-in-menu-wrap');
+  const mobileMenu = document.querySelector('.nav-in-menu-wrap-mobile');
   const isNavDrop = focused.className === 'nav-drop';
+  const isTabBtn = focused.className === 'tabs-tab';
   if (isNavDrop && (e.code === 'Enter' || e.code === 'Space')) {
     const dropExpanded = focused.getAttribute('aria-expanded') === 'true';
     // eslint-disable-next-line no-use-before-define
     toggleAllNavSections(focused.closest('.nav-sections'));
     focused.setAttribute('aria-expanded', dropExpanded ? 'false' : 'true');
+    console.log('focused', focused);
+    const firstTabBtn = isDesktop.matches ? desktopMenu.querySelector('.tabs-list')?.children[0] : mobileMenu.querySelector('.tabs-list')?.children[0];
+    firstTabBtn?.focus();
   }
+  // if (isTabBtn) {
+  //   const tabPanel = isDesktop.matches ? desktopMenu.querySelector();
+  // }
 }
 
 function focusNavSection() {
@@ -341,50 +352,6 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
       tabPanels?.forEach((panel) => panel.setAttribute('aria-hidden', 'true'));
     }
   });
-}
-
-function decorateNavItemMobile(mainUL) {
-  mainUL.classList.add('content');
-  const header = document.querySelector('header');
-  //header.classList.add('mobile');
-  const mainLIs = mainUL.children;
-  for (let i = 0; i < mainLIs.length; i += 1) {
-    const mainLI = mainLIs[i];
-    const mainA = mainLI.querySelector('a');
-
-    const $details = details({ class: 'accordion-item' });
-    const $summary = summary({ class: 'accordion-item-label' });
-    const labelRight = div({ class: 'markerdiv' });
-    const lablDiv = div();
-    lablDiv.append(mainA, labelRight);
-    $summary.append(lablDiv);
-
-    const childUL = mainLI.querySelector('ul');
-    if (childUL) {
-      $details.append($summary, childUL);
-      const parentLi = document.createElement('li');
-      parentLi.append($details);
-      mainLI.replaceWith(parentLi);
-      //decorateNavItemMobile(childUL);
-    } else {
-      $details.append($summary);
-      const parentLi = document.createElement('li');
-      parentLi.append($details);
-      mainLI.replaceWith(parentLi);
-    }
-  }
-}
-
-function findLevel(element) {
-  let ele = element;
-  let level = 0;
-  while (ele.parentElement) {
-    if (ele.parentElement.tagName === 'UL') {
-      level += 1;
-    }
-    ele = ele.parentElement;
-  }
-  return level;
 }
 
 function decorateNavItem(parent, navSectionSearchItem) {
@@ -513,45 +480,6 @@ function buildNavSections(navSections) {
         }
       });
     });
-    // if (isDesktop.matches) {
-    //   navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
-    //     if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
-    //     decorateNavItem(navSection, navSectionSearchItem);
-    //     navSection.addEventListener('mouseover', () => {
-    //       if (isDesktop.matches) {
-    //         toggleAllNavSections(navSections);
-    //         navSection.setAttribute('aria-expanded', 'true');
-    //       }
-    //     });
-    //     navSection.addEventListener('mouseout', () => {
-    //       if (isDesktop.matches) {
-    //         toggleAllNavSections(navSections);
-    //         navSection.setAttribute('aria-expanded', 'false');
-    //       }
-    //     });
-    //   });
-    // } 
-    // else {
-    //   const mainUL = navSections.querySelector(':scope .default-content-wrapper > ul');
-    //   decorateNavItemMobile(mainUL);
-    //   mainUL.querySelectorAll('details').forEach((detail) => {
-    //     detail.addEventListener('toggle', (event) => {
-    //       if (event.target.open) {
-    //         const value = findLevel(event.target);
-    //         event.target.querySelector('ul').querySelectorAll(':scope > details').forEach((ele) => {
-    //           ele.querySelector('summary').classList.add(`itemcolor${value + 1}`);
-    //           ele.querySelector('summary').classList.add(`child${value + 1}`);
-    //           ele.classList.add(`parent${value + 1}`);
-    //         });
-    //         detail.parentElement.querySelectorAll('details').forEach((ele) => {
-    //           if (ele !== event.target) {
-    //             ele.removeAttribute('open');
-    //           }
-    //         });
-    //       }
-    //     });
-    //   });
-    // }
     if (navSectionSearchItem) {
       navSectionSearchItem.remove();
     }
