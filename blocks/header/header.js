@@ -4,6 +4,10 @@ import {
   div, img, span, a, button, details, summary, h2, iframe,
 } from '../../scripts/dom-helpers.js';
 
+// TODO:
+// Accessibility
+// prevent scrolling when menu is active? L302
+
 function normalizeImage(str) {
   const imagePath = '/assets/images/google-translations/';
   return `${imagePath + str.replace(/[()]/g, '').replace(/[ ]/g, '-').toLowerCase()}.png`;
@@ -23,122 +27,6 @@ let searchIframe = '';
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
 const tracker = [];
-class Accordion {
-  constructor(el) {
-    // Store the <details> element
-    this.el = el;
-    // Store the <summary> element
-    this.summary = el.querySelector('summary');
-    // Store the parent <details> element
-    this.parent = el.parentElement.parentElement.parentElement;
-    // Store the <div class="content"> element
-    this.content = el.querySelector('.content');
-
-    // Store the animation object (so we can cancel it if needed)
-    this.animation = null;
-    // Store if the element is closing
-    this.isClosing = false;
-    // Store if the element is expanding
-    this.isExpanding = false;
-    // Detect user clicks on the summary element
-    this.arrowSelector = this.summary.querySelector('.markerdiv');
-    if (this.content) {
-      this.arrowSelector.addEventListener('click', (e) => this.onClick(e));
-    }
-  }
-
-  onClick(e) {
-    // Stop default behaviour from the browser
-    e.preventDefault();
-    // Add an overflow on the <details> to avoid content overflowing
-    this.el.style.overflow = 'hidden';
-    // Check if the element is being closed or is already closed
-    if (this.isClosing || !this.el.open) {
-      this.open();
-    // Check if the element is being openned or is already open
-    } else if (this.isExpanding || this.el.open) {
-      this.shrink();
-    }
-  }
-
-  shrink() {
-    // Set the element as "being closed"
-    this.isClosing = true;
-    // Store the current height of the element
-    const startHeight = `${this.el.offsetHeight}px`;
-    // Calculate the height of the summary
-    const endHeight = `${this.summary.offsetHeight}px`;
-    // If there is already an animation running
-    if (this.animation) {
-      // Cancel the current animation
-      this.animation.cancel();
-    }
-    // Start a WAAPI animation
-    this.animation = this.el.animate({
-      // Set the keyframes from the startHeight to endHeight
-      height: [startHeight, endHeight],
-    }, {
-      duration: 500,
-      easing: 'ease-out',
-    });
-    // When the animation is complete, call onAnimationFinish()
-    this.animation.onfinish = () => this.onAnimationFinish(false);
-    // If the animation is cancelled, isClosing variable is set to false
-    // eslint-disable-next-line no-return-assign
-    this.animation.oncancel = () => this.isClosing = false;
-  }
-
-  open() {
-    // Apply a fixed height on the element
-    this.el.style.height = `${this.el.offsetHeight}px`;
-    // Force the [open] attribute on the details element
-    this.el.open = true;
-    // Wait for the next frame to call the expand function
-    window.requestAnimationFrame(() => this.expand());
-  }
-
-  expand() {
-    // Set the element as "being expanding"
-    this.isExpanding = true;
-    // Get the current fixed height of the element
-    const startHeight = `${this.el.offsetHeight}px`;
-    // Calculate the open height of the element (summary height + content height)
-    const endHeight = `${this.summary.offsetHeight + this.content.offsetHeight}px`;
-
-    // If there is already an animation running
-    if (this.animation) {
-      // Cancel the current animation
-      this.animation.cancel();
-    }
-
-    // Start a WAAPI animation
-    this.animation = this.el.animate({
-      // Set the keyframes from the startHeight to endHeight
-      height: [startHeight, endHeight],
-    }, {
-      duration: 500,
-      easing: 'ease-out',
-    });
-    // When the animation is complete, call onAnimationFinish()
-    this.animation.onfinish = () => this.onAnimationFinish(true);
-    // If the animation is cancelled, isExpanding variable is set to false
-    // eslint-disable-next-line no-return-assign
-    this.animation.oncancel = () => this.isExpanding = false;
-  }
-
-  onAnimationFinish(open) {
-    // Set the open attribute based on the parameter
-    this.el.open = open;
-    // Clear the stored animation
-    this.animation = null;
-    // Reset isClosing & isExpanding
-    this.isClosing = false;
-    this.isExpanding = false;
-    // Remove the overflow hidden and the fixed height
-    this.el.style.height = '';
-    this.el.style.overflow = '';
-  }
-}
 
 function decorateGoogleTranslator(languageTool) {
   languageTool.querySelectorAll('li').forEach((li, i) => {
@@ -353,11 +241,6 @@ function handleNavTools(navWrapper) {
     languageButton.addEventListener('click', () => {
       languageTool.classList.toggle('show');
     });
-    // const navToolsDiv = div({ class: 'nav-tools' });
-    // navToolsDiv.appendChild(searchDiv);
-    // navToolsDiv.appendChild(languageDiv);
-    // expandElement.appendChild(navToolsDiv);
-    //nav.appendChild(expandElement);
     nav.appendChild(searchDiv);
     nav.appendChild(languageDiv);
     navWrapper.querySelector('nav .nav-tools').remove();
@@ -414,15 +297,10 @@ function toggleAllNavSections(sections, expanded = false) {
  * @param {*} forceExpanded Optional param to force nav expand behavior when not null
  */
 function toggleMenu(nav, navSections, forceExpanded = null) {
-  // navSections.querySelectorAll('details[open]').forEach((detail) => {
-  //   detail.removeAttribute('open');
-  // });
-  console.log('Here');
   const expanded = forceExpanded !== null ? !forceExpanded : nav.getAttribute('aria-expanded') === 'true';
   const $button = nav.querySelector('.nav-hamburger button');
   // document.body.style.overflowY = (expanded || isDesktop.matches) ? '' : 'hidden';
   nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-  //toggleAllNavSections(navSections, expanded || isDesktop.matches ? 'false' : 'true');
   toggleAllNavSections(navSections, expanded || false);
   $button.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
   // enable nav dropdown keyboard accessibility
@@ -449,22 +327,32 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
   } else {
     window.removeEventListener('keydown', closeOnEscape);
   }
+
+  console.log('here');
+  navDrops.forEach((drop) => {
+    if (drop.hasAttribute('aria-expanded') && drop.getAttribute('aria-expanded') === 'true') {
+      drop.setAttribute('aria-expanded', 'false');
+    }
+    const mobileWrap = drop.querySelector('.nav-in-menu-wrap-mobile');
+    if (mobileWrap) {
+      const tabButtons = mobileWrap.querySelectorAll('.tabs-tab[aria-selected="true"]');
+      tabButtons?.forEach((button) => button.setAttribute('aria-selected', 'false'));
+      const tabPanels = mobileWrap.querySelectorAll('.tabs-panel[aria-hidden="false"]');
+      tabPanels?.forEach((panel) => panel.setAttribute('aria-hidden', 'true'));
+    }
+  });
 }
 
 function decorateNavItemMobile(mainUL) {
   mainUL.classList.add('content');
   const header = document.querySelector('header');
-  header.classList.add('mobile');
+  //header.classList.add('mobile');
   const mainLIs = mainUL.children;
-  //console.log('In decorate - mainLIs', mainLIs);
   for (let i = 0; i < mainLIs.length; i += 1) {
     const mainLI = mainLIs[i];
-    //console.log('mainLI', mainLI);
     const mainA = mainLI.querySelector('a');
-    //console.log('mainA', mainA);
 
     const $details = details({ class: 'accordion-item' });
-
     const $summary = summary({ class: 'accordion-item-label' });
     const labelRight = div({ class: 'markerdiv' });
     const lablDiv = div();
@@ -477,8 +365,6 @@ function decorateNavItemMobile(mainUL) {
       const parentLi = document.createElement('li');
       parentLi.append($details);
       mainLI.replaceWith(parentLi);
-      console.log('mainLI', mainLI);
-      //console.log('details', $details);
       //decorateNavItemMobile(childUL);
     } else {
       $details.append($summary);
@@ -499,11 +385,6 @@ function findLevel(element) {
     ele = ele.parentElement;
   }
   return level;
-}
-
-const handleMobileTabClick = (e) => {
-  e.preventDefault();
-  console.log('clicked');
 }
 
 function decorateNavItem(parent, navSectionSearchItem) {
@@ -560,7 +441,7 @@ function decorateNavItem(parent, navSectionSearchItem) {
     i += 1;
 
     // build tab button
-    const $button = button({ class: 'tabs-tab' });
+    const $button = button({ class: `tabs-tab ${tabpanelItems === null ? 'no-children' : ''}` });
     $button.id = `tab-${id}`;
     $button.innerHTML = tabInfo.innerHTML;
     $button.setAttribute('aria-controls', `tabpanel-${id}`);
@@ -578,7 +459,6 @@ function decorateNavItem(parent, navSectionSearchItem) {
       $button.setAttribute('aria-selected', true);
     });
     tablist.append($button);
-    //$button.addEventListener('click', handleMobileTabClick);
     mobileTabList.append($button.cloneNode(true), tabpanel.cloneNode(true));
   }
   parent.children[1].remove();
@@ -606,22 +486,29 @@ function buildNavSections(navSections) {
       navSection.addEventListener('click', (e) => {
         if (!isDesktop.matches) {
           const targetEl = e.target;
-          console.log('clicked', targetEl);
+          const tabsList = targetEl.closest('.tabs-list');
           if (targetEl.classList.contains('nav-drop')) {
-            const isExpanded = navSection.getAttribute('aria-expanded');
-            navSection.setAttribute('aria-expanded', isExpanded === 'true' ? 'false' : 'true');
+            const isCurrentlyExpanded = targetEl.getAttribute('aria-expanded') === 'true';
+            targetEl.closest('ul')?.querySelectorAll('.nav-drop')?.forEach((drop) => {
+              drop.setAttribute('aria-expanded', 'false');
+            });
+            if (!isCurrentlyExpanded) {
+              targetEl.setAttribute('aria-expanded', 'true');
+            }
           }
           if (targetEl.classList.contains('tabs-tab')) {
-            targetEl.closest('.tabs-list')?.querySelectorAll('.tabs-tab')?.forEach((button) => {
+            const isCurrentlyExpanded = targetEl.getAttribute('aria-selected') === 'true';
+            tabsList?.querySelectorAll('.tabs-tab')?.forEach((button) => {
               button.setAttribute('aria-selected', 'false');
             });
-            targetEl.closest('.tabs-list')?.querySelectorAll('.tabs-panel')?.forEach((panel) => {
+            tabsList?.querySelectorAll('.tabs-panel')?.forEach((panel) => {
               panel.setAttribute('aria-hidden', 'true');
             });
-
-            const targetPanel = targetEl.nextElementSibling;
-            targetEl.setAttribute('aria-selected', 'true');
-            targetPanel?.setAttribute('aria-hidden', 'false');
+            if (!isCurrentlyExpanded) {
+              targetEl.setAttribute('aria-selected', 'true');
+              const targetPanel = targetEl.nextElementSibling;
+              targetPanel?.setAttribute('aria-hidden', 'false');
+            }
           }
         }
       });
@@ -679,6 +566,39 @@ function updateBrandLink(brandImg) {
   brandImgLink.appendChild(brandImg);
 }
 
+// Add Skip to main content link
+const setupSkipMainContentLink = () => {
+  const skipLink = a({ href: '#main-content', class: 'skip-link' }, 'Skip to main content');
+  const main = document.querySelector('main');
+  main?.setAttribute('id', 'main-content');
+  main?.setAttribute('tabindex', '-1');
+  document.body.prepend(skipLink);
+  const mainContent = document.getElementById('main-content');
+  
+  skipLink.addEventListener('click', function(event) {
+    event.preventDefault();
+    
+    // Move focus to main content
+    mainContent.focus();
+    
+    // Optional: Smooth scroll to main content
+    mainContent.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'start'
+    });
+  });
+  
+  // Handle focus management for better accessibility
+  mainContent.addEventListener('blur', function() {
+    this.removeAttribute('tabindex');
+  });
+  
+  // Re-add tabindex when skip link is used
+  skipLink.addEventListener('focus', function() {
+    mainContent.setAttribute('tabindex', '-1');
+  });
+};
+
 /**
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
@@ -688,6 +608,8 @@ export default async function decorate(block) {
   const navMeta = getMetadata('nav');
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
   const fragment = await loadFragment(navPath);
+
+  setupSkipMainContentLink();
 
   // decorate nav DOM
   block.textContent = '';
@@ -716,19 +638,16 @@ export default async function decorate(block) {
   buildNavSections(navSections);
 
   // Logic for resizing nav sections
-
   function resizeNavSections(navSec, navSecBackUp) {
     console.log('Resize', isDesktop.matches);
     if (navSecBackUp) {
       const navSectionSearchItem = navSecBackUp.children[0]?.children[1];
       if (isDesktop.matches && navSec.querySelector('details')) {
-        const header = document.querySelector('header');
-        if (header.classList.contains('mobile')) {
-          header.classList.remove('mobile');
-        }
-        //navSections.remove();
+        // const header = document.querySelector('header');
+        // if (header.classList.contains('mobile')) {
+        //   header.classList.remove('mobile');
+        // }
         navSections = navSecBackUp.cloneNode(true);
-        //navSections.querySelector('p').remove();
         navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
           if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
           decorateNavItem(navSection, navSectionSearchItem);
@@ -745,39 +664,13 @@ export default async function decorate(block) {
             }
           });
         });
-        //expandElement.prepend(navSections);
-        //navBrand.after(expandElement);
       }
       if (!isDesktop.matches && navSec.querySelector('li') && navSec.querySelector('li').classList.contains('nav-drop')) {
-        console.log('Here');
         const header = document.querySelector('header');
-        if (!header.classList.contains('mobile')) {
-          header.classList.add('mobile');
-        }
-        //navSections.remove();
-        console.log('Nav Sections', navSections);
+        // if (!header.classList.contains('mobile')) {
+        //   header.classList.add('mobile');
+        // }
         navSections = navSecBackUp.cloneNode(true);
-        //navSections.querySelector('p').remove();
-        const mainUL = navSections.querySelector(':scope .default-content-wrapper > ul');
-        console.log('mainUL', mainUL);
-        //decorateNavItemMobile(mainUL);
-        // mainUL.querySelectorAll('details').forEach((detail) => {
-        //   detail.addEventListener('toggle', (event) => {
-        //     if (event.target.open) {
-        //       detail.parentElement.querySelectorAll('details').forEach((ele) => {
-        //         if (ele !== event.target) {
-        //           ele.removeAttribute('open');
-        //         }
-        //       });
-        //     }
-        //   });
-        // });
-        //expandElement.prepend(navSections);
-        //navBrand.after(expandElement);
-        // nav.querySelectorAll('details').forEach((el) => {
-        //   const detailObject = new Accordion(el);
-        //   tracker.push(detailObject);
-        // });
         tracker.forEach((t) => {
           t.el.addEventListener('click', () => {
             tracker.forEach((t2) => {
@@ -848,10 +741,10 @@ export default async function decorate(block) {
     li.removeAttribute('role');
   });
 
-  nav.querySelectorAll('details').forEach((el) => {
-    const detailObject = new Accordion(el);
-    tracker.push(detailObject);
-  });
+  // nav.querySelectorAll('details').forEach((el) => {
+  //   const detailObject = new Accordion(el);
+  //   tracker.push(detailObject);
+  // });
   tracker.forEach((t) => {
     t.el.addEventListener('click', () => {
       tracker.forEach((t2) => {
