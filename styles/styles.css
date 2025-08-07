@@ -103,7 +103,8 @@
   --heading-font-size-xs: 14px;
 
   /* nav height */
-  --nav-height: 104px;
+  --nav-height: 154px;
+  --nav-height-mobile: 119px;
 
   /* spacing */
   --spacing-xs: 8px;
@@ -617,6 +618,28 @@ main .section.details-404 > .default-content-wrapper {
   .section:not(.rightsection) > .default-content-wrapper {
     padding: 0 50px;
   }
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 6px;
+  color: var(--neutral-white);
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 4px;
+  z-index: 1000;
+  transition: top 0.2s ease;
+  opacity: 0;
+}
+
+.skip-link:focus {
+  top: 6px;
+  left: 0;
+  right: 0;
+  width: max-content;
+  margin: 0 auto;
+  opacity: 1;
 }
 
 @media (width >= 991px) {
