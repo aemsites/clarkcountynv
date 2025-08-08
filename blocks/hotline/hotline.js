@@ -1,7 +1,10 @@
 import { Accordion } from '../accordion-ml/accordion-ml.js';
 import {
-  div, input, li, p, ul, details, summary,
+  div, li, ul, details, summary, img,
 } from '../../scripts/dom-helpers.js';
+
+// TODO
+// Add default orange bg with logo if no img is authored
 
 function searchBlocks(searchValue, searchTarget) {
   const blocks = document.querySelectorAll('.business-block');
@@ -44,14 +47,6 @@ function handleTagSearch(element) {
   }
 }
 
-function handleTextSearch() {
-  const searchValue = document.querySelector('.hotline-search-input').value.trim();
-  if (searchValue != null && searchValue.length === 0) {
-    displayAllBlocks();
-  }
-  searchBlocks(searchValue, '.business-row .business-info h2');
-}
-
 function buildCategoryTags(categories) {
   const container = ul({ class: 'tag-container' });
   const sortedCategories = [...categories].sort((a, b) => a.localeCompare(b));
@@ -62,19 +57,39 @@ function buildCategoryTags(categories) {
   return container;
 }
 
-function buildSearchForm() {
-  const form = div(
-    { class: 'hotline-search-form' },
-    input({
-      class: 'hotline-search-input', placeholder: 'Search...', name: 'business-search', type: 'text',
-    }),
-  );
+function getAltFromDescription(description) {
+  return description.textContent;
+}
 
-  const searchInput = form.querySelector('input');
-  searchInput.addEventListener('input', handleTextSearch);
-  searchInput.addEventListener('click', handleTextSearch);
+// Removes authored <br> and adds anchor a11y title attributes
+function formatContactMarkup(markup) {
+  const tempDiv = document.createElement('div');
+  tempDiv.appendChild(markup.cloneNode(true));
 
-  return form;
+  const brElements = tempDiv.querySelectorAll('br');
+  brElements?.forEach(br => br.remove());
+
+  // Find all anchor tags with empty title attributes
+  const anchors = tempDiv.querySelectorAll('a[title=""]');
+  
+  anchors.forEach((anchor) => {
+    // Find the span with icon class inside this anchor
+    const iconSpan = anchor.querySelector('span[class*="icon-"]');
+
+    if (iconSpan) {
+      const classList = iconSpan.className.split(' ');
+      const iconClass = classList.find(cls => cls.startsWith('icon-') && cls !== 'icon');
+
+      if (iconClass) {
+        const iconType = iconClass.replace('icon-', '');
+        // Capitalize first letter and create title
+        const capitalizedIcon = iconType.charAt(0).toUpperCase() + iconType.slice(1);
+        anchor.setAttribute('title', `${capitalizedIcon} Link`);
+      }
+    }
+  });
+
+  return tempDiv;
 }
 
 export default function decorate(block) {
@@ -113,6 +128,9 @@ export default function decorate(block) {
       const learnMore = row.children[4];
       accLearnMore = decorateLearnMore(learnMore, i);
     }
+    const contactMarkup = document.createDocumentFragment();
+    contactMarkup.append(...contacts.children);
+    const contactMarkupFormatted = formatContactMarkup(contactMarkup);
 
     categories.push(category);
     const businessBlock = div(
@@ -120,26 +138,22 @@ export default function decorate(block) {
       div(
         { class: 'business-row' },
         div(
-          { class: 'business-image', style: `background: url(${backgroundImage}) center center / cover no-repeat;` },
-          p({ class: `category ${category.toLowerCase().replace(' ', '-')}` }, category),
+          { class: 'business-image-container' },
+          img({ src: backgroundImage, alt: `${getAltFromDescription(...descriptionEl.children)} image` }),
         ),
         div(
           { class: 'business-info' },
           ...descriptionEl.children,
-        ),
-        div(
-          { class: 'business-contacts' },
-          ...contacts.children,
+          contactMarkupFormatted,
         ),
       ),
     );
     if (row.children[4]) { businessBlock.append(accLearnMore); }
     contentContainer.append(businessBlock);
   });
-  const searchContainer = buildSearchForm();
   const categoryTagContainer = buildCategoryTags([...new Set(categories)]);
   block.innerHTML = '';
-  block.append(searchContainer, categoryTagContainer, contentContainer);
+  block.append(categoryTagContainer, contentContainer);
 
   /* eslint-disable no-new */
   block.querySelectorAll('details').forEach((el) => {
