@@ -2,16 +2,14 @@ import { Accordion } from '../accordion-ml/accordion-ml.js';
 import {
   div, li, ul, details, summary, img,
 } from '../../scripts/dom-helpers.js';
+import { fetchPlaceholders } from '../../scripts/aem.js';
 
-// TODO
-// Add default orange bg with logo if no img is authored
-
-function searchBlocks(searchValue, searchTarget) {
+function searchBlocks(searchValue) {
   const blocks = document.querySelectorAll('.business-block');
   blocks.forEach((block) => {
-    const elToSearch = block.querySelector(searchTarget);
+    const elToSearch = block.getAttribute('data-category');
     if (elToSearch) {
-      const text = elToSearch.textContent.toUpperCase();
+      const text = elToSearch.toUpperCase();
       if (text.indexOf(searchValue.toUpperCase()) === -1) {
         block.style.display = 'none';
       } else {
@@ -43,7 +41,7 @@ function handleTagSearch(element) {
 
   const searchValue = element.textContent.trim();
   if (searchValue != null && searchValue.length > 0) {
-    searchBlocks(searchValue, '.business-row .business-image p.category');
+    searchBlocks(searchValue);
   }
 }
 
@@ -67,18 +65,18 @@ function formatContactMarkup(markup) {
   tempDiv.appendChild(markup.cloneNode(true));
 
   const brElements = tempDiv.querySelectorAll('br');
-  brElements?.forEach(br => br.remove());
+  brElements?.forEach((br) => br.remove());
 
   // Find all anchor tags with empty title attributes
   const anchors = tempDiv.querySelectorAll('a[title=""]');
-  
+
   anchors.forEach((anchor) => {
     // Find the span with icon class inside this anchor
     const iconSpan = anchor.querySelector('span[class*="icon-"]');
 
     if (iconSpan) {
       const classList = iconSpan.className.split(' ');
-      const iconClass = classList.find(cls => cls.startsWith('icon-') && cls !== 'icon');
+      const iconClass = classList.find((cls) => cls.startsWith('icon-') && cls !== 'icon');
 
       if (iconClass) {
         const iconType = iconClass.replace('icon-', '');
@@ -92,54 +90,67 @@ function formatContactMarkup(markup) {
   return tempDiv;
 }
 
-export default function decorate(block) {
+export default async function decorate(block) {
   const contentContainer = div({ class: 'business-list' });
   const categories = [];
+  const isFilterHotline = block.classList.contains('filter');
 
-  function decorateLearnMore(learnMore, idValue) {
-    const $summary = summary({ class: 'accordion-item-label' });
+  const { clarkcountywhitelogo } = await fetchPlaceholders();
 
-    const body = div({ class: 'accordion-item-body' });
-    body.classList.add('content');
-    [...learnMore.children].forEach((row, i) => {
-      if (i === 0) {
-        // decorate accordion item label
-        const label = row;
-        $summary.className = 'accordion-item-label';
-        $summary.append(label);
-      } else {
-        // decorate accordion item content
-        body.append(row);
-      }
-    });
-    const id = `learn-more-${idValue}`;
-    const $details = details({ class: 'accordion-item', id });
-    $details.append($summary, body);
-    return $details;
-  }
-
-  [...block.children].forEach((row, i) => {
-    let accLearnMore;
+  [...block.children].forEach((row) => {
+    const hasAuthoredImage = row.children[0].querySelector('img');
     const backgroundImage = row.children[0].querySelector('img')?.getAttribute('src');
     const category = row.children[1].textContent;
     const descriptionEl = row.children[2];
     const contacts = row.children[3];
+    let accordionContent = null;
     if (row.children[4]) {
-      const learnMore = row.children[4];
-      accLearnMore = decorateLearnMore(learnMore, i);
+      if (isFilterHotline) {
+        const temp = document.createElement('div');
+        temp.innerHTML = row.children[4].innerHTML;
+        accordionContent = div();
+        accordionContent.innerHTML = row.children[4].innerHTML;
+      }
     }
+
     const contactMarkup = document.createDocumentFragment();
     contactMarkup.append(...contacts.children);
     const contactMarkupFormatted = formatContactMarkup(contactMarkup);
 
     categories.push(category);
-    const businessBlock = div(
+    const businessBlock = isFilterHotline ? div(
+      { class: 'business-block', 'data-category': category },
+      details(
+        { class: 'accordion-item' },
+        summary(
+          { class: 'accordion-item-label' },
+          div(
+            { class: 'business-row' },
+            div(
+              { class: 'business-image-container' },
+              img(
+                { src: backgroundImage, alt: `${getAltFromDescription(...descriptionEl.children)} image` },
+              ),
+            ),
+            div(
+              { class: 'business-info' },
+              ...descriptionEl.children,
+              contactMarkupFormatted,
+            ),
+          ),
+        ),
+        div(
+          { class: 'accordion-item-body content' },
+          accordionContent,
+        ),
+      ),
+    ) : div(
       { class: 'business-block' },
       div(
         { class: 'business-row' },
         div(
-          { class: 'business-image-container' },
-          img({ src: backgroundImage, alt: `${getAltFromDescription(...descriptionEl.children)} image` }),
+          { class: `business-image-container${!hasAuthoredImage ? ' bg-primary-orange' : ''}` },
+          img({ src: hasAuthoredImage ? backgroundImage : clarkcountywhitelogo, alt: `${getAltFromDescription(...descriptionEl.children)} image` }),
         ),
         div(
           { class: 'business-info' },
@@ -148,7 +159,6 @@ export default function decorate(block) {
         ),
       ),
     );
-    if (row.children[4]) { businessBlock.append(accLearnMore); }
     contentContainer.append(businessBlock);
   });
   const categoryTagContainer = buildCategoryTags([...new Set(categories)]);
