@@ -223,7 +223,6 @@ main .form input[type='file'] {
     height: 24px;
     flex: none;
     margin: 0;
-    position: static;
     z-index: 1;
     appearance: none;
     border: 2px solid var(--neutral-black-800);
@@ -890,7 +889,6 @@ main .form form .checkbox-group-wrapper.horizontal .field-description {
     width: 20px;
     height: 20px;
     border-radius: 10px;
-    display: inline-block;
     text-align: center;
     line-height: 18px;
     margin: 0 5px;
@@ -905,7 +903,7 @@ main .form form .checkbox-group-wrapper.horizontal .field-description {
 .tooltip-content:hover::before {
     border: solid;
     border-color: var(--neutral-black) transparent;
-    border-width: 16px 14px 0px;
+    border-width: 16px 14px 0;
     bottom: 15px;
     content: '';
     left: 2px;
@@ -922,7 +920,6 @@ main .form form .checkbox-group-wrapper.horizontal .field-description {
     z-index: 98;
     left: 2px;
     width: 230px;
-    line-height: 1.5em;
     color: var(--neutral-white);
     text-align: center;
     font-size: var(--body-font-size-s);
@@ -964,7 +961,6 @@ main .form form .checkbox-group-wrapper.horizontal .field-description {
 }
 
 @media (width >= 900px) {
-
     .form.block form {
         padding: 0 50px;
         gap: 40px;
