@@ -5,7 +5,7 @@
     --background-color-primary: #fff;
     --label-color: #000;
     --border-color: #818a91;
-    --form-error-color: #ff5f3f;
+    --form-error-color: var(--primary-orange-300);
     --button-primary-color: #5F8DDA;
     --button-secondary-color: #666;
     --button-primary-hover-color: #035fe6;
@@ -17,7 +17,7 @@
     --form-columns: 12;
     --form-field-horz-gap: 40px;
     --form-field-vert-gap: 40px;
-    --form-invalid-border-color: #ff5f3f;
+    --form-invalid-border-color: var(--primary-orange-300);
     --form-input-padding: 12px;
     --form-input-font-size: 1rem;
     --form-input-disable-color: #ebebe4;
@@ -134,7 +134,6 @@ main .form .field-description {
 
 main .form form .field-invalid .field-description {
     color: var(--form-error-color);
-    font-weight: 700;
 }
 
 /**
@@ -156,6 +155,12 @@ main .form form .field-invalid .field-description {
   [data-required="true"] > label:has(.tooltip-content) .tooltip-content,
   [data-required="true"] > legend:has(.tooltip-content) .tooltip-content {
     order: 2;
+  }
+
+  .field-wrapper[data-required="true"].field-invalid input,
+  .field-wrapper[data-required="true"].field-invalid select,
+  .field-wrapper[data-required="true"].field-invalid textarea {
+    border-color: var(--primary-orange-300);
   }
   
   /**
