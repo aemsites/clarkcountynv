@@ -436,6 +436,8 @@ main div.section.desktop img {
 }
 
 main div.section.desktop.short {
+    position: relative;
+    
     img {
         position: relative;
         width: 100%;
