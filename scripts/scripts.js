@@ -14,12 +14,10 @@ import {
   getMetadata,
   createOptimizedPicture as libCreateOptimizedPicture, fetchPlaceholders,
 } from './aem.js';
+// eslint-disable-next-line import/no-cycle
 import { loadFragment } from '../blocks/fragment/fragment.js';
-
 import { h1 } from './dom-helpers.js';
-
 import { getViewPort, externalLinks, ScrolltoTop } from './utils.js';
-
 import assetsInit from './aem-assets-plugin-support.js';
 
 const DEFAULT_BACKGROUND_IMAGE = `${window.location.origin}/assets/images/general/slide1.jpg`;

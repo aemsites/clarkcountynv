@@ -31,11 +31,11 @@ export default async function decorate(block) {
     } else {
       const closeBtnColor = (block.classList.contains('high') || block.classList.contains('low')) ? 'black' : 'white';
       const closeBtn = button(
-          { class: 'close-button', type: 'button', onclick: (e) => handleClose(e) },
-          img(
-            { src: `/icons/close-icon-${closeBtnColor}.svg`, alt: 'Close alert popup' }
-          )
-        );
+        { class: 'close-button', type: 'button', onclick: (e) => handleClose(e) },
+        img(
+          { src: `/icons/close-icon-${closeBtnColor}.svg`, alt: 'Close alert popup' },
+        ),
+      );
       const closeBtnContainer = div(closeBtn);
       block.querySelector(':scope > div')?.append(closeBtnContainer);
     }
