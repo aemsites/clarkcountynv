@@ -5,6 +5,7 @@ import {
 } from '../../scripts/dom-helpers.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { loadFragment } from '../../blocks/fragment/fragment.js';
+import { AccessibleLeftNav } from '../../blocks/left-nav/left-nav.js';
 
 /** allow for link attributes to be added by authors
  * example usage = Text [class:button,target:_blank,title:Title goes here]
@@ -38,7 +39,7 @@ export function decorateLinks(element) {
 
 async function check404(url) {
   try {
-    const response = await fetch(url, { method: 'HEAD' });
+    const response = await fetch(url, { method: 'GET' });
 
     // Return the URL only if the response is OK (status in 200–299)
     if (response.ok) {
@@ -63,7 +64,7 @@ async function checkFragmentAccordionML() {
   for (let i = pathParts.length - 1; i >= 1; i -= 1) {
     // Reconstruct the base path from deeper to root
     const basePath = `/${pathParts.slice(0, i).join('/')}`;
-    const testUrl = `${baseUrl + basePath}/fragment/accordion-ml`;
+    const testUrl = `${baseUrl + basePath}/fragment/left-nav`;
     // eslint-disable-next-line no-await-in-loop
     const fragPath = await check404(testUrl);
     if (fragPath) {
@@ -78,21 +79,23 @@ export default async function decorate(doc) {
   const $leftsection = document.querySelector('.leftsection');
 
   if ($leftsection) {
-    if (!$leftsection.querySelector('.accordion-ml.block')) {
+    if (!$leftsection.querySelector('.left-nav.block')) {
       // check for the URL path segments from extreme right, presence of fragment folder
       const fragPath = await checkFragmentAccordionML();
       if (fragPath) {
         const path = new URL(fragPath).pathname;
         const leftFrag = await loadFragment(path);
-        const leftnav = leftFrag.querySelector('.accordion-ml-wrapper').cloneNode(true);
+        const leftnav = leftFrag.querySelector('.left-nav-wrapper').cloneNode(true);
         const startH2 = $leftsection.querySelector('h2');
         // append leftnav just after startH2
         if (startH2) {
           startH2.after(leftnav);
-        } else {
-          // if no h2 found, append leftnav at the end of leftsection
-          $leftsection.append(leftnav);
-        }
+        } 
+        // if no h2 found, append leftnav at the end of leftsection
+        $leftsection.append(leftnav);
+        const leftNavBlock = leftnav.querySelector('.left-nav.block');
+        /* eslint-disable no-new */
+        new AccessibleLeftNav(leftNavBlock);   
       }
     }
     const $clickElement = $leftsection.querySelector('.default-content-wrapper > p');

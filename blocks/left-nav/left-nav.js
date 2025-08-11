@@ -1,4 +1,4 @@
-class AccessibleLeftNav {
+export class AccessibleLeftNav {
   constructor(navElement) {
     this.nav = navElement;
     this.init();
@@ -94,6 +94,13 @@ class AccessibleLeftNav {
     const textSpan = document.createElement('span');
     textSpan.className = 'nav-text';
     textSpan.textContent = originalText;
+
+    // Check if left nav text has a11y helper text - if so remove.
+    const toggleText = 'Toggle  submenu';
+    const toggleRegex = new RegExp(toggleText);
+    if (toggleRegex.test(textSpan.textContent)) {
+      textSpan.textContent = textSpan.textContent.replace(/Toggle\s+submenu/, '').trim();
+    }
 
     const caret = document.createElement('svg');
     caret.className = 'nav-caret';
