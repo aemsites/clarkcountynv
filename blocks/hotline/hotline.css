@@ -1,3 +1,9 @@
+.hotline.block {
+  width: 100%;
+  max-width: 1440px;
+  margin-right: auto;
+}
+
 .hotline .tag-container {
   padding: 0;
   margin: 24px 0 40px;
@@ -18,7 +24,6 @@
   background: var(--neutral-white);
   color: var(--primary-orange-600);
   border-radius: 24px;
-  padding: 12px;
   margin: 0;
   display: inline-block;
   cursor: pointer;
@@ -26,6 +31,38 @@
   font-style: normal;
   font-weight: var(--font-weight-bold);
   line-height: 110%;
+}
+
+.hotline .category-tag:hover {
+  background-color: var(--primary-orange-600);
+}
+
+.hotline .category-tag:hover .category-tag-link {
+  color: var(--neutral-white);
+}
+
+.hotline .category-tag-link {
+  color: var(--primary-orange-600);
+  text-decoration: none;
+  pointer-events: none;
+  padding: 12px;
+  display: inline-block;
+}
+
+.hotline .category-tag-link:focus {
+  border-radius: 24px;
+}
+
+.hotline .category-tag:hover .category-tag-link:focus {
+  color: var(--primary-orange-600);
+}
+
+.hotline .category-tag.selected-category .category-tag-link {
+  color: var(--neutral-white);
+}
+
+.hotline .category-tag.selected-category .category-tag-link:focus {
+  color: var(--primary-orange-600);
 }
 
 .hotline .category-tag.selected-category {
@@ -244,12 +281,20 @@
 
 @media (width >= 1200px) {
   .hotline .business-image-container {
-    min-width: 400px;
-    width: 400px;
-    min-height: 306px; 
+    min-width: 300px;
+    width: 300px;
+    min-height: 306px;
   }
 
   .hotline .business-row {
     flex-flow: row wrap;
+  }
+}
+
+@media (width >= 1400px) {
+  .hotline .business-image-container {
+    min-width: 400px;
+    width: 400px;
+    min-height: 306px; 
   }
 }

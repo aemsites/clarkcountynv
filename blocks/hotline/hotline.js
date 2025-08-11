@@ -1,6 +1,6 @@
 import { Accordion } from '../accordion-ml/accordion-ml.js';
 import {
-  div, li, ul, details, summary, img,
+  div, li, ul, details, summary, img, a,
 } from '../../scripts/dom-helpers.js';
 import { fetchPlaceholders } from '../../scripts/aem.js';
 
@@ -26,7 +26,9 @@ function displayAllBlocks() {
   });
 }
 
-function handleTagSearch(element) {
+function handleTagSearch(element, event) {
+  console.log('clicked', event);
+  event.preventDefault();
   if (element.classList.contains('selected-category')) {
     element.classList.remove('selected-category');
     displayAllBlocks();
@@ -47,9 +49,15 @@ function handleTagSearch(element) {
 
 function buildCategoryTags(categories) {
   const container = ul({ class: 'tag-container' });
-  const sortedCategories = [...categories].sort((a, b) => a.localeCompare(b));
+  const sortedCategories = [...categories].sort((c1, c2) => c1.localeCompare(c2));
   sortedCategories.forEach((category) => {
-    const categoryTag = li({ class: `category-tag ${category.toLowerCase().replace(' ', '-')}`, onclick(e) { handleTagSearch(this, e); } }, category);
+    const categoryTag = li(
+      { class: `category-tag ${category.toLowerCase().replace(' ', '-')}`, onclick(e) { handleTagSearch(this, e); } },
+      a(
+        { class: 'category-tag-link', href: '#' },
+        category,
+      ),
+    );
     container.append(categoryTag);
   });
   return container;
