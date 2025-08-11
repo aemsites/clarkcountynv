@@ -91,11 +91,11 @@ export default async function decorate(doc) {
         if (startH2) {
           startH2.after(leftnav);
         } 
-          // if no h2 found, append leftnav at the end of leftsection
-          $leftsection.append(leftnav);
-          const leftNavBlock = leftnav.querySelector('.left-nav.block');
-          new AccessibleLeftNav(leftNavBlock);
-      
+        // if no h2 found, append leftnav at the end of leftsection
+        $leftsection.append(leftnav);
+        const leftNavBlock = leftnav.querySelector('.left-nav.block');
+        /* eslint-disable no-new */
+        new AccessibleLeftNav(leftNavBlock);   
       }
     }
     const $clickElement = $leftsection.querySelector('.default-content-wrapper > p');
