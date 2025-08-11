@@ -1,6 +1,6 @@
 import ffetch from '../../scripts/ffetch.js';
 import {
-  div, a, img, h4, h6, span,
+  div, a, img, h4, span, p,
 } from '../../scripts/dom-helpers.js';
 import {
   buildBlock, decorateBlock, loadBlock, createOptimizedPicture, readBlockConfig,
@@ -56,11 +56,11 @@ const resultParsers = {
       const leftColumnFrag = document.createDocumentFragment();
       const rightColumnFrag = document.createDocumentFragment();
       if (result.newsImage) {
-        const cardImage = createOptimizedPicture(result.newsImage);
+        const cardImage = createOptimizedPicture(result.newsImage, `${result.newsCategory} image`);
         leftColumnFrag.append(cardImage);
       }
       if (result.newsCategory) {
-        const category = h6({ class: 'newslist-category' }, result.newsCategory);
+        const category = p({ class: 'newslist-category' }, result.newsCategory);
         rightColumnFrag.append(category);
       }
       if (result.newsTitle) {
