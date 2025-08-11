@@ -99,7 +99,7 @@ export class AccessibleLeftNav {
     const toggleText = 'Toggle  submenu';
     const toggleRegex = new RegExp(toggleText);
     if (toggleRegex.test(textSpan.textContent)) {
-      textSpan.textContent = textSpan.textContent.replace(/Toggle\s+submenu/, "").trim();
+      textSpan.textContent = textSpan.textContent.replace(/Toggle\s+submenu/, '').trim();
     }
 
     const caret = document.createElement('svg');

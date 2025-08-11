@@ -90,12 +90,12 @@ export default async function decorate(doc) {
         // append leftnav just after startH2
         if (startH2) {
           startH2.after(leftnav);
-        } else {
+        } 
           // if no h2 found, append leftnav at the end of leftsection
           $leftsection.append(leftnav);
           const leftNavBlock = leftnav.querySelector('.left-nav.block');
           new AccessibleLeftNav(leftNavBlock);
-        }
+      
       }
     }
     const $clickElement = $leftsection.querySelector('.default-content-wrapper > p');
