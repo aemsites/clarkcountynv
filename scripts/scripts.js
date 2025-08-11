@@ -14,6 +14,7 @@ import {
   getMetadata,
   createOptimizedPicture as libCreateOptimizedPicture, fetchPlaceholders,
 } from './aem.js';
+import { loadFragment } from '../blocks/fragment/fragment.js';
 
 import { h1 } from './dom-helpers.js';
 
@@ -507,6 +508,21 @@ async function loadEager(doc) {
 }
 
 /**
+ * Loads a block via fragment named 'alert-popup' onto page below header
+ * @param popup alert-popup element
+ * @returns {Promise}
+ */
+async function loadAlerts() {
+  const alertsFragUrl = '/fragments/pagealerts';
+  const fragment = await loadFragment(alertsFragUrl);
+  if (fragment) {
+    const block = fragment.querySelector(':scope > div');
+    const main = document.querySelector('main');
+    main?.prepend(block);
+  }
+}
+
+/**
  * Loads everything that doesn't need to be delayed.
  * @param {Element} doc The container element
  */
@@ -521,8 +537,8 @@ async function loadLazy(doc) {
   if (hash && element) element.scrollIntoView();
 
   loadHeader(doc.querySelector('header'));
+  loadAlerts();
   loadFooter(doc.querySelector('footer'));
-
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
 }
