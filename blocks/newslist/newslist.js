@@ -24,7 +24,7 @@ const resultParsers = {
   // Parse results into a cards block
   columns: (results) => {
     const blockContents = [];
-    const newsButtonText = getMetadata('news-button-text') || 'Read More';
+    const newsButtonText = getMetadata('news-button-text') || 'Read more';
     results.forEach((result) => {
       const cardleft = div({ class: 'card-left' });
       const row = [];
