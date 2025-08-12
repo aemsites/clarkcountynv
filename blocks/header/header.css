@@ -246,8 +246,6 @@ header nav .nav-drop strong {
   letter-spacing: 0.7px;
   text-transform: uppercase;
   text-decoration: none;
-  /* display: inline-block; */
-  /* margin: 12px 24px; */
   display: block;
   padding: 12px 50px 12px 24px;
 }
@@ -261,6 +259,10 @@ header nav .nav-drop strong a {
   letter-spacing: 0.7px;
   text-transform: uppercase;
   text-decoration: none;
+}
+
+header nav .nav-drop:focus {
+  outline: none;
 }
 
 header nav .nav-drop:focus > strong {

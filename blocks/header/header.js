@@ -403,26 +403,18 @@ function handleMegaMenuKeyboardNavigation(e) {
 }
 
 // Helper function to get the first focusable element within a nav-drop
-function getFirstFocusableElement(navDrop, isMobile) {
+function getFirstFocusableElement(navDrop) {
   const focusableSelectors = [
     'button:not([disabled])',
     //'a[href]',
-    //'[tabindex]:not([tabindex="-1"])'
   ];
-
-  if (isMobile) {
-    const focusableElements = navDrop.querySelectorAll('.nav-in-menu-wrap-mobile ' + focusableSelectors.join(', '));
-    return focusableElements[0];
-  }
-
-  return null;
   
-  //const focusableElements = navDrop.querySelectorAll(focusableSelectors.join(', '));
-  //return focusableElements[0] || null;
+  const focusableElements = navDrop.querySelectorAll(`.nav-in-menu-wrap-mobile ${focusableSelectors.join(', ')}`);
+  return focusableElements[0] || null;
 }
 
 // Helper function to get all focusable elements within a nav-drop
-function getFocusableElements(navDrop,) {
+function getFocusableElements(navDrop) {
   const focusableSelectors = [
     'button:not([disabled])',
     'a[href]',
@@ -442,7 +434,6 @@ function handleDesktopKeyboardNavigation(e, focused) {
 function handleMobileKeyboardNavigation(e, focused) {
   // Handle hamburger menu button Enter key
   if (e.code === 'Enter' && focused.closest('.nav-hamburger')) {
-    //console.log('Hamburger');
     e.preventDefault();
     const hamburgerBtn = focused.closest('.nav-hamburger').querySelector('button');
     const nav = document.getElementById('nav');
@@ -463,7 +454,6 @@ function handleMobileKeyboardNavigation(e, focused) {
 
   // Handle close button Tab key - move to first nav-drop
   if (e.code === 'Tab' && !e.shiftKey && focused.closest('.nav-menu-close')) {
-    //console.log('Focus first nav drop');
     e.preventDefault();
     const navSections = document.querySelector('.nav-sections');
     const firstNavDrop = navSections.querySelector('.nav-drop');
@@ -475,7 +465,6 @@ function handleMobileKeyboardNavigation(e, focused) {
 
   // Handle nav-drop Enter key - expand/collapse the dropdown
   if (e.code === 'Enter' && focused.classList.contains('nav-drop')) {
-    //console.log('Pressed enter on nav drop');
     e.preventDefault();
     const isCurrentlyExpanded = focused.getAttribute('aria-expanded') === 'true';
     
@@ -509,7 +498,7 @@ function handleMobileKeyboardNavigation(e, focused) {
         if (isNavDropExpanded) {
           // Focus first interactive element within the expanded nav-drop
           e.preventDefault();
-          const firstFocusableElement = getFirstFocusableElement(currentNavDrop, true);
+          const firstFocusableElement = getFirstFocusableElement(currentNavDrop);
           if (firstFocusableElement) {
             firstFocusableElement.focus();
           }
@@ -544,39 +533,46 @@ function handleMobileKeyboardNavigation(e, focused) {
     } 
     // If we're inside a nav-drop (on a child element)
     else if (currentNavDrop) {
-      const focusableElements = getFocusableElements(currentNavDrop);
-      const currentElementIndex = focusableElements.indexOf(focused);
-      
-      if (!e.shiftKey) {
-        // Forward tab
-        if (currentElementIndex < focusableElements.length - 1) {
-          // Move to next focusable element within the same nav-drop
-          e.preventDefault();
-          focusableElements[currentElementIndex + 1].focus();
-        } else {
-          // We're at the last element, move to next nav-drop
-          e.preventDefault();
-          const nextNavDrop = allNavDrops[currentNavDropIndex + 1];
-          if (nextNavDrop) {
-            nextNavDrop.focus();
+      // Special handling for tabs structure
+      const tabsList = currentNavDrop.querySelector('.tabs-list');
+      if (tabsList && focused.closest('.tabs-list')) {
+        handleTabsListNavigation(e, focused, tabsList, currentNavDrop, allNavDrops, currentNavDropIndex);
+      } else {
+        // Handle other focusable elements normally
+        const focusableElements = getFocusableElements(currentNavDrop);
+        const currentElementIndex = focusableElements.indexOf(focused);
+        
+        if (!e.shiftKey) {
+          // Forward tab
+          if (currentElementIndex < focusableElements.length - 1) {
+            // Move to next focusable element within the same nav-drop
+            e.preventDefault();
+            focusableElements[currentElementIndex + 1].focus();
           } else {
-            // If no more nav-drops, focus search button
-            const searchButton = document.querySelector('.nav-search-button');
-            if (searchButton) {
-              searchButton.focus();
+            // We're at the last element, move to next nav-drop
+            e.preventDefault();
+            const nextNavDrop = allNavDrops[currentNavDropIndex + 1];
+            if (nextNavDrop) {
+              nextNavDrop.focus();
+            } else {
+              // If no more nav-drops, focus search button
+              const searchButton = document.querySelector('.nav-search-button');
+              if (searchButton) {
+                searchButton.focus();
+              }
             }
           }
-        }
-      } else {
-        // Shift+Tab (backward)
-        if (currentElementIndex > 0) {
-          // Move to previous focusable element within the same nav-drop
-          e.preventDefault();
-          focusableElements[currentElementIndex - 1].focus();
         } else {
-          // We're at the first element, move to the nav-drop itself
-          e.preventDefault();
-          currentNavDrop.focus();
+          // Shift+Tab (backward)
+          if (currentElementIndex > 0) {
+            // Move to previous focusable element within the same nav-drop
+            e.preventDefault();
+            focusableElements[currentElementIndex - 1].focus();
+          } else {
+            // We're at the first element, move to the nav-drop itself
+            e.preventDefault();
+            currentNavDrop.focus();
+          }
         }
       }
     }
