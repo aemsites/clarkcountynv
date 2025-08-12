@@ -585,6 +585,7 @@ body.calendar main section .fc .fc-daygrid-day.fc-day-today {
 .calendar .fc-h-event .fc-event-title {
   display: inline;
   white-space: normal;
+  font-weight: var(--font-weight-book);
 }
 
 .calendar .fc-h-event .fc-event-main-frame {

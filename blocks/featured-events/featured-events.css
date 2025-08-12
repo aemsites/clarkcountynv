@@ -1,266 +1,121 @@
-.block.featured-events.columns-wrapper {
-    margin-top: 0;
-    padding: 26px 0;
+/* Featured Events */
+.featured-events.block {
+  width: 100%;
+  max-width: 1440px;
+  margin: 40px auto;
+  display: block;
 }
 
-.block.featured-events .off {
-    opacity: 0;
+.featured-events.block .columns.block {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
 }
 
-.block.featured-events .block.columns {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    position: relative;
-    margin-top: 4vh;
-    padding-left: 4vw;
-    padding-right: 4vw;
+.featured-events.block .columns.block .column1 {
+  width: 100%;
+  display: block;
+  text-wrap: unset;
 }
 
-.block.featured-events .block.columns > div {
-    display: flex;
-    width: 100%;
-    margin-bottom: 72px;
-    cursor: pointer;
-    height: auto;
+.featured-events.block .columns.block .column1 > p {
+  white-space: normal;
+  overflow: unset;
 }
 
-.block.featured-events .block.columns .event-image {
-    flex-basis: 50%;
-    height: 263px;
-    min-width: 20vw;
+.featured-events.block .columns.block > div > div > p {
+  margin: 0;
 }
 
-.block.featured-events div.see-more {
-    background: var(--dark-orange);
-    width: 210px;
-    display: flex;
-    justify-content: center;
-    margin: 2vh;
+.featured-events.block .event {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  cursor: pointer;
 }
 
-.block.featured-events div.see-more a {
-    display: inline-flex;
-    align-items: center;
-    font-size: 20px;
-    background: var(--dark-orange);
-    color: #fff;
-    padding: 9px 13px 9px 20px;
+.featured-events.block .event-image {
+  flex: 0 0 240px;
+  align-self: stretch;
 }
 
-.block.featured-events div.see-more a img {
-    margin-left: 10px;
+.featured-events.block .event-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-
-.block.featured-events .block.columns .event-image picture img {
-    height: 100%;
-    width: 100%;
+.featured-events.block .event-body {
+  flex: 1;
+  padding: 24px;
+  background-color: var(--neutral-black-200);
 }
 
-.block.featured-events .block.columns .event-body {
-    flex-basis: 60%;
-    padding: 22px 30px;
+.featured-events.block .title {
+  color: var(--primary-orange-600); 
+  line-height: 120%;
 }
 
-.block.featured-events .block.columns h3 {
-    font: 500 24px var(--heading-font-family);
-    line-height: 1.25;
-    margin: 13px 0 18px;
+.featured-events.block .date {
+  color: var(--neutral-black-800);
+  font-size: var(--body-font-size-s);
+  font-style: normal;
+  font-weight: var(--font-weight-bold);
+  line-height: 120%;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
 }
 
-.block.featured-events .block.columns > div .event-body .date {
-    align-items: center;
-    font: 400 18px var(--body-font-family);
-    display: flex;
-    text-transform: uppercase;
-    margin-right: 5px;
+.featured-events.block .date img {
+  width: 24px;
+  height: 24px;
 }
 
-.block.featured-events .block.columns > div .event-body .description {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-    line-clamp: 3;
-    font: 400 18px var(--body-font-family);
-    line-height: 1.35;
+.featured-events.block .description {
+  margin: 0;
+  font-size: var(--body-font-size-s);
+  line-height: 125%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: initial;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
-.block.featured-events .block.columns > div .event-body .path {
-    display: none;
+.featured-events.block .path {
+  display: none;
 }
 
-.block.featured-events .block.columns > div .event-body .date::before {
-    content: '';
-    display: inline-block;
-    width: 28px;
-    height: 28px;
-    margin-right: 10px;
-    background: url('https://main--clarkcountynv--aemsites.aem.page/assets/images/calendar-icon.png') center / cover no-repeat;
+.featured-events.block .see-more {
+  text-align: center;
+  margin-top: 40px;
 }
 
-.block.featured-events .event-modal .event-modal-date p {
-    color: white;
-    z-index: 1;
-    padding: 0;
-    margin: 0;
-    font-family: var(--heading-font-family);
-    font-size: 21px;
+.featured-events.block .see-more > a {
+  margin: 0;
 }
 
-.block.featured-events .event-modal .event-modal-time p {
-    color: white;
-    z-index: 1;
-    padding: 0 .6vw;
-    margin: 0;
-    font-family: var(--heading-font-family);
-    font-size: 16px;
+.featured-events.block .event-modal {
+  display: none;
 }
-
-.block.featured-events .event-modal .event-modal-date p:last-child {
-    font-size: 15px;
-    font-weight: 600;
-}
-
-.block.featured-events .event-modal .event-modal-time {
-    top: 276px;
-    position: absolute;
-    min-width: 165px;
-    transition: opacity .25s ease-in-out;
-}
-
-.block.featured-events .event-modal .event-modal-content {
-    width: 500px;
-    max-width: 100%;
-    background-color: white;
-    height: 750px;
-    margin: auto;
-    margin-top: 0;
-    position: relative;
-    animation: animatetop 1s;
-}
-
-@keyframes animatetop {
-    from {
-        top: -50px;
-        opacity: 0
-    }
-
-    to {
-        top: 0;
-        opacity: 1
-    }
-}
-
-.block.featured-events .event-modal .event-modal-footer {
-    width: 500px;
-    max-width: 100%;
-    position: absolute;
-    padding: 15px;
-    bottom: 0;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 1vw;
-    color: white;
-}
-
-.block.featured-events .event-modal .event-modal-footer button {
-    padding: 8px 12px 6px;
-    display: block;
-    float: right;
-    border-radius: 3px;
-    margin-left: 5px;
-    font-size: 16px;
-    font-family: var(--heading-font-family);
-    font-weight: 600 !important;
-    line-height: 1 !important;
-}
-
-.block.featured-events .block.columns > div > div.column1 p {
-    white-space: normal;
-}
-
-.block.featured-events .block.columns div.event {
-    display: flex;
-    flex-direction: column;
-}
-
-.block.featured-events .event-modal {
-    display: none; 
-    position: fixed; 
-    z-index: 10000; 
-    padding-top: 100px; 
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%; 
-    overflow: auto; 
-    background-color: rgb(0 0 0); 
-    background-color: rgba(0 0 0 / 40%);
-}
-
-.block.featured-events .event-modal .event-modal-footer a {
-    padding: 8px 12px 6px;
-    display: block;
-    float: right;
-    border-radius: 3px;
-    margin-left: 5px;
-    font-size: 16px;
-    font-family: var(--heading-font-family);
-    font-weight: 600 !important;
-    line-height: 1 !important;
-}
-
-.block.featured-events div.event-modal a:any-link {
-    color: white;
-}
-
-.block.featured-events .event-modal .event-modal-footer a.displayoff {
-    display: none;
-}
-
-.block.featured-events .event-modal .event-modal-date {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    text-align: center;
-    color: #fff;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    padding-top: 1.2vh;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    gap: .2vh;
-    line-height: 1;
-    transition: opacity .25s ease-in-out;
-}
-
 
 @media (width >= 900px) {
-    .block.featured-events .block.columns > div {
-        width: 48%;
-        height: 263px;
-    }
+  .featured-events.block .event-image img {
+    width: 240px;
+  }
 
-    .block.featured-events .block.columns {
-        padding-left: 1vw;
-        padding-right: 1vw;
-    }
+  .featured-events.block .columns.block {
+    grid-template-columns: repeat(2, minmax(300px, 649px));
+    justify-content: center;
+  }
 
-    .block.featured-events .block.columns div.event {
-        flex-direction: row;
-    }
-
-}
-
-@media (width >= 1200px) {
-    .block.featured-events .block.columns {
-        padding-left: 8vw;
-        padding-right: 8vw;
-    }
+  .featured-events.block .event {
+    flex-flow: row wrap;
+  }
 }

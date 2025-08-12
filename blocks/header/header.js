@@ -613,7 +613,7 @@ const setupSkipMainContentLink = () => {
 
   // Handle focus management for better accessibility
   mainContent.addEventListener('blur', () => {
-    this.removeAttribute('tabindex');
+    main.removeAttribute('tabindex');
   });
 
   // Re-add tabindex when skip link is used

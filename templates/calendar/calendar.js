@@ -139,7 +139,7 @@ const checkForNestedIframe = () => {
   }, 1000);
 };
 
-async function popupEvent(url, readMore, eventData) {
+export async function popupEvent(url, readMore, eventData) {
   const { _def: { title } } = eventData;
   const eventModalContent = document.createDocumentFragment();
   const pageIframe = iframe({ src: url, title });
@@ -164,6 +164,7 @@ async function popupEvent(url, readMore, eventData) {
     const iframeDocument = pageIframe.contentDocument || pageIframe.contentWindow.document;
     const iframeBody = iframeDocument?.body;
     setTimeout(() => {
+      iframeBody.classList.add('iframe-modal');
       const eventFooterSection = iframeBody?.querySelector('.section.event-footer');
       if (eventFooterSection) {
         eventFooterSection.innerHTML = '';
