@@ -269,6 +269,28 @@ body.calendar main section .fc .fc-daygrid-day.fc-day-today {
   background-color: var(--neutral-white);
 }
 
+.calendar .section.description {
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.calendar .section.description  .default-content-wrapper > p:first-of-type {
+ color: var(--primary-orange-600);
+  font-size: var(--body-font-size-l);
+  font-style: normal;
+  font-weight: var(--font-weight-bold);
+  line-height: 120%;
+  padding: 20px 0px;
+}
+
+.calendar .section.description  .default-content-wrapper > p {
+  font-style: normal;
+  line-height: 120%;
+  max-width: 1440px;
+  padding: 20px 0px;
+}
+
 @media (width >= 900px) {
     body.calendar .fc-scroller {
         overflow: hidden !important;
@@ -305,6 +327,11 @@ body.calendar main section .fc .fc-daygrid-day.fc-day-today {
 
     body.calendar main section .fc-theme-standard .fc-popover {
         width: auto;
+    }
+
+
+   .calendar .section.description  .default-content-wrapper > p:first-of-type {
+    font-size: var(--body-font-size-xl);
     }
 }
 
