@@ -147,6 +147,10 @@ header nav .nav-in-menu-wrap-mobile .tabs-tab a {
   display: none;
 }
 
+.header nav .nav-sections > .default-content-wrapper {
+  padding: 0;
+}
+
 header nav p {
   margin: 0;
   line-height: 1;
@@ -1106,7 +1110,7 @@ header .nav-search .search-box .search-form-wrap .search-results {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    padding-right: 40px;
+    padding-right: 24px;
     position: static;
   }
 
@@ -1261,5 +1265,11 @@ header .nav-search .search-box .search-form-wrap .search-results {
 
   #nav > div.section.nav-brand > div > p  picture:nth-child(2) {
     margin-right: 50px;
+  }
+}
+
+@media (width >= 1200px) {
+  header nav .nav-sections .default-content-wrapper > ul > li {
+    padding-right: 40px;
   }
 }
