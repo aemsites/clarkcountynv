@@ -4,7 +4,7 @@ header {
   background-color: var(--primary-orange-600);
   transform: translateY(0);
   transition: all .3s;
-  z-index: 1;
+  z-index: 101;
 }
 
 /* stylelint-disable declaration-block-no-redundant-longhand-properties */
@@ -23,6 +23,10 @@ header nav {
   align-items: center;
 }
 /* stylelint-enable declaration-block-no-redundant-longhand-properties */
+
+header nav[aria-expanded="true"] {
+  box-shadow: 0 2px 15px 0 rgba(0 0 0 / 20%);
+}
 
 header nav .nav-sections {
   justify-content: center;
@@ -102,9 +106,12 @@ header nav .nav-in-menu-wrap-mobile .tabs-tab {
   position: relative;
 }
 
-header nav .nav-in-menu-wrap-mobile .tabs-tab:focus,
 header nav .nav-in-menu-wrap-mobile .tabs-tab:hover {
   background-color: var(--primary-orange-600);
+}
+
+header nav .nav-in-menu-wrap-mobile .tabs-tab:focus {
+  background-color: var(--primary-orange-900);
 }
 
 header nav .nav-in-menu-wrap-mobile .tabs-tab::after {
@@ -124,6 +131,10 @@ header nav .nav-in-menu-wrap-mobile .tabs-tab.no-children::after {
 
 header nav .nav-in-menu-wrap-mobile .tabs-tab[aria-selected="true"] {
   background-color: var(--primary-orange-300);
+}
+
+header nav .nav-in-menu-wrap-mobile .tabs-tab[aria-selected="true"]:focus {
+  background-color: var(--primary-orange-900);
 }
 
 header nav .nav-in-menu-wrap-mobile .tabs-panel[aria-hidden="false"] {
@@ -226,7 +237,6 @@ header nav[aria-expanded="true"] .nav-sections > div > ul {
   background-color: var(--primary-orange-600);
 }
 
-header nav .nav-drop strong a,
 header nav .nav-drop strong {
   color: var(--neutral-white);
   font-size: var(--body-font-size-xs);
@@ -236,8 +246,30 @@ header nav .nav-drop strong {
   letter-spacing: 0.7px;
   text-transform: uppercase;
   text-decoration: none;
-  display: inline-block;
-  margin: 12px 24px;
+  /* display: inline-block; */
+  /* margin: 12px 24px; */
+  display: block;
+  padding: 12px 50px 12px 24px;
+}
+
+header nav .nav-drop strong a {
+  color: var(--neutral-white);
+  font-size: var(--body-font-size-xs);
+  font-style: normal;
+  font-weight: var(--font-weight-bold);
+  line-height: 120%;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+header nav .nav-drop:focus > strong {
+  background-color: var(--primary-orange-900);
+}
+
+header nav .nav-drop strong a:active {
+  text-decoration: underline;
+  background-color: var(--primary-orange-900);
 }
 
 header nav .nav-drop strong:has(a) > a {
@@ -1018,6 +1050,7 @@ header .nav-search .search-box .search-form-wrap .search-results {
     overflow: visible;
     margin: 0 auto;
     align-items: center;
+    box-shadow: none;
   }
 
   header nav[aria-expanded="true"] .expanddiv {

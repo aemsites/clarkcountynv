@@ -267,16 +267,16 @@ function closeOnEscape(e) {
 
 function openOnKeydown(e) {
   const focused = document.activeElement;
-  const desktopMenu = document.querySelector('.nav-in-menu-wrap');
-  const mobileMenu = document.querySelector('.nav-in-menu-wrap-mobile');
+  //const desktopMenu = document.querySelector('.nav-in-menu-wrap');
+  //const mobileMenu = document.querySelector('.nav-in-menu-wrap-mobile');
   const isNavDrop = focused.className === 'nav-drop';
   if (isNavDrop && (e.code === 'Enter' || e.code === 'Space')) {
     const dropExpanded = focused.getAttribute('aria-expanded') === 'true';
     // eslint-disable-next-line no-use-before-define
     toggleAllNavSections(focused.closest('.nav-sections'));
     focused.setAttribute('aria-expanded', dropExpanded ? 'false' : 'true');
-    const firstTabBtn = isDesktop.matches ? desktopMenu.querySelector('.tabs-list')?.children[0] : mobileMenu.querySelector('.tabs-list')?.children[0];
-    firstTabBtn?.focus();
+    //const firstTabBtn = isDesktop.matches ? desktopMenu.querySelector('.tabs-list')?.children[0] : mobileMenu.querySelector('.tabs-list')?.children[0];
+    //firstTabBtn?.focus();
   }
 }
 
@@ -300,9 +300,35 @@ function switchToTab(tabButton, currentMegaMenu) {
 }
 
 function handleMegaMenuKeyboardNavigation(e) {
+  const focused = document.activeElement;
+
+  // Handle mobile hamburger button Enter key
+  if (e.code === 'Enter' && focused.closest('.nav-hamburger')) {
+    setTimeout(() => {
+      const closeButton = document.querySelector('.nav-menu-close button');
+      if (closeButton) {
+        closeButton.focus();
+      }
+      return;
+    }, 100);
+  } 
+
+  // Handle mobile close button Tab key
+  if (e.code === 'Tab' && !e.shiftKey && focused.closest('.nav-menu-close')) {
+    e.preventDefault();
+    console.log('here');
+    // Find the first nav-drop li element and focus it
+    const navSections = document.querySelector('.nav-sections');
+    const firstNavDrop = navSections.querySelector('.nav-drop');
+    if (firstNavDrop) {
+      firstNavDrop.focus();
+    }
+    return;
+  }
+
+  // Original mega menu navigation logic - only handle Tab key
   if (e.code !== 'Tab') return;
 
-  const focused = document.activeElement;
   let currentMegaMenu = focused.closest('.nav-in-menu-wrap') || focused.closest('.nav-in-menu-wrap-mobile');
 
   // Handle case when focused on close button - it's not inside the menu wrap divs
@@ -310,6 +336,8 @@ function handleMegaMenuKeyboardNavigation(e) {
     const navDrop = focused.closest('.nav-drop');
     currentMegaMenu = navDrop?.querySelector('.nav-in-menu-wrap') || navDrop?.querySelector('.nav-in-menu-wrap-mobile');
   }
+
+  console.log('currentMegaMenu', currentMegaMenu);
 
   if (!currentMegaMenu) return;
 
@@ -374,8 +402,201 @@ function handleMegaMenuKeyboardNavigation(e) {
   }
 }
 
+// Helper function to get the first focusable element within a nav-drop
+function getFirstFocusableElement(navDrop, isMobile) {
+  const focusableSelectors = [
+    'button:not([disabled])',
+    //'a[href]',
+    //'[tabindex]:not([tabindex="-1"])'
+  ];
+
+  if (isMobile) {
+    const focusableElements = navDrop.querySelectorAll('.nav-in-menu-wrap-mobile ' + focusableSelectors.join(', '));
+    return focusableElements[0];
+  }
+
+  return null;
+  
+  //const focusableElements = navDrop.querySelectorAll(focusableSelectors.join(', '));
+  //return focusableElements[0] || null;
+}
+
+// Helper function to get all focusable elements within a nav-drop
+function getFocusableElements(navDrop,) {
+  const focusableSelectors = [
+    'button:not([disabled])',
+    'a[href]',
+    'input:not([disabled])',
+    'select:not([disabled])',
+    'textarea:not([disabled])',
+    '[tabindex]:not([tabindex="-1"])'
+  ];
+  
+  return Array.from(navDrop.querySelectorAll(focusableSelectors.join(', ')));
+}
+
+function handleDesktopKeyboardNavigation(e, focused) {
+  console.log('Desktop Keyboard');
+}
+
+function handleMobileKeyboardNavigation(e, focused) {
+  // Handle hamburger menu button Enter key
+  if (e.code === 'Enter' && focused.closest('.nav-hamburger')) {
+    //console.log('Hamburger');
+    e.preventDefault();
+    const hamburgerBtn = focused.closest('.nav-hamburger').querySelector('button');
+    const nav = document.getElementById('nav');
+    const navSections = nav.querySelector('.nav-sections');
+    
+    // Open the menu
+    toggleMenu(nav, navSections);
+    
+    // Focus the close button after a brief delay to ensure DOM is updated
+    setTimeout(() => {
+      const closeButton = document.querySelector('.nav-menu-close button');
+      if (closeButton) {
+        closeButton.focus();
+      }
+    }, 50);
+    return;
+  }
+
+  // Handle close button Tab key - move to first nav-drop
+  if (e.code === 'Tab' && !e.shiftKey && focused.closest('.nav-menu-close')) {
+    //console.log('Focus first nav drop');
+    e.preventDefault();
+    const navSections = document.querySelector('.nav-sections');
+    const firstNavDrop = navSections.querySelector('.nav-drop');
+    if (firstNavDrop) {
+      firstNavDrop.focus();
+    }
+    return;
+  }
+
+  // Handle nav-drop Enter key - expand/collapse the dropdown
+  if (e.code === 'Enter' && focused.classList.contains('nav-drop')) {
+    //console.log('Pressed enter on nav drop');
+    e.preventDefault();
+    const isCurrentlyExpanded = focused.getAttribute('aria-expanded') === 'true';
+    
+    // Close all other nav-drops
+    const allNavDrops = document.querySelectorAll('.nav-drop');
+    allNavDrops.forEach(drop => {
+      if (drop !== focused) {
+        drop.setAttribute('aria-expanded', 'false');
+      }
+    });
+    
+    // Toggle the current nav-drop
+    focused.setAttribute('aria-expanded', isCurrentlyExpanded ? 'false' : 'true');
+    return;
+  }
+
+  // Handle Tab navigation between nav-drop elements and their children
+  if (e.code === 'Tab') {
+    const allNavDrops = Array.from(document.querySelectorAll('.nav-drop'));
+    const currentNavDrop = focused.classList.contains('nav-drop') ? focused : focused.closest('.nav-drop');
+    
+    if (!currentNavDrop) return;
+    
+    const currentNavDropIndex = allNavDrops.indexOf(currentNavDrop);
+    const isNavDropExpanded = currentNavDrop.getAttribute('aria-expanded') === 'true';
+    
+    // If we're on a nav-drop element
+    if (focused.classList.contains('nav-drop')) {
+      if (!e.shiftKey) {
+        // Forward tab
+        if (isNavDropExpanded) {
+          // Focus first interactive element within the expanded nav-drop
+          e.preventDefault();
+          const firstFocusableElement = getFirstFocusableElement(currentNavDrop, true);
+          if (firstFocusableElement) {
+            firstFocusableElement.focus();
+          }
+        } else {
+          // Move to next nav-drop
+          e.preventDefault();
+          const nextNavDrop = allNavDrops[currentNavDropIndex + 1];
+          if (nextNavDrop) {
+            nextNavDrop.focus();
+          } else {
+            // If no more nav-drops, focus search button or other navigation elements
+            const searchButton = document.querySelector('.nav-search-button');
+            if (searchButton) {
+              searchButton.focus();
+            }
+          }
+        }
+      } else {
+        // Shift+Tab (backward)
+        e.preventDefault();
+        const prevNavDrop = allNavDrops[currentNavDropIndex - 1];
+        if (prevNavDrop) {
+          prevNavDrop.focus();
+        } else {
+          // If first nav-drop, go back to close button
+          const closeButton = document.querySelector('.nav-menu-close button');
+          if (closeButton) {
+            closeButton.focus();
+          }
+        }
+      }
+    } 
+    // If we're inside a nav-drop (on a child element)
+    else if (currentNavDrop) {
+      const focusableElements = getFocusableElements(currentNavDrop);
+      const currentElementIndex = focusableElements.indexOf(focused);
+      
+      if (!e.shiftKey) {
+        // Forward tab
+        if (currentElementIndex < focusableElements.length - 1) {
+          // Move to next focusable element within the same nav-drop
+          e.preventDefault();
+          focusableElements[currentElementIndex + 1].focus();
+        } else {
+          // We're at the last element, move to next nav-drop
+          e.preventDefault();
+          const nextNavDrop = allNavDrops[currentNavDropIndex + 1];
+          if (nextNavDrop) {
+            nextNavDrop.focus();
+          } else {
+            // If no more nav-drops, focus search button
+            const searchButton = document.querySelector('.nav-search-button');
+            if (searchButton) {
+              searchButton.focus();
+            }
+          }
+        }
+      } else {
+        // Shift+Tab (backward)
+        if (currentElementIndex > 0) {
+          // Move to previous focusable element within the same nav-drop
+          e.preventDefault();
+          focusableElements[currentElementIndex - 1].focus();
+        } else {
+          // We're at the first element, move to the nav-drop itself
+          e.preventDefault();
+          currentNavDrop.focus();
+        }
+      }
+    }
+  }
+}
+
+function handleMenuKeyboardNavigation(e) {
+  const focused = document.activeElement;
+  const isDesktopViewport = window.matchMedia('(min-width: 900px)').matches;
+  if (isDesktopViewport) {
+    handleDesktopKeyboardNavigation(e, focused);
+  } else {
+    handleMobileKeyboardNavigation(e, focused);
+  }
+}
+
 function addMegaMenuAccessibilityListeners() {
-  document.addEventListener('keydown', handleMegaMenuKeyboardNavigation);
+  const header = document.querySelector('header');
+  //header?.addEventListener('keydown', handleMegaMenuKeyboardNavigation);
+  header?.addEventListener('keydown', handleMenuKeyboardNavigation);
 }
 
 function focusNavSection() {
@@ -408,21 +629,13 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
   $button.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
   // enable nav dropdown keyboard accessibility
   const navDrops = navSections.querySelectorAll('.nav-drop');
-  if (isDesktop.matches) {
-    navDrops.forEach((drop) => {
-      if (!drop.hasAttribute('tabindex')) {
-        drop.setAttribute('role', 'none');
-        drop.setAttribute('tabindex', 0);
-        drop.addEventListener('focus', focusNavSection);
-      }
-    });
-  } else {
-    navDrops.forEach((drop) => {
-      drop.removeAttribute('role');
-      drop.removeAttribute('tabindex');
-      drop.removeEventListener('focus', focusNavSection);
-    });
-  }
+  navDrops?.forEach((drop) => {
+    if (!drop.hasAttribute('tabindex')) {
+      drop.setAttribute('role', 'none');
+      drop.setAttribute('tabindex', 0);
+      //drop.addEventListener('focus', focusNavSection);
+    }
+  });
   // enable menu collapse on escape keypress
   if (!expanded || isDesktop.matches) {
     // collapse menu on escape press
@@ -731,17 +944,6 @@ export default async function decorate(block) {
   const navWrapper = div({ class: 'nav-wrapper' });
   navWrapper.append(nav);
   block.append(navWrapper);
-
-  window.addEventListener('scroll', () => {
-    const header = document.querySelector('header');
-    // eslint-disable-next-line max-len
-    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-    if (scrollTop > 0) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
-    }
-  });
   handleNavTools(navWrapper);
   // improve accessibility
   document.querySelectorAll('#nav > div.section.nav-sections > div > ul > li').forEach((li) => {
