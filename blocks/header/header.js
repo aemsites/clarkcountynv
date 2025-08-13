@@ -336,8 +336,6 @@ function handleMegaMenuKeyboardNavigation(e) {
     currentMegaMenu = navDrop?.querySelector('.nav-in-menu-wrap') || navDrop?.querySelector('.nav-in-menu-wrap-mobile');
   }
 
-  console.log('currentMegaMenu', currentMegaMenu);
-
   if (!currentMegaMenu) return;
 
   const tabsList = currentMegaMenu.querySelector('.tabs-list');
@@ -612,9 +610,9 @@ function handleMobileKeyboardNavigation(e, focused) {
 
   // Handle Tab navigation between nav-drop elements and their children
   if (e.code === 'Tab') {
-    console.log('TABBING');
     const allNavDrops = Array.from(document.querySelectorAll('.nav-drop'));
     const currentNavDrop = focused.classList.contains('nav-drop') ? focused : focused.closest('.nav-drop');
+
     if (!currentNavDrop) return;
     
     const currentNavDropIndex = allNavDrops.indexOf(currentNavDrop);
@@ -627,6 +625,7 @@ function handleMobileKeyboardNavigation(e, focused) {
         e.preventDefault();
         const strongElement = focused.querySelector('strong');
         const anchorInStrong = strongElement ? strongElement.querySelector('a') : null;
+
         if (anchorInStrong) {
           // Focus the anchor link within the strong tag
           anchorInStrong.focus();
@@ -666,9 +665,41 @@ function handleMobileKeyboardNavigation(e, focused) {
     } 
     // If we're inside a nav-drop (on a child element)
     else if (currentNavDrop) {
-      // Special handling for tabs structure
-      const tabsList = currentNavDrop.querySelector('.nav-in-menu-wrap-mobile .tabs-list');
-      if (tabsList && focused.closest('.tabs-list')) {
+      // Check if focused element is an anchor within a strong tag (direct child of nav-drop)
+      const strongElement = focused.closest('strong');
+      const isAnchorInStrong = focused.tagName === 'A' && strongElement && strongElement.parentElement.classList.contains('nav-drop');
+      
+      if (isAnchorInStrong) {
+        if (!e.shiftKey) {
+          // Forward tab from anchor in strong tag
+          e.preventDefault();
+          if (isNavDropExpanded) {
+            // Nav-drop is expanded, focus first interactive element
+            const firstFocusableElement = getFirstFocusableElement(currentNavDrop);
+            if (firstFocusableElement) {
+              firstFocusableElement.focus();
+            }
+          } else {
+            // Nav-drop is not expanded, move to next nav-drop
+            const nextNavDrop = allNavDrops[currentNavDropIndex + 1];
+            if (nextNavDrop) {
+              nextNavDrop.focus();
+            } else {
+              // If no more nav-drops, focus search button
+              const searchButton = document.querySelector('.nav-search-button');
+              if (searchButton) {
+                searchButton.focus();
+              }
+            }
+          }
+        } else {
+          // Shift+Tab from anchor in strong tag - go back to nav-drop
+          e.preventDefault();
+          currentNavDrop.focus();
+        }
+      } else if (currentNavDrop.querySelector('.nav-in-menu-wrap-mobile .tabs-list') && focused.closest('.nav-in-menu-wrap-mobile')) {
+        // Special handling for tabs structure
+        const tabsList = currentNavDrop.querySelector('.nav-in-menu-wrap-mobile .tabs-list');
         handleTabsListNavigation(e, focused, tabsList, currentNavDrop, allNavDrops, currentNavDropIndex);
       } else {
         // Handle other focusable elements normally

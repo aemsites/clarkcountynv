@@ -205,7 +205,6 @@ header .nav-search {
   position: relative;
   justify-content: flex-start;
   align-items: center;
-  /* padding: 10px 24px; */
   grid-area: search;
   display: none;
 }
@@ -1100,12 +1099,16 @@ header .nav-search .search-box .search-form-wrap .search-results {
 
   header .nav-search-button {
     border-bottom: 2px solid transparent;
+    font-size: var(--body-font-size-s);
+    padding: 0;
+    margin-right: 12px;
   }
 
   header .nav-search-button.active,
   header .nav-search-button:hover,
   header .nav-search-button:focus {
     border-color: var(--neutral-white);
+    background-color: transparent;
   }
 
   header .nav-search {
@@ -1180,6 +1183,15 @@ header .nav-search .search-box .search-form-wrap .search-results {
     position: static;
   }
 
+  header nav .nav-sections .default-content-wrapper > ul > li:focus {
+    outline: auto;
+  }
+
+  header nav .nav-drop:focus > strong {
+    background-color: transparent;
+    border-bottom: 2px solid var(--neutral-white);
+  }
+
   header nav .nav-sections .default-content-wrapper > ul > li:last-child {
     padding-right: 0;
   }
@@ -1241,6 +1253,20 @@ header .nav-search .search-box .search-form-wrap .search-results {
     letter-spacing: 0.8px;
     text-transform: uppercase;
     margin: 0;
+    padding: 0;
+  }
+
+  header nav .nav-drop strong:has(a) > a {
+    padding: 0;
+  }
+
+  header nav .nav-drop strong a:focus {
+    background-color: transparent;
+    border-bottom: 2px solid var(--neutral-white);
+  }
+
+  header nav .nav-drop:hover > strong > a:focus {
+    border: none;
   }
 
   header nav .nav-sections .nav-drop > strong {
