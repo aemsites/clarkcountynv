@@ -431,6 +431,138 @@ function handleDesktopKeyboardNavigation(e, focused) {
   console.log('Desktop Keyboard');
 }
 
+// Helper function to handle navigation within tabs structure
+function handleTabsListNavigation(e, focused, tabsList, currentNavDrop, allNavDrops, currentNavDropIndex) {
+  const tabButtons = Array.from(tabsList.querySelectorAll('.tabs-tab'));
+  
+  // Check if focused element is a tabs-tab button
+  if (focused.classList.contains('tabs-tab')) {
+    if (!e.shiftKey) {
+      // Forward tab from tabs-tab button should go to anchor inside it
+      e.preventDefault();
+      const isTabSelected = focused.getAttribute('aria-selected') === 'true';
+      
+      if (isTabSelected) {
+        // If tab is active, look for its corresponding panel
+        const panelId = focused.getAttribute('aria-controls');
+        const correspondingPanel = tabsList.parentElement.querySelector(`#${panelId}`);
+        const isPanelVisible = correspondingPanel && correspondingPanel.getAttribute('aria-hidden') === 'false';
+        
+        if (isPanelVisible) {
+          // Focus first link in the active panel
+          const firstLink = correspondingPanel.querySelector('a');
+          if (firstLink) {
+            firstLink.focus();
+            return;
+          }
+        }
+      }
+      
+      // If no active panel or no links in panel, go to anchor inside button
+      const anchorInside = focused.querySelector('a');
+      if (anchorInside) {
+        anchorInside.focus();
+      }
+    } else {
+      // Shift+Tab from tabs-tab button
+      const currentTabIndex = tabButtons.indexOf(focused);
+      if (currentTabIndex > 0) {
+        // Go to previous tabs-tab button
+        e.preventDefault();
+        tabButtons[currentTabIndex - 1].focus();
+      } else {
+        // First tabs-tab, go back to nav-drop
+        e.preventDefault();
+        currentNavDrop.focus();
+      }
+    }
+  }
+  // Check if focused element is an anchor inside a tabs-tab
+  else if (focused.tagName === 'A' && focused.closest('.tabs-tab')) {
+    const parentButton = focused.closest('.tabs-tab');
+    const currentTabIndex = tabButtons.indexOf(parentButton);
+
+    if (!e.shiftKey) {
+      // Forward tab from anchor should go to next tabs-tab button
+      e.preventDefault();
+      if (currentTabIndex < tabButtons.length - 1) {
+        // Go to next tabs-tab button
+        console.log('button', tabButtons[currentTabIndex + 1]);
+        tabButtons[currentTabIndex + 1].focus();
+      } else {
+        // Last tab, check if there are tab panels to navigate to
+        const tabPanels = Array.from(tabsList.parentElement.querySelectorAll('.tabs-panel'));
+        const visiblePanel = tabPanels.find(panel => panel.getAttribute('aria-hidden') === 'false');
+        if (visiblePanel) {
+          const firstLink = visiblePanel.querySelector('a');
+          if (firstLink) {
+            firstLink.focus();
+          } else {
+            // No visible panel or links, move to next nav-drop
+            moveToNextNavDrop(allNavDrops, currentNavDropIndex);
+          }
+        } else {
+          // No visible panels, move to next nav-drop
+          moveToNextNavDrop(allNavDrops, currentNavDropIndex);
+        }
+      }
+    } else {
+      // Shift+Tab from anchor should go back to its parent tabs-tab button
+      e.preventDefault();
+      parentButton.focus();
+    }
+  }
+  // Handle links in tab panels
+  else if (focused.tagName === 'A' && focused.closest('.tabs-panel')) {
+    const currentPanel = focused.closest('.tabs-panel');
+    const panelLinks = Array.from(currentPanel.querySelectorAll('a'));
+    const currentLinkIndex = panelLinks.indexOf(focused);
+    
+    if (!e.shiftKey) {
+      // Forward tab
+      if (currentLinkIndex < panelLinks.length - 1) {
+        // Move to next link in panel
+        e.preventDefault();
+        panelLinks[currentLinkIndex + 1].focus();
+      } else {
+        // Last link in panel, move to next tabs-tab button
+        e.preventDefault();
+        const panelId = currentPanel.getAttribute('id');
+        const correspondingTab = tabsList.querySelector(`[aria-controls="${panelId}"]`);
+        
+        if (correspondingTab) {
+          const currentTabIndex = tabButtons.indexOf(correspondingTab);
+          if (currentTabIndex < tabButtons.length - 1) {
+            // Move to next tabs-tab button
+            tabButtons[currentTabIndex + 1].focus();
+          } else {
+            // Last tab button, move to next nav-drop
+            moveToNextNavDrop(allNavDrops, currentNavDropIndex);
+          }
+        } else {
+          // Fallback: move to next nav-drop
+          moveToNextNavDrop(allNavDrops, currentNavDropIndex);
+        }
+      }
+    } else {
+      // Shift+Tab
+      if (currentLinkIndex > 0) {
+        // Move to previous link in panel
+        e.preventDefault();
+        panelLinks[currentLinkIndex - 1].focus();
+      } else {
+        // First link in panel, go back to the corresponding tabs-tab button
+        e.preventDefault();
+        const panelId = currentPanel.getAttribute('id');
+        const correspondingTab = tabsList.querySelector(`[aria-controls="${panelId}"]`);
+        if (correspondingTab) {
+          correspondingTab.focus();
+        }
+      }
+    }
+  }
+}
+
 function handleMobileKeyboardNavigation(e, focused) {
   // Handle hamburger menu button Enter key
   if (e.code === 'Enter' && focused.closest('.nav-hamburger')) {
@@ -530,11 +662,11 @@ function handleMobileKeyboardNavigation(e, focused) {
           }
         }
       }
-    } 
+    }
     // If we're inside a nav-drop (on a child element)
     else if (currentNavDrop) {
       // Special handling for tabs structure
-      const tabsList = currentNavDrop.querySelector('.tabs-list');
+      const tabsList = currentNavDrop.querySelector('.nav-in-menu-wrap-mobile .tabs-list');
       if (tabsList && focused.closest('.tabs-list')) {
         handleTabsListNavigation(e, focused, tabsList, currentNavDrop, allNavDrops, currentNavDropIndex);
       } else {

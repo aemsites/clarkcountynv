@@ -101,7 +101,7 @@ header nav .nav-in-menu-wrap-mobile .tabs-tab {
   margin: 0;
   border: none;
   width: 100%;
-  padding: 12px 24px 12px 40px;
+  padding: 0;
   text-align: left;
   position: relative;
 }
@@ -152,6 +152,13 @@ header nav .nav-in-menu-wrap-mobile .tabs-tab a {
   font-style: normal;
   font-weight: var(--font-weight-bold);
   line-height: 110%;
+  display: block;
+  padding: 12px 24px 12px 40px;
+}
+
+header nav .nav-in-menu-wrap-mobile .tabs-tab a:focus {
+  background-color: var(--primary-orange-900);
+  text-decoration: underline;
 }
 
 .header .nav-in-menu-wrap-mobile .tabs-panel[aria-hidden="true"] {
@@ -198,7 +205,7 @@ header .nav-search {
   position: relative;
   justify-content: flex-start;
   align-items: center;
-  padding: 10px 24px;
+  /* padding: 10px 24px; */
   grid-area: search;
   display: none;
 }
@@ -214,12 +221,18 @@ header .nav-search-button {
   border: none;
   background-color: transparent;
   color: var(--neutral-white);
-  font-size: var(--body-font-size-s);
+  font-size: var(--body-font-size-xs);
   font-style: normal;
   font-weight: var(--font-weight-bold);
   line-height: 120%;
   letter-spacing: 0.8px;
   text-transform: uppercase;
+  padding: 4px 24px;
+  width: 100%;
+}
+
+header .nav-search-button:focus {
+  background-color: var(--primary-orange-900);
 }
 
 header nav[aria-expanded="true"] .nav-sections {
@@ -265,6 +278,10 @@ header nav .nav-drop:focus {
   outline: none;
 }
 
+header nav .nav-in-menu-wrap-mobile .tabs-panel ul {
+  padding: 0;
+}
+
 header nav .nav-drop:focus > strong {
   background-color: var(--primary-orange-900);
 }
@@ -276,11 +293,17 @@ header nav .nav-drop strong a:active {
 
 header nav .nav-drop strong:has(a) > a {
   margin: 0;
+  display: block;
+  padding: 12px 50px 12px 24px;
+}
+
+header nav .nav-drop strong:has(a) {
+  padding: 0;
 }
 
 header nav .nav-drop strong a:focus {
-  background-color: transparent;
-  border: 1px solid var(--link-focus-bg);
+  background-color: var(--primary-orange-900);
+  text-decoration: underline;
 }
 
 header .tabs-panel ul > li {
@@ -462,6 +485,14 @@ header .nav-in-menu-wrap-mobile .tabs-panel a:any-link {
   font-style: normal;
   font-weight: var(--font-weight-book);
   line-height: 125%;
+  display: block;
+  margin: 0;
+  padding: 10px 50px 10px 80px;
+}
+
+header .nav-in-menu-wrap-mobile .tabs-panel a:any-link:focus {
+  background-color: var(--primary-orange-900);
+  text-decoration: underline;
 }
 
 header .tabs-panel a:any-link {
