@@ -146,7 +146,9 @@ main .form form .field-invalid .field-description {
   }
 
   [data-required="true"] > label:has(.tooltip-content),
-  [data-required="true"] > legend:has(.tooltip-content) {
+  [data-required="true"] > legend:has(.tooltip-content),
+  [data-required="false"] > label:has(.tooltip-content),
+  [data-required="false"] > legend:has(.tooltip-content) {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -226,11 +228,14 @@ main .form input[type='file'] {
     z-index: 1;
     appearance: none;
     border: 2px solid var(--neutral-black-800);
-    border-radius: 50%;
     outline: none;
     cursor: pointer;
     padding: 0;
     position: relative;
+}
+
+.form.block input[type='radio'] {
+    border-radius: 50%;
 }
 
 .form.block input[type='checkbox']:hover::before,
@@ -243,6 +248,9 @@ main .form input[type='file'] {
     background: var(--neutral-black-400);
     width: 24px;
     height: 24px;
+}
+
+.form.block input[type='radio']:hover::before {
     border-radius: 50%;
 }
 
@@ -271,6 +279,9 @@ main .form input[type='file'] {
     background: transparent;
     width: 24px;
     height: 24px;
+}
+
+.form.block input[type='radio']:checked::before {
     border-radius: 50%;
 }
 
@@ -283,8 +294,11 @@ main .form input[type='file'] {
     width: 12px;
     height: 12px;
     background-color: var(--neutral-black);
-    border-radius: 50%;
     transform: translate(-50%, -50%);
+}
+
+.form.block input[type='radio']:checked::after {
+    border-radius: 50%;
 }
 
 main .form textarea {
@@ -365,6 +379,7 @@ main .form form .checkbox-wrapper, main .form form .radio-wrapper {
 main .form form fieldset > .radio-wrapper,
 main .form form fieldset > .checkbox-wrapper {
     margin-left: var(--form-field-gap);
+    margin-bottom: 8px;
 }
 
 main .form form fieldset.cards {

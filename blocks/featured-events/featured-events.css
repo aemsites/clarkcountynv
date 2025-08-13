@@ -10,6 +10,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 40px;
+  padding: 0 24px;
 }
 
 .featured-events.block .columns.block .column1 {
