@@ -511,12 +511,14 @@ async function loadEager(doc) {
  * @returns {Promise}
  */
 async function loadAlerts() {
-  const alertsFragUrl = '/fragments/pagealerts';
+  const alertsFragUrl = '/drafts/astewart/fragments/pagealerts';
   const fragment = await loadFragment(alertsFragUrl);
   if (fragment) {
     const block = fragment.querySelector(':scope > div');
     const main = document.querySelector('main');
     main?.prepend(block);
+    const firstPopup = document.querySelector('.alert-popup.popup.full-width');
+    firstPopup?.querySelector('.close-button')?.focus();
   }
 }
 
