@@ -154,7 +154,7 @@
 .alert-popup.popup.full-width.high .close-button:focus {
   border-color: var(--neutral-black);
   background-color: var(--secondary-orange-600);
-  box-shadow: 0 0 2px 2px var(--secondary-orange-400);
+  box-shadow: 0 0 0 4px var(--secondary-orange-400);
 }
 
 .alert-popup.popup.full-width.medium .close-button:hover {
@@ -164,7 +164,7 @@
 
 .alert-popup.popup.full-width.medium .close-button:focus {
   border-color: var(--neutral-white);
-  box-shadow: 0 0 2px 2px var(--primary-orange-300);
+  box-shadow: 0 0 0 4px var(--primary-orange-300);
 }
 
 .alert-popup.popup.full-width.low .close-button:hover {
@@ -174,7 +174,7 @@
 
 .alert-popup.popup.full-width.low .close-button:focus {
   border-color: var(--neutral-black);
-  box-shadow: 0 0 2px 2px var(--neutral-black-400);
+  box-shadow: 0 0 0 4px var(--neutral-black-400);
 }
 
 .alert-popup.popup.full-width .close-button img {
