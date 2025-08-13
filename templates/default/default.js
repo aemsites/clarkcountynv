@@ -61,7 +61,7 @@ async function checkFragmentAccordionML() {
   // Split current path into parts, excluding empty strings
   const pathParts = currentPath.split('/').filter((part) => part);
 
-  for (let i = pathParts.length - 1; i >= 1; i -= 1) {
+  for (let i = pathParts.length; i >= 1; i -= 1) {
     // Reconstruct the base path from deeper to root
     const basePath = `/${pathParts.slice(0, i).join('/')}`;
     const testUrl = `${baseUrl + basePath}/fragment/left-nav`;
@@ -97,6 +97,11 @@ export default async function decorate(doc) {
         /* eslint-disable no-new */
         new AccessibleLeftNav(leftNavBlock);
       }
+    }
+
+    if ($leftsection.querySelector('.leftnav-info-wrapper')) {
+      const $leftNavInfo = $leftsection.querySelector('.leftnav-info-wrapper');
+      $leftsection.append($leftNavInfo);
     }
     const $clickElement = $leftsection.querySelector('.default-content-wrapper > p');
     const $activeElement = $leftsection.querySelector('.left-nav.block');
