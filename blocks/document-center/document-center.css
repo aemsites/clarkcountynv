@@ -111,7 +111,7 @@
 
 .document-center .content ul li {
   border-bottom: 2px solid var(--neutral-black-400);
-  padding: 8px 44px;
+  padding: 8px 20px;
 }
 
 .document-center .content a {
@@ -135,6 +135,8 @@
 
 .document-center .file-item {
   font-size: var(--body-font-size-s);
+  display: flex;
+  flex-direction: column;
 }
 
 .document-center .file-item > a::before {
@@ -152,6 +154,10 @@
 
 .document-center .file-item .fa-file-pdf-o::before {
   content: "\f1c1";
+}
+
+.document-center .file-item span.doc-file-desc {
+  margin-left: 22px;
 }
 
 @media (width >= 900px) {
@@ -179,6 +185,6 @@
   }
 
   .document-center .content ul li {
-    padding: 8px 50px;
+    padding: 8px 25px;
   }
 }
