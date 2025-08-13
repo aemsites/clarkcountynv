@@ -511,7 +511,7 @@ async function loadEager(doc) {
  * @returns {Promise}
  */
 async function loadAlerts() {
-  const alertsFragUrl = '/drafts/astewart/fragments/pagealerts';
+  const alertsFragUrl = '/fragments/pagealerts';
   const fragment = await loadFragment(alertsFragUrl);
   if (fragment) {
     const block = fragment.querySelector(':scope > div');
