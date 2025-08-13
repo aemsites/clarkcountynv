@@ -401,12 +401,13 @@ function handleMegaMenuKeyboardNavigation(e) {
 
 // Helper function to get the first focusable element within a nav-drop
 function getFirstFocusableElement(navDrop) {
+  const isDesktopViewport = window.matchMedia('(min-width: 900px)').matches;
   const focusableSelectors = [
     'button:not([disabled])',
     //'a[href]',
   ];
   
-  const focusableElements = navDrop.querySelectorAll(`.nav-in-menu-wrap-mobile ${focusableSelectors.join(', ')}`);
+  const focusableElements = navDrop.querySelectorAll(`${isDesktopViewport ? '.nav-in-menu-wrap' : '.nav-in-menu-wrap-mobile'} ${focusableSelectors.join(', ')}`);
   return focusableElements[0] || null;
 }
 
@@ -560,6 +561,7 @@ function handleTabsListNavigation(e, focused, tabsList, currentNavDrop, allNavDr
 }
 
 function handleMobileKeyboardNavigation(e, focused) {
+  const isDesktopViewport = window.matchMedia('(min-width: 900px)').matches;
   // Handle hamburger menu button Enter key
   if (e.code === 'Enter' && focused.closest('.nav-hamburger')) {
     e.preventDefault();
@@ -668,7 +670,6 @@ function handleMobileKeyboardNavigation(e, focused) {
       // Check if focused element is an anchor within a strong tag (direct child of nav-drop)
       const strongElement = focused.closest('strong');
       const isAnchorInStrong = focused.tagName === 'A' && strongElement && strongElement.parentElement.classList.contains('nav-drop');
-      
       if (isAnchorInStrong) {
         if (!e.shiftKey) {
           // Forward tab from anchor in strong tag
@@ -697,7 +698,8 @@ function handleMobileKeyboardNavigation(e, focused) {
           e.preventDefault();
           currentNavDrop.focus();
         }
-      } else if (currentNavDrop.querySelector('.nav-in-menu-wrap-mobile .tabs-list') && focused.closest('.nav-in-menu-wrap-mobile')) {
+      } else if (
+        currentNavDrop.querySelector(`${isDesktopViewport ? '.nav-in-menu-wrap' : '.nav-in-menu-wrap-mobile'} .tabs-list`) && (focused.closest('.nav-in-menu-wrap-mobile') || focused.closest('.nav-in-menu-wrap'))) {
         // Special handling for tabs structure
         const tabsList = currentNavDrop.querySelector('.nav-in-menu-wrap-mobile .tabs-list');
         handleTabsListNavigation(e, focused, tabsList, currentNavDrop, allNavDrops, currentNavDropIndex);
@@ -745,12 +747,13 @@ function handleMobileKeyboardNavigation(e, focused) {
 
 function handleMenuKeyboardNavigation(e) {
   const focused = document.activeElement;
-  const isDesktopViewport = window.matchMedia('(min-width: 900px)').matches;
-  if (isDesktopViewport) {
-    handleDesktopKeyboardNavigation(e, focused);
-  } else {
-    handleMobileKeyboardNavigation(e, focused);
-  }
+  // const isDesktopViewport = window.matchMedia('(min-width: 900px)').matches;
+  // if (isDesktopViewport) {
+  //   handleDesktopKeyboardNavigation(e, focused);
+  // } else {
+  //   handleMobileKeyboardNavigation(e, focused);
+  // }
+  handleMobileKeyboardNavigation(e, focused);
 }
 
 function addMegaMenuAccessibilityListeners() {

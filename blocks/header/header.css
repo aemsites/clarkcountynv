@@ -507,6 +507,13 @@ header .tabs-panel a:any-link {
 
 header .nav-in-menu-wrap .tabs-tab a {
   text-decoration: none;
+  padding: 10px 50px;
+  display: block;
+}
+
+header .nav-in-menu-wrap .tabs-tab a:focus {
+  text-decoration: underline;
+  background-color: var(--primary-orange-900);
 }
 
 header nav .nav-sections:has(details) .default-content-wrapper details a {
@@ -730,9 +737,11 @@ header .nav-in-menu-wrap .tabs-list button {
   background-color: var(--primary-orange-600);
   cursor: pointer;
   text-align: left;
-  padding: 10px 50px;
+  /* padding: 10px 50px; */
   position: relative;
   white-space: normal;
+  padding: 0;
+  border: none;
 }
 
 header .nav-in-menu-wrap .tabs-list button:hover,
