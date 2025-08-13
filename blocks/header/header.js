@@ -316,7 +316,6 @@ function handleMegaMenuKeyboardNavigation(e) {
   // Handle mobile close button Tab key
   if (e.code === 'Tab' && !e.shiftKey && focused.closest('.nav-menu-close')) {
     e.preventDefault();
-    console.log('here');
     // Find the first nav-drop li element and focus it
     const navSections = document.querySelector('.nav-sections');
     const firstNavDrop = navSections.querySelector('.nav-drop');
@@ -487,7 +486,6 @@ function handleTabsListNavigation(e, focused, tabsList, currentNavDrop, allNavDr
       e.preventDefault();
       if (currentTabIndex < tabButtons.length - 1) {
         // Go to next tabs-tab button
-        console.log('button', tabButtons[currentTabIndex + 1]);
         tabButtons[currentTabIndex + 1].focus();
       } else {
         // Last tab, check if there are tab panels to navigate to
@@ -567,7 +565,6 @@ function handleMobileKeyboardNavigation(e, focused) {
   // Handle hamburger menu button Enter key
   if (e.code === 'Enter' && focused.closest('.nav-hamburger')) {
     e.preventDefault();
-    const hamburgerBtn = focused.closest('.nav-hamburger').querySelector('button');
     const nav = document.getElementById('nav');
     const navSections = nav.querySelector('.nav-sections');
     
@@ -615,9 +612,9 @@ function handleMobileKeyboardNavigation(e, focused) {
 
   // Handle Tab navigation between nav-drop elements and their children
   if (e.code === 'Tab') {
+    console.log('TABBING');
     const allNavDrops = Array.from(document.querySelectorAll('.nav-drop'));
     const currentNavDrop = focused.classList.contains('nav-drop') ? focused : focused.closest('.nav-drop');
-    
     if (!currentNavDrop) return;
     
     const currentNavDropIndex = allNavDrops.indexOf(currentNavDrop);
@@ -626,17 +623,21 @@ function handleMobileKeyboardNavigation(e, focused) {
     // If we're on a nav-drop element
     if (focused.classList.contains('nav-drop')) {
       if (!e.shiftKey) {
-        // Forward tab
-        if (isNavDropExpanded) {
-          // Focus first interactive element within the expanded nav-drop
-          e.preventDefault();
+        // Forward tab - first check for anchor link in strong tag
+        e.preventDefault();
+        const strongElement = focused.querySelector('strong');
+        const anchorInStrong = strongElement ? strongElement.querySelector('a') : null;
+        if (anchorInStrong) {
+          // Focus the anchor link within the strong tag
+          anchorInStrong.focus();
+        } else if (isNavDropExpanded) {
+          // No anchor in strong, but nav-drop is expanded - focus first interactive element
           const firstFocusableElement = getFirstFocusableElement(currentNavDrop);
           if (firstFocusableElement) {
             firstFocusableElement.focus();
           }
         } else {
-          // Move to next nav-drop
-          e.preventDefault();
+          // No anchor in strong and not expanded - move to next nav-drop
           const nextNavDrop = allNavDrops[currentNavDropIndex + 1];
           if (nextNavDrop) {
             nextNavDrop.focus();
@@ -662,7 +663,7 @@ function handleMobileKeyboardNavigation(e, focused) {
           }
         }
       }
-    }
+    } 
     // If we're inside a nav-drop (on a child element)
     else if (currentNavDrop) {
       // Special handling for tabs structure
