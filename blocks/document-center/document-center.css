@@ -135,6 +135,8 @@
 
 .document-center .file-item {
   font-size: var(--body-font-size-s);
+  display: flex;
+  flex-direction: column;
 }
 
 .document-center .file-item > a::before {
@@ -152,6 +154,10 @@
 
 .document-center .file-item .fa-file-pdf-o::before {
   content: "\f1c1";
+}
+
+.document-center .file-item span.doc-file-desc {
+  margin-left: 20px;
 }
 
 @media (width >= 900px) {
