@@ -216,7 +216,6 @@ header .nav-search-button {
   align-items: center;
   gap: 6px;
   margin: 0;
-  padding: 0;
   border: none;
   background-color: transparent;
   color: var(--neutral-white);
@@ -737,7 +736,6 @@ header .nav-in-menu-wrap .tabs-list button {
   background-color: var(--primary-orange-600);
   cursor: pointer;
   text-align: left;
-  /* padding: 10px 50px; */
   position: relative;
   white-space: normal;
   padding: 0;
