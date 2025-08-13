@@ -140,9 +140,41 @@
 
 .alert-popup.popup.full-width .close-button {
   background-color: transparent;
-  border: none;
   margin: 0;
   padding: 0;
+  border: 2px solid transparent;
+  height: 36px;
+}
+
+.alert-popup.popup.full-width.high .close-button:hover {
+  border-color: var(--neutral-black);
+  background-color: var(--secondary-orange-400);
+}
+
+.alert-popup.popup.full-width.high .close-button:focus {
+  border-color: var(--neutral-black);
+  background-color: var(--secondary-orange-600);
+  box-shadow: 0 0 0 4px var(--secondary-orange-400);
+}
+
+.alert-popup.popup.full-width.medium .close-button:hover {
+  border-color: var(--neutral-white);
+  background-color: var(--primary-orange-300);
+}
+
+.alert-popup.popup.full-width.medium .close-button:focus {
+  border-color: var(--neutral-white);
+  box-shadow: 0 0 0 4px var(--primary-orange-300);
+}
+
+.alert-popup.popup.full-width.low .close-button:hover {
+  border-color: var(--neutral-black);
+  background-color: var(--neutral-black-400);
+}
+
+.alert-popup.popup.full-width.low .close-button:focus {
+  border-color: var(--neutral-black);
+  box-shadow: 0 0 0 4px var(--neutral-black-400);
 }
 
 .alert-popup.popup.full-width .close-button img {

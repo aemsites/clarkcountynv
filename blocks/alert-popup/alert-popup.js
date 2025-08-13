@@ -7,6 +7,13 @@ const handleClose = (e) => {
   if (currPopup) {
     currPopup.classList.add('hide');
   }
+  setTimeout(() => {
+    // get next popup and focus close button
+    const nextPopup = document.querySelector('.alert-popup.popup.full-width:not(.hide)');
+    if (nextPopup) {
+      nextPopup.querySelector('.close-button')?.focus();
+    }
+  }, 250);
 };
 
 export default async function decorate(block) {
