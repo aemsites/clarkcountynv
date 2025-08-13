@@ -99,10 +99,13 @@ export default async function decorate(doc) {
       }
     }
 
-    if ($leftsection.querySelector('.leftnav-info-wrapper')) {
-      const $leftNavInfo = $leftsection.querySelector('.leftnav-info-wrapper');
-      $leftsection.append($leftNavInfo);
+    if($leftsection.querySelectorAll('.leftnav-info-wrapper').length>0){
+      const $leftNavInfo=$leftsection.querySelectorAll('.leftnav-info-wrapper');
+      for (let index = 0; index < $leftNavInfo.length; index++) {
+        $leftsection.append($leftNavInfo[index]);
+      }    
     }
+   
     const $clickElement = $leftsection.querySelector('.default-content-wrapper > p');
     const $activeElement = $leftsection.querySelector('.left-nav.block');
     const sectionMenuBtn = button({ class: 'section-menu-btn', type: 'button' });
