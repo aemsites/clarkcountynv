@@ -535,6 +535,7 @@ async function loadLazy(doc) {
   if (hash && element) element.scrollIntoView();
 
   loadHeader(doc.querySelector('header'));
+  const uniquePaths = '/calendar/';
   if (!window.location.pathname.includes(uniquePaths)) loadAlerts();
   loadFooter(doc.querySelector('footer'));
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
