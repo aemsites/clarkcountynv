@@ -99,13 +99,12 @@ export default async function decorate(doc) {
       }
     }
 
-    if($leftsection.querySelectorAll('.leftnav-info-wrapper').length>0){
-      const $leftNavInfo=$leftsection.querySelectorAll('.leftnav-info-wrapper');
-      for (let index = 0; index < $leftNavInfo.length; index++) {
+    if ($leftsection.querySelectorAll('.leftnav-info-wrapper').length > 0) {
+      const $leftNavInfo = $leftsection.querySelectorAll('.leftnav-info-wrapper');
+      for (let index = 0; index < $leftNavInfo.length; index += 1) {
         $leftsection.append($leftNavInfo[index]);
-      }    
-    }
-   
+      }
+    }   
     const $clickElement = $leftsection.querySelector('.default-content-wrapper > p');
     const $activeElement = $leftsection.querySelector('.left-nav.block');
     const sectionMenuBtn = button({ class: 'section-menu-btn', type: 'button' });
