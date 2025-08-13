@@ -148,7 +148,7 @@ footer {
     flex-flow: row wrap;
     justify-content: flex-start;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
     list-style: none;
     padding: 0;
 }
@@ -228,6 +228,7 @@ footer {
 
     .footer .footer-right {
         width: 25%;
+        margin-top: 0;
     }
 
     .footer .footer-middle > div {
