@@ -90,20 +90,19 @@ export default async function decorate(doc) {
         // append leftnav just after startH2
         if (startH2) {
           startH2.after(leftnav);
-        } 
+        }
         // if no h2 found, append leftnav at the end of leftsection
         $leftsection.append(leftnav);
         const leftNavBlock = leftnav.querySelector('.left-nav.block');
         /* eslint-disable no-new */
-        new AccessibleLeftNav(leftNavBlock);   
+        new AccessibleLeftNav(leftNavBlock);
       }
     }
 
     if ($leftsection.querySelector('.leftnav-info-wrapper')) {
-      const $leftNavInfo=$leftsection.querySelector('.leftnav-info-wrapper');
+      const $leftNavInfo = $leftsection.querySelector('.leftnav-info-wrapper');
       $leftsection.append($leftNavInfo);
     }
-    
     const $clickElement = $leftsection.querySelector('.default-content-wrapper > p');
     const $activeElement = $leftsection.querySelector('.left-nav.block');
     const sectionMenuBtn = button({ class: 'section-menu-btn', type: 'button' });
