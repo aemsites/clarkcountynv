@@ -1,9 +1,5 @@
 window.onload = function () {
-  /* eslint-disable no-console */
-  console.log(window.parent.location.href);
-  console.log(window.location.href);
-  console.log(window.opener.location.href);
-  document.getElementById('pageurl').innerHTML = window.location.href;
+  document.getElementById('pageurl').innerHTML = window.parent.location.href;
 };
 
 const form = document.querySelector("#reviewform");
