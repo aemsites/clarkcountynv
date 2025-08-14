@@ -37,7 +37,7 @@ export function decorateLinks(element) {
 
 async function check404(url) {
   try {
-    const response = await fetch(url, { method: 'HEAD' });
+    const response = await fetch(url, { method: 'GET' });
 
     // Return the URL only if the response is OK (status in 200–299)
     if (response.ok) {
@@ -59,10 +59,10 @@ async function checkFragmentAccordionML() {
   // Split current path into parts, excluding empty strings
   const pathParts = currentPath.split('/').filter((part) => part);
 
-  for (let i = pathParts.length - 1; i >= 1; i -= 1) {
+  for (let i = pathParts.length; i >= 1; i -= 1) {
     // Reconstruct the base path from deeper to root
     const basePath = `/${pathParts.slice(0, i).join('/')}`;
-    const testUrl = `${baseUrl + basePath}/fragment/accordion-ml`;
+    const testUrl = `${baseUrl + basePath}/fragments/accordion-ml`;
     // eslint-disable-next-line no-await-in-loop
     const fragPath = await check404(testUrl);
     if (fragPath) {
@@ -88,10 +88,14 @@ export default async function decorate(doc) {
         // append leftnav just after startH2
         if (startH2) {
           startH2.after(leftnav);
-        } else {
-          // if no h2 found, append leftnav at the end of leftsection
-          $leftsection.append(leftnav);
-        }
+        } 
+          $leftsection.append(leftnav);     
+      }
+    }
+    if ($leftsection.querySelectorAll('.leftnav-info-wrapper').length > 0) {
+      const $leftNavInfo = $leftsection.querySelectorAll('.leftnav-info-wrapper');
+      for (let index = 0; index < $leftNavInfo.length; index += 1) {
+        $leftsection.append($leftNavInfo[index]);
       }
     }
     const $clickElement = $leftsection.querySelector('.default-content-wrapper > p');
