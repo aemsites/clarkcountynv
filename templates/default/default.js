@@ -88,8 +88,8 @@ export default async function decorate(doc) {
         // append leftnav just after startH2
         if (startH2) {
           startH2.after(leftnav);
-        } 
-          $leftsection.append(leftnav);     
+        }
+        $leftsection.append(leftnav);
       }
     }
     if ($leftsection.querySelectorAll('.leftnav-info-wrapper').length > 0) {
