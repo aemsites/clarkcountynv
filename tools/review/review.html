@@ -55,12 +55,7 @@
                                             </div>
                                            
                                    
-                                    <div class="d-none" id="submitSuccessMessage" hidden >
-                                            <div class="fw-bolder">Page sent for review</div>
-                                    </div>
-                                    <div class="d-none" id="submitErrorMessage" hidden >
-                                        <div class="text-center text-danger mb-3">Error sending page for review!</div>
-                                    </div>
+                                  
                                   
                                     <div class=""><button id="submitButton" style="color: var(--form-button-color); background: var(--form-button-background-color);
                                         border: var(--form-button-border);padding: var(--form-button-padding);font-size: var(--form-button-font-size);border-radius: unset;" type="submit">Send for review</button></div>
@@ -68,6 +63,14 @@
                             </div>
                 </div>
             </form>
+
+              <div class="d-none" id="submitSuccessMessage" hidden >
+                                            <div class="fw-bolder">Page sent for review</div>
+                                    </div>
+                                    <div class="d-none" id="submitErrorMessage" hidden >
+                                        <div class="text-center text-danger mb-3">Error sending page for review!</div>
+                                    </div>
+            <div id="message" style="display:none; color: green; margin-top: 10px;">Form submitted successfully!</div>
         <script src="js/review.js"></script>
     </body>
 </html>

@@ -11,7 +11,6 @@ async function sendData() {
   console.log(formData.get("message"));
   console.log(formData.get("priority"));
 
-console.log("inside send data");
 const data = JSON.stringify({
     "pageUrl": document.getElementById('pageurl').innerHTML,
     "requestType": formData.get("changeType"),
@@ -21,12 +20,18 @@ const data = JSON.stringify({
 console.log("data",data);
 
   try {
-    var req = new XMLHttpRequest();
+  var req = new XMLHttpRequest();
   var url = "https://prod-43.usgovtexas.logic.azure.us/workflows/6414b37738a64ad1865219fdcf6bce9c/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=wuv2It6barW-w9zvAuFejn81kppwFGw0tBLqGnV0BSk";
   req.open("POST", url, true);
   req.setRequestHeader('Content-Type', 'application/json');
   req.send(data);
- 
+ if (req.status === 200) {
+   document.getElementById('submitSuccessMessage').style.display = 'block';
+     document.getElementById('reviewform').reset();
+}else{
+  document.getElementById('submitErrorMessage').style.display = 'block';
+}
+   
   } catch (e) {
     console.error(e);
   }
