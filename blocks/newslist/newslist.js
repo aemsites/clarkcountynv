@@ -160,7 +160,6 @@ const loadresults = async (jsonDataNews, resultsDiv, page, newsbox) => {
     newsitem.classList.add('news');
   });
   newsbox.append(builtBlock);
-  newsbox.append(paginationblock.parentElement);
 };
 
 async function getCategories(block, newsbox) {
