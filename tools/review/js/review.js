@@ -1,4 +1,8 @@
 window.onload = function () {
+  /* eslint-disable no-console */
+  console.log(window.parent.location.href);
+  console.log(window.location.href);
+  console.log(window.opener.location.href);
   document.getElementById('pageurl').innerHTML = window.location.href;
 };
 
