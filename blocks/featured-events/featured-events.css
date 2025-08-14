@@ -51,6 +51,7 @@
   flex: 1;
   padding: 24px;
   background-color: var(--neutral-black-200);
+  width: 100%;
 }
 
 .featured-events.block .title {
