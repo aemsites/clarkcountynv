@@ -62,7 +62,7 @@ async function checkFragmentAccordionML() {
   for (let i = pathParts.length; i >= 1; i -= 1) {
     // Reconstruct the base path from deeper to root
     const basePath = `/${pathParts.slice(0, i).join('/')}`;
-    const testUrl = `${baseUrl + basePath}/fragments/accordion-ml`;
+    const testUrl = `${baseUrl + basePath}/fragments/left-nav`;
     // eslint-disable-next-line no-await-in-loop
     const fragPath = await check404(testUrl);
     if (fragPath) {
