@@ -110,7 +110,6 @@ export default async function decorate(doc) {
     const sectionMenuBtn = button({ class: 'section-menu-btn', type: 'button' });
     sectionMenuBtn.innerHTML = $clickElement.innerHTML;
     $clickElement.replaceWith(sectionMenuBtn);
-    const sectionMenuBtnParent = sectionMenuBtn.parentElement;
     if (sectionMenuBtn.parentElement.classList.contains('default-content-wrapper')) {
       sectionMenuBtn.parentElement.classList.add('left-nav-default-content-wrapper');
     }
