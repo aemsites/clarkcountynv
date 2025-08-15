@@ -136,7 +136,7 @@ export default function decorate(block) {
             ) : null,
             youtubeSrc ? a(
               { href: youtubeSrc, class: 'staff-tile-contact-icon' },
-              img({ src: '/icons/facebook-icon-white.svg', alt: 'Youtube icon' }),
+              img({ src: '/icons/youtube-icon-white.svg', alt: 'Youtube icon' }),
             ) : null,
             twitterSrc ? a(
               { href: twitterSrc, class: 'staff-tile-contact-icon' },
