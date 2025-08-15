@@ -28,11 +28,33 @@
     p.contact-address {
         margin-top: 14px;
     }
+}
 
-    a {
-        color: inherit;
-        text-decoration: underline
-    }
+.leftnav-info .leftnav-info-card a {
+    color: var(--neutral-white);
+    text-decoration: underline;
+}
+
+.leftnav-info .leftnav-info-card a:hover {
+    color: var(--neutral-black-400);
+    text-decoration-color: var(--neutral-black-400);
+}
+
+.leftnav-info .leftnav-info-card a:focus {
+    color: var(--neutral-white);
+    background-color: transparent;
+    text-decoration-color: var(--neutral-black-400);
+    border: 1px solid var(--neutral-white);
+}
+
+.leftnav-info .leftnav-info-card a:visited {
+    color: var(--secondary-orange-400);
+    text-decoration-color: var(--secondary-orange-400);
+}
+
+.leftnav-info .leftnav-info-card a:disabled {
+    color: var(--neutral-black-400);
+    text-decoration: none;
 }
 
 @media (width >= 900px) {
