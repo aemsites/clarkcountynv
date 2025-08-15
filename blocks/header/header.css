@@ -1032,6 +1032,8 @@ header .nav-search .search-box .search-form-wrap .search-results {
     justify-content: space-between;
     flex-direction: row;
     height: var(--nav-height);
+    width: 100%;
+    max-width: 1440px;
   }
 
   header nav .menuul {
