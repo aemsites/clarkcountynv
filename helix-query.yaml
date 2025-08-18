@@ -44,7 +44,7 @@ indices:
     exclude:
       - /drafts/**
       - /**/fragments/**
-      - /business/business_opportunities/fragments/left-nav
+      - /**/left-nav
       - /fragments/**
       - /tools/**
       - /calendar/county-commissioners/*
