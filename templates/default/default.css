@@ -10,6 +10,7 @@ main .mainmenu {
 
 main .mainmenu .leftsection {
     background-color: var(--primary-orange-600);
+    margin-bottom: 20px;
 }
 
 main .mainmenu .rightsection.no-underline a:hover {
@@ -139,6 +140,7 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
     main .mainmenu .leftsection {
         flex: 0 0 350px;
         max-width: 350px;
+        margin-bottom: 0;
     }
 
     main .mainmenu .leftsection > .default-content-wrapper > button {
