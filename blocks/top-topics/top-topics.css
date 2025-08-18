@@ -117,8 +117,7 @@
 }
 
 .top-topics .top-topics-mobile button:focus {
-    outline: 2px solid #007acc;
-    outline-offset: -2px;
+    outline: none;
 }
 
 .top-topics .top-topics-mobile .tabs-panel li {
