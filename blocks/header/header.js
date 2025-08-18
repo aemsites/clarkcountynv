@@ -293,7 +293,9 @@ function switchToTab(tabButton, currentMegaMenu) {
 function getFirstFocusableElement(navDrop) {
   const isDesktopViewport = window.matchMedia('(min-width: 900px)').matches;
   const focusableSelectors = [
-    'button:not([disabled])',
+    //'button:not([disabled])',
+    '[tabindex]:not([tabindex="-1"])',
+    //'a:not([disabled])',
   ];
 
   const focusableElements = navDrop.querySelectorAll(`${isDesktopViewport ? '.nav-in-menu-wrap' : '.nav-in-menu-wrap-mobile'} ${focusableSelectors.join(', ')}`);
@@ -818,6 +820,7 @@ function handleMobileKeyboardNavigation(e, focused) {
         }
       }
     } else if (currentNavDrop) {
+      console.log('Here');
       // Check if focused element is an anchor within a strong tag (direct child of nav-drop)
       const strongElement = focused.closest('strong');
       const isAnchorInStrong = focused.tagName === 'A' && strongElement && strongElement.parentElement.classList.contains('nav-drop');
@@ -851,6 +854,7 @@ function handleMobileKeyboardNavigation(e, focused) {
         }
       } else if (
         currentNavDrop.querySelector(`${isDesktopViewport ? '.nav-in-menu-wrap' : '.nav-in-menu-wrap-mobile'} .tabs-list`) && (focused.closest('.nav-in-menu-wrap-mobile') || focused.closest('.nav-in-menu-wrap'))) {
+          console.log('Here 2');
         // Special handling for tabs structure
         const tabsList = currentNavDrop.querySelector('.nav-in-menu-wrap-mobile .tabs-list');
         handleTabsListNavigation(
@@ -865,6 +869,8 @@ function handleMobileKeyboardNavigation(e, focused) {
         // Handle other focusable elements normally
         const focusableElements = getFocusableElements(currentNavDrop);
         const currentElementIndex = focusableElements.indexOf(focused);
+
+        console.log('HERE');
 
         if (!e.shiftKey) {
           // Forward tab
@@ -917,6 +923,17 @@ function handleMenuKeyboardNavigation(e) {
 function addMegaMenuAccessibilityListeners() {
   const header = document.querySelector('header');
   header?.addEventListener('keydown', handleMenuKeyboardNavigation);
+}
+
+function handleTabButtonClick(e) {
+  const rect = this.getBoundingClientRect();
+  const clickX = e.clientX - rect.left;
+  const chevronAreaStart = rect.width - 60;
+  if (clickX >= chevronAreaStart) {
+    // click inside chevron - expand/collapse
+    console.log('Clicked chevron');
+    e.preventDefault();
+  }
 }
 
 function decorateNavItem(parent) {
@@ -975,20 +992,28 @@ function decorateNavItem(parent) {
     }
     i += 1;
 
-    // build tab button
-    const $button = button({ class: `tabs-tab ${tabpanelItems === null ? 'no-children' : ''}` });
+    // build tab button - this should be conditional based on any child link authored
+    // if no child link authored, change from anchor to button
+    //const $button = a({ class: `tabs-tab ${tabpanelItems === null ? 'no-children' : ''}` });
+    const $button = div({ class: `tabs-tab ${tabpanelItems === null ? 'no-children' : ''}` });
     $button.id = `tab-${id}`;
+    $button.textContent = tabInfo.textContent
     $button.innerHTML = tabInfo.innerHTML;
+    //const temp = document.createElement("div");
+    //temp.innerHTML = tabInfo.innerHTML;
+    //const linkHref = temp.querySelector('a')?.getAttribute('href');
+    //$button.setAttribute('href', linkHref);
     $button.setAttribute('aria-controls', `tabpanel-${id}`);
+    $button.setAttribute('tabindex', '0');
     // eslint-disable-next-line no-nested-ternary
     $button.setAttribute('aria-selected', !isDesktop.matches ? 'false' : (i === 1 ? true : !i));
     $button.setAttribute('role', 'tab');
-    $button.setAttribute('type', 'button');
+    //$button.setAttribute('type', 'button');
     $button.addEventListener('mouseover', () => {
       parent.querySelectorAll('[role=tabpanel]').forEach((panel) => {
         panel.setAttribute('aria-hidden', true);
       });
-      tablist.querySelectorAll('button').forEach((btn) => {
+      tablist.querySelectorAll('.tabs-tab').forEach((btn) => {
         btn.setAttribute('aria-selected', false);
       });
       tabpanel.setAttribute('aria-hidden', false);
@@ -996,6 +1021,7 @@ function decorateNavItem(parent) {
     });
     tablist.append($button);
     mobileTabList.append($button.cloneNode(true), tabpanel.cloneNode(true));
+    mobileTabList.querySelectorAll('.tabs-tab')?.forEach((link) => link.addEventListener('click', handleTabButtonClick));
   }
   parent.children[1].remove();
 }
