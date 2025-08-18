@@ -44,7 +44,7 @@ indices:
 
     exclude:
       - /drafts/**
-      - '**/fragments/**'
+      - /business/fragments/*'
       - /tools/**
       - /calendar/county-commissioners/*
       - /calendar/county-commission-district-a/*
