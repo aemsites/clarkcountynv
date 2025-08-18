@@ -682,7 +682,65 @@ main .section.details-404 > .default-content-wrapper {
   opacity: 1;
 }
 
-@media (width >= 991px) {
+.section .breadcrumbs {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 24px;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  overflow: hidden;
+  z-index: 100;
+
+  ul {
+    margin: 0;
+    list-style: none;
+    font: normal 17px 'Neue Montreal', sans-serif;
+    color: #fff;
+    line-height: 1;
+
+    li {
+      display: inline-block;
+      margin: 0;
+      line-height: 1.3;
+      position: relative;
+      margin-right: 23px;
+    }
+
+    li:first-of-type a {
+      color: var(--secondary-orange-400);
+    }
+
+    li:not(:last-of-type)::after {
+      content: '';
+      width: 4px;
+      height: 8px;
+      background: url('../../icons/breadcrumbs-arrow.png') center/4px 8px no-repeat;
+      position: absolute;
+      top: 8px;
+      right: -15px;
+    }
+  }
+
+  a:any-link {
+    color: currentcolor;
+    font-weight: normal;
+  }
+
+  a {
+    display: inline-block;
+    color: var(--neutral-white);
+    position: relative;
+    text-decoration: none;
+  }
+}
+
+@media (width >= 900px) {
+  .section .breadcrumbs {
+    top: 40px;
+  }
+
   .desktop {
     display: block;
   }
@@ -720,7 +778,7 @@ main .section.details-404 > .default-content-wrapper {
   }
 
   main > div.section.desktop.with-background-image.short {
-    height: 400px;
+    height: 330px;
   }
 
    /* widget for share */
@@ -965,58 +1023,6 @@ main > div.section.newsdetail > .default-content-wrapper > p {
 
 .biddetail {
     padding: 50px 15px;
-}
-
-.section .breadcrumbs {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 150px;
-    width:auto;
-    overflow: hidden;
-    z-index: 100;
-
-    ul {
-        margin: 0;
-        list-style: none;
-        font: normal 17px 'Neue Montreal', sans-serif;
-        color: #fff;
-        line-height: 1;
-
-        li {
-            display: inline-block;
-            margin: 0;
-            line-height: 1.3;
-            position: relative;
-            margin-right: 23px;
-        }
-
-        li:first-of-type a {
-            color:#FFC7B8;
-        }
-
-        li:not(:last-of-type)::after {
-            content: '';
-            width: 4px;
-            height: 8px;
-            background: url('../../icons/breadcrumbs-arrow.png') center/4px 8px no-repeat;
-            position: absolute;
-            top: 8px;
-            right: -15px;
-        }
-    }
-
-    a:any-link {
-        color: currentcolor;
-        font-weight: normal;
-    }
-
-    a {
-        display:inline-block;
-        color:#fff;
-        position:relative;
-        text-decoration:none;
-    }
 }
 
 .no-button a:any-link:not(.block a, .block * a) {
