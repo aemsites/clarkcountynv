@@ -41,11 +41,10 @@ indices:
       - /calendar/cjcc/
       - /calendar/mojave-max-and-dcp-outreach-events-volunteer-opportunities/
       - /calendar/featured-events/
-
     exclude:
       - /drafts/**
       - /**/fragments/**
-      - /business/business_opportunities/fragments/*
+      - /business/business_opportunities/fragments/left-nav
       - /fragments/**
       - /tools/**
       - /calendar/county-commissioners/*
