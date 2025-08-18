@@ -42,7 +42,6 @@ main .hero.text.homepage div div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-right: 2vw;
   align-items: center;
 }
 

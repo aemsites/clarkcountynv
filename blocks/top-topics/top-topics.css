@@ -20,6 +20,7 @@
     border: none;
     background-color: transparent;
     text-wrap: auto;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .top-topics .search-btn-wrapper {
@@ -63,7 +64,6 @@
 
 .top-topics .tabs-list button[aria-selected="true"] {
     background-color: var(--primary-orange-600);
-    -webkit-tap-highlight-color: transparent;
 }
 
 .top-topics .tabs-list button[aria-selected="true"] p {

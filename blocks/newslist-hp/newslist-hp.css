@@ -12,7 +12,7 @@
   grid-template-columns: 1fr;
   display: grid;
   gap: 24px;
-  margin-top: 40px;
+  margin: 40px 0;
 }
 
 .newslist-hp .newsitems .news {

@@ -67,6 +67,15 @@ export default async function decorate(block) {
     defaultContentEl.innerHTML = '';
     defaultContentEl.appendChild(fragmentEl);
   }
-
-  block.append(footer);
+  const topSection = footer.querySelector('.section.newsletter');
+  const bottomSections = footer.querySelectorAll('.section:not(.newsletter)');
+  const footerTopSection = div({ class: 'footer-top-section' }, topSection);
+  const footerBottomSection = div(
+    { class: 'footer-bottom-section' },
+    div(
+      { class: 'footer-bottom-wrapper' },
+      ...bottomSections,
+    ),
+  );
+  block.append(footerTopSection, footerBottomSection);
 }

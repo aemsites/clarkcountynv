@@ -550,6 +550,32 @@ main .section.rightsection.no-button .columns.alert a:any-link {
   text-wrap: auto;
 }
 
+.columns.highlight > div > div.column2 p:not(:last-child) a {
+  color: var(--neutral-white);
+  text-decoration: underline;
+}
+
+.columns.highlight > div > div.column2 p:not(:last-child) a:hover {
+  color: var(--neutral-black-400);
+  text-decoration-color: var(--neutral-black-400);
+}
+
+.columns.highlight > div > div.column2 p:not(:last-child) a:focus {
+  color: var(--neutral-white);
+  background-color: transparent;
+  text-decoration-color: var(--neutral-black-400);
+  border: 1px solid var(--neutral-white);
+}
+
+.columns.highlight > div > div.column2 p:not(:last-child) a:visited {
+  color: var(--secondary-orange-400);
+}
+
+.columns.highlight > div > div.column2 p:not(:last-child) a:disabled {
+  color: var(--neutral-black-400);
+  text-decoration: none;
+}
+
 .columns.highlight .column1 {
   align-self: stretch;
 }
