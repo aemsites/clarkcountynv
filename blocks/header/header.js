@@ -765,6 +765,10 @@ function handleMobileKeyboardNavigation(e, focused) {
     return;
   }
 
+  if (e.code === 'Enter' && focused.classList.contains('tabs-tab')) {
+    const isCurrentlyExpanded = focused.getAttribute('aria-expanded') === 'true';
+  }
+
   // Handle Tab navigation between nav-drop elements and their children
   if (e.code === 'Tab') {
     const allNavDrops = Array.from(document.querySelectorAll('.nav-drop'));
