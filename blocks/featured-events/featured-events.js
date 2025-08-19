@@ -4,13 +4,15 @@ import {
 } from '../../scripts/dom-helpers.js';
 import {
   createOptimizedPicture, buildBlock, decorateBlock, loadBlock,
+  fetchPlaceholders as defaultFetchPlaceholders,
 } from '../../scripts/aem.js';
 import { normalizeString } from '../../scripts/utils.js';
 import { popupEvent } from '../../templates/calendar/calendar.js';
 
 const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEPT', 'OCT', 'NOV', 'DEC'];
 let divisions = [];
-
+const defaultplaceholders = await defaultFetchPlaceholders();
+const CLARKLOGO = defaultplaceholders.clarkcountylogo;
 // Result parsers parse the query results into a format that can be used by the block builder for
 // the specific block types
 const resultParsers = {
@@ -25,7 +27,7 @@ const resultParsers = {
         const columnImage = createOptimizedPicture(result.image);
         divLeft.appendChild(columnImage);
       } else {
-        const columnImage = createOptimizedPicture('/assets/images/general/media_1777f18b0073109f55dbd10b12552b5115288e89b.png');
+        const columnImage = createOptimizedPicture(CLARKLOGO);
         divLeft.appendChild(columnImage);
       }
       const divRight = div({ class: 'event-body' });
