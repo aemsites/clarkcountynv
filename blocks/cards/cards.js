@@ -3,6 +3,28 @@ import {
   ul, li, a, div, img, h4, br, p,
 } from '../../scripts/dom-helpers.js';
 
+const removeAnchorsAndCleanParagraphs = (content) => {
+  const contentCopy = content.cloneNode(true);
+  const paragraphs = Array.from(contentCopy.querySelectorAll('p'));
+  paragraphs?.forEach((paragraph) => {
+      const anchors = Array.from(paragraph.querySelectorAll('a'));
+      anchors?.forEach(anchor => {
+        anchor.remove();
+      });
+
+      if (paragraph.children.length && paragraph.firstElementChild.tagName === 'STRONG') {
+        paragraph.remove();
+      }
+      
+      const hasContent = paragraph.textContent.trim().length > 0 || paragraph.querySelector('*:not(br)') !== null;
+      if (!hasContent) {
+        paragraph.remove();
+      }
+
+  });
+  return contentCopy;
+};
+
 export default function decorate(block) {
   /* change to ul, li */
   const $ul = ul();
@@ -153,8 +175,9 @@ export default function decorate(block) {
       const iconImg = row.children[0];
       const content = row.children[1];
       const cardTitle = content.children[0];
-      const cardDesc = content.querySelectorAll(':not(p.button-container):not(a.button)');
       const cardLink = content.querySelector('a');
+      //const cardContent = removeAnchorsAndCleanParagraphs(content.children[1]);
+      const cardContent = removeAnchorsAndCleanParagraphs(content);
       const { href, title, target } = cardLink ?? {};
       $ul.append(
         li(
@@ -168,13 +191,13 @@ export default function decorate(block) {
                 { class: 'card-content' },
                 img ? div({ class: 'card-img' }, iconImg) : null,
                 cardTitle ? p({ class: 'card-title' }, cardTitle) : null,
-                cardDesc ? p({ class: 'card-description' }, ...cardDesc) : null,
+                cardContent ? p({ class: 'card-description' }, cardContent) : null,
               ),
             ) : div(
               { class: 'card-content' },
               img ? div({ class: 'card-img' }, iconImg) : null,
               cardTitle ? p({ class: 'card-title' }, cardTitle) : null,
-              cardDesc ? p({ class: 'card-description' }, ...cardDesc) : null,
+              cardContent ? p({ class: 'card-description' }, cardContent) : null,
             ),
           ),
         ),
