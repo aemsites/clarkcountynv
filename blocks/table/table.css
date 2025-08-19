@@ -406,12 +406,37 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
             font-weight: 400;
             padding: 0;
             margin: 0;
-            color: var(--primary-orange-900);
+            color: var(--primary-orange-600);
             background-color: transparent;
             border: 0;
             display: inline;
+            text-decoration: underline;
+            text-decoration-color: var(--primary-orange-600);
         }
     }
+}
+
+.table.agenda table a {
+    font-weight: 400;
+    padding: 0;
+    margin: 0;
+    color: var(--primary-orange-600);
+    background-color: transparent;
+    border: 0;
+    display: inline;
+    text-decoration: underline;
+    text-decoration-color: var(--primary-orange-600);
+}
+
+.table.agenda table a:hover {
+    color: var(--primary-orange-900);
+    text-decoration-color: var(--primary-orange-900);
+}
+
+.table.agenda table a:focus {
+    color: var(--primary-orange-900);
+    text-decoration-color: var(--primary-orange-900);
+    border: 1px solid var(--primary-orange-900);
 }
 
 .table.align-top table td{
