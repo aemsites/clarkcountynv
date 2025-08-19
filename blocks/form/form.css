@@ -998,6 +998,10 @@ main .form form .checkbox-group-wrapper.horizontal .field-description {
         grid-column: span 12;
     }
 
+    .rightsection .form.block form fieldset > .field-wrapper.col-12 {
+        grid-column: span 12;
+    }
+
     .form.block div.spinner {
         margin-top: 25%;
         margin-left: 48%;
