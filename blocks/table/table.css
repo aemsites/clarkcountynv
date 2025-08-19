@@ -401,18 +401,6 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
                 width: 15%;
             }
         }
-
-        a {
-            font-weight: 400;
-            padding: 0;
-            margin: 0;
-            color: var(--primary-orange-600);
-            background-color: transparent;
-            border: 0;
-            display: inline;
-            text-decoration: underline;
-            text-decoration-color: var(--primary-orange-600);
-        }
     }
 }
 
