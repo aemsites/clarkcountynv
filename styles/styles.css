@@ -1026,7 +1026,7 @@ main > div.section.newsdetail > .default-content-wrapper > p {
 }
 
 .no-button a:any-link:not(.block a, .block * a) {
-    color: var(--no-button-link);
+    color: var(--primary-orange-600);
     background-color: transparent;
     text-decoration: underline;
     border: 0;
