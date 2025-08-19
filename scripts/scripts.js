@@ -14,11 +14,10 @@ import {
   getMetadata,
   createOptimizedPicture as libCreateOptimizedPicture, fetchPlaceholders,
 } from './aem.js';
-
+// eslint-disable-next-line import/no-cycle
+import { loadFragment } from '../blocks/fragment/fragment.js';
 import { h1 } from './dom-helpers.js';
-
 import { getViewPort, externalLinks, ScrolltoTop } from './utils.js';
-
 import assetsInit from './aem-assets-plugin-support.js';
 
 const placeholders = await fetchPlaceholders();
@@ -157,6 +156,7 @@ function decorateSectionsWithBackgrounds(element) {
     const bgImageDesktop = section.getAttribute('data-bg-image-desktop');
     const bgImageMobile = section.getAttribute('data-bg-image-mobile');
     const bgImageTablet = section.getAttribute('data-bg-image-tablet');
+    const hasMobileClass = section.classList.contains('mobile');
 
     if (!(bgImage || bgImageDesktop || bgImageMobile || bgImageTablet)) {
       section.setAttribute('data-bg-image', DEFAULT_BACKGROUND_IMAGE);
@@ -180,7 +180,7 @@ function decorateSectionsWithBackgrounds(element) {
       } else {
         section.classList.add('with-background-image');
       }
-      const backgroundPic = libCreateOptimizedPicture(background);
+      const backgroundPic = libCreateOptimizedPicture(background, `${hasMobileClass ? 'Mobile' : 'Desktop'} hero image`);
       backgroundPic.classList.add('background-image');
       section.append(backgroundPic);
     }
@@ -506,6 +506,23 @@ async function loadEager(doc) {
 }
 
 /**
+ * Loads a block via fragment named 'alert-popup' onto page below header
+ * @param popup alert-popup element
+ * @returns {Promise}
+ */
+async function loadAlerts() {
+  const alertsFragUrl = '/fragments/pagealerts';
+  const fragment = await loadFragment(alertsFragUrl);
+  if (fragment) {
+    const block = fragment.querySelector(':scope > div');
+    const main = document.querySelector('main');
+    main?.prepend(block);
+    const firstPopup = document.querySelector('.alert-popup.popup.full-width');
+    firstPopup?.querySelector('.close-button')?.focus();
+  }
+}
+
+/**
  * Loads everything that doesn't need to be delayed.
  * @param {Element} doc The container element
  */
@@ -520,8 +537,9 @@ async function loadLazy(doc) {
   if (hash && element) element.scrollIntoView();
 
   loadHeader(doc.querySelector('header'));
+  const uniquePaths = '/calendar/';
+  if (!window.location.pathname.includes(uniquePaths)) loadAlerts();
   loadFooter(doc.querySelector('footer'));
-
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
 }

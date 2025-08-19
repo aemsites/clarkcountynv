@@ -6,7 +6,7 @@ export default async function decorate(doc) {
     aElem.classList.remove('button');
   });
 
-  doc.querySelectorAll('a[href$*=".jpg"], a[href*=".png"], a[href*=".jpeg"], a[href*=".gif"]').forEach((aEl) => {
+  doc.querySelectorAll('a[href*=".jpg"], a[href*=".png"], a[href*=".jpeg"], a[href*=".gif"]').forEach((aEl) => {
     if (['jpg', 'jpeg', 'png', 'gif'].some((ext) => {
       const { pathname } = new URL(aEl.href, window.location.origin);
       return pathname.toLowerCase().endsWith(`.${ext}`);

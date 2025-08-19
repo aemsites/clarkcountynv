@@ -1,0 +1,6 @@
+.horizontal-rule.block .separator {
+    border: none;
+    height: 2px;
+    background-color: var(--primary-orange-600);
+    margin: 42px auto 40px;
+}

@@ -19,9 +19,18 @@ export default async function decorate(block) {
   while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
 
   const newsletterLink = footer.querySelector('.newsletter a');
-  newsletterLink.classList?.remove('button');
+  newsletterLink?.classList?.remove('button');
 
-  replaceClickableImageLinkWithImage(footer.querySelector('.footer-left'));
+  const footerLeft = footer.querySelector('.footer-left');
+  replaceClickableImageLinkWithImage(footerLeft);
+
+  footerLeft?.querySelectorAll('.button-container')?.forEach((container, index) => {
+    if (index === 0) {
+      container.classList.add('footer-desktop-logo');
+    } else {
+      container.classList.add('footer-mobile-logo');
+    }
+  });
 
   footer.querySelectorAll('.footer-right a').forEach((aEl, index) => {
     // set unique aria label for each link
@@ -39,5 +48,34 @@ export default async function decorate(block) {
     }
   });
 
-  block.append(footer);
+  // Break Footer Middle into Sections
+  const footerMiddle = footer.querySelector('.footer-middle');
+  const defaultContentEl = footerMiddle?.children.length && footerMiddle?.children[0];
+  if (defaultContentEl) {
+    const headers = Array.from(defaultContentEl.querySelectorAll('h5'));
+    const fragmentEl = document.createDocumentFragment();
+    headers?.forEach((header, index) => {
+      const sectionWrapper = div({ class: `${index === 0 ? 'middle-left' : 'middle-right'}` });
+      sectionWrapper.appendChild(header.cloneNode(true));
+      let sibling = header.nextElementSibling;
+      while (sibling && sibling.tagName !== 'H5') {
+        sectionWrapper.appendChild(sibling.cloneNode(true));
+        sibling = sibling.nextElementSibling;
+      }
+      fragmentEl.appendChild(sectionWrapper);
+    });
+    defaultContentEl.innerHTML = '';
+    defaultContentEl.appendChild(fragmentEl);
+  }
+  const topSection = footer.querySelector('.section.newsletter');
+  const bottomSections = footer.querySelectorAll('.section:not(.newsletter)');
+  const footerTopSection = div({ class: 'footer-top-section' }, topSection);
+  const footerBottomSection = div(
+    { class: 'footer-bottom-section' },
+    div(
+      { class: 'footer-bottom-wrapper' },
+      ...bottomSections,
+    ),
+  );
+  block.append(footerTopSection, footerBottomSection);
 }

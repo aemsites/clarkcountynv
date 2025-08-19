@@ -202,4 +202,22 @@ main .block.text {
     &.no-margin-top p{
         margin-top: unset;
     }
+
+    &.eyebrow p {
+        color: var(--neutral-black-900);
+        font-size: var(--body-font-size-s);
+        font-style: normal;
+        font-weight: var(--font-weight-bold);
+        letter-spacing: 0.7px;
+        text-transform: uppercase;
+    }
+}
+
+@media (width >= 900px) {
+    main .block.text {
+        &.eyebrow p {
+            font-size: var(--body-font-size-m);
+            letter-spacing: 0.8px;
+        }
+    }
 }

@@ -37,18 +37,17 @@ body.event main .section.hero .hero-wrapper .block.hero.time div div {
     min-width: 165px;
 }
 
-body.event main .section.description p:has(a) {
-    margin-top: 1vh;
-    font-weight: 600;
+body.event main .section.description strong {
+    font-weight: var(--font-weight-book);
 }
 
 body.event main .section.description p a {
-    color: #007bff;
+    color: var(--primary-orange-600);
+    font-size: var(--body-font-size-s);
+    font-style: normal;
+    font-weight: var(--font-weight-book);
+    line-height: 120%;
     text-decoration: underline;
-    background-color: transparent;
-    font-size: 18px;
-    font-family: var(--heading-font-family);
-    padding: 0;
 }
 
 body.event main .section.hero .hero-wrapper .block.hero.time div p {
@@ -97,14 +96,17 @@ body.event main .section.hero .hero-wrapper .block.hero.time {
 }
 
 body.event main .section.title {
-    padding: 15px;
+    margin: 40px 0 24px;
 }
 
 body.event main .section.title h2 {
-    font-size: 22px;
-    font-weight: 400;
-    line-height: 1.2;
-    font-family: var(--heading-font-family);
+    color: var(--primary-orange-600);    
+    font-size: var(--body-font-size-l);
+    font-style: normal;
+    font-weight: var(--font-weight-bold);
+    line-height: 120%;
+    margin: 0;
+    padding: 0 24px;
 }
 
 body.event main .section.image {
@@ -123,9 +125,20 @@ body.event main .section.address {
 }
 
 body.event main .section.description {
-    padding: 15px;
-    font-size: 18px;
-    font-family: var(--heading-font-family);
+    padding: 0 24px;
+}
+
+body.event main .section.description p {
+    color: var(--neutral-black);    
+    font-size: var(--body-font-size-s);
+    font-style: normal;
+    font-weight: var(--font-weight-book);
+    line-height: 125%;
+    margin-top: 24px;
+}
+
+body.event main .section.description p:first-child {
+    margin: 0;
 }
 
 body.event main .section.description-center {
@@ -137,7 +150,7 @@ body.event main .section.description-center {
 }
 
 body.event main .section.map-location {
-    padding: 15px;
+    padding: 24px;
 }
 
 body.event main .section.map-location iframe {
@@ -175,11 +188,28 @@ body.event main .section.locations ul ul {
 }
 
 body.event main .section.event-footer {
-    padding: 15px;
-    font-size: 16px;
-    font-family: var(--heading-font-family);
-    border-top: 1px solid #dee2e6;
-    height: 14vh;
+    padding: 0 24px 24px;
+}
+
+body.event main .section.event-footer .event-modal-footer {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+}
+
+body.event main .section.event-footer .event-modal-footer .button {
+    margin: 0;
+    padding: 11px 24px; 
+    font-size: var(--body-font-size-s);
+    font-style: normal;
+    font-weight: var(--font-weight-bold);
+    line-height: 110%;
+}
+
+body.event main .section.event-footer.hidden {
+    display: none;
 }
 
 body.event main .section.event-footer .default-content-wrapper {

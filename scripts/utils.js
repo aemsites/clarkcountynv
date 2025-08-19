@@ -1,5 +1,6 @@
 // Function to get the current window size
 import { createOptimizedPicture } from './aem.js';
+import { div } from './dom-helpers.js';
 
 export function getWindowSize() {
   const windowWidth = window.innerWidth
@@ -84,13 +85,14 @@ export function createHashId(text) {
 }
 
 export function addPagingWidget(
-  div,
+  divEl,
   curpage,
   totalPages,
   doc = document,
   curLocation = window.location,
 ) {
   const queryParams = new URLSearchParams(curLocation.search);
+  const navWrapper = div({ role: 'navigation', 'aria-label': 'Pagination Navigation' });
   const nav = doc.createElement('ul');
   nav.classList.add('pagination');
 
@@ -119,6 +121,11 @@ export function addPagingWidget(
 
       queryParams.set('pg', i);
       a.href = `${curLocation.pathname}?${queryParams}`;
+      a.setAttribute('aria-label', `Goto Page ${a.innerText}`);
+      if (numli.classList.contains('active')) {
+        a.setAttribute('aria-current', 'true');
+        a.setAttribute('aria-label', `Current page, Page ${a.innerText}`);
+      }
       numli.appendChild(a);
 
       nav.appendChild(numli);
@@ -138,8 +145,8 @@ export function addPagingWidget(
     rt.appendChild(rta);
     nav.appendChild(rt);
   }
-
-  div.appendChild(nav);
+  navWrapper.append(nav);
+  divEl.appendChild(navWrapper);
 }
 
 export function replaceClickableImageLinkWithImage(element) {
@@ -152,4 +159,14 @@ export function replaceClickableImageLinkWithImage(element) {
       aEl.appendChild(picture);
     }
   });
+}
+
+export function debounce(func, delay) {
+  let timeoutId;
+  return (...args) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      func.apply(this, args);
+    }, delay);
+  };
 }

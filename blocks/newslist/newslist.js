@@ -1,11 +1,10 @@
 import ffetch from '../../scripts/ffetch.js';
 import { addPagingWidget, normalizeString } from '../../scripts/utils.js';
 import {
-  div, a, li, option,
-  h3,
+  div, a, li, h3, span, p,
 } from '../../scripts/dom-helpers.js';
 import {
-  buildBlock, decorateBlock, loadBlock, createOptimizedPicture, fetchPlaceholders,
+  buildBlock, decorateBlock, loadBlock, createOptimizedPicture, getMetadata, fetchPlaceholders,
 } from '../../scripts/aem.js';
 
 const placeholders = await fetchPlaceholders();
@@ -22,21 +21,14 @@ class News {
   }
 }
 
-function intoValidDate(localdate) {
-  const date = new Date(localdate);
-  const timezoneOffset = date.getTimezoneOffset();
-  const adjustedTime = new Date(date.getTime() + (timezoneOffset * 60 * 1000));
-  return adjustedTime.toDateString();
-}
-
 // Result parsers parse the query results into a format that can be used by the block builder for
 // the specific block types
 const resultParsers = {
   // Parse results into a cards block
   columns: (results) => {
     const blockContents = [];
+    const newsButtonText = getMetadata('news-button-text') || 'Read more';
     results.forEach((result) => {
-      let publishedDate;
       const cardleft = div({ class: 'card-left' });
       const row = [];
       if (result.newsImage.length > 0) {
@@ -46,33 +38,32 @@ const resultParsers = {
         const cardImage = createOptimizedPicture(CLARKLOGO);
         cardleft.append(cardImage);
       }
-      const cardright = div({ class: 'card-right' });
-      if (result.newsPublished.length > 0) {
-        publishedDate = intoValidDate(new Date(result.newsPublished * 1000));
-        publishedDate = new Date(publishedDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-      }
-      const divTitle = div();
-      if (result.newsCategory && publishedDate) {
-        divTitle.textContent = `${result.newsCategory} - ${publishedDate}`;
-      } else {
-        // eslint-disable-next-line no-nested-ternary
-        const available = publishedDate || (result.newsCategory ? result.newsCategory : '');
-        divTitle.textContent = available;
-      }
-      cardright.append(divTitle);
+      const cardright = div(
+        { class: 'card-right' },
+      );
 
-      const divDescription = div({ class: 'description' });
-      const pageTitle = h3({ class: 'pagetitle' }, result.newsTitle);
-      divDescription.textContent = result.newsDescription;
-      const aEle = a({ class: 'description' });
-      aEle.href = window.location.origin + result.newsPath;
-      aEle.append(pageTitle, divDescription);
-      cardright.append(aEle);
-      const divReadmore = div({ class: 'readmore' });
-      const aEle1 = a({ class: 'readmore' }, 'Read More');
+      const divDescription = p(
+        { class: 'description' },
+        span(
+          { class: 'fw-bold' },
+          'Additional Details: ',
+        ),
+        result.newsDescription,
+      );
+
+      const pageTitle = h3(
+        { class: 'pagetitle' },
+        result.newsTitle,
+      );
+      cardright.append(pageTitle, divDescription);
+
+      const aEle1 = a(
+        { class: 'button primary' },
+        newsButtonText,
+      );
       aEle1.href = window.location.origin + result.newsPath;
-      divReadmore.append(aEle1);
-      cardright.append(divReadmore);
+      cardright.append(aEle1);
+
       row.push(cardleft, cardright);
       blockContents.push(row);
     });
@@ -167,12 +158,11 @@ const loadresults = async (jsonDataNews, resultsDiv, page, newsbox) => {
   resultsDiv.append(parentDiv);
   decorateBlock(builtBlock);
   await loadBlock(builtBlock);
-  builtBlock.classList.add('newsItems');
+  builtBlock.classList.add('news-items');
   builtBlock.querySelectorAll(':scope > div').forEach((newsitem) => {
     newsitem.classList.add('news');
   });
   newsbox.append(builtBlock);
-  newsbox.append(paginationblock.parentElement);
 };
 
 async function getCategories(block, newsbox) {
@@ -200,53 +190,12 @@ async function getCategories(block, newsbox) {
     curPage = parseInt(curPage, 10);
   }
 
-  // Allot options to the select element
-  const select = block.querySelector('#news-filter');
-  const firstOption = option({ value: normalizeString('All News') }, 'All News');
-  select.append(firstOption);
-  categories.forEach((category) => {
-    const $option = option({ value: normalizeString(category) });
-    $option.textContent = category;
-    select.append($option);
-  });
-
-  select.querySelectorAll('option').forEach(($option) => {
-    if (normalizeString($option.value) === normalizeString(catNews)) {
-      $option.setAttribute('selected', true);
-      if (normalizeString(catNews) === normalizeString('All News')) {
-        loadresults(jsonDataNews, block, curPage, newsbox);
-      } else {
-        // eslint-disable-next-line max-len
-        const filteredNews = jsonDataNews.filter((news) => normalizeString(news.category) === normalizeString(catNews));
-        loadresults(filteredNews, block, curPage, newsbox);
-      }
-    } else {
-      $option.removeAttribute('selected');
-    }
-  });
-
-  // Select option change event
-  select.addEventListener('change', (e) => {
-    const selectedCategory = e.target.value;
-    // remove the query parameter from the URL
-    const paramsv1 = new URLSearchParams(window.location.search);
-    paramsv1.set('category', selectedCategory);
-    paramsv1.delete('pg');
-    window.location.search = paramsv1.toString();
-  });
+  loadresults(jsonDataNews, block, curPage, newsbox);
 }
 
 export default async function decorate(block) {
   block.innerHTML = '';
-  const newscontrol = div({ class: 'news-control' });
   const newsbox = div({ class: 'news-box' });
-  newscontrol.innerHTML = `
-  <div id="news-controls">
-    <label for="news-categories">Show : </label>
-    <select id="news-filter" name="news-categories">                 
-    </select>
-</div>`;
-  block.append(newscontrol);
   block.append(newsbox);
   await getCategories(block, newsbox);
 }

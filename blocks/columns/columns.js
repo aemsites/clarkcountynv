@@ -1,5 +1,6 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
-import { a, i } from '../../scripts/dom-helpers.js';
+import { a, i, iframe } from '../../scripts/dom-helpers.js';
+import { replaceClickableImageLinkWithImage } from '../../scripts/utils.js';
 
 function enablePlaybutton(col, pic, redirectURL) {
   const playButton = a({ class: 'explore-video-play' }, i({ class: 'play-button' }));
@@ -110,4 +111,36 @@ export default function decorate(block) {
       }
     });
   });
+
+  // Contact Card (Map Embed)
+  const isContactCard = block.classList.contains('contact-card');
+  if (isContactCard) {
+    const firstCol = block.querySelector('.column1');
+    const secondCol = block.querySelector('.column2');
+    const secondColFirstEl = secondCol?.firstElementChild;
+    const isTitleHeader = secondColFirstEl && (secondColFirstEl.tagName === 'H2' || secondColFirstEl.tagName === 'H3');
+    const title = `${isTitleHeader.textContent} map` || 'Google map embed';
+    const mapLink = firstCol?.querySelector('a');
+    const hasEmbedCode = mapLink?.href.indexOf('www.google.com/maps/embed') > -1;
+    if (hasEmbedCode) {
+      const map = iframe(
+        {
+          src: mapLink,
+          allowFullscreen: true,
+          frameBorder: 0,
+          class: 'map-embed',
+          title,
+        },
+      );
+      mapLink?.parentElement.replaceWith(map);
+    } else {
+      firstCol?.classList.add('no-embed');
+    }
+  }
+
+  // 2 Column Image Layout
+  const isTwoColImgLayout = block.classList.contains('two-column-image');
+  if (isTwoColImgLayout) {
+    replaceClickableImageLinkWithImage(block);
+  }
 }

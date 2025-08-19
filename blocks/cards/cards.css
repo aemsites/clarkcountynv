@@ -228,71 +228,277 @@
     }
 }
 
-.cards.staff.block {
-    ul {
-        margin: unset;
+/* Cards - Staff */
+.cards.staff ul {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: stretch;
+    gap: 26px;
+    max-width: 1340px;
+    margin: 0 26px;
+    list-style: none;
+}
+
+.cards.staff ul > li {
+    width: 100%;
+    margin: 0;
+    border: 2px solid var(--neutral-black-400);
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+}
+
+.cards.staff ul > li > a {
+    display: inline-block;
+    text-decoration: none;
+}
+
+.cards.staff ul > li:hover {
+    background-color: var(--neutral-black-200);
+}
+
+.cards.staff .staff-tile-img-box img {
+    display: inline-block;
+    width: 136px;
+    height: 136px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 24px 50px;
+}
+
+.cards.staff .staff-tile-name {
+    color: var(--neutral-black);
+    font-size: var(--heading-font-size-m);
+    line-height: 125%;
+    margin: 8px 0;
+}
+
+.cards.staff .staff-tile-title {
+    color: var(--neutral-black);
+    font-size: var(--heading-font-size-m);
+    line-height: 125%;
+    margin: 8px 0 32px;
+}
+
+.cards.staff .staff-tile-title p {
+    margin: 0;
+}
+
+.cards.staff .staff-tile-district {
+    color: var(--neutral-black);
+}
+
+.cards.staff .staff-tile-district p {
+    margin: 0;
+}
+
+.cards.staff .staff-tile-contacts {
+    background: var(--primary-orange-600);
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 0;
+    margin-top: auto;
+}
+
+.cards.staff .staff-tile-contacts a {
+    text-decoration: none;
+    display: inline-flex;
+}
+
+.cards.staff .staff-tile-contacts img {
+    width: 24px;
+    height: 24px;
+}
+
+@media (width >= 600px) {
+    .cards.staff ul {
+        gap: 2rem;
+        margin: 0 26px;
     }
 
-    li:nth-of-type(4n) {
-        margin-right: 0;
+    .rightsection .cards.staff ul {
+        margin: 0;
     }
 
-    li:hover {
-        background: none;
+    .cards.staff ul > li {
+        max-width: 240px;
+    }
+}
+
+@media (width >= 900px) {
+    .cards.staff ul {
+        gap: clamp(1rem, 10vw, 127px);
+        justify-content: flex-start;
     }
 
-    .staff-tile-img-box {
-        margin-top: 20px;
+    .rightsection .cards.staff ul {
+        gap: clamp(1rem, 10vw, 106px);
+    }
+}
 
-        img {
-            display: inline-block;
-            min-width: 162px;
-            width: 162px;
-            height: 162px;
-            object-fit: cover;
-            border-radius: 50%
-        }
+@media (width >= 1200px) {
+    .cards.staff ul {
+        margin: 0 auto;
+    }
+}
+
+/* Cards - Icon Cards */
+.cards.clickable-icon {
+    display: block;
+}
+
+.cards.clickable-icon .card-wrapper {
+    height: 100%;
+}
+
+.cards.clickable-icon .card-content {
+    padding: 20px 20px 40px;
+    height: 100%;
+}
+
+.cards.clickable-icon .card-link {
+    height: 100%;
+    width: 100%;
+}
+
+.cards.clickable-icon .card-img {
+    margin-bottom: 16px;
+}
+
+.cards.clickable-icon .card-title {
+    color: var(--neutral-black);
+    font-size: var(--body-font-size-m);
+    font-weight: var(--font-weight-bold);
+    line-height: 125%;
+    margin-bottom: 32px;
+}
+
+.cards.clickable-icon .card-description {
+    color: var(--neutral-black);
+    font-size: var(--body-font-size-m);
+    font-weight: var(--font-weight-book);
+    line-height: 125%;
+}
+
+.cards.clickable-icon ul {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 26px;
+    max-width: 1340px;
+    margin: 0 26px;
+    list-style: none;
+}
+
+.cards.clickable-icon ul > li {
+    width: 100%;
+    min-height: 373px;
+    margin: 0;
+    border: 2px solid var(--neutral-black-400);
+    align-self: stretch;
+}
+
+.cards.clickable-icon ul > li:hover {
+    background-color: unset;
+}
+
+.cards.clickable-icon ul > li .card-link:hover,
+.cards.clickable-icon ul > li .card-link:focus {
+    background-color: var(--primary-orange-600);
+}
+
+.cards.clickable-icon ul > li .card-link:hover p,
+.cards.clickable-icon ul > li .card-link:focus p {
+    color: var(--neutral-white);
+}
+
+.cards.clickable-icon ul > li .card-link:hover img,
+.cards.clickable-icon ul > li .card-link:focus img {
+    filter: brightness(0) invert(1);
+}
+
+.cards.clickable-icon ul > li a {
+    height: 100%;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.cards.clickable-icon p {
+    margin: 0;
+}
+
+.cards.clickable-icon .icon {
+    width: 120px;
+    height: 120px;
+    padding: 0;
+}
+
+.cards.clickable-icon .card-content a {
+    color: var(--primary-orange-600);
+    text-decoration: underline;
+}
+
+.cards.clickable-icon .card-content a:visited {
+    color: var(--secondary-orange-400);
+}
+
+.cards.clickable-icon .card-content a:disabled {
+    color: var(--neutral-black-400);
+    text-decoration: none;
+}
+
+.cards.clickable-icon .card-link:hover .card-content a,
+.cards.clickable-icon .card-link:focus .card-content a {
+    color: var(--neutral-white);
+    text-decoration-color: var(--neutral-white);
+}
+
+.cards.clickable-icon .card-link:hover .card-content a:hover {
+    color: var(--neutral-black-400);
+    text-decoration-color: var(--neutral-black-400);
+}
+
+.cards.clickable-icon .card-link:hover .card-content a:focus {
+    color: var(--neutral-white);
+    background-color: transparent;
+    text-decoration-color: var(--neutral-black-400);
+    border: 1px solid var(--neutral-white);
+}
+
+@media (width >= 600px) {
+    .cards.clickable-icon ul {
+        gap: 2rem;
+        margin: 0 26px;
     }
 
-    .staff-tile-name {
-        font: 700 18px 'Open Sans', sans-serif;
-        color: #000;
-        margin: 20px 0 10px;
+    .rightsection .cards.clickable-icon ul {
+        margin: 0;
     }
 
-    .staff-tile-title {
-        font: 400 18px 'Open Sans', sans-serif;
-        color: #000;
-        margin-bottom: 15px;
+    .cards.clickable-icon ul > li {
+        max-width: 240px;
+    }
+}
+
+@media (width >= 900px) {
+    .cards.clickable-icon ul {
+        gap: clamp(1rem, 10vw, 127px);
+        justify-content: flex-start;
     }
 
-    .staff-tile-contacts {
-        background: #C54B2A;
-        text-align: center;
-        padding: 5px 15px;
-
-        a {
-            margin: 0 10px
-        }
-
-        i.fa {
-            color: #FFF;
-            font-family: var(--icon-font-family);
-            font-style: normal;
-        }
+    .rightsection .cards.clickable-icon ul {
+        gap: clamp(1rem, 10vw, 106px);
     }
+}
 
-    @media screen and (width <= 1200px) and (width > 767px) {
-        li {
-            flex: 1 1 calc(40% - 20px);
-            max-width: calc(50% - 20px);
-        }
-    }
-
-    @media only screen and (width <= 767px) {
-        ul li {
-            width: 100%;
-        }
+@media (width >= 1200px) {
+    .cards.clickable-icon ul {
+        margin: 0 auto;
     }
 }
 

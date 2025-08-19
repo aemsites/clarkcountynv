@@ -3,6 +3,10 @@
  * Recreate a table
  * https://www.hlx.live/developer/block-collection/table
  */
+import {
+  div, button, img,
+} from '../../scripts/dom-helpers.js';
+import { debounce } from '../../scripts/utils.js';
 
 function buildCell(rowIndex) {
   const cell = rowIndex ? document.createElement('td') : document.createElement('th');
@@ -22,6 +26,40 @@ function getMaxColumns(block) {
   });
 
   return maxColumns;
+}
+
+function getScrollAmount(table) {
+  const tableWidth = table.offsetWidth;
+  const columns = table.querySelectorAll('th').length;
+  const avgColumnWidth = tableWidth / columns;
+  return Math.max(avgColumnWidth, 100);
+}
+
+function updateButtonStates(tableContainer, scrollLeftBtn, scrollRightBtn, fadeLeft, fadeRight) {
+  const { scrollLeft } = tableContainer;
+  const maxScroll = tableContainer.scrollWidth - tableContainer.clientWidth;
+  scrollLeftBtn.disabled = scrollLeft <= 0;
+  scrollRightBtn.disabled = scrollLeft >= maxScroll;
+
+  // Show left fade if we can scroll left (not at the beginning)
+  if (scrollLeft > 5) {
+    fadeLeft.classList.remove('hidden');
+  } else {
+    fadeLeft.classList.add('hidden');
+  }
+
+  // Show right fade if we can scroll right (not at the end)
+  if (scrollLeft < maxScroll - 5) {
+    fadeRight.classList.remove('hidden');
+  } else {
+    fadeRight.classList.add('hidden');
+  }
+
+  // Hide both fades if table doesn't need scrolling
+  if (maxScroll <= 0) {
+    fadeLeft.classList.add('hidden');
+    fadeRight.classList.add('hidden');
+  }
 }
 
 export default async function decorate(block) {
@@ -75,6 +113,57 @@ export default async function decorate(block) {
     }
   });
 
+  const tableContainer = div({ class: 'table-wrapper' });
+  const tableFadeLeft = div({ class: 'scroll-fade scroll-fade-left hidden' });
+  const tableFadeRight = div({ class: 'scroll-fade scroll-fade-right' });
+  const tableNav = div({ class: 'table-controls' });
+  const scrollLeftBtn = button({ class: 'button primary', type: 'button' });
+  const scrollRightBtn = button({ class: 'button primary', type: 'button' });
+  const scrollLeftBtnImg = img({ src: '/icons/arrow-left-white.svg', alt: 'Scroll left arrow icon' });
+  const scrollRightBtnImg = img({ src: '/icons/arrow-right-white.svg', alt: 'Scroll right arrow icon' });
+  const isNavigableTable = !block.classList.contains('agenda');
+
+  tableContainer.addEventListener('scroll', () => debounce(updateButtonStates(tableContainer, scrollLeftBtn, scrollRightBtn, tableFadeLeft, tableFadeRight)), 100);
+  window.addEventListener('resize', () => debounce(updateButtonStates(tableContainer, scrollLeftBtn, scrollRightBtn, tableFadeLeft, tableFadeRight)), 100);
+
+  scrollLeftBtn.addEventListener('click', () => {
+    const scrollAmount = getScrollAmount(table);
+    tableContainer.scrollBy({
+      left: -scrollAmount,
+      behavior: 'smooth',
+    });
+  });
+
+  scrollRightBtn.addEventListener('click', () => {
+    const scrollAmount = getScrollAmount(table);
+    tableContainer.scrollBy({
+      left: scrollAmount,
+      behavior: 'smooth',
+    });
+  });
+
+  if (isNavigableTable) {
+    tableContainer.append(tableFadeLeft, tableFadeRight, table);
+  } else {
+    tableContainer.append(table);
+  }
+
   block.innerHTML = '';
-  block.append(table);
+  block.append(tableContainer);
+  if (isNavigableTable) {
+    scrollLeftBtn.append(scrollLeftBtnImg);
+    scrollRightBtn.append(scrollRightBtnImg);
+    tableNav.append(scrollLeftBtn, scrollRightBtn);
+    block.append(tableNav);
+  }
+
+  setTimeout(() => {
+    updateButtonStates(
+      tableContainer,
+      scrollLeftBtn,
+      scrollRightBtn,
+      tableFadeLeft,
+      tableFadeRight,
+    );
+  }, 100);
 }

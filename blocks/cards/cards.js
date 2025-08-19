@@ -1,6 +1,6 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import {
-  ul, li, a, div, img, h4, i, br,
+  ul, li, a, div, img, h4, br, p,
 } from '../../scripts/dom-helpers.js';
 
 export default function decorate(block) {
@@ -98,51 +98,84 @@ export default function decorate(block) {
       );
     } else if (block.classList.contains('staff')) {
       const imgSrc = row.children[0].querySelector('img')?.src;
+      const defaultImgSrc = '/images/staff-img-placeholder.svg';
       const altText = imgSrc?.split('/').pop().split('?')[0];
       const name = row.children[1].textContent;
-      const title = row.children[2];
-      const pageLink = row.children[3].querySelector('a')?.href;
-      const phone = row.children[4].querySelector('a[title="phone"]')?.href;
-      const email = row.children[4].querySelector('a[title="email"]')?.href;
-      const facebookSrc = row.children[4].querySelector('a[title="facebook"]')?.href;
-      const youtubeSrc = row.children[4].querySelector('a[title="youtube"]')?.href;
-      const twitterSrc = row.children[4].querySelector('a[title="twitter"]')?.href;
-      const instagramSrc = row.children[4].querySelector('a[title="instagram"]')?.href;
+      const district = row.children[2];
+      const title = row.children[3];
+      const pageLink = row.children[4].querySelector('a')?.href;
+      const phone = row.children[5].querySelector('a[title="phone"]')?.href;
+      const email = row.children[5].querySelector('a[title="email"]')?.href;
+      const facebookSrc = row.children[5].querySelector('a[title="facebook"]')?.href;
+      const youtubeSrc = row.children[5].querySelector('a[title="youtube"]')?.href;
+      const twitterSrc = row.children[5].querySelector('a[title="twitter"]')?.href;
+      const instagramSrc = row.children[5].querySelector('a[title="instagram"]')?.href;
 
       $ul.append(
         li(
           a(
             { href: pageLink || '', class: 'tile-detail', style: pageLink ? '' : 'pointer-events: none;' },
-            div({ class: 'staff-tile-img-box' }, img({ src: imgSrc, alt: altText || '' })),
-            h4({ class: 'staff-tile-name' }, `${name.split('-')[0]} - `, br(), name.split('-')[1]),
+            div({ class: 'staff-tile-img-box' }, img({ src: imgSrc || defaultImgSrc, alt: altText || '' })),
+            h4({ class: 'staff-tile-name' }, `${name.split('-')[0]}`, br(), name.split('-')[1]),
+            div({ class: 'staff-tile-district' }, district),
             div({ class: 'staff-tile-title' }, title),
           ),
           div(
             { class: 'staff-tile-contacts' },
             phone ? a(
               { href: phone, class: 'staff-tile-contact-icon' },
-              i({ class: 'fa fa-phone' }),
+              img({ src: '/icons/phone-icon-white.svg', alt: 'Phone icon' }),
             ) : null,
             email ? a(
               { href: email, class: 'staff-tile-contact-icon' },
-              i({ class: 'fa fa-envelope' }),
+              img({ src: '/icons/email-icon-white.svg', alt: 'Email icon' }),
             ) : null,
             facebookSrc ? a(
               { href: facebookSrc, class: 'staff-tile-contact-icon' },
-              i({ class: 'fa fa-facebook' }),
+              img({ src: '/icons/facebook-icon-white.svg', alt: 'Facebook icon' }),
             ) : null,
             youtubeSrc ? a(
               { href: youtubeSrc, class: 'staff-tile-contact-icon' },
-              i({ class: 'fa fa-youtube' }),
+              img({ src: '/icons/youtube-icon-white.svg', alt: 'Youtube icon' }),
             ) : null,
             twitterSrc ? a(
               { href: twitterSrc, class: 'staff-tile-contact-icon' },
-              i({ class: 'fa fa-x-twitter' }),
+              img({ src: '/icons/twitter-icon-white.svg', alt: 'Twitter icon' }),
             ) : null,
             instagramSrc ? a(
               { href: instagramSrc, class: 'staff-tile-contact-icon' },
-              i({ class: 'fa fa-instagram' }),
+              img({ src: '/icons/instagram-icon-white.svg', alt: 'Instagram icon' }),
             ) : null,
+          ),
+        ),
+      );
+    } else if (block.classList.contains('clickable-icon')) {
+      const iconImg = row.children[0];
+      const content = row.children[1];
+      const cardTitle = content.children[0];
+      const cardDesc = content.children[1];
+      const cardLink = content.querySelector('a');
+      const { href, title, target } = cardLink ?? {};
+      $ul.append(
+        li(
+          div(
+            { class: 'card-wrapper' },
+            cardLink ? a(
+              {
+                class: 'card-link', href, title, target,
+              },
+              div(
+                { class: 'card-content' },
+                img ? div({ class: 'card-img' }, iconImg) : null,
+                cardTitle ? p({ class: 'card-title' }, cardTitle) : null,
+                cardDesc ? p({ class: 'card-description' }, cardDesc) : null,
+              ),
+            ) : div(
+              { class: 'card-content' },
+              img ? div({ class: 'card-img' }, iconImg) : null,
+              cardTitle ? p({ class: 'card-title' }, cardTitle) : null,
+              cardDesc ? p({ class: 'card-description' }, cardDesc) : null,
+            ),
           ),
         ),
       );

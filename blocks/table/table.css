@@ -1,13 +1,17 @@
 .table {
   width: 100%;
-  overflow-x: auto;
+  position: relative;
+}
+
+.table .table-wrapper {
+    width: 100%;
+    overflow-x: auto;
 }
 
 .table table {
   width: 100%;
   max-width: 100%;
   border-collapse: collapse;
-  font-size: var(--body-font-size-xs);
 }
 
 /* Adding Table head background color */
@@ -49,35 +53,59 @@
     background-color: var(--table-head-background-color-green);
 }
 
-@media (width >= 600px) {
-  .table table {
-    font-size: var(--body-font-size-s);
-  }
-}
-
 @media (width >= 900px) {
   .table table {
     font-size: var(--body-font-size-m);
   }
 }
 
-.table table th {
-    font-weight: 700;
-  }
-  
-  .table:not(:has('center')) table th,
-  .table:not(:has('center')) table td {
+.table .scroll-fade {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50px;
+    pointer-events: none;
+    z-index: 10;
+    transition: opacity 0.3s ease;
+}
+
+.table .scroll-fade-left {
+    left: 0;
+    background: linear-gradient(to right, rgba(255 255 255 / 90%) 0%, rgba(255 255 255 / 50%) 50%, rgba(255 255 255 / 0%) 100%);
+}
+
+.table .scroll-fade-right {
+    right: 0;
+    background: linear-gradient(to left, rgba(255 255 255 / 90%) 0%, rgba(255 255 255 / 50%) 50%, rgba(255 255 255 / 0%) 100%);
+}
+
+.table .scroll-fade.hidden {
+    opacity: 0;
+}
+
+.table thead {
+    background-color: var(--primary-orange-600);
+    color: var(--neutral-white);
+}
+
+.table th {
+    font-weight: var(--font-weight-bold);
+    padding: 6px;
+}
+
+.table:not(:has('center')) table th,
+.table:not(:has('center')) table td {
     padding: 0.5em;
     text-align: left;
   }
 
 .table:not(.cards) table thead tr {
-  border-top: 2px solid #dadada;
-  border-bottom: 2px solid #dadada;
+    text-align: left;
+    border: none;
 }
 
 .table:not(.cards) table tbody tr {
-  border-bottom: 1px solid #dadada;
+    border-bottom: 2px solid var(--neutral-black-400);
 }
 
 .table.parks {
@@ -91,6 +119,7 @@
 .table table th p,
 .table table td p {
   margin: 0;
+  font-size: var(--body-font-size-m);
 }
 
 .table table td p + p {
@@ -101,9 +130,36 @@
     border: none;
 }
 
+/* Table Scroll Arrows */
+.table .table-controls {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    z-index: 11;
+}
+
+.table .table-controls .button {
+    margin: 24px 0 0;
+    padding: 8px 24px;
+}
+
+@media (width >= 600px) {
+    .table table {
+        font-size: var(--body-font-size-s);
+    }
+
+    .table .scroll-fade,
+    .table .table-controls {
+        display: none;
+    }
+}
+
 /* no header variant */
 .table.no-header table tbody tr {
-  border-top: 1px solid #dadada;
+  border-top: 2px solid var(--neutral-black-400);
 }
 
 /* striped variant */
@@ -321,51 +377,41 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
 }
 
 .table.agenda {
-  table {
-      font-size: var(--body-font-size-xs);
+    table {
+        font-size: var(--body-font-size-xs);
 
-      td {
-          padding: 0;
+        td {
+            &:nth-child(1) {
+                width: 40%;
+            }
 
-          &:nth-child(1) {
-              width: 40%;
-          }
+            &:nth-child(2) {
+                width: 15%;
+            }
 
-          &:nth-child(2) {
-              width: 10%;
-          }
+            &:nth-child(3) {
+                width: 15%;
+            }
 
-          &:nth-child(3) {
-              width: 10%;
-          }
+            &:nth-child(4) {
+                width: 15%;
+            }
 
-          &:nth-child(4) {
-              width: 10%;
-          }
+            &:nth-child(5) {
+                width: 15%;
+            }
+        }
 
-          &:nth-child(5) {
-              width: 10%;
-          }
-
-          &:nth-child(6) {
-              width: 10%;
-          }
-
-          &:nth-child(7) {
-              width: 10%;
-          }
-      }
-
-      a {
-          font-weight: 400;
-          padding: 0;
-          margin: 0;
-          color: var(--no-button-link);
-          background-color: transparent;
-          text-decoration: underline;
-          border: 0;
-      }
-  }
+        a {
+            font-weight: 400;
+            padding: 0;
+            margin: 0;
+            color: var(--primary-orange-900);
+            background-color: transparent;
+            border: 0;
+            display: inline;
+        }
+    }
 }
 
 .table.align-top table td{
@@ -673,9 +719,9 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
 
 /* CSS for left-aligned text */
 .table.left-align table th,
-                  table td {
-padding: 0.5em;
-text-align: left;
+table td {
+    padding: 6px;
+    text-align: left;
 }
 
 /* Mobile view adjustments */

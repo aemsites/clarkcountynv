@@ -1,9 +1,11 @@
 // eslint-disable-next-line no-unused-vars,no-empty-function
 import {
   div,
+  button,
 } from '../../scripts/dom-helpers.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { loadFragment } from '../../blocks/fragment/fragment.js';
+import { AccessibleLeftNav } from '../../blocks/left-nav/left-nav.js';
 
 /** allow for link attributes to be added by authors
  * example usage = Text [class:button,target:_blank,title:Title goes here]
@@ -77,21 +79,26 @@ export default async function decorate(doc) {
   const $leftsection = document.querySelector('.leftsection');
 
   if ($leftsection) {
-    if (!$leftsection.querySelector('.accordion-ml.block')) {
+    if (!$leftsection.querySelector('.left-nav.block')) {
       // check for the URL path segments from extreme right, presence of fragment folder
       const fragPath = await checkFragmentAccordionML();
       if (fragPath) {
         const path = new URL(fragPath).pathname;
         const leftFrag = await loadFragment(path);
-        const leftnav = leftFrag.querySelector('.accordion-ml-wrapper').cloneNode(true);
+        const leftnav = leftFrag.querySelector('.left-nav-wrapper').cloneNode(true);
         const startH2 = $leftsection.querySelector('h2');
         // append leftnav just after startH2
         if (startH2) {
           startH2.after(leftnav);
         }
+        // if no h2 found, append leftnav at the end of leftsection
         $leftsection.append(leftnav);
+        const leftNavBlock = leftnav.querySelector('.left-nav.block');
+        /* eslint-disable no-new */
+        new AccessibleLeftNav(leftNavBlock);
       }
     }
+
     if ($leftsection.querySelectorAll('.leftnav-info-wrapper').length > 0) {
       const $leftNavInfo = $leftsection.querySelectorAll('.leftnav-info-wrapper');
       for (let index = 0; index < $leftNavInfo.length; index += 1) {
@@ -99,11 +106,17 @@ export default async function decorate(doc) {
       }
     }
     const $clickElement = $leftsection.querySelector('.default-content-wrapper > p');
-    const $activeElement = $leftsection.querySelector('.accordion-ml.block');
+    const $activeElement = $leftsection.querySelector('.left-nav.block');
+    const sectionMenuBtn = button({ class: 'section-menu-btn', type: 'button' });
+    sectionMenuBtn.innerHTML = $clickElement.innerHTML;
+    $clickElement.replaceWith(sectionMenuBtn);
+    if (sectionMenuBtn.parentElement.classList.contains('default-content-wrapper')) {
+      sectionMenuBtn.parentElement.classList.add('left-nav-default-content-wrapper');
+    }
 
-    $clickElement.addEventListener('click', () => {
-      $clickElement.classList.toggle('active');
-      $activeElement.classList.toggle('active');
+    sectionMenuBtn.addEventListener('click', () => {
+      sectionMenuBtn.classList.toggle('active');
+      $activeElement?.classList.toggle('active');
       const height = document.querySelector(':root');
       const originalHeight = height.style.getPropertyValue('--original-height');
       height.style.setProperty('--height', `${originalHeight}`);
