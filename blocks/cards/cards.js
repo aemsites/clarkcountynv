@@ -7,20 +7,17 @@ const removeAnchorsAndCleanParagraphs = (content) => {
   const contentCopy = content.cloneNode(true);
   const paragraphs = Array.from(contentCopy.querySelectorAll('p'));
   paragraphs?.forEach((paragraph) => {
-      const anchors = Array.from(paragraph.querySelectorAll('a'));
-      anchors?.forEach(anchor => {
-        anchor.remove();
-      });
-
-      if (paragraph.children.length && paragraph.firstElementChild.tagName === 'STRONG') {
-        paragraph.remove();
-      }
-      
-      const hasContent = paragraph.textContent.trim().length > 0 || paragraph.querySelector('*:not(br)') !== null;
-      if (!hasContent) {
-        paragraph.remove();
-      }
-
+    const anchors = Array.from(paragraph.querySelectorAll('a'));
+    anchors?.forEach((anchor) => {
+      anchor.remove();
+    });
+    if (paragraph.children.length && paragraph.firstElementChild.tagName === 'STRONG') {
+      paragraph.remove();
+    }
+    const hasContent = paragraph.textContent.trim().length > 0 || paragraph.querySelector('*:not(br)') !== null;
+    if (!hasContent) {
+      paragraph.remove();
+    }
   });
   return contentCopy;
 };
@@ -176,7 +173,6 @@ export default function decorate(block) {
       const content = row.children[1];
       const cardTitle = content.children[0];
       const cardLink = content.querySelector('a');
-      //const cardContent = removeAnchorsAndCleanParagraphs(content.children[1]);
       const cardContent = removeAnchorsAndCleanParagraphs(content);
       const { href, title, target } = cardLink ?? {};
       $ul.append(
