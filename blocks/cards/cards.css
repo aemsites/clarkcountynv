@@ -253,6 +253,7 @@
 .cards.staff ul > li > a {
     display: inline-block;
     text-decoration: none;
+    padding: 0 12px;
 }
 
 .cards.staff ul > li:hover {
