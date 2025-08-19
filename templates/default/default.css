@@ -193,6 +193,11 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
         flex-direction: row;
     }
 
+    main .mainmenu .rightsection.contact-us > div,
+    main .mainmenu .contact-us > div {
+        width: 100%;
+    }
+
     main .mainmenu .rightsection.contact-us .default-content-wrapper, main .mainmenu .contact-us .default-content-wrapper,  main .mainmenu .rightsection.contact-us .default-content-wrapper a, main .mainmenu .contact-us .default-content-wrapper a {
         margin: 0;
     }

@@ -98,6 +98,10 @@ main .form-container {
     width: var(--form-width);
 }
 
+main .mainmenu .form-container {
+    padding: 0;
+}
+
 main .form {
     background-color: var(--form-background-color);
 }
@@ -201,6 +205,10 @@ main .form form .field-invalid .field-description {
     font-weight: var(--font-weight-book);
     line-height: 125%;
     outline: none;
+}
+
+.form.block textarea::placeholder {
+    font-family: var(--body-font-family);
 }
 
 main .form input:disabled{
@@ -370,7 +378,7 @@ main .form form p {
 
 main .form form .checkbox-wrapper, main .form form .radio-wrapper {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
     margin: 0;
     gap: 8px;
@@ -757,18 +765,6 @@ main .form form .wizard.left .panel-wrapper{
   flex: 1;
 }
 
-@media (width >= 1200px) {
-    main .form form .form-textarea-wrapper,
-    main .form form .file-wrapper,
-    main .form form .panel-wrapper {
-        flex: 1 0 100%;
-    }
-
-    main .form form .panel-wrapper {
-        flex-flow: row wrap;
-    }
-}
-
 main .form .form-message.success-message {
     color: #0f5132;
     background-color: #d1e7dd;
@@ -981,8 +977,25 @@ main .form form .checkbox-group-wrapper.horizontal .field-description {
         gap: 40px;
     }
 
+    main .mainmenu .form-container {
+        padding: 0 24px;
+    }
+
+    .rightsection .form.block form {
+        padding: 0;
+    }
+
+    main .form form .checkbox-wrapper,
+    main .form form .radio-wrapper {
+        flex-wrap: nowrap;
+    }
+
     .form.block form fieldset > .field-wrapper {
         grid-column: span 6;
+    }
+
+    .rightsection .form.block form fieldset > .field-wrapper {
+        grid-column: span 12;
     }
 
     .form.block div.spinner {
@@ -1007,6 +1020,26 @@ main .form form .checkbox-group-wrapper.horizontal .field-description {
 
     .form.block form .panel-wrapper {
         gap: 40px;
+    }
+}
+
+@media (width >= 1200px) {
+    main .mainmenu .form-container {
+        padding: 0 50px;
+    }
+
+    main .form form .form-textarea-wrapper,
+    main .form form .file-wrapper,
+    main .form form .panel-wrapper {
+        flex: 1 0 100%;
+    }
+
+    main .form form .panel-wrapper {
+        flex-flow: row wrap;
+    }
+
+    .rightsection .form.block form fieldset > .field-wrapper {
+        grid-column: span 6;
     }
 }
 
