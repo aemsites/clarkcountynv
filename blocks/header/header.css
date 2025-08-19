@@ -360,11 +360,12 @@ header nav .nav-language {
   justify-content: flex-end;
   color: var(--white);
   align-items: center;
-  margin: 15px;
   flex-direction: column;
   position: relative;
   grid-area: language;
   justify-self: center;
+  width: 100%;
+  padding-right: 24px;
 }
 
 header nav .nav-language .google-translate {
@@ -1076,6 +1077,7 @@ header .nav-search .search-box .search-form-wrap .search-results {
     align-items: center;
     justify-content: center;
     color: var(--nuetral-white);
+    width: auto;
   }
 
   header nav .expanddiv {
