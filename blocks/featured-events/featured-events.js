@@ -11,6 +11,8 @@ import { popupEvent } from '../../templates/calendar/calendar.js';
 
 const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEPT', 'OCT', 'NOV', 'DEC'];
 let divisions = [];
+const defaultplaceholders = await defaultFetchPlaceholders();
+const CLARKLOGO = defaultplaceholders.clarkcountylogo;
 // Result parsers parse the query results into a format that can be used by the block builder for
 // the specific block types
 const resultParsers = {
