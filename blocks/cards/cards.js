@@ -153,7 +153,7 @@ export default function decorate(block) {
       const iconImg = row.children[0];
       const content = row.children[1];
       const cardTitle = content.children[0];
-      const cardDesc = content.children[1];
+      const cardDesc = content.querySelectorAll(':not(p.button-container):not(a.button)');
       const cardLink = content.querySelector('a');
       const { href, title, target } = cardLink ?? {};
       $ul.append(
@@ -168,13 +168,13 @@ export default function decorate(block) {
                 { class: 'card-content' },
                 img ? div({ class: 'card-img' }, iconImg) : null,
                 cardTitle ? p({ class: 'card-title' }, cardTitle) : null,
-                cardDesc ? p({ class: 'card-description' }, cardDesc) : null,
+                cardDesc ? p({ class: 'card-description' }, ...cardDesc) : null,
               ),
             ) : div(
               { class: 'card-content' },
               img ? div({ class: 'card-img' }, iconImg) : null,
               cardTitle ? p({ class: 'card-title' }, cardTitle) : null,
-              cardDesc ? p({ class: 'card-description' }, cardDesc) : null,
+              cardDesc ? p({ class: 'card-description' }, ...cardDesc) : null,
             ),
           ),
         ),
