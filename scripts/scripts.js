@@ -20,7 +20,8 @@ import { h1 } from './dom-helpers.js';
 import { getViewPort, externalLinks, ScrolltoTop } from './utils.js';
 import assetsInit from './aem-assets-plugin-support.js';
 
-const DEFAULT_BACKGROUND_IMAGE = `${window.location.origin}/assets/images/general/slide1.jpg`;
+const placeholders = await fetchPlaceholders();
+const DEFAULT_BACKGROUND_IMAGE = placeholders.defaultherobanner;
 
 const getPageTitle = async (url) => {
   // TODO: check if URL is valid, shouldn't be empty or null or need trailing slash
@@ -71,7 +72,6 @@ async function buildBreadcrumbsFromNavTree(nav, currentUrl) {
   }
 
   // TODO: needs placeholders file
-  const placeholders = await fetchPlaceholders();
   const homePlaceholder = placeholders.breadcrumbsHomeLabel || 'Home';
 
   crumbs.unshift({ title: homePlaceholder, url: homeUrl });

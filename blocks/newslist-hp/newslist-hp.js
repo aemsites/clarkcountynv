@@ -3,8 +3,12 @@ import {
   div, a, img, h4, span, p,
 } from '../../scripts/dom-helpers.js';
 import {
-  buildBlock, decorateBlock, loadBlock, createOptimizedPicture, readBlockConfig,
+  buildBlock, decorateBlock, loadBlock, createOptimizedPicture, fetchPlaceholders, readBlockConfig,
 } from '../../scripts/aem.js';
+
+const placeholders = await fetchPlaceholders();
+const CLARKLOGO = placeholders.clarkcountylogo;
+const WHITEARROW = placeholders.whitearrow;
 
 class News {
   constructor(newsTitle, newsDescription, newsPath, newsPublished, newsImage, newsCategory) {
@@ -30,7 +34,7 @@ const resultParsers = {
         const cardImage = createOptimizedPicture(result.newsImage);
         cardtop.append(cardImage);
       } else {
-        const cardImage = createOptimizedPicture('/news/media_1cd00e6d663e3a8f17a6a71845a2d09cc41f55b6d.png');
+        const cardImage = createOptimizedPicture(CLARKLOGO);
         cardtop.append(cardImage);
       }
       const cardbottom = div({ class: 'card-bottom' });
@@ -43,7 +47,7 @@ const resultParsers = {
 
       const pageTitle = div({ class: 'pagetitle' }, result.newsTitle);
       cardbottom.append(pageTitle);
-      const aEle1 = div({ class: 'learnmore' }, a({ href: `${result.newsPath}` }, 'Explore More', img({ src: '/assets/images/general/white-arrow-right.png', alt: 'more' })));
+      const aEle1 = div({ class: 'learnmore' }, a({ href: `${result.newsPath}` }, 'Explore More', img({ src: WHITEARROW, alt: 'more' })));
       cardbottom.append(aEle1);
       row.push(cardtop, cardbottom);
       blockContents.push(row);

@@ -441,6 +441,7 @@
 .cards.clickable-icon .card-content a {
     color: var(--primary-orange-600);
     text-decoration: underline;
+    word-break: break-all;
 }
 
 .cards.clickable-icon .card-content a:visited {

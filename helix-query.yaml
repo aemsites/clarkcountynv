@@ -43,6 +43,8 @@ indices:
       - /calendar/featured-events/
     exclude:
       - /drafts/**
+      - /**/fragments/**
+      - /**/left-nav
       - /fragments/**
       - '**/fragments/**'
       - /tools/**
