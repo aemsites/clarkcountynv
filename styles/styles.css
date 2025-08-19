@@ -496,10 +496,10 @@ main div.section.mobile {
 
     .page-title {
         position: absolute;
-        left: 20px;
+        left: 0;
         bottom: 0;
         text-shadow: 0 2px 0.99px rgb(0 0 0 / 90%);
-        padding: 0 15px;
+        padding: 0 24px;
         color: var(--neutral-white);
     }
 
@@ -1026,7 +1026,7 @@ main > div.section.newsdetail > .default-content-wrapper > p {
 }
 
 .no-button a:any-link:not(.block a, .block * a) {
-    color: var(--no-button-link);
+    color: var(--primary-orange-600);
     background-color: transparent;
     text-decoration: underline;
     border: 0;
