@@ -630,6 +630,12 @@ main .section.details-404 > .default-content-wrapper {
     padding: 0 50px;
   }
 
+  body.full-template main > .section {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
   .max-width-wrapper {
     width: 100%;
     max-width: 1440px;
