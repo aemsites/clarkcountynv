@@ -600,29 +600,6 @@ main .section.details-404 > .default-content-wrapper {
   box-sizing: border-box;
 }
 
-/* widget for share */
-
-.floating-share-btn {
-    position: fixed;
-    z-index: 99999;
-    width: 53px;
-    border-radius: 0;
-    border: 0;
-    color: #fff!important;
-    padding: 7px 8px;
-    box-shadow: 0 0 10px rgba(0 0 0 0.3);
-    text-align: center;
-    line-height:1.5;
-
-    span {
-        width: 18px;
-        display:block;
-        text-transform:uppercase;
-        font-size:12px;
-        line-height:1;
-    }
-}
-
 .rightsection > .columns-wrapper {
   margin-bottom: 40px;
 }
@@ -651,6 +628,12 @@ main .section.details-404 > .default-content-wrapper {
 @media (width >= 900px) {
   .section:not(.rightsection) > .default-content-wrapper {
     padding: 0 50px;
+  }
+
+  body.full-template main > .section {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
   }
 
   .max-width-wrapper {
@@ -779,17 +762,6 @@ main .section.details-404 > .default-content-wrapper {
 
   main > div.section.desktop.with-background-image.short {
     height: 330px;
-  }
-
-   /* widget for share */
-  .floating-share-btn {
-    top:40%;
-    right:0;
-    background:#C54B2A!important;
-  }
-
-  .floating-share-btn-home {
-    background:#0094C3 !important;
   }
 
   /* BEGIN BUSINESS PAGES STYLES */

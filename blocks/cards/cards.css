@@ -193,16 +193,17 @@
                     width: 100%;
                 }
 
-                .visitors-tile-text{
+                .visitors-tile-text {
                     position: relative;
                     display: block;
                     width: 100%;
                     padding: 19px 0;
-                    font: 600 30px Oswald,sans-serif;
-                    color: #000;
+                    color: var(--neutral-black);
                     text-align: center;
                     line-height: 1.2;
-                    background-color: #FFF;
+                    background-color: var(--neutral-white);
+                    font-weight: var(--font-weight-bold);
+                    font-size: 30px;
                 }
             }
         }
@@ -252,6 +253,7 @@
 .cards.staff ul > li > a {
     display: inline-block;
     text-decoration: none;
+    padding: 0 12px;
 }
 
 .cards.staff ul > li:hover {

@@ -30,7 +30,8 @@ function getMaxColumns(block) {
 
 function getScrollAmount(table) {
   const tableWidth = table.offsetWidth;
-  const columns = table.querySelectorAll('th').length;
+  const isAgendaTable = table.closest('.table').classList.contains('no-header');
+  const columns = isAgendaTable ? table.querySelectorAll('tbody > tr > td').length : table.querySelectorAll('th').length;
   const avgColumnWidth = tableWidth / columns;
   return Math.max(avgColumnWidth, 100);
 }
@@ -121,7 +122,6 @@ export default async function decorate(block) {
   const scrollRightBtn = button({ class: 'button primary', type: 'button' });
   const scrollLeftBtnImg = img({ src: '/icons/arrow-left-white.svg', alt: 'Scroll left arrow icon' });
   const scrollRightBtnImg = img({ src: '/icons/arrow-right-white.svg', alt: 'Scroll right arrow icon' });
-  const isNavigableTable = !block.classList.contains('agenda');
 
   tableContainer.addEventListener('scroll', () => debounce(updateButtonStates(tableContainer, scrollLeftBtn, scrollRightBtn, tableFadeLeft, tableFadeRight)), 100);
   window.addEventListener('resize', () => debounce(updateButtonStates(tableContainer, scrollLeftBtn, scrollRightBtn, tableFadeLeft, tableFadeRight)), 100);
@@ -142,20 +142,15 @@ export default async function decorate(block) {
     });
   });
 
-  if (isNavigableTable) {
-    tableContainer.append(tableFadeLeft, tableFadeRight, table);
-  } else {
-    tableContainer.append(table);
-  }
+  tableContainer.append(tableFadeLeft, tableFadeRight, table);
 
   block.innerHTML = '';
   block.append(tableContainer);
-  if (isNavigableTable) {
-    scrollLeftBtn.append(scrollLeftBtnImg);
-    scrollRightBtn.append(scrollRightBtnImg);
-    tableNav.append(scrollLeftBtn, scrollRightBtn);
-    block.append(tableNav);
-  }
+
+  scrollLeftBtn.append(scrollLeftBtnImg);
+  scrollRightBtn.append(scrollRightBtnImg);
+  tableNav.append(scrollLeftBtn, scrollRightBtn);
+  block.append(tableNav);
 
   setTimeout(() => {
     updateButtonStates(

@@ -3,16 +3,6 @@
     background: #B54425;
     margin: 10px 0;
 
-    h2 {
-        display: block;
-        font: 700 24px Oswald,sans-serif;
-        color: #fff;
-        text-transform: uppercase;
-        padding: 15px 10px 11px 15px;
-        margin-top: unset;
-        margin-bottom: 8px;
-    }
-
     p {
         font-size: var(--body-font-size-s);
         color: #fff;
@@ -28,6 +18,16 @@
     p.contact-address {
         margin-top: 14px;
     }
+}
+
+.leftnav-info .leftnav-info-card h2 {
+    display: block;
+    color: var(--neutral-white);
+    text-transform: uppercase;
+    padding: 15px 10px 11px 15px;
+    margin-top: unset;
+    margin-bottom: 8px;
+    font-size: var(--heading-font-size-l);
 }
 
 .leftnav-info .leftnav-info-card a {
