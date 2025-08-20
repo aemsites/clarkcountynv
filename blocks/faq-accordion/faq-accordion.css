@@ -75,7 +75,7 @@
 }
 
 .faq-accordion.accordion details[open] details:not([open]) summary::before {
-    background: url('../../icons/chevron-up.svg') center center no-repeat;
+    background: url('../../icons/chevron-down-grey.svg') center center no-repeat;
 }
 
 .faq-accordion.accordion details[open] details:not([open]) summary p {
