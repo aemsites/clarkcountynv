@@ -423,9 +423,17 @@ main .section.rightsection.no-button .columns.alert a:any-link {
   padding: 0 24px;
 }
 
+.rightsection .columns.two-column-text {
+  padding: 0;
+}
+
 .columns.two-column-text > div {
   align-items: flex-start;
   gap: 40px;
+}
+
+.rightsection .columns.two-column-text > div {
+  gap: 0;
 }
 
 .columns.two-column-text :is(h2, h3) {
@@ -439,6 +447,10 @@ main .section.rightsection.no-button .columns.alert a:any-link {
 
 .columns.two-column-text h3 {
   margin: 40px 0 16px;
+}
+
+.rightsection .columns.two-column-text h3 {
+  margin: 24px 0 16px;
 }
 
 .columns.two-column-text hr {
@@ -482,6 +494,14 @@ main .section.rightsection.no-button .columns.alert a:any-link {
 
   .columns.two-column-text .column1 p {
     font-size: var(--body-font-size-m);
+  }
+
+  .rightsection .columns.two-column-text h3 {
+    margin: 40px 0 16px;
+  }
+
+  .rightsection .columns.two-column-text > div {
+    gap: 40px;
   }
 }
 
