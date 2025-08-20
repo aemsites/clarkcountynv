@@ -743,6 +743,14 @@ header .nav-in-menu-wrap .tabs-list button {
   border: none;
 }
 
+header .nav-in-menu-wrap .tabs-list .tabs-tab {
+  padding: 10px 50px;
+}
+
+header .nav-in-menu-wrap .tabs-list .tabs-tab:has(a) {
+  padding: 0;
+}
+
 header .nav-in-menu-wrap .tabs-list button:hover,
 header .nav-in-menu-wrap .tabs-list button:focus {
   background-color: var(--primary-orange-900);
