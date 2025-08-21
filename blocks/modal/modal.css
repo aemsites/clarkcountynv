@@ -16,7 +16,6 @@ body.modal-open {
 
 .modal dialog .modal-content {
   box-sizing: border-box;
-  overflow-y: auto;
   overscroll-behavior: none;
   width: 100%;
   max-height: calc(100dvh - (2 * var(--header-height)) - 48px);
@@ -177,7 +176,6 @@ body.modal-open {
 
 /* Calendar Event Modal */
 .modal.event-modal-block dialog {
-  overflow-y: scroll;
   width: 100%;
   max-width: 390px;
   height: 100%;
