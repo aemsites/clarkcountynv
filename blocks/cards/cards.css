@@ -369,6 +369,11 @@
     margin: 0 auto;
 }
 
+.rightsection .cards.logo ul {
+    justify-content: flex-start;
+    margin: 0;
+}
+
 .cards.logo li {
     display: flex;
     align-items: center;
@@ -390,6 +395,7 @@
     width: 100%;
     height: 96px;
     text-decoration: none;
+    background-color: var(--neutral-black-200);
 }
 
 .cards.logo .card-link:hover,

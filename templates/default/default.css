@@ -159,7 +159,7 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
     main .mainmenu .rightsection {
         width: 100%;
         flex: 100%;
-        padding: 50px;
+        padding: 24px;
         box-sizing: border-box;
     }
 
@@ -226,6 +226,12 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
     main .mainmenu .rightsection.contact-us .map-embed.block  p, main .mainmenu .contact-us .map-embed.block  p {
         margin: 0;
         text-align: center;
+    }
+}
+
+@media (width >= 1200px) {
+    main .mainmenu .rightsection {
+        padding: 50px;
     }
 }
 
