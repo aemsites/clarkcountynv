@@ -559,7 +559,6 @@ main .section.rightsection.no-button .columns.alert a:any-link {
 
 .columns.highlight > div > div.column2 p {
   font-size: var(--body-font-size-m);
-  /* margin: 0 0 40px; */
   margin: 0;
 }
 
