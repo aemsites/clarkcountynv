@@ -101,9 +101,13 @@ header nav .nav-in-menu-wrap-mobile .tabs-tab {
   margin: 0;
   border: none;
   width: 100%;
-  padding: 0;
+  padding: 12px 24px 12px 40px;
   text-align: left;
   position: relative;
+}
+
+header nav .nav-in-menu-wrap-mobile .tabs-tab:has(a) {
+  padding: 0;
 }
 
 header nav .nav-in-menu-wrap-mobile .tabs-tab:hover {
