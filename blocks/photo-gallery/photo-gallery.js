@@ -8,27 +8,48 @@ const getFocusableElements = (modal) => {
   return focusableElements;
 };
 
+const setFocus = (event, element) => {
+  setTimeout(() => {
+    element.focus();
+  }, 0);
+};
+
 const handleModalAccessibility = (event) => {
   const modal = event.target.closest('.image-modal-content');
   const focusableElements = getFocusableElements(modal);
   const focused = document.activeElement;
-  //console.log('Focusable Elements', focusableElements);
-  //console.log('Focused', focused);
   console.log('Focused', focused);
-  if (event.code === 'Tab' && focused.classList.contains('close-button')) {
+  if (event.code === 'Tab') {
+    //event.preventDefault();
     if (!event.shiftKey) {
-      console.log('Go Forward');
-      setTimeout(() => {
-        // Go forward
+      if (focused.classList.contains('close-button')) {
         const expandBtn = modal.querySelector('.expand-button');
         if (expandBtn) {
-          expandBtn.focus();
-          expandBtn.style.opacity = '1';
+          setFocus(event, expandBtn);
         }
-      }, 100);
+      } else if (focused.classList.contains('slide-nav')) {
+        if (focused.classList.contains('next')) {
+          const tweetBtn = modal.querySelector('.tweet-button');
+          if (tweetBtn) {
+            setFocus(event, tweetBtn);
+          }
+        }
+      } else if (focused.classList.contains('like-button')) {
+        const closeBtn = modal.querySelector('.close-button');
+        if (closeBtn) {
+          console.log('Close btn', closeBtn);
+          setFocus(event, closeBtn);
+        }
+      }
     } else {
-      // Go backward
-      console.log('Go backward');
+      console.log('Go Backward');
+      if (focused.classList.contains('close-button')) {
+        const likeBtn = modal.querySelector('.like-button');
+        if (likeBtn) {
+          console.log('likeBtn btn', likeBtn);
+          setFocus(event, likeBtn);
+        }
+      }
     }
   }
 };
@@ -76,7 +97,7 @@ function createModal(images, startIndex) {
         div(
           { class: 'social-buttons' },
           a({ class: 'tweet-button', href: 'https://twitter.com/share', target: '_blank' }, 'Tweet'),
-          button({ class: 'like-button' }, img({ class: 'fb-like', src: 'https://static.xx.fbcdn.net/rsrc.php/v4/yW/r/gWpQpSsEGQ-.png' }), span('  Like 0')),
+          button({ class: 'like-button', type: 'button' }, img({ class: 'fb-like', src: 'https://static.xx.fbcdn.net/rsrc.php/v4/yW/r/gWpQpSsEGQ-.png' }), span('  Like 0')),
         ),
       ),
     ),
@@ -303,6 +324,7 @@ const handlePhotoGalleryKeyDown = (event, images, startIndex) => {
     setTimeout(() => {
       const modalContent = document.querySelector('.image-modal-content');
       if (modalContent) {
+        modalContent.classList.add('focused');
         const closeBtn = modalContent.querySelector('.close-button');
         closeBtn?.focus();
       }
