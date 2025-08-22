@@ -559,7 +559,8 @@ main .section.rightsection.no-button .columns.alert a:any-link {
 
 .columns.highlight > div > div.column2 p {
   font-size: var(--body-font-size-m);
-  margin: 0 0 40px;
+  /* margin: 0 0 40px; */
+  margin: 0;
 }
 
 .columns.highlight > div > div.column2 p:last-child {
@@ -606,6 +607,15 @@ main .section.rightsection.no-button .columns.alert a:any-link {
 }
 
 @media (width >= 900px) {
+  .columns.highlight {
+    min-height: 330px;
+    max-height: 350px;
+  }
+
+  .columns.highlight > div {
+    min-height: 330px;
+  }
+
   .columns.highlight .column1 picture {
     display: block;
     height: 100%;
@@ -613,11 +623,16 @@ main .section.rightsection.no-button .columns.alert a:any-link {
 
   .columns.highlight .column1 img {
     height: 100%;
+    max-height: 350px;
     object-fit: cover;
   }
 
   .columns.highlight > div > div.column2 p:last-child {
     margin: auto 0 0;
+  }
+
+  .columns.highlight > div > div.column2 p:last-child:has(a.button) {
+    display: flex;
   }
 }
 
