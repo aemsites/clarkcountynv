@@ -2,55 +2,38 @@ import {
   button, div, img, span, a,
 } from '../../scripts/dom-helpers.js';
 
+// Gets focusable elements within modal and slightly change tab order
 const getFocusableElements = (modal) => {
   const focusableSelectors = ['button', 'a'];
   const focusableElements = modal.querySelectorAll(`${focusableSelectors.join(', ')}`);
-  return focusableElements;
+  const elementsArray = Array.from(focusableElements);
+  const closeButton = elementsArray.find((el) => el.classList.contains('close-button'));
+  const otherElements = elementsArray.filter((el) => !el.classList.contains('close-button'));
+  const reorderedArray = closeButton ? [closeButton, ...otherElements] : otherElements;
+  return reorderedArray;
 };
 
-const setFocus = (event, element) => {
-  setTimeout(() => {
-    element.focus();
-  }, 0);
-};
-
+// Handles modal keyboard accessibility
 const handleModalAccessibility = (event) => {
   const modal = event.target.closest('.image-modal-content');
   const focusableElements = getFocusableElements(modal);
   const focused = document.activeElement;
-  console.log('Focused', focused);
+
   if (event.code === 'Tab') {
-    //event.preventDefault();
+    event.preventDefault();
+
+    const currentIndex = focusableElements.indexOf(focused);
+    let nextIndex;
+
     if (!event.shiftKey) {
-      if (focused.classList.contains('close-button')) {
-        const expandBtn = modal.querySelector('.expand-button');
-        if (expandBtn) {
-          setFocus(event, expandBtn);
-        }
-      } else if (focused.classList.contains('slide-nav')) {
-        if (focused.classList.contains('next')) {
-          const tweetBtn = modal.querySelector('.tweet-button');
-          if (tweetBtn) {
-            setFocus(event, tweetBtn);
-          }
-        }
-      } else if (focused.classList.contains('like-button')) {
-        const closeBtn = modal.querySelector('.close-button');
-        if (closeBtn) {
-          console.log('Close btn', closeBtn);
-          setFocus(event, closeBtn);
-        }
-      }
+      // Tab forward
+      nextIndex = (currentIndex + 1) % focusableElements.length;
     } else {
-      console.log('Go Backward');
-      if (focused.classList.contains('close-button')) {
-        const likeBtn = modal.querySelector('.like-button');
-        if (likeBtn) {
-          console.log('likeBtn btn', likeBtn);
-          setFocus(event, likeBtn);
-        }
-      }
+      // Shift+Tab backward
+      nextIndex = (currentIndex - 1 + focusableElements.length) % focusableElements.length;
     }
+
+    focusableElements[nextIndex].focus();
   }
 };
 
@@ -348,7 +331,7 @@ export default function decorate(block) {
 
   images.forEach((imgEl, index) => {
     const photoItem = div(
-      { class: 'photo-item', 'tabindex': '0' },
+      { class: 'photo-item', tabindex: '0' },
       imgEl.cloneNode(true),
       div({ class: 'hover-circle' }),
     );

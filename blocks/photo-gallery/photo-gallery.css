@@ -178,7 +178,6 @@
 
                     &:focus {
                         opacity: 1;
-                        /* outline: 1px solid var(--primary-orange-600); */
                         border: 2px solid var(--primary-orange-600);
                     }
                 }
