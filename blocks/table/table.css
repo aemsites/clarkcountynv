@@ -120,6 +120,7 @@
 .table table td p {
   margin: 0;
   font-size: var(--body-font-size-m);
+  word-break: break-word;
 }
 
 .table table td p + p {
