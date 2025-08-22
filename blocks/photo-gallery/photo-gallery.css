@@ -34,12 +34,19 @@
             transition: transform 0.3s ease;
         }
 
-        &:hover img {
+        &:hover img,
+        &:focus img {
             transform: scale(1.05);
         }
 
-        &:hover .hover-circle {
+        &:hover .hover-circle,
+        &:focus .hover-circle {
             transform: translate(-50%, -50%) scale(2);
+        }
+
+        &:focus {
+            outline: none;
+            border: 2px solid var(--primary-orange-600);
         }
     }
 }
@@ -127,6 +134,12 @@
                         right: 0;
                         background: url("/icons/sprite-next.png") center right no-repeat;
                     }
+
+                    &:focus {
+                        opacity: 1;
+                        border-color: var(--primary-orange-600);
+                        outline: 1px solid var(--primary-orange-600);
+                    }
                 }
 
                 /* Show nav buttons only when hovering over the image container */
@@ -144,11 +157,13 @@
                     right: 5px;
                     width: 28px;
                     height: 28px;
-                    background: url('/icons/sprite.png') 31px -31px no-repeat;
+                    background: url('/icons/sprite.png') 0 -30px no-repeat;
                     cursor: pointer;
                     opacity: 0;
                     transition: opacity 0.3s ease, transform 0.3s ease;
                     z-index: 3;
+                    margin: 0;
+                    padding: 0;
 
                     &:hover {
                         transform: scale(1.1);
@@ -156,6 +171,12 @@
 
                     &.contracted {
                         background-position: 31px -85px;
+                    }
+
+                    &:focus {
+                        opacity: 1;
+                        outline: 1px solid var(--primary-orange-600);
+                        border-color: var(--primary-orange-600);
                     }
                 }
 
@@ -194,6 +215,7 @@
                     justify-content: center;
                     width: 20px;
                     height: 20px;
+                    margin: 0;
 
                     &.prev {
                         left: 5px;
@@ -221,6 +243,9 @@
                         border: 2px solid transparent;
                         transition: all 0.3s ease;
                         flex-shrink: 0;
+                        margin: 0;
+                        padding: 0;
+                        background-color: transparent;
 
                         &:hover {
                             border-color: rgb(255 255 255 / 50%);
@@ -259,6 +284,7 @@
                             background: url("/icons/sprite.png") no-repeat;
                             opacity: 0.8;
                             transition: opacity 0.3s ease;
+                            margin: 0;
 
                             &:hover {
                                 opacity: 1;
@@ -317,6 +343,10 @@
 
                     &:hover {
                         opacity: 1;
+                    }
+
+                    &:focus {
+                        outline: 1px solid var(--primary-orange-600);
                     }
                 }
             }
