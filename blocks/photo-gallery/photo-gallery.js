@@ -80,7 +80,7 @@ function createModal(images, startIndex) {
         div(
           { class: 'social-buttons' },
           a({ class: 'tweet-button', href: 'https://twitter.com/share', target: '_blank' }, 'Tweet'),
-          button({ class: 'like-button', type: 'button' }, img({ class: 'fb-like', src: 'https://static.xx.fbcdn.net/rsrc.php/v4/yW/r/gWpQpSsEGQ-.png' }), span('  Like 0')),
+          button({ class: 'like-button', type: 'button' }, img({ class: 'fb-like', alt: 'facebook like thumbs up image', src: 'https://static.xx.fbcdn.net/rsrc.php/v4/yW/r/gWpQpSsEGQ-.png' }), span('  Like 0')),
         ),
       ),
     ),

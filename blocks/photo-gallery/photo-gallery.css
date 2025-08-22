@@ -332,7 +332,7 @@
 
                 .image-counter {
                     font-style: italic;
-                    color: #999;
+                    color: var(--neutral-black-800);
                     font-size: var(--body-font-size-xs);
                 }
 
