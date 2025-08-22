@@ -2,6 +2,41 @@ import {
   button, div, img, span, a,
 } from '../../scripts/dom-helpers.js';
 
+// Gets focusable elements within modal and slightly change tab order
+const getFocusableElements = (modal) => {
+  const focusableSelectors = ['button', 'a'];
+  const focusableElements = modal.querySelectorAll(`${focusableSelectors.join(', ')}`);
+  const elementsArray = Array.from(focusableElements);
+  const closeButton = elementsArray.find((el) => el.classList.contains('close-button'));
+  const otherElements = elementsArray.filter((el) => !el.classList.contains('close-button'));
+  const reorderedArray = closeButton ? [closeButton, ...otherElements] : otherElements;
+  return reorderedArray;
+};
+
+// Handles modal keyboard accessibility
+const handleModalAccessibility = (event) => {
+  const modal = event.target.closest('.image-modal-content');
+  const focusableElements = getFocusableElements(modal);
+  const focused = document.activeElement;
+
+  if (event.code === 'Tab') {
+    event.preventDefault();
+
+    const currentIndex = focusableElements.indexOf(focused);
+    let nextIndex;
+
+    if (!event.shiftKey) {
+      // Tab forward
+      nextIndex = (currentIndex + 1) % focusableElements.length;
+    } else {
+      // Shift+Tab backward
+      nextIndex = (currentIndex - 1 + focusableElements.length) % focusableElements.length;
+    }
+
+    focusableElements[nextIndex].focus();
+  }
+};
+
 function createModal(images, startIndex) {
   let slideshowInterval = null;
 
@@ -14,38 +49,38 @@ function createModal(images, startIndex) {
         div(
           { class: 'image-container' },
           img({ src: images[startIndex].src, alt: images[startIndex].alt }),
-          button({ class: 'nav-button prev' }),
-          button({ class: 'nav-button next' }),
-          button({ class: 'expand-button' }),
+          button({ class: 'expand-button', type: 'button', 'aria-label': 'Expand gallery button' }),
+          button({ class: 'nav-button prev', type: 'button', 'aria-label': 'Previous photo button' }),
+          button({ class: 'nav-button next', type: 'button', 'aria-label': 'Next photo button' }),
         ),
         div(
           { class: 'thumbnails-container' },
-          button({ class: 'thumb-nav prev' }),
+          button({ class: 'thumb-nav prev', type: 'button', 'aria-label': 'Thumbnail previous photo button' }),
           div(
             { class: 'thumbnails-wrapper' },
-            ...images.map((imgEl, idx) => div(
-              { class: `thumbnail ${idx === startIndex ? 'active' : ''}`, 'data-index': idx },
+            ...images.map((imgEl, idx) => button(
+              { class: `thumbnail ${idx === startIndex ? 'active' : ''}`, 'data-index': idx, type: 'button' },
               img({ src: imgEl.src, alt: imgEl.alt }),
             )),
           ),
-          button({ class: 'thumb-nav next' }),
+          button({ class: 'thumb-nav next', type: 'button', 'aria-label': 'Thumbnail next photo button' }),
         ),
         div(
           { class: 'modal-controls' },
           div(
             { class: 'slideshow-controls' },
-            a({ class: 'play-button' }),
-            a({ class: 'slide-nav prev' }),
-            a({ class: 'slide-nav next' }),
+            button({ class: 'play-button', type: 'button', 'aria-label': 'Play photo gallery button' }),
+            button({ class: 'slide-nav prev', type: 'button', 'aria-label': 'Slide nav previous button' }),
+            button({ class: 'slide-nav next', type: 'button', 'aria-label': 'Slide nav next button' }),
           ),
           div({ class: 'image-counter' }, `${startIndex + 1}/${images.length}`),
           div({ class: 'modal-title' }, images[startIndex].alt),
-          button({ class: 'close-button' }),
+          button({ class: 'close-button', type: 'button', 'aria-label': 'Close photo gallery button' }),
         ),
         div(
           { class: 'social-buttons' },
           a({ class: 'tweet-button', href: 'https://twitter.com/share', target: '_blank' }, 'Tweet'),
-          button({ class: 'like-button' }, img({ class: 'fb-like', src: 'https://static.xx.fbcdn.net/rsrc.php/v4/yW/r/gWpQpSsEGQ-.png' }), span('  Like 0')),
+          button({ class: 'like-button', type: 'button' }, img({ class: 'fb-like', alt: 'facebook like thumbs up image', src: 'https://static.xx.fbcdn.net/rsrc.php/v4/yW/r/gWpQpSsEGQ-.png' }), span('  Like 0')),
         ),
       ),
     ),
@@ -101,6 +136,8 @@ function createModal(images, startIndex) {
       modal.remove();
     }
   });
+
+  modal.addEventListener('keydown', (event) => handleModalAccessibility(event));
 
   const closeButton = modal.querySelector('.close-button');
   closeButton.addEventListener('click', () => {
@@ -263,6 +300,21 @@ function createModal(images, startIndex) {
   });
 }
 
+const handlePhotoGalleryKeyDown = (event, images, startIndex) => {
+  if (event.code === 'Enter') {
+    createModal(images, startIndex);
+
+    setTimeout(() => {
+      const modalContent = document.querySelector('.image-modal-content');
+      if (modalContent) {
+        modalContent.classList.add('focused');
+        const closeBtn = modalContent.querySelector('.close-button');
+        closeBtn?.focus();
+      }
+    }, 100);
+  }
+};
+
 export default function decorate(block) {
   const images = [];
   [...block.children].forEach((row) => {
@@ -279,11 +331,16 @@ export default function decorate(block) {
 
   images.forEach((imgEl, index) => {
     const photoItem = div(
-      { class: 'photo-item' },
+      { class: 'photo-item', tabindex: '0' },
       imgEl.cloneNode(true),
       div({ class: 'hover-circle' }),
     );
     galleryGrid.appendChild(photoItem);
+
+    photoItem.addEventListener('keydown', (event) => {
+      currentImageIndex = index;
+      handlePhotoGalleryKeyDown(event, images, currentImageIndex);
+    });
 
     photoItem.addEventListener('click', () => {
       currentImageIndex = index;
