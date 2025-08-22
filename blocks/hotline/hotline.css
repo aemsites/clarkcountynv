@@ -90,6 +90,7 @@
   justify-content: flex-start;
   align-items: flex-start;
   row-gap: 24px;
+  margin-bottom: 24px;
 }
 
 .hotline.filter .business-list {
@@ -186,7 +187,7 @@
 }
 
 .hotline.filter details[open] summary::after {
-  background: url('../../icons/chevron-down.svg') center center no-repeat;
+  background: url('../../icons/chevron-up-orange.svg') center center no-repeat;
 }
 
 .hotline.filter summary {
@@ -200,7 +201,7 @@
   position: absolute;
   top: 10px;
   right: 10px;
-  background: url('../../icons/chevron-up.svg') center center no-repeat;
+  background: url('../../icons/chevron-down-grey.svg') center center no-repeat;
   cursor: pointer;
   width: 24px;
   height: 24px;
@@ -235,6 +236,7 @@
 
   .hotline .business-list {
     row-gap: 40px;
+    margin-bottom: 40px;
   }
 
   .hotline .business-row {

@@ -58,7 +58,7 @@
 }
 
 .document-center details[open] > summary::before {
-  background: url('../../icons/chevron-down.svg') center center no-repeat;
+  background: url('../../icons/chevron-up-orange.svg') center center no-repeat;
 }
 
 .document-center details[open] > summary .summary-title {
@@ -78,7 +78,7 @@
 
 .document-center summary::before {
   content: '';
-  background: url('../../icons/chevron-up.svg') center center no-repeat;
+  background: url('../../icons/chevron-down-grey.svg') center center no-repeat;
   width: 18px;
   height: 18px;
   display: inline-block;

@@ -32,17 +32,8 @@ async function loadWidget() {
   }
 }
 
-// Script for share Widget
-async function loadShareWidget() {
-  const calendarPath = '/calendar/';
-  if (!window.location.pathname.includes(calendarPath)) {
-    await loadScript('/widgets/share-button/share-button.js');
-  }
-}
-
 if (isDesktop.matches) {
   loadWidget();
-  loadShareWidget();
 }
 
 function resizeAction() {

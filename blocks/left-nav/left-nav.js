@@ -121,7 +121,7 @@ export class AccessibleLeftNav {
       // Check if click was on the caret area (right side of link)
       const rect = link.getBoundingClientRect();
       const clickX = e.clientX - rect.left;
-      const caretArea = rect.width - 40; // Last 40px is caret area
+      const caretArea = rect.width - 60;
 
       if (clickX > caretArea) {
         // Click was on caret - toggle submenu

@@ -198,6 +198,32 @@ export default function decorate(block) {
           ),
         ),
       );
+    } else if (block.classList.contains('logo')) {
+      const iconImg = row.children[0];
+      const cardTitle = row.children[1];
+      const cardDesc = row.children[2];
+      const cardLink = row.children.length && row.children[3] && row.children[3].querySelector('a');
+      const { href, title } = cardLink ?? {};
+      $ul.append(
+        li(
+          cardLink ? a(
+            { class: 'card-link', href, title },
+            iconImg ? div({ class: 'card-img' }, iconImg) : null,
+            div(
+              { class: 'card-content' },
+              cardTitle ? div({ class: 'card-title' }, cardTitle) : null,
+              cardDesc ? div({ class: 'card-description' }, cardDesc) : null,
+            ),
+          ) : div(
+            iconImg ? div({ class: 'card-img' }, iconImg) : null,
+            div(
+              { class: 'card-content' },
+              cardTitle ? div({ class: 'card-title' }, cardTitle) : null,
+              cardDesc ? div({ class: 'card-description' }, cardDesc) : null,
+            ),
+          ),
+        ),
+      );
     } else {
       const $li = li();
       while (row.firstElementChild) $li.append(row.firstElementChild);

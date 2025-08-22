@@ -159,7 +159,7 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
     main .mainmenu .rightsection {
         width: 100%;
         flex: 100%;
-        padding: 50px;
+        padding: 24px;
         box-sizing: border-box;
     }
 
@@ -226,6 +226,12 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
     main .mainmenu .rightsection.contact-us .map-embed.block  p, main .mainmenu .contact-us .map-embed.block  p {
         margin: 0;
         text-align: center;
+    }
+}
+
+@media (width >= 1200px) {
+    main .mainmenu .rightsection {
+        padding: 50px;
     }
 }
 
@@ -320,7 +326,7 @@ main .mainmenu .rightsection.image-center picture img {
 }
 
 main .mainmenu .rightsection.no-button a:any-link:not(.cards a, .cards * a, .hotline a, .newslist a, .newslist-ens a, .document-center a) {
-    color: var(--primary-orange-900);
+    color: var(--primary-orange-600);
     background-color: transparent;
     text-decoration: underline;
     border: 0;
@@ -328,6 +334,15 @@ main .mainmenu .rightsection.no-button a:any-link:not(.cards a, .cards * a, .hot
     margin: 0 !important;
     white-space: wrap;
     text-align: unset;
+    font-weight: var(--font-weight-book);
+}
+
+main .mainmenu .rightsection.no-button a:any-link:not(.cards a, .cards * a, .hotline a, .newslist a, .newslist-ens a, .document-center a):hover {
+    color: var(--primary-orange-900);
+}
+
+main .mainmenu .rightsection.no-button a:any-link:not(.cards a, .cards * a, .hotline a, .newslist a, .newslist-ens a, .document-center a):focus {
+    border: 1px solid var(--primary-orange-900);
 }
 
 main .mainmenu .rightsection.no-button-v1 .cards a,
