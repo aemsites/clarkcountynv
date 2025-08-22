@@ -407,7 +407,9 @@
 .cards.logo .card-link:hover h3,
 .cards.logo .card-link:hover p,
 .cards.logo .card-link:focus h3,
-.cards.logo .card-link:focus p {
+.cards.logo .card-link:focus p,
+.cards.logo .card-link:hover h4,
+.cards.logo .card-link:focus h4 {
     color: var(--neutral-white);
 }
 
