@@ -915,13 +915,17 @@ function handleMenuKeyboardNavigation(e) {
 }
 
 const handleSecondaryListBehavior = (event) => {
-  const listItem = event.target;
+  const listItem = event.target.classList.contains('secondary-list-item-text') ? event.target.closest('li') : event.target;
   const list = listItem.closest('ul');
   const currentlyExpanded = list.querySelector(':scope > li[aria-expanded="true"]');
-  if (currentlyExpanded) {
+  
+  // Close other expanded items, but not the one we're hovering over
+  if (currentlyExpanded && currentlyExpanded !== listItem) {
     currentlyExpanded.setAttribute('aria-expanded', 'false');
   }
-  if (listItem.hasAttribute('aria-expanded') && listItem.getAttribute('aria-expanded') === 'false') {
+  
+  // Always expand the hovered item
+  if (listItem.hasAttribute('aria-expanded')) {
     listItem.setAttribute('aria-expanded', 'true');
   }
 };
@@ -978,9 +982,31 @@ function decorateNavItem(parent) {
         secondaryItem.classList.add('secondary-list-item');
         secondaryItem.setAttribute('tabindex', '0');
         secondaryItem.setAttribute('aria-expanded', isDesktop.matches && i === 0 ? 'true' : 'false');
-        secondaryItem.addEventListener('mouseover', (e) => {
-          if (e.target === e.currentTarget) {
-            handleSecondaryListBehavior(e);
+        if (isDesktop.matches) {
+          secondaryItem.addEventListener('mouseover', (e) => {
+            // Allow mouseover on the secondary item or its direct text wrapper
+            if (e.target === e.currentTarget || e.target.classList.contains('secondary-list-item-text')) {
+              handleSecondaryListBehavior(e);
+            }
+          });
+        }
+
+        // Add click handler for mobile toggle behavior
+        secondaryItem.addEventListener('click', (e) => {
+          if (e.target === e.currentTarget || e.target.classList.contains('secondary-list-item-text')) {
+            const list = secondaryItem.closest('ul');
+            const currentlyExpanded = list.querySelector(':scope > li[aria-expanded="true"]');
+            const isExpanded = secondaryItem.getAttribute('aria-expanded') === 'true';
+            
+            // Close any currently expanded item
+            if (currentlyExpanded) {
+              currentlyExpanded.setAttribute('aria-expanded', 'false');
+            }
+            
+            // Toggle the clicked item (only expand if it wasn't already expanded)
+            if (!isExpanded) {
+              secondaryItem.setAttribute('aria-expanded', 'true');
+            }
           }
         });
         const headerTextEl = secondaryItem.childNodes.length && secondaryItem.childNodes[0];
