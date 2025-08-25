@@ -966,6 +966,7 @@ function decorateNavItem(parent) {
 
   const list = parent.children[1];
 
+
   // Add classes to nested list structure
   if (list && list.nodeName === 'UL') {
     list.classList.add('secondary-list');
@@ -976,14 +977,26 @@ function decorateNavItem(parent) {
       if (secondaryItem.nodeName === 'LI') {
         secondaryItem.classList.add('secondary-list-item');
         secondaryItem.setAttribute('tabindex', '0');
-        secondaryItem.setAttribute('aria-expanded', isDesktop && i === 0 ? 'true' : 'false');
+        secondaryItem.setAttribute('aria-expanded', isDesktop.matches && i === 0 ? 'true' : 'false');
         secondaryItem.addEventListener('mouseover', (e) => {
           if (e.target === e.currentTarget) {
             handleSecondaryListBehavior(e);
           }
         });
         const headerTextEl = secondaryItem.childNodes.length && secondaryItem.childNodes[0];
-        const headerText = headerTextEl.nodeName === '#text' ? headerTextEl.textContent.trim() : headerTextEl.innerText; 
+        const headerText = headerTextEl.nodeName === '#text' ? headerTextEl.textContent.trim() : headerTextEl.innerText;
+        
+        // Wrap the first child in a div with secondary-list-item-text class
+        if (headerTextEl) {
+          const textWrapper = div({ class: 'secondary-list-item-text' });
+          if (headerTextEl.nodeName === '#text') {
+            textWrapper.textContent = headerTextEl.textContent.trim();
+            secondaryItem.replaceChild(textWrapper, headerTextEl);
+          } else {
+            textWrapper.appendChild(headerTextEl);
+            secondaryItem.insertBefore(textWrapper, secondaryItem.firstChild);
+          }
+        } 
         
         // Check for nested tertiary list
         const tertiaryList = secondaryItem.querySelector('ul');
@@ -999,7 +1012,7 @@ function decorateNavItem(parent) {
             const tertiaryItem = tertiaryItems[j];
             if (tertiaryItem.nodeName === 'LI') {
               tertiaryItem.classList.add('tertiary-list-item');
-              tertiaryItem.setAttribute('tabindex', '0');
+              // tertiaryItem.setAttribute('tabindex', '0');
             }
           }
           secondaryItem.append(tertiaryListWrapper);
