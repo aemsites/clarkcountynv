@@ -915,7 +915,6 @@ function handleMenuKeyboardNavigation(e) {
 }
 
 const handleSecondaryListBehavior = (event) => {
-  console.log('mouseover');
   const listItem = event.target;
   const list = listItem.closest('ul');
   const currentlyExpanded = list.querySelector(':scope > li[aria-expanded="true"]');
@@ -977,9 +976,12 @@ function decorateNavItem(parent) {
       if (secondaryItem.nodeName === 'LI') {
         secondaryItem.classList.add('secondary-list-item');
         secondaryItem.setAttribute('tabindex', '0');
-        secondaryItem.setAttribute('aria-expanded', 'false');
-
-        secondaryItem.addEventListener('mouseover', (e) => handleSecondaryListBehavior(e));
+        secondaryItem.setAttribute('aria-expanded', isDesktop && i === 0 ? 'true' : 'false');
+        secondaryItem.addEventListener('mouseover', (e) => {
+          if (e.target === e.currentTarget) {
+            handleSecondaryListBehavior(e);
+          }
+        });
         const headerTextEl = secondaryItem.childNodes.length && secondaryItem.childNodes[0];
         const headerText = headerTextEl.nodeName === '#text' ? headerTextEl.textContent.trim() : headerTextEl.innerText; 
         
