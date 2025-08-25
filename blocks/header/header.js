@@ -914,6 +914,19 @@ function handleMenuKeyboardNavigation(e) {
   }
 }
 
+const handleSecondaryListBehavior = (event) => {
+  console.log('mouseover');
+  const listItem = event.target;
+  const list = listItem.closest('ul');
+  const currentlyExpanded = list.querySelector(':scope > li[aria-expanded="true"]');
+  if (currentlyExpanded) {
+    currentlyExpanded.setAttribute('aria-expanded', 'false');
+  }
+  if (listItem.hasAttribute('aria-expanded') && listItem.getAttribute('aria-expanded') === 'false') {
+    listItem.setAttribute('aria-expanded', 'true');
+  }
+};
+
 function addMegaMenuAccessibilityListeners() {
   const header = document.querySelector('header');
   header?.addEventListener('keydown', handleMenuKeyboardNavigation);
@@ -940,64 +953,114 @@ function decorateNavItem(parent) {
   parent.append(menuUl);
 
   const navInMenuWrap = div({ class: 'nav-in-menu-wrap' });
-  const navInMenuWrapMobile = div({ class: 'nav-in-menu-wrap-mobile' });
+  //navInMenuWrap.append(parent.children[1]);
+  //const navInMenuWrapMobile = div({ class: 'nav-in-menu-wrap-mobile' });
   navIn.append(navInMenuWrap);
-  navIn.append(navInMenuWrapMobile);
+  //navIn.append(navInMenuWrapMobile);
 
-  const tablist = div({ class: 'tabs-list' });
-  tablist.setAttribute('role', 'tablist');
+  //const tablist = div({ class: 'tabs-list' });
+  //tablist.setAttribute('role', 'tablist');
 
-  navInMenuWrap.append(tablist);
-  navInMenuWrapMobile.append(tablist.cloneNode(true));
-  const mobileTabList = navInMenuWrapMobile.querySelector('.tabs-list');
+  //navInMenuWrap.append(tablist);
+  //navInMenuWrapMobile.append(tablist.cloneNode(true));
+  //const mobileTabList = navInMenuWrapMobile.querySelector('.tabs-list');
 
-  const list = parent.children[1].nodeName === 'UL' ? parent.children[1].children : null;
-  const listLen = list !== null ? list.length : 0;
-  let i = 0;
-  while (i < listLen) {
-    const tabInfo = list.item(i);
-    const tabPanelItemText = tabInfo.querySelector('a').textContent;
-    const tabPanelHeader = h2({ class: 'tabs-panel-header' }, tabPanelItemText);
-    const id = toClassName(tabPanelItemText);
+  const list = parent.children[1];
 
-    const tabpanel = div();
-    navInMenuWrap.append(tabpanel);
-    // decorate tabpanel
-    tabpanel.className = 'tabs-panel';
-    tabpanel.id = `tabpanel-${id}`;
-    tabpanel.setAttribute('aria-hidden', !isDesktop.matches ? 'true' : !!i);
-    tabpanel.setAttribute('aria-labelledby', `tab-${id}`);
-    tabpanel.setAttribute('role', 'tabpanel');
-    const tabpanelItems = tabInfo.querySelector('ul');
-    if (tabpanelItems !== null) {
-      tabpanel.append(tabPanelHeader);
-      tabpanel.append(tabpanelItems);
+  // Add classes to nested list structure
+  if (list && list.nodeName === 'UL') {
+    list.classList.add('secondary-list');
+    const secondaryItems = list.children;
+    
+    for (let i = 0; i < secondaryItems.length; i++) {
+      const secondaryItem = secondaryItems[i];
+      if (secondaryItem.nodeName === 'LI') {
+        secondaryItem.classList.add('secondary-list-item');
+        secondaryItem.setAttribute('tabindex', '0');
+        secondaryItem.setAttribute('aria-expanded', 'false');
+
+        secondaryItem.addEventListener('mouseover', (e) => handleSecondaryListBehavior(e));
+        const headerTextEl = secondaryItem.childNodes.length && secondaryItem.childNodes[0];
+        const headerText = headerTextEl.nodeName === '#text' ? headerTextEl.textContent.trim() : headerTextEl.innerText; 
+        
+        // Check for nested tertiary list
+        const tertiaryList = secondaryItem.querySelector('ul');
+        if (tertiaryList) {
+          const tertiaryListWrapper = div({ class: 'tertiary-list-wrapper' });
+          const tertiaryListHeader = h2({ class: 'tertiary-list-header' }, headerText);
+          tertiaryListWrapper.append(tertiaryListHeader);
+          tertiaryListWrapper.append(tertiaryList);
+          tertiaryList.classList.add('tertiary-list');
+          const tertiaryItems = tertiaryList.children;
+          
+          for (let j = 0; j < tertiaryItems.length; j++) {
+            const tertiaryItem = tertiaryItems[j];
+            if (tertiaryItem.nodeName === 'LI') {
+              tertiaryItem.classList.add('tertiary-list-item');
+              tertiaryItem.setAttribute('tabindex', '0');
+            }
+          }
+          secondaryItem.append(tertiaryListWrapper);
+        }
+      }
     }
-    i += 1;
-
-    // build tab button
-    const $button = button({ class: `tabs-tab ${tabpanelItems === null ? 'no-children' : ''}` });
-    $button.id = `tab-${id}`;
-    $button.innerHTML = tabInfo.innerHTML;
-    $button.setAttribute('aria-controls', `tabpanel-${id}`);
-    // eslint-disable-next-line no-nested-ternary
-    $button.setAttribute('aria-selected', !isDesktop.matches ? 'false' : (i === 1 ? true : !i));
-    $button.setAttribute('role', 'tab');
-    $button.setAttribute('type', 'button');
-    $button.addEventListener('mouseover', () => {
-      parent.querySelectorAll('[role=tabpanel]').forEach((panel) => {
-        panel.setAttribute('aria-hidden', true);
-      });
-      tablist.querySelectorAll('button').forEach((btn) => {
-        btn.setAttribute('aria-selected', false);
-      });
-      tabpanel.setAttribute('aria-hidden', false);
-      $button.setAttribute('aria-selected', true);
-    });
-    tablist.append($button);
-    mobileTabList.append($button.cloneNode(true), tabpanel.cloneNode(true));
   }
-  parent.children[1].remove();
+
+  navInMenuWrap.append(parent.children[1]);
+
+  // const list = parent.children[1].nodeName === 'UL' ? parent.children[1].children : null;
+  // const listLen = list !== null ? list.length : 0;
+  // let i = 0;
+  // while (i < listLen) {
+  //   const listItem = list.item(i);
+  //   console.log(listItem);
+  //   i += 1;
+  // }
+  // while (i < listLen) {
+  //   const tabInfo = list.item(i);
+  //   const tabPanelItemText = tabInfo.querySelector('a').textContent;
+  //   const tabPanelHeader = h2({ class: 'tabs-panel-header' }, tabPanelItemText);
+  //   const id = toClassName(tabPanelItemText);
+
+  //   const tabpanel = div();
+  //   navInMenuWrap.append(tabpanel);
+  //   // decorate tabpanel
+  //   tabpanel.className = 'tabs-panel';
+  //   tabpanel.id = `tabpanel-${id}`;
+  //   tabpanel.setAttribute('aria-hidden', !isDesktop.matches ? 'true' : !!i);
+  //   tabpanel.setAttribute('aria-labelledby', `tab-${id}`);
+  //   tabpanel.setAttribute('role', 'tabpanel');
+  //   const tabpanelItems = tabInfo.querySelector('ul');
+  //   if (tabpanelItems !== null) {
+  //     tabpanel.append(tabPanelHeader);
+  //     tabpanel.append(tabpanelItems);
+  //   }
+  //   i += 1;
+
+  //   // build tab button
+  //   const $button = button({ class: `tabs-tab ${tabpanelItems === null ? 'no-children' : ''}` });
+  //   $button.id = `tab-${id}`;
+  //   $button.innerHTML = tabInfo.innerHTML;
+  //   $button.setAttribute('aria-controls', `tabpanel-${id}`);
+  //   // eslint-disable-next-line no-nested-ternary
+  //   $button.setAttribute('aria-selected', !isDesktop.matches ? 'false' : (i === 1 ? true : !i));
+  //   $button.setAttribute('role', 'tab');
+  //   $button.setAttribute('type', 'button');
+  //   $button.addEventListener('mouseover', () => {
+  //     parent.querySelectorAll('[role=tabpanel]').forEach((panel) => {
+  //       panel.setAttribute('aria-hidden', true);
+  //     });
+  //     tablist.querySelectorAll('button').forEach((btn) => {
+  //       btn.setAttribute('aria-selected', false);
+  //     });
+  //     tabpanel.setAttribute('aria-hidden', false);
+  //     $button.setAttribute('aria-selected', true);
+  //   });
+  //   tablist.append($button);
+  //   mobileTabList.append($button.cloneNode(true), tabpanel.cloneNode(true));
+  // }
+  // console.log(parent.children[1]);
+  // parent.children[1].remove();
 }
 
 function buildNavSections(navSections) {
