@@ -396,8 +396,10 @@ function handleDesktopKeyboardNavigation(e, focused) {
 
     // Focus the first tabs-tab button in the desktop menu
     const desktopMenu = focused.querySelector('.nav-in-menu-wrap');
-    const firstTabBtn = desktopMenu?.querySelector('.tabs-list .tabs-tab');
+    //const firstTabBtn = desktopMenu?.querySelector('.tabs-list .tabs-tab');
+    const firstTabBtn = desktopMenu?.querySelector('.secondary-list-item');
     if (firstTabBtn) {
+      console.log('Pressed enter - firstTabBtn', firstTabBtn);
       firstTabBtn.focus();
     }
     return;
