@@ -414,10 +414,11 @@ function handleDesktopKeyboardNavigation(e, focused) {
 
     if (!desktopMenu) return;
 
-    const tabButtons = Array.from(desktopMenu.querySelectorAll('.tabs-tab'));
+    //const tabButtons = Array.from(desktopMenu.querySelectorAll('.tabs-tab'));
+    const tabButtons = Array.from(desktopMenu.querySelectorAll('.secondary-list-item'));
 
     // If focused on a tabs-tab button
-    if (focused.classList.contains('tabs-tab')) {
+    if (focused.classList.contains('secondary-list-item')) {
       const currentTabIndex = tabButtons.indexOf(focused);
 
       if (!e.shiftKey) {
@@ -439,8 +440,8 @@ function handleDesktopKeyboardNavigation(e, focused) {
           currentNavDrop.focus();
         }
       }
-    } else if (focused.tagName === 'A' && focused.closest('.tabs-tab')) {
-      const parentButton = focused.closest('.tabs-tab');
+    } else if (focused.tagName === 'A' && focused.closest('.secondary-list-item')) {
+      const parentButton = focused.closest('.secondary-list-item');
       const currentTabIndex = tabButtons.indexOf(parentButton);
 
       if (!e.shiftKey) {
@@ -448,9 +449,12 @@ function handleDesktopKeyboardNavigation(e, focused) {
         e.preventDefault();
         const panelId = parentButton.getAttribute('aria-controls');
         const correspondingPanel = desktopMenu.querySelector(`#${panelId}`);
+        const tertiaryList = parentButton.querySelector('.tertiary-list');
 
-        if (correspondingPanel) {
-          const firstLink = correspondingPanel.querySelector('a');
+        //if (correspondingPanel) {
+        if (tertiaryList) {
+          //const firstLink = correspondingPanel.querySelector('a');
+          const firstLink = tertiaryList.querySelector('a');
           if (firstLink) {
             firstLink.focus();
           } else {
@@ -463,8 +467,9 @@ function handleDesktopKeyboardNavigation(e, focused) {
         e.preventDefault();
         parentButton.focus();
       }
-    } else if (focused.tagName === 'A' && focused.closest('.tabs-panel')) {
-      const currentPanel = focused.closest('.tabs-panel');
+    } else if (focused.tagName === 'A' && focused.closest('.tertiary-list')) {
+      //const currentPanel = focused.closest('.tabs-panel');
+      const currentPanel = focused.closest('.tertiary-list');
       const panelLinks = Array.from(currentPanel.querySelectorAll('a'));
       const currentLinkIndex = panelLinks.indexOf(focused);
 
