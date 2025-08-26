@@ -956,20 +956,8 @@ function decorateNavItem(parent) {
   parent.append(menuUl);
 
   const navInMenuWrap = div({ class: 'nav-in-menu-wrap' });
-  //navInMenuWrap.append(parent.children[1]);
-  //const navInMenuWrapMobile = div({ class: 'nav-in-menu-wrap-mobile' });
   navIn.append(navInMenuWrap);
-  //navIn.append(navInMenuWrapMobile);
-
-  //const tablist = div({ class: 'tabs-list' });
-  //tablist.setAttribute('role', 'tablist');
-
-  //navInMenuWrap.append(tablist);
-  //navInMenuWrapMobile.append(tablist.cloneNode(true));
-  //const mobileTabList = navInMenuWrapMobile.querySelector('.tabs-list');
-
   const list = parent.children[1];
-
 
   // Add classes to nested list structure
   if (list && list.nodeName === 'UL') {
@@ -1038,7 +1026,6 @@ function decorateNavItem(parent) {
             const tertiaryItem = tertiaryItems[j];
             if (tertiaryItem.nodeName === 'LI') {
               tertiaryItem.classList.add('tertiary-list-item');
-              // tertiaryItem.setAttribute('tabindex', '0');
             }
           }
           secondaryItem.append(tertiaryListWrapper);
@@ -1046,62 +1033,7 @@ function decorateNavItem(parent) {
       }
     }
   }
-
   navInMenuWrap.append(parent.children[1]);
-
-  // const list = parent.children[1].nodeName === 'UL' ? parent.children[1].children : null;
-  // const listLen = list !== null ? list.length : 0;
-  // let i = 0;
-  // while (i < listLen) {
-  //   const listItem = list.item(i);
-  //   console.log(listItem);
-  //   i += 1;
-  // }
-  // while (i < listLen) {
-  //   const tabInfo = list.item(i);
-  //   const tabPanelItemText = tabInfo.querySelector('a').textContent;
-  //   const tabPanelHeader = h2({ class: 'tabs-panel-header' }, tabPanelItemText);
-  //   const id = toClassName(tabPanelItemText);
-
-  //   const tabpanel = div();
-  //   navInMenuWrap.append(tabpanel);
-  //   // decorate tabpanel
-  //   tabpanel.className = 'tabs-panel';
-  //   tabpanel.id = `tabpanel-${id}`;
-  //   tabpanel.setAttribute('aria-hidden', !isDesktop.matches ? 'true' : !!i);
-  //   tabpanel.setAttribute('aria-labelledby', `tab-${id}`);
-  //   tabpanel.setAttribute('role', 'tabpanel');
-  //   const tabpanelItems = tabInfo.querySelector('ul');
-  //   if (tabpanelItems !== null) {
-  //     tabpanel.append(tabPanelHeader);
-  //     tabpanel.append(tabpanelItems);
-  //   }
-  //   i += 1;
-
-  //   // build tab button
-  //   const $button = button({ class: `tabs-tab ${tabpanelItems === null ? 'no-children' : ''}` });
-  //   $button.id = `tab-${id}`;
-  //   $button.innerHTML = tabInfo.innerHTML;
-  //   $button.setAttribute('aria-controls', `tabpanel-${id}`);
-  //   // eslint-disable-next-line no-nested-ternary
-  //   $button.setAttribute('aria-selected', !isDesktop.matches ? 'false' : (i === 1 ? true : !i));
-  //   $button.setAttribute('role', 'tab');
-  //   $button.setAttribute('type', 'button');
-  //   $button.addEventListener('mouseover', () => {
-  //     parent.querySelectorAll('[role=tabpanel]').forEach((panel) => {
-  //       panel.setAttribute('aria-hidden', true);
-  //     });
-  //     tablist.querySelectorAll('button').forEach((btn) => {
-  //       btn.setAttribute('aria-selected', false);
-  //     });
-  //     tabpanel.setAttribute('aria-hidden', false);
-  //     $button.setAttribute('aria-selected', true);
-  //   });
-  //   tablist.append($button);
-  //   mobileTabList.append($button.cloneNode(true), tabpanel.cloneNode(true));
-  // }
-  // console.log(parent.children[1]);
-  // parent.children[1].remove();
 }
 
 function buildNavSections(navSections) {
