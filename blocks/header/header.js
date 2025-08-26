@@ -385,25 +385,32 @@ function handleEndOfTabPanel(tabButtons, currentTabIndex, allNavDrops, currentNa
 function handleDesktopKeyboardNavigation(e, focused) {
   const allNavDrops = Array.from(document.querySelectorAll('.nav-drop'));
 
-  // Handle nav-drop Enter key - expand the dropdown and focus first tab
+  // Handle nav-drop Enter key - toggle the dropdown
   if (e.code === 'Enter' && focused.classList.contains('nav-drop')) {
     e.preventDefault();
 
-    // Close all other nav-drops
-    allNavDrops.forEach((drop) => {
-      if (drop !== focused) {
-        drop.setAttribute('aria-expanded', 'false');
+    const isExpanded = focused.getAttribute('aria-expanded') === 'true';
+    
+    if (isExpanded) {
+      // Close the nav-drop if it's already expanded
+      focused.setAttribute('aria-expanded', 'false');
+    } else {
+      // Close all other nav-drops
+      allNavDrops.forEach((drop) => {
+        if (drop !== focused) {
+          drop.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      // Open the current nav-drop
+      focused.setAttribute('aria-expanded', 'true');
+
+      // Focus the first secondary-list-item
+      const desktopMenu = focused.querySelector('.nav-in-menu-wrap');
+      const firstSecondaryItem = desktopMenu?.querySelector('.secondary-list-item');
+      if (firstSecondaryItem) {
+        firstSecondaryItem.focus();
       }
-    });
-
-    // Open the current nav-drop
-    focused.setAttribute('aria-expanded', 'true');
-
-    // Focus the first tabs-tab button in the desktop menu
-    const desktopMenu = focused.querySelector('.nav-in-menu-wrap');
-    const firstTabBtn = desktopMenu?.querySelector('.secondary-list-item');
-    if (firstTabBtn) {
-      firstTabBtn.focus();
     }
     return;
   }
@@ -419,125 +426,137 @@ function handleDesktopKeyboardNavigation(e, focused) {
 
     if (!desktopMenu) return;
 
-    const tabButtons = Array.from(desktopMenu.querySelectorAll('.secondary-list-item'));
+    const secondaryItems = Array.from(desktopMenu.querySelectorAll('.secondary-list-item'));
+    const closeButton = currentNavDrop.querySelector('.nav-close');
 
-    // If focused on a tabs-tab button
+    // If focused on a secondary-list-item
     if (focused.classList.contains('secondary-list-item')) {
-      const currentTabIndex = tabButtons.indexOf(focused);
       if (!e.shiftKey) {
-        // Forward tab from tabs-tab button - go to anchor inside it
+        // Forward tab from secondary-list-item
         e.preventDefault();
-        const anchorInsideListItem = focused.querySelector('.secondary-list-item-text > a');
-        if (anchorInsideListItem) {
-          anchorInsideListItem.focus();
+        
+        // Check if there's an anchor within the secondary-list-item-text
+        const anchorInText = focused.querySelector('.secondary-list-item-text > a');
+        if (anchorInText) {
+          anchorInText.focus();
         } else {
-          const anchorInside = focused.querySelector('a');
-          if (anchorInside) {
-            anchorInside.focus();
-          } else {
-            const nextListItemSibling = focused.nextElementSibling;
-            if (nextListItemSibling) {
-              nextListItemSibling.focus();
+          // No anchor in text, find first anchor in tertiary-list
+          const tertiaryList = focused.querySelector('.tertiary-list');
+          if (tertiaryList) {
+            const firstTertiaryLink = tertiaryList.querySelector('a');
+            if (firstTertiaryLink) {
+              firstTertiaryLink.focus();
+            } else {
+              // No links in tertiary list, focus close button
+              closeButton?.focus();
             }
+          } else {
+            // No tertiary list, focus close button
+            closeButton?.focus();
           }
         }
       } else {
-        // Shift+Tab from tabs-tab button - go to previous tab and show its content
+        // Shift+Tab from secondary-list-item - go to previous secondary-list-item or nav-drop
         e.preventDefault();
-        if (currentTabIndex > 0) {
-          const previousTab = tabButtons[currentTabIndex - 1];
-          switchToTab(previousTab, desktopMenu);
-          previousTab.focus();
+        const currentIndex = secondaryItems.indexOf(focused);
+        if (currentIndex > 0) {
+          const previousSecondaryItem = secondaryItems[currentIndex - 1];
+          
+          // Close current expanded item and open the previous one
+          focused.setAttribute('aria-expanded', 'false');
+          previousSecondaryItem.setAttribute('aria-expanded', 'true');
+          previousSecondaryItem.focus();
         } else {
-          // First tabs-tab, go back to nav-drop
+          // First secondary item, go back to nav-drop
           currentNavDrop.focus();
         }
       }
-    //} else if (focused.tagName === 'A' && focused.closest('.secondary-list-item')) {
-    } else if (focused.tagName === 'A' && focused.parentElement.classList.contains('secondary-list-item')) {
-      const parentButton = focused.closest('.secondary-list-item');
-      const currentTabIndex = tabButtons.indexOf(parentButton);
-
+    } else if (focused.tagName === 'A' && focused.parentElement?.classList.contains('secondary-list-item-text')) {
+      // Anchor within secondary-list-item-text
+      const parentSecondaryItem = focused.closest('.secondary-list-item');
+      
       if (!e.shiftKey) {
-        // Forward tab from anchor - go to first link in corresponding tab panel
+        // Forward tab from anchor in secondary-list-item-text
         e.preventDefault();
-        const panelId = parentButton.getAttribute('aria-controls');
-        const correspondingPanel = desktopMenu.querySelector(`#${panelId}`);
-        const tertiaryList = parentButton.querySelector('.tertiary-list');
-
+        
+        // Find first anchor in tertiary-list
+        const tertiaryList = parentSecondaryItem.querySelector('.tertiary-list');
         if (tertiaryList) {
-          const firstLink = tertiaryList.querySelector('a');
-          if (firstLink) {
-            firstLink.focus();
+          const firstTertiaryLink = tertiaryList.querySelector('a');
+          if (firstTertiaryLink) {
+            firstTertiaryLink.focus();
           } else {
-            // No links in panel, move to next tab button or close menu
-            handleEndOfTabPanel(tabButtons, currentTabIndex, allNavDrops, currentNavDropIndex);
+            // No links in tertiary list, focus close button
+            closeButton?.focus();
           }
+        } else {
+          // No tertiary list, focus close button
+          closeButton?.focus();
         }
       } else {
-        // Shift+Tab from anchor - go back to its parent tabs-tab button
+        // Shift+Tab from anchor - go back to parent secondary-list-item
         e.preventDefault();
-        parentButton.focus();
+        parentSecondaryItem.focus();
       }
     } else if (focused.tagName === 'A' && focused.closest('.tertiary-list')) {
-      console.log('HERE 3');
-      //const currentPanel = focused.closest('.tabs-panel');
-      const currentPanel = focused.closest('.tertiary-list');
-      const panelLinks = Array.from(currentPanel.querySelectorAll('a'));
-      const currentLinkIndex = panelLinks.indexOf(focused);
+      // Anchor within tertiary-list
+      const tertiaryList = focused.closest('.tertiary-list');
+      const tertiaryLinks = Array.from(tertiaryList.querySelectorAll('a'));
+      const currentLinkIndex = tertiaryLinks.indexOf(focused);
 
       if (!e.shiftKey) {
         // Forward tab
-        if (currentLinkIndex < panelLinks.length - 1) {
-          // Move to next link in panel
+        if (currentLinkIndex < tertiaryLinks.length - 1) {
+          // Move to next link in tertiary list
           e.preventDefault();
-          panelLinks[currentLinkIndex + 1].focus();
+          tertiaryLinks[currentLinkIndex + 1].focus();
         } else {
-          // Last link in panel - focus the close button
+          // Last link in tertiary list - focus close button
           e.preventDefault();
-          const closeButton = currentNavDrop.querySelector('.nav-close');
-          if (closeButton) {
-            closeButton.focus();
-          }
+          closeButton?.focus();
         }
       } else {
-        // Shift+Tab from panel link
+        // Shift+Tab from tertiary link
         e.preventDefault();
         if (currentLinkIndex > 0) {
-          // Move to previous link in panel
-          panelLinks[currentLinkIndex - 1].focus();
+          // Move to previous link in tertiary list
+          tertiaryLinks[currentLinkIndex - 1].focus();
         } else {
-          // First link in panel - go back to the active tabs-tab button
-          const panelId = currentPanel.getAttribute('id');
-          const correspondingTab = desktopMenu.querySelector(`[aria-controls="${panelId}"]`);
-          if (correspondingTab) {
-            correspondingTab.focus();
+          // First link in tertiary list - go back to secondary-list-item or its anchor
+          const parentSecondaryItem = focused.closest('.secondary-list-item');
+          const anchorInText = parentSecondaryItem.querySelector('.secondary-list-item-text > a');
+          if (anchorInText) {
+            anchorInText.focus();
+          } else {
+            parentSecondaryItem.focus();
           }
         }
       }
     } else if (focused.classList.contains('nav-close')) {
       if (!e.shiftKey) {
-        // Forward tab from close button - move to next tabs-tab button
+        // Forward tab from close button
         e.preventDefault();
-
-        // Find which tab panel was last active (visible)
-
-        const visiblePanel = Array.from(desktopMenu.querySelectorAll('.secondary-list-item')).find((listItem) => listItem.getAttribute('aria-expanded') === 'true');
-
-        let currentTabIndex = -1;
-        if (visiblePanel) {
-          const panelId = visiblePanel.getAttribute('id');
-          const correspondingTab = desktopMenu.querySelector(`[aria-controls="${panelId}"]`);
-          currentTabIndex = visiblePanel ? tabButtons.indexOf(visiblePanel) : -1;
-        }
-
-        if (currentTabIndex < tabButtons.length - 1) {
-          // Move to next tabs-tab button and make it active
-          const nextTab = tabButtons[currentTabIndex + 1];
-          switchToTab(nextTab, desktopMenu);
-          nextTab.focus();
+        
+        // Find the currently expanded secondary-list-item
+        const expandedSecondaryItem = secondaryItems.find(item => 
+          item.getAttribute('aria-expanded') === 'true'
+        );
+        
+        let currentIndex = expandedSecondaryItem ? 
+          secondaryItems.indexOf(expandedSecondaryItem) : -1;
+        
+        if (currentIndex < secondaryItems.length - 1) {
+          // Move to next secondary-list-item
+          const nextSecondaryItem = secondaryItems[currentIndex + 1];
+          
+          // Close current expanded item and open the next one
+          if (expandedSecondaryItem) {
+            expandedSecondaryItem.setAttribute('aria-expanded', 'false');
+          }
+          nextSecondaryItem.setAttribute('aria-expanded', 'true');
+          nextSecondaryItem.focus();
         } else {
-          // Last tab, close current nav-drop and move to next nav-drop or search
+          // Last secondary item, close current nav-drop and move to next nav-drop or search
           currentNavDrop.setAttribute('aria-expanded', 'false');
 
           if (currentNavDropIndex < allNavDrops.length - 1) {
@@ -552,26 +571,36 @@ function handleDesktopKeyboardNavigation(e, focused) {
           }
         }
       } else {
-        // Shift+Tab from close button - go back to last link in current active panel
+        // Shift+Tab from close button - go back to last link in currently expanded tertiary list
         e.preventDefault();
-        const visiblePanel = Array.from(desktopMenu.querySelectorAll('.tabs-panel')).find((panel) => panel.getAttribute('aria-hidden') === 'false');
-
-        if (visiblePanel) {
-          const panelLinks = Array.from(visiblePanel.querySelectorAll('a'));
-          if (panelLinks.length > 0) {
-            // Focus last link in panel
-            panelLinks[panelLinks.length - 1].focus();
-          } else {
-            // No links in panel, go back to anchor in corresponding tab
-            const panelId = visiblePanel.getAttribute('id');
-            const correspondingTab = desktopMenu.querySelector(`[aria-controls="${panelId}"]`);
-            if (correspondingTab) {
-              const anchorInTab = correspondingTab.querySelector('a');
-              if (anchorInTab) {
-                anchorInTab.focus();
+        
+        const expandedSecondaryItem = secondaryItems.find(item => 
+          item.getAttribute('aria-expanded') === 'true'
+        );
+        
+        if (expandedSecondaryItem) {
+          const tertiaryList = expandedSecondaryItem.querySelector('.tertiary-list');
+          if (tertiaryList) {
+            const tertiaryLinks = Array.from(tertiaryList.querySelectorAll('a'));
+            if (tertiaryLinks.length > 0) {
+              // Focus last link in tertiary list
+              tertiaryLinks[tertiaryLinks.length - 1].focus();
+            } else {
+              // No links, go to anchor in secondary-list-item-text or the item itself
+              const anchorInText = expandedSecondaryItem.querySelector('.secondary-list-item-text > a');
+              if (anchorInText) {
+                anchorInText.focus();
               } else {
-                correspondingTab.focus();
+                expandedSecondaryItem.focus();
               }
+            }
+          } else {
+            // No tertiary list, go to anchor in secondary-list-item-text or the item itself
+            const anchorInText = expandedSecondaryItem.querySelector('.secondary-list-item-text > a');
+            if (anchorInText) {
+              anchorInText.focus();
+            } else {
+              expandedSecondaryItem.focus();
             }
           }
         }
