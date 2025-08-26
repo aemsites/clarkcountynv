@@ -1602,6 +1602,13 @@ header .nav-in-menu-wrap .tertiary-list-item a:hover {
   header .nav-in-menu-wrap .tertiary-list-item a {
     text-decoration: underline;
     padding: 0;
+    display: inline-block;
+  }
+
+  header .nav-in-menu-wrap .tertiary-list-item a:focus {
+    color: var(--primary-orange-900);
+    background-color: transparent;
+    border: 1px solid var(--primary-orange-900);
   }
 
   header .nav-in-menu-wrap .tertiary-list-header {
