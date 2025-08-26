@@ -1048,6 +1048,14 @@ header .nav-in-menu-wrap .secondary-list-item {
   position: relative;
 }
 
+header .nav-in-menu-wrap .secondary-list-item:focus {
+  outline: none;
+}
+
+header .nav-in-menu-wrap .secondary-list-item:focus > .secondary-list-item-text {
+  background-color: var(--primary-orange-900);
+}
+
 header .nav-in-menu-wrap .secondary-list-item-text {
   color: var(--neutral-white);
   font-size: var(--body-font-size-s);
@@ -1067,6 +1075,11 @@ header .nav-in-menu-wrap .secondary-list-item-text:has(a) {
 header .nav-in-menu-wrap .secondary-list-item-text:has(a) a {
   padding: 11px 24px 11px 50px;
   display: block;
+}
+
+header .nav-in-menu-wrap .secondary-list-item-text:has(a) a:focus {
+  background-color: var(--primary-orange-900);
+  text-decoration: underline;
 }
 
 header .nav-in-menu-wrap .secondary-list-item[aria-expanded="true"] {
@@ -1125,30 +1138,22 @@ header .nav-in-menu-wrap .tertiary-list-item {
   font-style: normal;
   font-weight: var(--font-weight-book);
   line-height: 120%;
-  padding: 11px 24px 11px 80px;
 }
 
-/* header .nav-in-menu-wrap .tertiary-list-item:has(a) {
-  padding: 0;
-}
-
-header .nav-in-menu-wrap .tertiary-list-item:has(a) a {
+header .nav-in-menu-wrap .tertiary-list-item a {
   text-decoration: none;
   padding: 11px 24px 11px 80px;
   display: block;
-} */
-
-/* header .nav-in-menu-wrap .tertiary-list-item > a {
-  text-decoration: none;
-} */
-
-header .nav-in-menu-wrap .tertiary-list-item > a:hover {
-  color: var(--primary-orange-900);
 }
 
-header .nav-in-menu-wrap .tertiary-list-item > a:focus {
+header .nav-in-menu-wrap .tertiary-list-item a:focus {
+  background-color: var(--primary-orange-900);
+  color: var(--neutral-white);
+  text-decoration: underline;
+}
+
+header .nav-in-menu-wrap .tertiary-list-item a:hover {
   color: var(--primary-orange-900);
-  border: 1px solid var(--primary-orange-900);
 }
 
 @media (width >= 600px) {
@@ -1594,8 +1599,9 @@ header .nav-in-menu-wrap .tertiary-list-item > a:focus {
     padding: 0;
   }
 
-  header .nav-in-menu-wrap .tertiary-list-item > a {
+  header .nav-in-menu-wrap .tertiary-list-item a {
     text-decoration: underline;
+    padding: 0;
   }
 
   header .nav-in-menu-wrap .tertiary-list-header {
