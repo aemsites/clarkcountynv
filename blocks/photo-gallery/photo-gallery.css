@@ -34,12 +34,19 @@
             transition: transform 0.3s ease;
         }
 
-        &:hover img {
+        &:hover img,
+        &:focus img {
             transform: scale(1.05);
         }
 
-        &:hover .hover-circle {
+        &:hover .hover-circle,
+        &:focus .hover-circle {
             transform: translate(-50%, -50%) scale(2);
+        }
+
+        &:focus {
+            outline: none;
+            border: 2px solid var(--primary-orange-600);
         }
     }
 }
@@ -65,6 +72,11 @@
         max-width: 90vw;
         transform: scale(1);
         transition: transform 0.3s ease;
+
+        &.focused .nav-button,
+        &.focused .expand-button {
+            opacity: 1 !important;
+        }
 
         .modal-main {
             flex: 1;
@@ -127,6 +139,10 @@
                         right: 0;
                         background: url("/icons/sprite-next.png") center right no-repeat;
                     }
+
+                    &:focus {
+                        outline: 2px solid var(--primary-orange-600);
+                    }
                 }
 
                 /* Show nav buttons only when hovering over the image container */
@@ -144,11 +160,13 @@
                     right: 5px;
                     width: 28px;
                     height: 28px;
-                    background: url('/icons/sprite.png') 31px -31px no-repeat;
+                    background: url('/icons/sprite.png') 0 -30px no-repeat;
                     cursor: pointer;
                     opacity: 0;
                     transition: opacity 0.3s ease, transform 0.3s ease;
                     z-index: 3;
+                    margin: 0;
+                    padding: 0;
 
                     &:hover {
                         transform: scale(1.1);
@@ -156,6 +174,11 @@
 
                     &.contracted {
                         background-position: 31px -85px;
+                    }
+
+                    &:focus {
+                        opacity: 1;
+                        border: 2px solid var(--primary-orange-600);
                     }
                 }
 
@@ -194,6 +217,7 @@
                     justify-content: center;
                     width: 20px;
                     height: 20px;
+                    margin: 0;
 
                     &.prev {
                         left: 5px;
@@ -203,6 +227,10 @@
                     &.next {
                         right: 5px;
                         background-position: -82px -3px;
+                    }
+
+                    &:focus {
+                        outline: 2px solid var(--primary-orange-600);
                     }
                 }
 
@@ -221,6 +249,9 @@
                         border: 2px solid transparent;
                         transition: all 0.3s ease;
                         flex-shrink: 0;
+                        margin: 0;
+                        padding: 0;
+                        background-color: transparent;
 
                         &:hover {
                             border-color: rgb(255 255 255 / 50%);
@@ -234,6 +265,10 @@
                             width: 100%;
                             height: 100%;
                             object-fit: cover;
+                        }
+
+                        &:focus {
+                            border: 2px solid var(--primary-orange-600);
                         }
                     }
                 }
@@ -259,9 +294,14 @@
                             background: url("/icons/sprite.png") no-repeat;
                             opacity: 0.8;
                             transition: opacity 0.3s ease;
+                            margin: 0;
 
                             &:hover {
                                 opacity: 1;
+                            }
+
+                            &:focus {
+                                outline: 2px solid var(--primary-orange-600);
                             }
                         }
 
@@ -292,7 +332,7 @@
 
                 .image-counter {
                     font-style: italic;
-                    color: #999;
+                    color: var(--neutral-black-800);
                     font-size: var(--body-font-size-xs);
                 }
 
@@ -318,6 +358,10 @@
                     &:hover {
                         opacity: 1;
                     }
+
+                    &:focus {
+                        outline: 2px solid var(--primary-orange-600);
+                    }
                 }
             }
 
@@ -331,6 +375,11 @@
 
                 .tweet-button {
                     text-decoration: underline;
+
+                    &:focus {
+                        background-color: transparent;
+                        border: 1px solid var(--primary-orange-600)
+                    }
                 }
 
                 .like-button {
@@ -354,6 +403,10 @@
             }
         }
     }
+}
+
+.image-modal-content.focused .modal-main .thumbnails-container {
+    opacity: 1;
 }
 
 .image-modal-content:hover .modal-main .thumbnails-container {

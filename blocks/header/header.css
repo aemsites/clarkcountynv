@@ -78,7 +78,7 @@ header nav .nav-menu-buttons {
 header nav .nav-brand img {
   width: 100%;
   height: 100%;
-  max-width: 119px;
+  max-width: 110px;
 }
 
 header .nav-wrapper {
@@ -101,9 +101,13 @@ header nav .nav-in-menu-wrap-mobile .tabs-tab {
   margin: 0;
   border: none;
   width: 100%;
-  padding: 0;
+  padding: 12px 24px 12px 40px;
   text-align: left;
   position: relative;
+}
+
+header nav .nav-in-menu-wrap-mobile .tabs-tab:has(a) {
+  padding: 0;
 }
 
 header nav .nav-in-menu-wrap-mobile .tabs-tab:hover {
@@ -1075,8 +1079,8 @@ header .nav-search .search-box .search-form-wrap .search-results {
   }
 
   header nav .nav-brand img {
-    max-width: 151px;
-    width: 151px;
+    max-width: 115px;
+    width: 115px;
   }
 
   header nav .nav-language {
@@ -1376,6 +1380,10 @@ header .nav-search .search-box .search-form-wrap .search-results {
 
   #nav > div.section.nav-brand > div > p  picture:nth-child(2) {
     margin-right: 50px;
+  }
+
+  header button.translate-button {
+    padding-bottom: 6px;
   }
 }
 
