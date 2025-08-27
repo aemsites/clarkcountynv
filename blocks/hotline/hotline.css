@@ -140,6 +140,19 @@
   width: 100%;
 }
 
+.hotline .business-info span.icon[class$="-native"] {
+  background-color: var(--primary-orange-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  padding: 0;
+}
+
+.hotline .business-info span.icon[class$="-native"] svg {
+  fill: var(--neutral-white);
+}
+
 .hotline.filter .business-info {
   padding: 24px 0;
   background-color: var(--neutral-white);
