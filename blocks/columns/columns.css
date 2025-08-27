@@ -301,6 +301,15 @@ main .section.rightsection.no-button .columns.alert a:any-link {
   height: 100%;
 }
 
+.columns.contact-card .column1 img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 @media (width >= 600px) {
   .columns.contact-card .column1 {
     flex: 0 0 342px;
