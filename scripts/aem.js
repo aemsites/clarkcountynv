@@ -441,6 +441,36 @@ function addAccessibilityToButtonIcons(span, iconName) {
 }
 
 /**
+* Updates the icons to be a native SVG html element, instead of an <img>
+* @param {Element} [iconName] icon name
+*/
+async function replaceSvgImg(span, iconPath) {
+  try {
+    const trimmedSrc = iconPath.replace('-native', '');
+    const response = await fetch(trimmedSrc);
+    const svgText = await response.text();
+    
+    // Create a temporary div to parse the SVG
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = svgText;
+    const svgElement = tempDiv.querySelector('svg');
+    
+    if (svgElement) {
+      if (span.hasAttribute('role')) {
+        span.removeAttribute('role');
+      }
+      if (span.hasAttribute('aria-label')) {
+        span.removeAttribute('aria-label')
+      }
+      // Replace the img with the svg
+      span.append(svgElement);
+    }
+  } catch (error) {
+    console.error('Failed to load SVG:', error);
+  }
+}
+
+/**
  * Add <img> for icon, prefixed with codeBasePath and optional prefix.
  * @param {Element} [span] span element with icon classes
  * @param {string} [prefix] prefix to be added to icon src
@@ -450,12 +480,18 @@ function decorateIcon(span, prefix = '', alt = '') {
   const iconName = Array.from(span.classList)
     .find((c) => c.startsWith('icon-'))
     .substring(5);
-  const img = document.createElement('img');
-  img.dataset.iconName = iconName;
-  img.src = `${window.hlx.codeBasePath}${prefix}/icons/${iconName}.svg`;
-  img.alt = alt;
-  img.loading = 'lazy';
-  span.append(img);
+  
+  const iconPath = `${window.hlx.codeBasePath}${prefix}/icons/${iconName}.svg`;
+  if (iconName.indexOf('-native') === -1) {
+    const img = document.createElement('img');
+    img.dataset.iconName = iconName;
+    img.src = iconPath;
+    img.alt = alt;
+    img.loading = 'lazy';
+    span.append(img);
+  } else {
+    replaceSvgImg(span, iconPath);
+  } 
 
   // Check to see if anchor contains only an icon, if so add helper class for styling.
   const anchor = span.parentElement;
