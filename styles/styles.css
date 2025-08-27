@@ -208,13 +208,7 @@ main pre {
 
 /* links */
 a:any-link {
-  color: var(--primary-orange-900);
-  text-decoration-color: var(--neutral-white);
-  text-decoration-thickness: 6%;
-  text-underline-offset: 12%;
-}
-
-a:hover, a:focus, a:visited {
+  color: var(--primary-orange-600);
   text-decoration: underline;
   text-decoration-thickness: 6%;
   text-underline-offset: 12%;
@@ -226,7 +220,8 @@ a:hover {
 
 a:focus {
   color: var(--primary-orange-900);
-  background-color: var(--link-focus-bg);
+  background-color: transparent;
+  border: 1px solid var(--primary-blue-900);
   outline: 0;
 }
 
