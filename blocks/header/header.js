@@ -613,6 +613,17 @@ function handleMobileKeyboardNavigation(e, focused) {
     return;
   }
 
+  // Handle nav-search-button Enter key - focus on search close button
+  if (e.code === 'Enter' && focused.classList.contains('nav-search-button')) {
+    setTimeout(() => {
+      const searchCloseButton = document.querySelector('.search-close');
+      if (searchCloseButton) {
+        searchCloseButton.focus();
+      }
+    }, 50);
+    return;
+  }
+
   // Handle Tab navigation between nav-drop elements and their children
   if (e.code === 'Tab') {
     const allNavDrops = Array.from(document.querySelectorAll('.nav-drop'));
