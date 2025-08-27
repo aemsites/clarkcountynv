@@ -449,18 +449,18 @@ async function replaceSvgImg(span, iconPath) {
     const trimmedSrc = iconPath.replace('-native', '');
     const response = await fetch(trimmedSrc);
     const svgText = await response.text();
-    
+
     // Create a temporary div to parse the SVG
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = svgText;
     const svgElement = tempDiv.querySelector('svg');
-    
+
     if (svgElement) {
       if (span.hasAttribute('role')) {
         span.removeAttribute('role');
       }
       if (span.hasAttribute('aria-label')) {
-        span.removeAttribute('aria-label')
+        span.removeAttribute('aria-label');
       }
       // Replace the img with the svg
       span.append(svgElement);
@@ -480,7 +480,7 @@ function decorateIcon(span, prefix = '', alt = '') {
   const iconName = Array.from(span.classList)
     .find((c) => c.startsWith('icon-'))
     .substring(5);
-  
+
   const iconPath = `${window.hlx.codeBasePath}${prefix}/icons/${iconName}.svg`;
   if (iconName.indexOf('-native') === -1) {
     const img = document.createElement('img');
@@ -491,7 +491,7 @@ function decorateIcon(span, prefix = '', alt = '') {
     span.append(img);
   } else {
     replaceSvgImg(span, iconPath);
-  } 
+  }
 
   // Check to see if anchor contains only an icon, if so add helper class for styling.
   const anchor = span.parentElement;
