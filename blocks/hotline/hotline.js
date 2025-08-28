@@ -49,8 +49,7 @@ function handleTagSearch(element, event) {
 
 function buildCategoryTags(categories) {
   const container = ul({ class: 'tag-container' });
-  const sortedCategories = [...categories].sort((c1, c2) => c1.localeCompare(c2));
-  sortedCategories.forEach((category) => {
+  categories.forEach((category) => {
     const categoryTag = li(
       { class: `category-tag ${category.toLowerCase().replace(' ', '-')}`, onclick(e) { handleTagSearch(this, e); } },
       a(
