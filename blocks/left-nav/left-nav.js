@@ -1,3 +1,5 @@
+import { loadCSS } from '../../scripts/aem.js';
+
 export class AccessibleLeftNav {
   constructor(navElement) {
     this.nav = navElement;
@@ -8,6 +10,10 @@ export class AccessibleLeftNav {
     this.setupNavigationStructure();
     this.setupKeyboardNavigation();
     this.checkForActivePage();
+    // Init component block for sidekick library page
+    if (this.nav.classList.contains('sidekick-library')) {
+      this.sidekickPageInit();
+    }
   }
 
   checkForActivePage() {
@@ -17,6 +23,25 @@ export class AccessibleLeftNav {
         link.classList.add('active');
       }
     });
+  }
+
+  sidekickPageInit() {
+    const sidekickMain = this.nav.closest('main.sidekick-library');
+    if (sidekickMain) {
+      const leftSection = sidekickMain.querySelector('.leftsection');
+      if (leftSection) {
+        // Create mainmenu wrapper and append left + right sections
+        const mainMenu = document.createElement('div');
+        mainMenu.classList.add('mainmenu');
+        leftSection.parentNode.insertBefore(mainMenu, leftSection);
+        const rightSection = document.createElement('div');
+        rightSection.classList.add('rightsection');
+        mainMenu.append(leftSection, rightSection);
+
+        // load CSS from default template for 2 column layout
+        loadCSS(`${window.hlx.codeBasePath}/templates/default/default.css`);
+      }
+    }
   }
 
   setupNavigationStructure() {
