@@ -121,18 +121,21 @@ export default function decorate(block) {
     const isTitleHeader = secondColFirstEl && (secondColFirstEl.tagName === 'H2' || secondColFirstEl.tagName === 'H3');
     const title = `${isTitleHeader.textContent} map` || 'Google map embed';
     const mapLink = firstCol?.querySelector('a');
+    const hasFirstColImg = firstCol?.querySelector('picture');
     const hasEmbedCode = mapLink?.href.indexOf('www.google.com/maps/embed') > -1;
-    if (hasEmbedCode) {
-      const map = iframe(
-        {
-          src: mapLink,
-          allowFullscreen: true,
-          frameBorder: 0,
-          class: 'map-embed',
-          title,
-        },
-      );
-      mapLink?.parentElement.replaceWith(map);
+    if (hasEmbedCode || hasFirstColImg) {
+      if (hasEmbedCode) {
+        const map = iframe(
+          {
+            src: mapLink,
+            allowFullscreen: true,
+            frameBorder: 0,
+            class: 'map-embed',
+            title,
+          },
+        );
+        mapLink?.parentElement.replaceWith(map);
+      }
     } else {
       firstCol?.classList.add('no-embed');
     }
