@@ -37,6 +37,19 @@ function buildPayload(workspaceIdVar, reportIdVar, datasetIdVar) {
   return JSON.stringify(body);
 }
 
+// Schedule refresh ~5 minutes before expiry
+function scheduleRefresh(report, tokenExpiryIso) {
+  try {
+    const now = Date.now();
+    const exp = tokenExpiryIso ? new Date(tokenExpiryIso).getTime() : (now + 60 * 60 * 1000);
+    const msUntilRefresh = Math.max(30_000, exp - now - 5 * 60 * 1000);
+    log(`Scheduling token refresh in ${(msUntilRefresh / 60000).toFixed(1)} min`);
+    setTimeout(() => refreshToken(report), msUntilRefresh);
+  } catch {
+    setTimeout(() => refreshToken(report), 55 * 60 * 1000);
+  }
+}
+
 // TOKEN REFRESH LOGIC (Proactive Refresh)
 async function refreshToken(report) {
   try {
@@ -58,19 +71,6 @@ async function refreshToken(report) {
   } catch (e) {
     // eslint-disable-next-line prefer-template
     log('Refresh error: ' + (e?.message || e), true);
-  }
-}
-
-// Schedule refresh ~5 minutes before expiry
-function scheduleRefresh(report, tokenExpiryIso) {
-  try {
-    const now = Date.now();
-    const exp = tokenExpiryIso ? new Date(tokenExpiryIso).getTime() : (now + 60 * 60 * 1000);
-    const msUntilRefresh = Math.max(30_000, exp - now - 5 * 60 * 1000);
-    log(`Scheduling token refresh in ${(msUntilRefresh / 60000).toFixed(1)} min`);
-    setTimeout(() => refreshToken(report), msUntilRefresh);
-  } catch {
-    setTimeout(() => refreshToken(report), 55 * 60 * 1000);
   }
 }
 
@@ -113,7 +113,12 @@ export default async function decorate(block) {
     let payload = {}; try { payload = JSON.parse(txt); } catch {}
 
     if (!r.ok) { log(`Token endpoint failed HTTP ${r.status}\n${txt}`, true); return; }
-    const { embedToken, embedUrl, reportId, tokenExpiry } = payload || {};
+    const {
+      embedToken,
+      embedUrl,
+      reportId,
+      tokenExpiry,
+    } = payload || {};
     if (!embedToken || !embedUrl || !reportId) {
       log(`Missing fields from function. Got:\n${txt}`, true);
       return;
@@ -153,7 +158,7 @@ export default async function decorate(block) {
     report.on('rendered', () => log('Report rendered'));
 
     // eslint-disable-next-line prefer-template
-    report.on('error', e => log('Embed error:\n' + JSON.stringify(e?.detail || e, null, 2), true));
+    report.on('error', (e) => log('Embed error:\n' + JSON.stringify(e?.detail || e, null, 2), true));
 
     // 5) Schedule proactive token refresh
     scheduleRefresh(report, tokenExpiry);
