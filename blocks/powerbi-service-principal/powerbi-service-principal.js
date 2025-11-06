@@ -37,19 +37,6 @@ function buildPayload(workspaceIdVar, reportIdVar, datasetIdVar) {
   return JSON.stringify(body);
 }
 
-// Schedule refresh ~5 minutes before expiry
-function scheduleRefresh(report, tokenExpiryIso) {
-  try {
-    const now = Date.now();
-    const exp = tokenExpiryIso ? new Date(tokenExpiryIso).getTime() : (now + 60 * 60 * 1000);
-    const msUntilRefresh = Math.max(30_000, exp - now - 5 * 60 * 1000);
-    log(`Scheduling token refresh in ${(msUntilRefresh / 60000).toFixed(1)} min`);
-    setTimeout(() => refreshToken(report), msUntilRefresh);
-  } catch {
-    setTimeout(() => refreshToken(report), 55 * 60 * 1000);
-  }
-}
-
 // TOKEN REFRESH LOGIC (Proactive Refresh)
 async function refreshToken(report) {
   try {
@@ -66,11 +53,27 @@ async function refreshToken(report) {
     const j = await r.json();
     if (!j.embedToken) { log(`Refresh returned no token: ${JSON.stringify(j)}`, true); return; }
     await report.setAccessToken(j.embedToken);
+
+    // eslint-disable-next-line no-use-before-define
     scheduleRefresh(report, j.tokenExpiry);
+
     log('Token refreshed');
   } catch (e) {
     // eslint-disable-next-line prefer-template
     log('Refresh error: ' + (e?.message || e), true);
+  }
+}
+
+// Schedule refresh ~5 minutes before expiry
+function scheduleRefresh(report, tokenExpiryIso) {
+  try {
+    const now = Date.now();
+    const exp = tokenExpiryIso ? new Date(tokenExpiryIso).getTime() : (now + 60 * 60 * 1000);
+    const msUntilRefresh = Math.max(30_000, exp - now - 5 * 60 * 1000);
+    log(`Scheduling token refresh in ${(msUntilRefresh / 60000).toFixed(1)} min`);
+    setTimeout(() => refreshToken(report), msUntilRefresh);
+  } catch {
+    setTimeout(() => refreshToken(report), 55 * 60 * 1000);
   }
 }
 
