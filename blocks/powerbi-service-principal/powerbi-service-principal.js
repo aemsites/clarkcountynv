@@ -1,16 +1,16 @@
 import {
   loadScript,
-  readBlockConfig
+  readBlockConfig,
 } from '../../scripts/aem.js';
 import {
   div,
-  domEl
+  domEl,
 } from '../../scripts/dom-helpers.js';
 
 export function pre(...items) { return domEl('pre', ...items); }
 
 // Azure Function URL and Key to get Power BI embed token & embed URL
-const FN_URL = "https://fn-dg-pbi-prod-westus3.azurewebsites.net/api/pbi-token-sp";
+const FN_URL = 'https://fn-dg-pbi-prod-westus3.azurewebsites.net/api/pbi-token-sp';
 
 // will be read from the block parameters, see the decorate() function
 let FN_KEY = null;
@@ -19,22 +19,22 @@ let REPORT_ID = null;
 let DATASET_ID = null;
 
 const log = (msg, isErr = false) => {
-    const el = document.getElementById('log');
-    el.textContent += (el.textContent ? "\n" : "") + msg;
-    if (isErr) el.classList.add('err');
+  const el = document.getElementById('log');
+  el.textContent += (el.textContent ? "\n" : '') + msg;
+  if (isErr) el.classList.add('err');
 };
 
 // Build the POST body (reuse for refresh)
 function buildPayload(workspaceIdVar, reportIdVar, datasetIdVar) {
-    const body = {
-    workspaceId: workspaceIdVar,
-    reportId: reportIdVar,
-    datasetId: datasetIdVar
-    };
-    // If you want to include RLS, uncomment above and add here:
-    // body.username = RLS_USERNAME;
-    // body.roles = RLS_ROLES;
-    return JSON.stringify(body);
+  const body = {
+  workspaceId: workspaceIdVar,
+  reportId: reportIdVar,
+  datasetId: datasetIdVar,
+  };
+  // If you want to include RLS, uncomment above and add here:
+  // body.username = RLS_USERNAME;
+  // body.roles = RLS_ROLES;
+  return JSON.stringify(body);
 }
 
 // TOKEN REFRESH LOGIC (Proactive Refresh)
