@@ -31,9 +31,9 @@ function buildPayload(workspaceIdVar, reportIdVar, datasetIdVar) {
     reportId: reportIdVar,
     datasetId: datasetIdVar,
   };
-  // If you want to include RLS, uncomment above and add here:
-  // body.username = RLS_USERNAME;
-  // body.roles = RLS_ROLES;
+    // If you want to include RLS, uncomment above and add here:
+    // body.username = RLS_USERNAME;
+    // body.roles = RLS_ROLES;
   return JSON.stringify(body);
 }
 
@@ -59,8 +59,7 @@ async function refreshToken(report) {
 
     log('Token refreshed');
   } catch (e) {
-    // eslint-disable-next-line prefer-template
-    log('Refresh error: ' + (e?.message || e), true);
+    log(`Refresh error: ${e?.message || e}`, true);
   }
 }
 
@@ -117,10 +116,7 @@ export default async function decorate(block) {
 
     if (!r.ok) { log(`Token endpoint failed HTTP ${r.status}\n${txt}`, true); return; }
     const {
-      embedToken,
-      embedUrl,
-      reportId,
-      tokenExpiry,
+      embedToken, embedUrl, reportId, tokenExpiry,
     } = payload || {};
     if (!embedToken || !embedUrl || !reportId) {
       log(`Missing fields from function. Got:\n${txt}`, true);
@@ -134,10 +130,7 @@ export default async function decorate(block) {
     const config = {
       type: 'report',
       id: reportId,
-
-      // eslint-disable-next-line object-shorthand
-      embedUrl: embedUrl, // e.g., https://app.powerbigov.us/...
-
+      embedUrl, // e.g., https://app.powerbigov.us/...
       accessToken: embedToken,
       tokenType: models.TokenType.Embed,
       permissions: models.Permissions.All,
@@ -159,14 +152,11 @@ export default async function decorate(block) {
     // 4) Diagnostic events
     report.on('loaded', () => log('Report loaded'));
     report.on('rendered', () => log('Report rendered'));
-
-    // eslint-disable-next-line prefer-template
-    report.on('error', (e) => log('Embed error:\n' + JSON.stringify(e?.detail || e, null, 2), true));
+    report.on('error', (e) => log(`Embed error:\n${JSON.stringify(e?.detail || e, null, 2)}`, true));
 
     // 5) Schedule proactive token refresh
     scheduleRefresh(report, tokenExpiry);
   } catch (err) {
-    // eslint-disable-next-line prefer-template
-    log('Unexpected error: ' + (err?.message || err), true);
+    log(`Unexpected error: ${err?.message || err}`, true);
   }
 }
