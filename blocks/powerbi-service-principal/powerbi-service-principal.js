@@ -73,7 +73,7 @@ export default async function decorate(block) {
   block.innerHTML = '';
 
   // create the div container for Power BI report
-  const pbiVar = div({ id: 'pbi' });
+  const pbiVar = div({ id: `pbi-${REPORT_ID}`, class: 'pbi' });
   block.append(pbiVar);
 
   try {
@@ -122,7 +122,7 @@ export default async function decorate(block) {
       pbi.factories.wpmpFactory,
       pbi.factories.routerFactory,
     );
-    const container = document.getElementById('pbi');
+    const container = document.getElementById(`pbi-${REPORT_ID}`);
     const report = service.embed(container, config);
 
     // 5) Schedule proactive token refresh
