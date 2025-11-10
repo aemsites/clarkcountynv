@@ -4,36 +4,21 @@ import {
 } from '../../scripts/aem.js';
 import {
   div,
-  domEl,
 } from '../../scripts/dom-helpers.js';
 
-export function pre(...items) { return domEl('pre', ...items); }
-
-// Azure Function URL and Key to get Power BI embed token & embed URL
 const FN_URL = 'https://fn-dg-pbi-prod-westus3.azurewebsites.net/api/pbi-token-sp';
 
-// will be read from the block parameters, see the decorate() function
 let FN_KEY = null;
 let WORKSPACE_ID = null;
 let REPORT_ID = null;
 let DATASET_ID = null;
 
-const log = (msg, isErr = false) => {
-  const el = document.getElementById('log');
-  el.textContent += (el.textContent ? '\n' : '') + msg;
-  if (isErr) el.classList.add('err');
-};
-
-// Build the POST body (reuse for refresh)
 function buildPayload(workspaceIdVar, reportIdVar, datasetIdVar) {
   const body = {
     workspaceId: workspaceIdVar,
     reportId: reportIdVar,
     datasetId: datasetIdVar,
   };
-    // If you want to include RLS, uncomment above and add here:
-    // body.username = RLS_USERNAME;
-    // body.roles = RLS_ROLES;
   return JSON.stringify(body);
 }
 
@@ -49,17 +34,15 @@ async function refreshToken(report) {
       body: buildPayload(WORKSPACE_ID, REPORT_ID, DATASET_ID),
       cache: 'no-store',
     });
-    if (!r.ok) { log(`Refresh failed HTTP ${r.status}: ${await r.text()}`, true); return; }
+    if (!r.ok) { return; }
     const j = await r.json();
-    if (!j.embedToken) { log(`Refresh returned no token: ${JSON.stringify(j)}`, true); return; }
+    if (!j.embedToken) { return; }
     await report.setAccessToken(j.embedToken);
 
     // eslint-disable-next-line no-use-before-define
     scheduleRefresh(report, j.tokenExpiry);
-
-    log('Token refreshed');
   } catch (e) {
-    log(`Refresh error: ${e?.message || e}`, true);
+    // eslint-disable-next-line no-empty
   }
 }
 
@@ -69,7 +52,6 @@ function scheduleRefresh(report, tokenExpiryIso) {
     const now = Date.now();
     const exp = tokenExpiryIso ? new Date(tokenExpiryIso).getTime() : (now + 60 * 60 * 1000);
     const msUntilRefresh = Math.max(30_000, exp - now - 5 * 60 * 1000);
-    log(`Scheduling token refresh in ${(msUntilRefresh / 60000).toFixed(1)} min`);
     setTimeout(() => refreshToken(report), msUntilRefresh);
   } catch {
     setTimeout(() => refreshToken(report), 55 * 60 * 1000);
@@ -94,10 +76,6 @@ export default async function decorate(block) {
   const pbiVar = div({ id: 'pbi' });
   block.append(pbiVar);
 
-  // create the pre element for logging
-  const preVar = pre({ id: 'log' }, 'Starting Power BI embed...\n');
-  block.append(preVar);
-
   try {
     // 1) Fetch embed info via POST JSON (with header key)
     const r = await fetch(FN_URL, {
@@ -114,15 +92,13 @@ export default async function decorate(block) {
     // eslint-disable-next-line no-empty
     let payload = {}; try { payload = JSON.parse(txt); } catch {}
 
-    if (!r.ok) { log(`Token endpoint failed HTTP ${r.status}\n${txt}`, true); return; }
+    if (!r.ok) { return; }
     const {
       embedToken, embedUrl, reportId, tokenExpiry,
     } = payload || {};
     if (!embedToken || !embedUrl || !reportId) {
-      log(`Missing fields from function. Got:\n${txt}`, true);
       return;
     }
-    log(`Token OK. reportId=${reportId}\nembedUrl=${embedUrl}`);
 
     // 2) Build embed configuration
     const pbi = window['powerbi-client'];
@@ -149,14 +125,9 @@ export default async function decorate(block) {
     const container = document.getElementById('pbi');
     const report = service.embed(container, config);
 
-    // 4) Diagnostic events
-    report.on('loaded', () => log('Report loaded'));
-    report.on('rendered', () => log('Report rendered'));
-    report.on('error', (e) => log(`Embed error:\n${JSON.stringify(e?.detail || e, null, 2)}`, true));
-
     // 5) Schedule proactive token refresh
     scheduleRefresh(report, tokenExpiry);
   } catch (err) {
-    log(`Unexpected error: ${err?.message || err}`, true);
+    // eslint-disable-next-line no-empty
   }
 }
