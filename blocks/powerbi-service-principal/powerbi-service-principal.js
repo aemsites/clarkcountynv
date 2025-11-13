@@ -112,7 +112,7 @@ export default async function decorate(block) {
       permissions: models.Permissions.All,
       settings: {
         panes: { filters: { visible: false } },
-        navContentPaneEnabled: true,
+        navContentPaneEnabled: false,
       },
     };
 
