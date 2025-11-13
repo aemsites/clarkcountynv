@@ -1,5 +1,8 @@
 .powerbi-service-principal.block .pbi {
   height: 100vh;
   width: 100%;
-  border: 0;
+}
+
+.powerbi-service-principal.block iframe {
+  border: none;
 }
