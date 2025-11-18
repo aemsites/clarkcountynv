@@ -667,7 +667,7 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
                     padding: 10px 10px 10px 30px;
 
                     h3 {
-                        color: #ba372a;
+                        color: var(--primary-orange-600);
                         margin: 0;
                         line-height: 1.3;
                     }
