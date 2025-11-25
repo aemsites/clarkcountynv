@@ -1,7 +1,7 @@
 export default async function decorate(block) {
-    console.log("aiembed block has been accessed");
+  console.log('aiembed block has been accessed');
 
-    block.innerHTML = `<iframe
+  block.innerHTML = `<iframe
     id="ccFrame"
     src="https://customer.1mind.cloud/cc/embed-v7.html"
     allow="microphone https://customer.1mind.cloud; camera https://customer.1mind.cloud"
