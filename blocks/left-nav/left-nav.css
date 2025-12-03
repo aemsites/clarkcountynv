@@ -1,5 +1,6 @@
 .left-nav.block {
   display: none;
+  background-color: var(--primary-orange-600);
 }
 
 .left-nav.block.active {
