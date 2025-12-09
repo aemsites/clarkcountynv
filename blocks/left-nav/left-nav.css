@@ -1,10 +1,14 @@
 .left-nav.block {
   display: none;
-  background-color: var(--primary-orange-600);
 }
 
 .left-nav.block.active {
   display: block;
+}
+
+.left-nav.block.in-preview {
+  max-width: 350px;
+  background-color: var(--primary-orange-600);
 }
 
 .left-nav ul {
