@@ -10,10 +10,20 @@ export class AccessibleLeftNav {
     this.setupNavigationStructure();
     this.setupKeyboardNavigation();
     this.checkForActivePage();
+
+    // If we are inside of left-nav fragment preview mode, add class
+    if (window.location.pathname.endsWith('/fragments/left-nav')) {
+      this.addPreviewClass();
+    }
+
     // Init component block for sidekick library page
     if (this.nav.classList.contains('sidekick-library')) {
       this.sidekickPageInit();
     }
+  }
+
+  addPreviewClass() {
+    this.nav.classList.add('in-preview');
   }
 
   checkForActivePage() {
