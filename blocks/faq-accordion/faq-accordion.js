@@ -155,7 +155,7 @@ export default function decorate(block) {
     const id = createHashId(headingText);
 
     details.id = id;
-    details.open = true;
+    details.open = false;
     details.append(summary, body);
 
     details.addEventListener('toggle', handleToggleHash);
