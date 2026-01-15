@@ -94,14 +94,12 @@ const resultParsers = {
 const loadresults = async (block, numberOfCards) => {
   const newsResults = [];
 
-  //// insert document reading code here, can just replace the row children with the object values
   [...block.children].forEach((row) => {
-
   // map the table columns to the object properties
-  const pageTitle = row.children[0]?.querySelector('p')?.textContent.trim()|| ' ';
-  const path = row.children[1]?.querySelector('a')?.href || '';
-  const bannerUrl = row.children[2]?.querySelector('img')?.src || '';
-  const category = row.children[3]?.querySelector('p')?.textContent.trim() || ' ';
+  const pageTitle = row.children[2]?.querySelector('p')?.textContent.trim()|| ' ';
+  const path = row.children[3]?.querySelector('a')?.href || '';
+  const bannerUrl = row.children[0]?.querySelector('img')?.src || '';
+  const category = row.children[1]?.querySelector('p')?.textContent.trim() || ' ';
 
   // create the object
   const obj = new News(pageTitle, path, bannerUrl, category);
