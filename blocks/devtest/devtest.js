@@ -1,3 +1,8 @@
+// TODO: - Ask in web team meeting what the name of this block should be
+//           - Will have to go over all of the class names after renaming the block,
+//             can also fix other classes at the same time
+//       - Test failure cases (if no url is put in, or wrong values in other columns, etc)
+
 import {
   div, a, img, h4, span, p,
 } from '../../scripts/dom-helpers.js';
@@ -12,9 +17,7 @@ const WHITEARROW = placeholders.whitearrow;
 class News {
   constructor(newsTitle, newsPath, newsImage, newsCategory) {
     this.newsTitle = newsTitle;
-    // this.newsDescription = newsDescription;
     this.newsPath = newsPath;
-    // this.newsPublished = newsPublished;
     this.newsImage = newsImage;
     this.newsCategory = newsCategory;
   }
@@ -96,14 +99,14 @@ const loadresults = async (block, numberOfCards) => {
 
   [...block.children].forEach((row) => {
   // map the table columns to the object properties
-  const pageTitle = row.children[2]?.querySelector('p')?.textContent.trim()|| ' ';
-  const path = row.children[3]?.querySelector('a')?.href || '';
-  const bannerUrl = row.children[0]?.querySelector('img')?.src || '';
-  const category = row.children[1]?.querySelector('p')?.textContent.trim() || ' ';
+    const pageTitle = row.children[2]?.querySelector('p')?.textContent.trim() || ' ';
+    const path = row.children[3]?.querySelector('a')?.href || '';
+    const bannerUrl = row.children[0]?.querySelector('img')?.src || '';
+    const category = row.children[1]?.querySelector('p')?.textContent.trim() || ' ';
 
-  // create the object
-  const obj = new News(pageTitle, path, bannerUrl, category);
-  newsResults.push(obj);
+    // create the object
+    const obj = new News(pageTitle, path, bannerUrl, category);
+    newsResults.push(obj);
   });
 
   const blockType = 'columns';
@@ -135,5 +138,5 @@ const loadresults = async (block, numberOfCards) => {
 
 export default async function decorate(block) {
   const numberofcards = block.children.length;
-  await loadresults(block, numberofcards)
+  await loadresults(block, numberofcards);
 }
