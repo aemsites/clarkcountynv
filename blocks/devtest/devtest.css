@@ -16,6 +16,7 @@ a long description will make both cards on that row taller than the other ones e
   grid-template-columns: 1fr;
   display: grid;
   gap: 24px;
+  
   /* margin: 40px 0; */
 }
 
