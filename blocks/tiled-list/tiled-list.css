@@ -3,16 +3,12 @@
 /* Note for future self: the cards are automatically sized with the text description. For instance... a row has 2 cards, and
 a long description will make both cards on that row taller than the other ones etc. */
 
-.devtest {
-  /* padding: 0 24px; */
-}
-
-.devtest .columns-wrapper {
+.tiled-list .columns-wrapper {
   margin: 0;
   padding: 0;
 }
 
-.devtest .newsitems {
+.tiled-list .newsitems {
   grid-template-columns: 1fr;
   display: grid;
   gap: 24px;
@@ -20,16 +16,16 @@ a long description will make both cards on that row taller than the other ones e
   /* margin: 40px 0; */
 }
 
-.devtest .newsitems .news {
+.tiled-list .newsitems .news {
   gap: 0;
 }
 
-.devtest .news .column1 {
+.tiled-list .news .column1 {
   width: unset;
   max-height: 100%;
 }
 
-.devtest .news .column2 {
+.tiled-list .news .column2 {
   background-color: var(--neutral-black-200);
   align-self: stretch;
   padding: 24px;
@@ -38,18 +34,18 @@ a long description will make both cards on that row taller than the other ones e
   align-items: flex-start;
 }
 
-.devtest .news .column2 .icon {
+.tiled-list .news .column2 .icon {
   width: 18px;
   height: 18px;
   padding: 0;
   display: inline-flex;
 }
 
-.devtest .news .column2 .icon img {
+.tiled-list .news .column2 .icon img {
   margin-block: auto;
 }
 
-.devtest .news .newslist-category {
+.tiled-list .news .newslist-category {
   margin: 0;
   color: var(--neutral-black-800);
   font-size: var(--heading-font-size-s);
@@ -60,12 +56,12 @@ a long description will make both cards on that row taller than the other ones e
   text-transform: uppercase;
 }
 
-.devtest .news .newslist-title {
+.tiled-list .news .newslist-title {
   margin: 12px 0 29px;
   color: var(--primary-orange-600);
 }
 
-.devtest .news .newslist-link {
+.tiled-list .news .newslist-link {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -74,47 +70,47 @@ a long description will make both cards on that row taller than the other ones e
   text-decoration: none;
 }
 
-.devtest .news .newslist-link:hover,
-.devtest .news .newslist-link:focus {
+.tiled-list .news .newslist-link:hover,
+.tiled-list .news .newslist-link:focus {
   text-decoration: underline;
   text-decoration-color: var(--primary-orange-600);
 }
 
 @media (width >= 900px) {
-  .devtest .newsitems {
+  .tiled-list .newsitems {
     gap: 40px;
     justify-content: center;
   }
 
-  .devtest .news .column1 {
+  .tiled-list .news .column1 {
     flex: 0 0 240px;
     align-self: stretch;
   }
 
-  .devtest .newsitems .news {
+  .tiled-list .newsitems .news {
     flex-flow: column nowrap;
   }
 }
 
 @media (width >= 1200px) {
-  .devtest .newsitems .news {
+  .tiled-list .newsitems .news {
     min-height: 180px;
     flex-flow: row nowrap;
   }
 
-  .devtest .news .column1 img {
+  .tiled-list .news .column1 img {
     width: 240px;
     height: 100%;
     object-fit: cover;
   }
 
-  .devtest .news .newslist-title {
+  .tiled-list .news .newslist-title {
     margin-bottom: 35px;
   }
 }
 
 @media (width >= 1400px) {
-  .devtest .newsitems {
+  .tiled-list .newsitems {
     grid-template-columns: repeat(2, 1fr);
   }
 }
