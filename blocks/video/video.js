@@ -8,6 +8,7 @@
 //       - Placeholder image DAM videos (DONE)
 //       - Placeholder image support on width/height adjustable videos (DONE)
 //       - Placeholder image support on left-align option (DONE)
+//       - Fix the height stretch bug on video (left align) load (DONE)
 
 //       - Delete all debug comments and unused lines of code + lint
 //       - Test all videos on kitchen sink page: http://localhost:3000/drafts/jlui/dam-video-test
@@ -176,7 +177,7 @@ function embedAdobeDAM(url, autoplay, background, hasAlignment, customWidth, cus
     </div> </div>`;
   } else {
     temp.innerHTML = `<div style="display: flex; justify-content: center;"> <div class="video-player" style="width: ${iframeWidth}; position: relative; ${!hasAlignment ? 'height: 0; padding-bottom: 56.25%;' : ''} height: ${iframeHeight};">
-      <iframe src="${url.href}${placeholder ? '?autoplay=1' : ''}" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" 
+      <iframe src="${url.href}${placeholder ? '?autoplay=1' : ''}?isLetterBoxed=true" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" 
       allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope; picture-in-picture" allowfullscreen="" scrolling="no" title="Content from Adobe DAM" loading="lazy"></iframe>
     </div> </div>`;
     /// //////
