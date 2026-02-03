@@ -11,9 +11,9 @@
 //       - Fix the height stretch bug on video (left align) load (DONE)
 
 //       - Fix width/height adjustable DAM video letterboxing
-//         This can be done with ?isLetterBoxed=true on the URL
+//         This can be done with ?isLetterBoxed=true on the URL (DONE)
 
-//       - Video (height-350) isnt working??? its rendering as height-506
+//       - Video (height-350) isnt working??? its rendering as height-506 (DONE)
 
 //       - Try the "poster" attribute for placeholder images? Instead of
 //         using a custom solution, maybe we can utilize the built-in
@@ -79,7 +79,7 @@ function embedVimeo(url, autoplay, background, hasAlignment) {
   return temp.children.item(0);
 }
 
-function embedAdobeDAM(url, autoplay, background, hasAlignment, customWidth, customHeight, placeholder) {
+function embedAdobeDAM(url, autoplay, background, hasAlignment, customWidth, customHeight, placeholder, shouldCenter) {
   let suffix = '';
   if (background || autoplay) {
     const suffixParams = {
@@ -95,8 +95,8 @@ function embedAdobeDAM(url, autoplay, background, hasAlignment, customWidth, cus
 
   console.log('custom width: ', customWidth);
 
-  let width = null;
-  let height = null;
+  let width = '100%';
+  let height = '100%';
 
   if (customWidth.some((style) => style.startsWith('width'))) {
     const widthStyle = customWidth.find((style) => style.startsWith('width'));
@@ -104,129 +104,78 @@ function embedAdobeDAM(url, autoplay, background, hasAlignment, customWidth, cus
   }
 
   if (customHeight.some((style) => style.startsWith('height'))) {
-    const widthStyle = customHeight.find((style) => style.startsWith('height'));
-    height = `${widthStyle.replace('height-', '')}px`;
+    const heightStyle = customHeight.find((style) => style.startsWith('height'));
+    height = `${heightStyle.replace('height-', '')}px`;
   }
 
   console.log('width: ', width);
   console.log('height: ', height);
 
-  // ${url.href}?autoplay=1 is used for the placeholder image... but if we set it indiscriminately it will autoplay any videos on the page (if there are multiple)
-
   const temp = document.createElement('div');
 
+
+
+
+
+  const params = new URLSearchParams();
+
+  if (placeholder) {
+    params.set('autoplay', '1');
+  }
+
+  if (width != '100%' || height != '100%') {
+    params.set('isLetterBoxed', 'true');
+  }
+
+  console.log("has: ", hasAlignment);
+
+  const src = `${url.href}${params.toString() ? `?${params.toString()}` : ''}`;
+
+  const content = `<div class="video-player" style="width: ${width}; position: relative; ${!hasAlignment ? `height: ${height};` : ''} ">
+    <iframe src="${src}" style="border: 0; top: 0; left: 0; width: ${width}; height: ${height}; position: absolute;" 
+    allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope; picture-in-picture" allowfullscreen="" scrolling="no" title="Content from Adobe DAM" loading="lazy"></iframe>
+  </div>`;
+  
+  temp.innerHTML = shouldCenter
+    ? `<div style="display: flex; justify-content: center;">${content}</div>`
+    : content;
+
+    // temp.innerHTML = `<div style="display: flex; justify-content: center;"> <div class="video-player" style="width: ${width}; position: relative; ${!hasAlignment ? 'padding-bottom: 56.25%;' : ''} height: ${height};">
+    //   <iframe src="${src}" style="border: 0; top: 0; left: 0; width: ${width}; height: ${height}; position: absolute;" 
+    //   allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope; picture-in-picture" allowfullscreen="" scrolling="no" title="Content from Adobe DAM" loading="lazy"></iframe>
+    // </div> </div>`;
+
+  // temp.innerHTML = `<div style="display: flex; justify-content: center;"> <div class="video-player" style="width: 100%; position: relative; ${!hasAlignment ? `height: ${height};` : ''}">
+  //   <iframe src="${src}" style="border: 0; top: 0; left: 0; width: ${width}; height: ${height}; position: absolute;" 
+  //   allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope; picture-in-picture" allowfullscreen="" scrolling="no" title="Content from Adobe DAM" loading="lazy"></iframe>
+  // </div> </div>`;
+
+
+  // /// ////// working
   // if (hasAlignment) {
   //   temp.innerHTML = `<div class="video-player" style="left: 0; width: 100%; position: relative; ${!hasAlignment ? 'height: 0; padding-bottom: 56.25%;' : ''}">
-  //     <iframe src="${url.href}" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;"
+  //     <iframe src="${src}" style="border: 0; top: 0; left: 0; width: ${width}; height: ${height}; position: absolute;" 
   //     allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope; picture-in-picture" allowfullscreen="" scrolling="no" title="Content from Adobe DAM" loading="lazy"></iframe>
   //   </div>`;
-  // } else if (width) {
-  //   temp.innerHTML = `<div class="video-player" style="left: 0; width: 100%; position: relative; ${!hasAlignment ? 'height: 0; padding-bottom: 56.25%;' : ''}">
-  //     <iframe src="${url.href}" style="border: 0; top: 0; left: 0; width: ${width ?? '100%'}; height: ${height ?? '100%'}; position: absolute;"
+  // } else if (placeholder) {
+  //   // temp.innerHTML = `
+  //   // <div style="display: flex; justify-content: center;"> <div class="video-player" style=" width: ${iframeWidth}; height: ${iframeHeight}; aspect-ratio: 16 / 9; "> <iframe src="${url.href}?autoplay=1" style="width: 100%; height: 100%; border: 0; object-fit: contain;" allowfullscreen loading="lazy"> </iframe> </div> </div>
+  //   // `;
+
+  //   temp.innerHTML = `<div style="display: flex; justify-content: center;"> <div class="video-player" style="width: ${width}; position: relative; ${!hasAlignment ? 'padding-bottom: 56.25%;' : ''} height: ${height};">
+  //     <iframe src="${src}" style="border: 0; top: 0; left: 0; width: ${width}; height: ${height}; position: absolute;" 
   //     allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope; picture-in-picture" allowfullscreen="" scrolling="no" title="Content from Adobe DAM" loading="lazy"></iframe>
-  //   </div>`;
-  // } else if (height) {
-  //   temp.innerHTML = `<div class="video-player" style="left: 0; width: 100%; position: relative; ${!hasAlignment ? 'height: 0; padding-bottom: 56.25%;' : ''}">
-  //     <iframe src="${url.href}" style="border: 0; top: 0; left: 0; height: ${height}; position: absolute;"
-  //     allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope; picture-in-picture" allowfullscreen="" scrolling="no" title="Content from Adobe DAM" loading="lazy"></iframe>
-  //   </div>`;
+  //   </div> </div>`;
   // } else {
-  //   temp.innerHTML = `<div class="video-player" style="left: 0; width: 100%; position: relative; ${!hasAlignment ? 'height: 0; padding-bottom: 56.25%;' : ''}">
-  //     <iframe src="${url.href}" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;"
+  //   temp.innerHTML = `<div style="display: flex; justify-content: center;"> <div class="video-player" style="width: ${width}; position: relative; ${!hasAlignment ? 'padding-bottom: 56.25%;' : ''} height: ${height};">
+  //     <iframe src="${src}" style="border: 0; top: 0; left: 0; width: ${width}; height: ${height}; position: absolute;" 
   //     allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope; picture-in-picture" allowfullscreen="" scrolling="no" title="Content from Adobe DAM" loading="lazy"></iframe>
-  //   </div>`;
+  //   </div> </div>`;
   // }
+  //   /// //////
 
-  // temp.innerHTML = `<div class="video-player" style="left: 0; width: 100%; position: relative; ${!hasAlignment ? 'height: 0; padding-bottom: 56.25%;' : ''}">
-  //   <iframe src="${url.href}" style="border: 0; top: 0; left: 0; width: ${height ?? '100%'}; height: ${width ?? '100%'}; position: absolute;"
-  //   allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope; picture-in-picture" allowfullscreen="" scrolling="no" title="Content from Adobe DAM" loading="lazy"></iframe>
-  // </div>`;
 
-  const iframeWidth = width ?? '100%';
-  const iframeHeight = height ?? '100%';
-
-  // // If on mobile (400px or below), override width to 350px
-  // if (window.innerWidth >= 400) {
-  //     iframeWidth = '350px';
-  // }
-
-  // temp.innerHTML = `
-  //   <div class="video-player"
-  //        style="
-  //          position: relative;
-  //          width: ${iframeWidth};
-  //          height: ${iframeHeight};
-  //          aspect-ratio: 16 / 9;
-  //        ">
-  //     <iframe
-  //       src="${url.href}"
-  //       style="
-  //         border: 0;
-  //         width: 100%;
-  //         height: 100%;
-  //       "
-  //       allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-  //       allowfullscreen
-  //       loading="lazy">
-  //     </iframe>
-  //   </div>
-  // `;
-
-  /// ////// working
-  if (hasAlignment) {
-    temp.innerHTML = `<div class="video-player" style="left: 0; width: 100%; position: relative; ${!hasAlignment ? 'height: 0; padding-bottom: 56.25%;' : ''}">
-      <iframe src="${url.href}${placeholder ? '?autoplay=1' : ''}" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" 
-      allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope; picture-in-picture" allowfullscreen="" scrolling="no" title="Content from Adobe DAM" loading="lazy"></iframe>
-    </div>`;
-  } else if (placeholder) {
-    // temp.innerHTML = `
-    // <div style="display: flex; justify-content: center;"> <div class="video-player" style=" width: ${iframeWidth}; height: ${iframeHeight}; aspect-ratio: 16 / 9; "> <iframe src="${url.href}?autoplay=1" style="width: 100%; height: 100%; border: 0; object-fit: contain;" allowfullscreen loading="lazy"> </iframe> </div> </div>
-    // `;
-
-    temp.innerHTML = `<div style="display: flex; justify-content: center;"> <div class="video-player" style="width: ${iframeWidth}; position: relative; ${!hasAlignment ? 'height: 0; padding-bottom: 56.25%;' : ''} height: ${iframeHeight};">
-      <iframe src="${url.href}${placeholder ? '?autoplay=1' : ''}" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" 
-      allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope; picture-in-picture" allowfullscreen="" scrolling="no" title="Content from Adobe DAM" loading="lazy"></iframe>
-    </div> </div>`;
-  } else {
-    temp.innerHTML = `<div style="display: flex; justify-content: center;"> <div class="video-player" style="width: ${iframeWidth}; position: relative; ${!hasAlignment ? 'height: 0; padding-bottom: 56.25%;' : ''} height: ${iframeHeight};">
-      <iframe src="${url.href}${placeholder ? '?autoplay=1' : ''}?isLetterBoxed=true" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" 
-      allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope; picture-in-picture" allowfullscreen="" scrolling="no" title="Content from Adobe DAM" loading="lazy"></iframe>
-    </div> </div>`;
-    /// //////
-
-    //   if (hasAlignment) {
-    //       temp.innerHTML = `<div class="video-player" style="left: 0; width: 100%; position: relative; ${!hasAlignment ? 'height: 0; padding-bottom: 56.25%;' : ''}">
-    //       <iframe src="${url.href}${placeholder ? '?autoplay=1' : ''}" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;"
-    //       allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope; picture-in-picture" allowfullscreen="" scrolling="no" title="Content from Adobe DAM" loading="lazy"></iframe>
-    //     </div>`;
-    //   }
-    // else {
-    //       temp.innerHTML = `<div style="display: flex; justify-content: center;"> <div class="video-player" style="width: ${iframeWidth}; height: ${iframeHeight}; position: relative; ${!hasAlignment ? 'padding-bottom: 56.25%;' : ''} ">
-    //       <iframe src="${url.href}${placeholder ? '?autoplay=1' : ''}" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;"
-    //       allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope; picture-in-picture" allowfullscreen="" scrolling="no" title="Content from Adobe DAM" loading="lazy"></iframe>
-    //     </div> </div>`;
-
-    // temp.innerHTML = `
-    // <div style="display: flex; justify-content: center;">
-    //   <div class="video-player" style="width: 100%; max-width: ${iframeWidth}; height: 100%; max-height: ${iframeHeight}; aspect-ratio: 16 / 9;">
-    //     <iframe
-    //       src="${url.href}"
-    //       style="width: 100%; height: 100%; border: 0;"
-    //       allowfullscreen
-    //       loading="lazy">
-    //     </iframe>
-    //   </div>
-    // </div>
-    // `;
-
-    // const style = document.createElement('style');
-    // style.textContent = `
-    //   .vjs-tech {
-    //     object-fit: contain !important;
-    //   }
-    // `;
-    // document.head.appendChild(style);
-  }
+  console.log(temp.innerHTML);
 
   return temp.children.item(0);
 }
@@ -267,6 +216,7 @@ const loadVideoEmbed = (block, link, autoplay, background, placeholder) => {
 
   console.log('isDAM?: ', isDAM);
   const hasAlignment = block.classList.contains('left-align') || block.classList.contains('right-align');
+  const shouldCenter = block.classList.contains('center');
 
   if (isYoutube) {
     const embedWrapper = embedYoutube(url, autoplay, background, hasAlignment);
@@ -286,7 +236,7 @@ const loadVideoEmbed = (block, link, autoplay, background, placeholder) => {
     const customWidth = [...block.classList].filter((className) => className.startsWith('width-'));
     const customHeight = [...block.classList].filter((className) => className.startsWith('height-'));
 
-    const embedWrapper = embedAdobeDAM(url, autoplay, background, hasAlignment, customWidth, customHeight, placeholder);
+    const embedWrapper = embedAdobeDAM(url, autoplay, background, hasAlignment, customWidth, customHeight, placeholder, shouldCenter);
     block.append(embedWrapper);
     embedWrapper.querySelector('iframe').addEventListener('load', () => {
       block.dataset.embedLoaded = true;
@@ -323,6 +273,21 @@ function videoEnablement(block) {
   }
   block.dataset.embedLoaded = false;
 
+  const customWidth = [...block.classList].filter((className) => className.startsWith('width-'));
+  const customHeight = [...block.classList].filter((className) => className.startsWith('height-'));
+  let widthVar = '100%';
+  let heightVar = '100%';
+
+  if (customWidth.some((style) => style.startsWith('width'))) {
+    const widthStyle = customWidth.find((style) => style.startsWith('width'));
+    widthVar = `${widthStyle.replace('width-', '')}px`;
+  }
+
+  if (customHeight.some((style) => style.startsWith('height'))) {
+    const heightStyle = customHeight.find((style) => style.startsWith('height'));
+    heightVar = `${heightStyle.replace('height-', '')}px`;
+  }
+
   const autoplay = block.classList.contains('autoplay');
   if (placeholder) {
     console.log('placeholder tripped');
@@ -330,6 +295,12 @@ function videoEnablement(block) {
     block.classList.add('placeholder');
     const wrapper = document.createElement('div');
     wrapper.className = 'video-placeholder';
+
+    if (!block.classList.contains('left-align')) {
+    wrapper.style.width = widthVar;
+    wrapper.style.height = heightVar;
+    }
+
     wrapper.append(placeholder);
 
     if (!autoplay) {

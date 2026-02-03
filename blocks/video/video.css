@@ -1,6 +1,12 @@
 /* Video Style */
 .video {
   text-align: center;
+  /* max-width: 900px; */
+  margin: 24px ;
+}
+
+.video {
+  text-align: center;
   max-width: 900px;
   margin: 24px auto;
 }
@@ -127,6 +133,12 @@
 
 .video.width-medium .video-player {
   order: 1;
+}
+
+.video-player {
+  width: 100vh;
+  aspect-ratio: 16 / 9;
+  position: relative;
 }
 
 /* Video - Left/Right Aligned */
@@ -276,8 +288,12 @@
 }
 
 /* Mobile override only */
-/* @media (max-width: 400px) {
-  .video-player {
+@media (max-width: 400px) {
+  iframe {
     width: 350px !important;
   }
-} */
+
+  .video-placeholder {
+    width: 350px !important;
+  }
+}
