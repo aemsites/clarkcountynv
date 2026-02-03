@@ -1,124 +1,100 @@
 .section.rptt-calc {
-    .form.block {
-        form {
-            :not(.field-description, .field-invalid) {
-                color: #000;
-            }
+	.form.block {
+		form {
+			p,
+			span,
+			label,
+			input,
+			textarea {
+				&:not(.field-description, .field-invalid) {
+					color: #000;
+				}
+			}
 
-            .field-description,
-            .field-invalid {
-                position: relative;
-                left: 1em;
-            }
+			.field-wrapper {
+				grid-column: span 12;
+				display: block;
+			}
 
-            .number-wrapper {
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                margin: 0;
+			.field-description,
+			.field-invalid {
+				grid-column: 2 / 3;
+				margin-top: 0.25rem;
+			}
 
-                label {
-                    flex-basis: 75%;
-                }
+			.number-wrapper {
+				display: grid;
+				grid-template-columns: 60% 40%;
+				column-gap: 0.5rem;
+				width: 100%;
+				align-items: center;
 
-                input {
-                    flex-basis: 25%;
-                    border: 1px solid #92ACAF;
-                    background-color: #eee;
-                    text-align: right;
-                }
+				input {
+					border: 1px solid #92ACAF;
+					text-align: right;
+				}
 
-                /* Chrome, Safari, Edge, Opera */
-                input[type='number']::-webkit-outer-spin-button,
-                input[type='number']::-webkit-inner-spin-button {
-                    /* stylelint-disable-next-line property-no-vendor-prefix */
-                    -webkit-appearance: none;
-                    margin: 0;
-                }
+				/* Chrome, Safari, Edge, Opera */
+				input[type='number']::-webkit-outer-spin-button,
+				input[type='number']::-webkit-inner-spin-button {
+					/* stylelint-disable-next-line property-no-vendor-prefix */
+					-webkit-appearance: none;
+					margin: 0;
+				}
 
-                /* Firefox */
-                input[type='number'] {
-                    /* stylelint-disable-next-line property-no-vendor-prefix */
-                    -moz-appearance: textfield;
-                }
+				/* Firefox */
+				input[type='number'] {
+					/* stylelint-disable-next-line property-no-vendor-prefix */
+					-moz-appearance: textfield;
+				}
 
+				&.field-taxable-amount,
+				&.field-percentage-of-ownership,
+				&.field-transfer-tax,
+				&.field-total-value-sales-price-newform,
+				&.field-transfer-tax-value,
+				&.field-real-property-transfer-tax-due,
+				&.field-percentage-being-transferred {
+					input {
+						background-color: var(--form-input-disable-color);
+					}
+				}
 
-                &:first-child {
-                    margin-top: 10vh;
+			}
 
-                    label {
-                        flex-basis: 50%;
-                    }
+			.button-wrapper {
+				display: flex;
+				justify-content: center;
+				border-bottom: 2px solid var(--primary-orange-600);
+			}
 
-                    input {
-                        flex-basis: 50%;
-                    }
-                }
+			.field-estimate-tax-button {
+				button {
+					background: var(--primary-orange-600);
+					padding: 10px 24px;
+				}
 
-                &.field-taxable-amount {
-                    label {
-                        flex-basis: 60%;
-                    }
+				button:hover {
+					background: var(--primary-orange-300);
+				}
 
-                    input {
-                        flex-basis: 40%;
-                    }
-                }
+				button:active {
+					background-color: var(--primary-orange-900);
+    				border-color: var(--primary-orange-900);
+				}
 
-                &.field-transfer-tax {
-                    margin-top: 10vh;
-                }
+				button:focus {
+					background-color: var(--primary-orange-300);
+					border-color: var(--primary-orange-600);
+					cursor: pointer;
+					outline: 0;
+				}
+			}
 
-                &.field-deed-in-lieu-fixed {
-                    label {
-                        flex-basis: 60%;
-                    }
-
-                    input {
-                        flex-basis: 40%;
-                    }
-                }
-            }
-
-            .number-wrapper[class*="fixed"] {
-                input {
-                    background-color: white;
-                    text-align: right;
-                }
-            }
-
-            .number-wrapper[class*="newform"] {
-                margin-top: 15vh;
-            }
-
-            .button-wrapper {
-                display: flex;
-                justify-content: end;
-                position: relative;
-                width: 103%;
-                border-bottom: 2px solid #000;
-            }
-
-            .field-estimate-tax-button {
-                button {
-                    background: #0094C3;
-                    color: #fff !important;
-                    border: 0;
-                    border-radius: 0;
-                    display: inline-block;
-                    font-size: var(--body-font-size-m);
-                    font-weight: 400;
-                    text-decoration: none;
-                    cursor: pointer;
-                    line-height: 1;
-                    vertical-align: top;
-                    font-family: sans-serif;
-                    transition: all 0.3s;
-                    right: 4vw;
-                    position: relative;
-                }
-            }
-        }
-    }
+			.plain-text-wrapper {
+				grid-column: span 12;
+				text-align: center;
+			}
+		}
+	}
 }
