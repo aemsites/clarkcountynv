@@ -180,26 +180,26 @@ function videoEnablement(block) {
   }
   block.dataset.embedLoaded = false;
 
-  const customWidth = [...block.classList].filter((className) => className.startsWith('width-'));
-  const customHeight = [...block.classList].filter((className) => className.startsWith('height-'));
-  let widthVar = '100%';
-  let heightVar = '100%';
-
-  if (customWidth.some((style) => style.startsWith('width'))) {
-    const widthStyle = customWidth.find((style) => style.startsWith('width'));
-    widthVar = `${widthStyle.replace('width-', '')}px`;
-  }
-
-  if (customHeight.some((style) => style.startsWith('height'))) {
-    const heightStyle = customHeight.find((style) => style.startsWith('height'));
-    heightVar = `${heightStyle.replace('height-', '')}px`;
-  }
-
   const autoplay = block.classList.contains('autoplay');
   if (placeholder) {
     block.classList.add('placeholder');
     const wrapper = document.createElement('div');
     wrapper.className = 'video-placeholder';
+
+    const customWidth = [...block.classList].filter((className) => className.startsWith('width-'));
+    const customHeight = [...block.classList].filter((className) => className.startsWith('height-'));
+    let widthVar = '100%';
+    let heightVar = '100%';
+
+    if (customWidth.some((style) => style.startsWith('width'))) {
+      const widthStyle = customWidth.find((style) => style.startsWith('width'));
+      widthVar = `${widthStyle.replace('width-', '')}px`;
+    }
+
+    if (customHeight.some((style) => style.startsWith('height'))) {
+      const heightStyle = customHeight.find((style) => style.startsWith('height'));
+      heightVar = `${heightStyle.replace('height-', '')}px`;
+    }
 
     if (!block.classList.contains('left-align')) {
     wrapper.style.width = widthVar;
