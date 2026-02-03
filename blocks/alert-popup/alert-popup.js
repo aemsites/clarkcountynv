@@ -7,6 +7,10 @@ const handleClose = (e) => {
   if (currPopup) {
     currPopup.classList.add('hide');
   }
+
+  // set sessionStorage cookie when user closes a full-width popup
+  sessionStorage.setItem('closed', 'true');
+
   setTimeout(() => {
     // get next popup and focus close button
     const nextPopup = document.querySelector('.alert-popup.popup.full-width:not(.hide)');
@@ -17,40 +21,46 @@ const handleClose = (e) => {
 };
 
 export default async function decorate(block) {
-  const type = block.classList.contains('popup') ? 'popup' : 'banner';
-  if (type === 'popup') {
-    if (!block.classList.contains('full-width')) {
-      const childNodes = block.children[0]?.childNodes;
-      if (childNodes.length) {
-        const filteredNodes = Array.from(childNodes).filter((node) => node.nodeName === 'DIV');
-        if (filteredNodes.length) {
-          const { showModal, block: modal } = await createModal(filteredNodes);
-          modal.className += ' alert-popup popup';
-          const modalContent = modal.querySelector('.modal-content');
-          const icon = modalContent?.querySelector('span.icon');
-          if (icon) {
-            icon.setAttribute('role', 'img');
-            icon.setAttribute('aria-label', `Alert ${type} icon`);
+  if (sessionStorage.getItem('closed') === 'true') {
+    // if alert-popup (full width) has been closed, do not render it again
+    block.innerHTML = '';
+  } else {
+    // otherwise, render it normally.
+    const type = block.classList.contains('popup') ? 'popup' : 'banner';
+    if (type === 'popup') {
+      if (!block.classList.contains('full-width')) {
+        const childNodes = block.children[0]?.childNodes;
+        if (childNodes.length) {
+          const filteredNodes = Array.from(childNodes).filter((node) => node.nodeName === 'DIV');
+          if (filteredNodes.length) {
+            const { showModal, block: modal } = await createModal(filteredNodes);
+            modal.className += ' alert-popup popup';
+            const modalContent = modal.querySelector('.modal-content');
+            const icon = modalContent?.querySelector('span.icon');
+            if (icon) {
+              icon.setAttribute('role', 'img');
+              icon.setAttribute('aria-label', `Alert ${type} icon`);
+            }
+            showModal();
           }
-          showModal();
         }
+      } else {
+        const closeBtnColor = (block.classList.contains('high') || block.classList.contains('low')) ? 'black' : 'white';
+        const closeBtn = button(
+          { class: 'close-button', type: 'button', onclick: (e) => handleClose(e) },
+          img(
+            { src: `/icons/close-icon-${closeBtnColor}.svg`, alt: 'Close alert popup' },
+          ),
+        );
+        const closeBtnContainer = div(closeBtn);
+        block.querySelector(':scope > div')?.append(closeBtnContainer);
       }
     } else {
-      const closeBtnColor = (block.classList.contains('high') || block.classList.contains('low')) ? 'black' : 'white';
-      const closeBtn = button(
-        { class: 'close-button', type: 'button', onclick: (e) => handleClose(e) },
-        img(
-          { src: `/icons/close-icon-${closeBtnColor}.svg`, alt: 'Close alert popup' },
-        ),
-      );
-      const closeBtnContainer = div(closeBtn);
-      block.querySelector(':scope > div')?.append(closeBtnContainer);
-    }
-  } else {
-    const spanIcon = block.querySelector('span.icon');
-    if (spanIcon) {
-      spanIcon.setAttribute('role', 'img');
-      spanIcon.setAttribute('aria-label', `Alert ${type} icon`);
+      const spanIcon = block.querySelector('span.icon');
+      if (spanIcon) {
+        spanIcon.setAttribute('role', 'img');
+        spanIcon.setAttribute('aria-label', `Alert ${type} icon`);
+      }
     }
   }
 }
