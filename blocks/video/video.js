@@ -10,6 +10,18 @@
 //       - Placeholder image support on left-align option (DONE)
 //       - Fix the height stretch bug on video (left align) load (DONE)
 
+//       - Fix width/height adjustable DAM video letterboxing
+//         This can be done with ?isLetterBoxed=true on the URL
+
+//       - Video (height-350) isnt working??? its rendering as height-506
+
+//       - Try the "poster" attribute for placeholder images? Instead of
+//         using a custom solution, maybe we can utilize the built-in
+//         video.js functionality for it instead.
+//         See https://videojs.org/guides/options/
+
+//       - Utilize the suffixParams options to keep the code consistent with other functions
+
 //       - Delete all debug comments and unused lines of code + lint
 //       - Test all videos on kitchen sink page: http://localhost:3000/drafts/jlui/dam-video-test
 
