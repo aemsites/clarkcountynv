@@ -84,19 +84,18 @@ function embedAdobeDAM(
   const temp = document.createElement('div');
   const params = new URLSearchParams();
 
-  if (placeholder) params.set('autoplay', '1');
+  if (placeholder) {
+    params.set('autoplay', '1');
+  }
 
   if (width !== '100%' || height !== 'auto') {
     params.set('isLetterBoxed', 'true');
   }
 
   const src = `${url.href}${params.toString() ? `?${params.toString()}` : ''}`;
-  const styleWidth = width === '100%' ? '100%' : '100%';
-  const styleMaxWidth = width !== '100%' ? `max-width: ${width};` : '';
-  const styleHeight = !hasAlignment ? `height: ${height};` : '';
 
   const content = `
-    <div class="video-player" style="width: ${styleWidth}; ${styleMaxWidth} aspect-ratio: 16/9; position: relative; ${styleHeight}">
+    <div class="video-player" style="width: 100%; ${width !== '100%' ? `max-width: ${width};` : ''} aspect-ratio: 16/9; position: relative; ${!hasAlignment ? `height: ${height};` : ''}">
       <iframe src="${src}"
         style="border: 0; width: 100%; height: 100%; position: absolute; top: 0; left: 0;"
         allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope; picture-in-picture"
@@ -108,10 +107,7 @@ function embedAdobeDAM(
     </div>
   `;
 
-  // Wrap in flex for centering if needed
-  temp.innerHTML = shouldCenter
-    ? `<div style="display: flex; justify-content: center; width: 100%;">${content}</div>`
-    : content;
+  temp.innerHTML = shouldCenter ? `<div style="display: flex; justify-content: center; width: 100%;">${content}</div>` : content;
 
   return temp.children.item(0);
 }
