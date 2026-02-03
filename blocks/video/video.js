@@ -4,27 +4,6 @@
  * https://www.hlx.live/developer/block-collection/video
  */
 
-// TODO: - Width/Height adjustable DAM videos (DONE)
-//       - Placeholder image DAM videos (DONE)
-//       - Placeholder image support on width/height adjustable videos (DONE)
-//       - Placeholder image support on left-align option (DONE)
-//       - Fix the height stretch bug on video (left align) load (DONE)
-
-//       - Fix width/height adjustable DAM video letterboxing
-//         This can be done with ?isLetterBoxed=true on the URL (DONE)
-
-//       - Video (height-350) isnt working??? its rendering as height-506 (DONE)
-
-//       - Try the "poster" attribute for placeholder images? Instead of
-//         using a custom solution, maybe we can utilize the built-in
-//         video.js functionality for it instead.
-//         See https://videojs.org/guides/options/
-
-//       - Utilize the suffixParams options to keep the code consistent with other functions
-
-//       - Delete all debug comments and unused lines of code + lint
-//       - Test all videos on kitchen sink page: http://localhost:3000/drafts/jlui/dam-video-test
-
 import {
   div,
 } from '../../scripts/dom-helpers.js';
@@ -80,21 +59,6 @@ function embedVimeo(url, autoplay, background, hasAlignment) {
 }
 
 function embedAdobeDAM(url, autoplay, background, hasAlignment, customWidth, customHeight, placeholder, shouldCenter) {
-  let suffix = '';
-  if (background || autoplay) {
-    const suffixParams = {
-      autoplay: autoplay ? '1' : '0',
-      mute: background ? '1' : '0',
-      controls: background ? '0' : '1',
-      disablekb: background ? '1' : '0',
-      loop: background ? '1' : '0',
-      playsinline: background ? '1' : '0',
-    };
-    suffix = `&${Object.entries(suffixParams).map(([k, v]) => `${k}=${encodeURIComponent(v)}`).join('&')}`;
-  }
-
-  console.log('custom width: ', customWidth);
-
   let width = '100%';
   let height = '100%';
 
@@ -108,15 +72,7 @@ function embedAdobeDAM(url, autoplay, background, hasAlignment, customWidth, cus
     height = `${heightStyle.replace('height-', '')}px`;
   }
 
-  console.log('width: ', width);
-  console.log('height: ', height);
-
   const temp = document.createElement('div');
-
-
-
-
-
   const params = new URLSearchParams();
 
   if (placeholder) {
@@ -127,8 +83,6 @@ function embedAdobeDAM(url, autoplay, background, hasAlignment, customWidth, cus
     params.set('isLetterBoxed', 'true');
   }
 
-  console.log("has: ", hasAlignment);
-
   const src = `${url.href}${params.toString() ? `?${params.toString()}` : ''}`;
 
   const content = `<div class="video-player" style="width: ${width}; position: relative; ${!hasAlignment ? `height: ${height};` : ''} ">
@@ -136,46 +90,7 @@ function embedAdobeDAM(url, autoplay, background, hasAlignment, customWidth, cus
     allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope; picture-in-picture" allowfullscreen="" scrolling="no" title="Content from Adobe DAM" loading="lazy"></iframe>
   </div>`;
   
-  temp.innerHTML = shouldCenter
-    ? `<div style="display: flex; justify-content: center;">${content}</div>`
-    : content;
-
-    // temp.innerHTML = `<div style="display: flex; justify-content: center;"> <div class="video-player" style="width: ${width}; position: relative; ${!hasAlignment ? 'padding-bottom: 56.25%;' : ''} height: ${height};">
-    //   <iframe src="${src}" style="border: 0; top: 0; left: 0; width: ${width}; height: ${height}; position: absolute;" 
-    //   allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope; picture-in-picture" allowfullscreen="" scrolling="no" title="Content from Adobe DAM" loading="lazy"></iframe>
-    // </div> </div>`;
-
-  // temp.innerHTML = `<div style="display: flex; justify-content: center;"> <div class="video-player" style="width: 100%; position: relative; ${!hasAlignment ? `height: ${height};` : ''}">
-  //   <iframe src="${src}" style="border: 0; top: 0; left: 0; width: ${width}; height: ${height}; position: absolute;" 
-  //   allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope; picture-in-picture" allowfullscreen="" scrolling="no" title="Content from Adobe DAM" loading="lazy"></iframe>
-  // </div> </div>`;
-
-
-  // /// ////// working
-  // if (hasAlignment) {
-  //   temp.innerHTML = `<div class="video-player" style="left: 0; width: 100%; position: relative; ${!hasAlignment ? 'height: 0; padding-bottom: 56.25%;' : ''}">
-  //     <iframe src="${src}" style="border: 0; top: 0; left: 0; width: ${width}; height: ${height}; position: absolute;" 
-  //     allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope; picture-in-picture" allowfullscreen="" scrolling="no" title="Content from Adobe DAM" loading="lazy"></iframe>
-  //   </div>`;
-  // } else if (placeholder) {
-  //   // temp.innerHTML = `
-  //   // <div style="display: flex; justify-content: center;"> <div class="video-player" style=" width: ${iframeWidth}; height: ${iframeHeight}; aspect-ratio: 16 / 9; "> <iframe src="${url.href}?autoplay=1" style="width: 100%; height: 100%; border: 0; object-fit: contain;" allowfullscreen loading="lazy"> </iframe> </div> </div>
-  //   // `;
-
-  //   temp.innerHTML = `<div style="display: flex; justify-content: center;"> <div class="video-player" style="width: ${width}; position: relative; ${!hasAlignment ? 'padding-bottom: 56.25%;' : ''} height: ${height};">
-  //     <iframe src="${src}" style="border: 0; top: 0; left: 0; width: ${width}; height: ${height}; position: absolute;" 
-  //     allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope; picture-in-picture" allowfullscreen="" scrolling="no" title="Content from Adobe DAM" loading="lazy"></iframe>
-  //   </div> </div>`;
-  // } else {
-  //   temp.innerHTML = `<div style="display: flex; justify-content: center;"> <div class="video-player" style="width: ${width}; position: relative; ${!hasAlignment ? 'padding-bottom: 56.25%;' : ''} height: ${height};">
-  //     <iframe src="${src}" style="border: 0; top: 0; left: 0; width: ${width}; height: ${height}; position: absolute;" 
-  //     allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope; picture-in-picture" allowfullscreen="" scrolling="no" title="Content from Adobe DAM" loading="lazy"></iframe>
-  //   </div> </div>`;
-  // }
-  //   /// //////
-
-
-  console.log(temp.innerHTML);
+  temp.innerHTML = shouldCenter ? `<div style="display: flex; justify-content: center;">${content}</div>` : content;
 
   return temp.children.item(0);
 }
@@ -207,14 +122,9 @@ const loadVideoEmbed = (block, link, autoplay, background, placeholder) => {
     return;
   }
   const url = new URL(link);
-
-  console.log('url: ', link);
-
   const isYoutube = link.includes('youtube') || link.includes('youtu.be');
   const isVimeo = link.includes('vimeo');
   const isDAM = link.includes('clarkcountynv.gov/adobe/assets');
-
-  console.log('isDAM?: ', isDAM);
   const hasAlignment = block.classList.contains('left-align') || block.classList.contains('right-align');
   const shouldCenter = block.classList.contains('center');
 
@@ -231,11 +141,8 @@ const loadVideoEmbed = (block, link, autoplay, background, placeholder) => {
       block.dataset.embedLoaded = true;
     });
   } else if (isDAM) {
-    console.log('isDAM block tripped');
-
     const customWidth = [...block.classList].filter((className) => className.startsWith('width-'));
     const customHeight = [...block.classList].filter((className) => className.startsWith('height-'));
-
     const embedWrapper = embedAdobeDAM(url, autoplay, background, hasAlignment, customWidth, customHeight, placeholder, shouldCenter);
     block.append(embedWrapper);
     embedWrapper.querySelector('iframe').addEventListener('load', () => {
@@ -290,8 +197,6 @@ function videoEnablement(block) {
 
   const autoplay = block.classList.contains('autoplay');
   if (placeholder) {
-    console.log('placeholder tripped');
-
     block.classList.add('placeholder');
     const wrapper = document.createElement('div');
     wrapper.className = 'video-placeholder';
