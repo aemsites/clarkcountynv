@@ -1,8 +1,3 @@
-// TODO: - Ask in web team meeting what the name of this block should be
-//           - Will have to go over all of the class names after renaming the block,
-//             can also fix other classes at the same time
-//       - Test failure cases (if no url is put in, or wrong values in other columns, etc)
-
 import {
   div, a, img, h4, span, p,
 } from '../../scripts/dom-helpers.js';
