@@ -8,6 +8,17 @@ import {
   div,
 } from '../../scripts/dom-helpers.js';
 
+// TODO: Mobile responsiveness on width 1015px down to 900px is messed up (for pretty much all video cases)
+
+// 900px and below seem to switch to something else that works, likely because that is when the left navbar collapses into its mobile version,
+// which ends up giving the elements enough space?
+
+// Maybe we should check these breakpoints on other pages to make sure that it is not just isolated to this.
+
+
+// can use ?posterImage=https://www.clarkcountynv.gov/adobe/assets/urn:aaid:aem:bc5b5d1e-5c3c-4f41-bc39-652d330ae553/as/content-at-scale.png?preferwebp=true
+// to set a placeholder image for the videos... maybe use this instead of the other custom placeholder code?
+
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 function embedYoutube(url, autoplay, background, hasAlignment) {
@@ -91,6 +102,8 @@ function embedAdobeDAM(
   if (width !== '100%' || height !== 'auto') {
     params.set('isLetterBoxed', 'true');
   }
+
+  // params.set("posterImage", "https://www.clarkcountynv.gov/adobe/assets/urn:aaid:aem:bc5b5d1e-5c3c-4f41-bc39-652d330ae553/as/content-at-scale.png?preferwebp=true")
 
   const src = `${url.href}${params.toString() ? `?${params.toString()}` : ''}`;
 
