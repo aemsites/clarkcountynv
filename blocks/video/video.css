@@ -5,12 +5,6 @@
   margin: 24px auto;
 }
 
-.video[data-embed-loaded='false']:not(.placeholder) {
-  /* reserve an approximate space to avoid extensive layout shifts */
-
-  /* aspect-ratio: 16 / 9; */
-}
-
 .video > div {
   display: flex;
   justify-content: center;
@@ -169,8 +163,6 @@
   align-self: stretch;
   width: 100%;
   aspect-ratio: 16 / 9;
-
-  /* min-width: 400px; */
 }
 
 .video.left-align .video-player {
@@ -233,11 +225,6 @@
     flex-flow: column nowrap;
   }
 
-  /* .rightsection .video.video.left-align .video-player,
-  .rightsection .video.video.right-align .video-player {
-    max-width: none;
-  } */
-
   .video.left-align,
   .video.right-align {
     flex-flow: row nowrap;
@@ -266,25 +253,16 @@
   .rightsection .video.video.right-align {
     flex-flow: row nowrap;
   }
-  
-  /* .video.left-align .video-player,
-  .video.right-align .video-player {
-    max-width: 400px;
-  }
-
-  .video.left-align .video-placeholder,
-  .video.right-align .video-placeholder {
-    max-width: 400px;
-    min-height: 283px;
-  } */
-
-  /* .rightsection .video.video.left-align .video-player,
-  .rightsection .video.video.right-align .video-player {
-    min-width: 400px;
-  } */
 }
 
-/* Mobile override only */
+/* Override for 1015-900px width... required for video sizing with collapsible left nav */
+@media (width >= 900px) and (width <= 1015px) {
+  .video {
+  max-width: 500px;
+  }
+}
+
+/* Mobile override for placeholder image videos */
 @media (width <= 430px) {
   .video .video-placeholder,
   iframe {
