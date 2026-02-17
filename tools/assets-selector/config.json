@@ -5,7 +5,7 @@
         "value": "Audio"
       },
       {
-        "mimeType": "audio/mpeg",
+        "mimeType": "audio/*",
         "value": "Audio"
       }
     ],
@@ -27,7 +27,7 @@
         "value": "reference"
       },
       {
-        "mimeType": "audio/mpeg",
+        "mimeType": "audio/*",
         "value": "reference"
       }
     ],
