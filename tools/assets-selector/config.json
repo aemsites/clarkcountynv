@@ -2,10 +2,10 @@
     "blockName": [
       {
         "mimeType": "video/*",
-        "value": "Audio"
+        "value": "Video"
       },
       {
-        "mimeType": "audio/*",
+        "mimeType": "audio/mpeg",
         "value": "Audio"
       }
     ],
@@ -27,7 +27,7 @@
         "value": "reference"
       },
       {
-        "mimeType": "audio/*",
+        "mimeType": "audio/mpeg",
         "value": "reference"
       }
     ],
@@ -57,7 +57,7 @@
               },
               {
                 "label": "Audio",
-                "value": "audio/*"
+                "value": "audio/mpeg"
               }
             ],
             "columns": 2
