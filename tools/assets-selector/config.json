@@ -54,6 +54,10 @@
               {
                 "label": "PDFs",
                 "value": "application/pdf"
+              },
+              {
+                "label": "Audio",
+                "value": "audio/*"
               }
             ],
             "columns": 2
