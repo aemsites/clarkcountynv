@@ -2,7 +2,7 @@
     "blockName": [
       {
         "mimeType": "video/*",
-        "value": "Video"
+        "value": "Audio"
       },
       {
         "mimeType": "audio/mpeg",
