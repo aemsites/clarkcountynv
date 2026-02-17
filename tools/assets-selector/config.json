@@ -2,7 +2,11 @@
     "blockName": [
       {
         "mimeType": "video/*",
-        "value": "Video"
+        "value": "Audio"
+      },
+      {
+        "mimeType": "audio/*",
+        "value": "Audio"
       }
     ],
     "headerStyle": [
@@ -20,6 +24,10 @@
     "copyMode": [
       {
         "mimeType": "image/*",
+        "value": "reference"
+      },
+      {
+        "mimeType": "audio/*",
         "value": "reference"
       }
     ],
