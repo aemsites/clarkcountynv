@@ -22,7 +22,7 @@
                 "prod",
                 "dev"
             ],
-            "url": "https://experience.adobe.com/solutions/CQ-helix-assets-addon/static-assets/resources/asset-selector.html?rail=false",
+            "url": "https://experience.adobe.com/solutions/CQ-assets-selectors/static-assets/resources/franklin/asset-selector.html?hideTreeNav=false&rail=false&extConfigUrl=https://raw.githubusercontent.com/aemsites/clarkcountynv/refs/heads/main/tools/assets-selector/config.json",
             "isPalette": true,
             "passConfig": true,
             "includePaths": [
