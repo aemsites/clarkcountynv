@@ -3,6 +3,10 @@
       {
         "mimeType": "video/*",
         "value": "Video"
+      },
+      {
+        "mimeType": "audio/mpeg",
+        "value": "Audio"
       }
     ],
     "headerStyle": [
@@ -20,6 +24,10 @@
     "copyMode": [
       {
         "mimeType": "image/*",
+        "value": "reference"
+      },
+      {
+        "mimeType": "audio/mpeg",
         "value": "reference"
       }
     ],
