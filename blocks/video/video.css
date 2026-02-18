@@ -5,11 +5,6 @@
   margin: 24px auto;
 }
 
-.video[data-embed-loaded='false']:not(.placeholder) {
-  /* reserve an approximate space to avoid extensive layout shifts */
-  aspect-ratio: 16 / 9;
-}
-
 .video > div {
   display: flex;
   justify-content: center;
@@ -50,6 +45,8 @@
 
 .video .video-placeholder {
   width: 100%;
+
+  /* height: 100%; */
   aspect-ratio: 16 / 9;
   position: relative;
 }
@@ -128,6 +125,12 @@
   order: 1;
 }
 
+.video-player {
+  width: 100vh;
+  aspect-ratio: 16 / 9;
+  position: relative;
+}
+
 /* Video - Left/Right Aligned */
 .video.left-align,
 .video.right-align {
@@ -151,6 +154,13 @@
 .video.right-align .video-player {
   align-self: stretch;
   overflow: hidden;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.video.left-align .video-placeholder,
+.video.right-align .video-placeholder {
+  align-self: stretch;
   width: 100%;
   aspect-ratio: 16 / 9;
 }
@@ -205,7 +215,7 @@
   float: inline-end;
 }
 
-@media (width >= 900px) {
+@media (width >= 1440px) {
   .video.width-medium .video-content p {
     font-size: var(--body-font-size-m);
   }
@@ -213,11 +223,6 @@
   .rightsection .video.video.left-align,
   .rightsection .video.video.right-align {
     flex-flow: column nowrap;
-  }
-
-  .rightsection .video.video.left-align .video-player,
-  .rightsection .video.video.right-align .video-player {
-    max-width: none;
   }
 
   .video.left-align,
@@ -231,6 +236,12 @@
     max-width: 400px;
   }
 
+  .video.left-align .video-placeholder,
+  .video.right-align .video-placeholder {
+    max-width: 400px;
+    min-height: 283px;
+  }
+
   .video.left-align .video-content p,
   .video.right-align .video-content p {
     font-size: var(--body-font-size-m);
@@ -242,9 +253,20 @@
   .rightsection .video.video.right-align {
     flex-flow: row nowrap;
   }
+}
 
-  .rightsection .video.video.left-align .video-player,
-  .rightsection .video.video.right-align .video-player {
-    min-width: 400px;
+/* Override for 1015-900px width... required for video sizing with collapsible left nav */
+@media (width >= 900px) and (width <= 1015px) {
+  .video {
+  max-width: 500px;
+  }
+}
+
+/* Mobile override for placeholder image videos */
+@media (width <= 430px) {
+  .video .video-placeholder,
+  iframe {
+    width: 100%;
+    max-width: 100%
   }
 }
