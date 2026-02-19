@@ -3,6 +3,7 @@
  * Show a video referenced by a link
  * https://www.hlx.live/developer/block-collection/video
  */
+
 import {
   div,
 } from '../../scripts/dom-helpers.js';
@@ -57,6 +58,60 @@ function embedVimeo(url, autoplay, background, hasAlignment) {
   return temp.children.item(0);
 }
 
+function embedAdobeDAM(
+  url,
+  autoplay,
+  background,
+  hasAlignment,
+  customWidth,
+  customHeight,
+  placeholder,
+  shouldCenter,
+) {
+  let width = '100%';
+  let height = 'auto';
+
+  if (customWidth.some((style) => style.startsWith('width'))) {
+    const widthStyle = customWidth.find((style) => style.startsWith('width'));
+    width = `${widthStyle.replace('width-', '')}px`;
+  }
+
+  if (customHeight.some((style) => style.startsWith('height'))) {
+    const heightStyle = customHeight.find((style) => style.startsWith('height'));
+    height = `${heightStyle.replace('height-', '')}px`;
+  }
+
+  const temp = document.createElement('div');
+  const params = new URLSearchParams();
+
+  if (placeholder) {
+    params.set('autoplay', '1');
+  }
+
+  if (width !== '100%' || height !== 'auto') {
+    params.set('isLetterBoxed', 'true');
+  }
+
+  const src = `${url.href}${params.toString() ? `?${params.toString()}` : ''}`;
+
+  const content = `
+    <div class="video-player" style="width: 100%; ${width !== '100%' ? `max-width: ${width};` : ''} aspect-ratio: 16/9; position: relative; ${!hasAlignment ? `height: ${height};` : ''}">
+      <iframe src="${src}"
+        style="border: 0; width: 100%; height: 100%; position: absolute; top: 0; left: 0;"
+        allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope; picture-in-picture"
+        allowfullscreen=""
+        scrolling="no"
+        title="Content from Adobe DAM"
+        loading="lazy">
+      </iframe>
+    </div>
+  `;
+
+  temp.innerHTML = shouldCenter ? `<div style="display: flex; justify-content: center; width: 100%;">${content}</div>` : content;
+
+  return temp.children.item(0);
+}
+
 function getVideoElement(source, autoplay, background) {
   const video = document.createElement('video');
   video.setAttribute('controls', '');
@@ -79,15 +134,16 @@ function getVideoElement(source, autoplay, background) {
   return video;
 }
 
-const loadVideoEmbed = (block, link, autoplay, background) => {
+const loadVideoEmbed = (block, link, autoplay, background, placeholder) => {
   if (block.dataset.embedLoaded === 'true') {
     return;
   }
   const url = new URL(link);
-
   const isYoutube = link.includes('youtube') || link.includes('youtu.be');
   const isVimeo = link.includes('vimeo');
+  const isDAM = link.includes('clarkcountynv.gov/adobe/assets');
   const hasAlignment = block.classList.contains('left-align') || block.classList.contains('right-align');
+  const shouldCenter = block.classList.contains('center');
 
   if (isYoutube) {
     const embedWrapper = embedYoutube(url, autoplay, background, hasAlignment);
@@ -97,6 +153,23 @@ const loadVideoEmbed = (block, link, autoplay, background) => {
     });
   } else if (isVimeo) {
     const embedWrapper = embedVimeo(url, autoplay, background, hasAlignment);
+    block.append(embedWrapper);
+    embedWrapper.querySelector('iframe').addEventListener('load', () => {
+      block.dataset.embedLoaded = true;
+    });
+  } else if (isDAM) {
+    const customWidth = [...block.classList].filter((className) => className.startsWith('width-'));
+    const customHeight = [...block.classList].filter((className) => className.startsWith('height-'));
+    const embedWrapper = embedAdobeDAM(
+      url,
+      autoplay,
+      background,
+      hasAlignment,
+      customWidth,
+      customHeight,
+      placeholder,
+      shouldCenter,
+    );
     block.append(embedWrapper);
     embedWrapper.querySelector('iframe').addEventListener('load', () => {
       block.dataset.embedLoaded = true;
@@ -137,6 +210,27 @@ function videoEnablement(block) {
     block.classList.add('placeholder');
     const wrapper = document.createElement('div');
     wrapper.className = 'video-placeholder';
+
+    const customWidth = [...block.classList].filter((className) => className.startsWith('width-'));
+    const customHeight = [...block.classList].filter((className) => className.startsWith('height-'));
+    let widthVar = '100%';
+    let heightVar = '100%';
+
+    if (customWidth.some((style) => style.startsWith('width'))) {
+      const widthStyle = customWidth.find((style) => style.startsWith('width'));
+      widthVar = `${widthStyle.replace('width-', '')}px`;
+    }
+
+    if (customHeight.some((style) => style.startsWith('height'))) {
+      const heightStyle = customHeight.find((style) => style.startsWith('height'));
+      heightVar = `${heightStyle.replace('height-', '')}px`;
+    }
+
+    if (!block.classList.contains('left-align')) {
+      wrapper.style.width = widthVar;
+      wrapper.style.height = heightVar;
+    }
+
     wrapper.append(placeholder);
 
     if (!autoplay) {
@@ -146,10 +240,20 @@ function videoEnablement(block) {
       );
       wrapper.addEventListener('click', () => {
         wrapper.remove();
-        loadVideoEmbed(block, link, true, false);
+        loadVideoEmbed(block, link, true, false, placeholder);
       });
     }
-    block.append(wrapper);
+
+    if (block.classList.contains('center')) {
+      const centerWrapper = document.createElement('div');
+      centerWrapper.style.display = 'flex';
+      centerWrapper.style.justifyContent = 'center';
+      centerWrapper.style.width = '100%';
+      centerWrapper.append(wrapper);
+      block.append(centerWrapper);
+    } else {
+      block.append(wrapper);
+    }
   }
 
   if (!placeholder || autoplay) {
