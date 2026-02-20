@@ -58,6 +58,7 @@
 .newslist-hp .news .newslist-title {
   margin: 12px 0 29px;
   color: var(--primary-orange-600);
+  text-decoration: none;
 }
 
 .newslist-hp .news .newslist-link {
