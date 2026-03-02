@@ -19,10 +19,9 @@
             "title": "AEM Assets Library",
             "environments": [
                 "edit",
-                "prod",
                 "dev"
             ],
-            "url": "https://experience.adobe.com/solutions/CQ-assets-selectors/static-assets/resources/franklin/asset-selector.html?hideTreeNav=false&rail=false&extConfigUrl=https://raw.githubusercontent.com/aemsites/clarkcountynv/refs/heads/main/tools/assets-selector/config.json",
+            "url": "https://experience.adobe.com/solutions/CQ-assets-selectors/static-assets/resources/assets-selectors.js",
             "isPalette": true,
             "passConfig": true,
             "includePaths": [
