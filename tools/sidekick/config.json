@@ -19,10 +19,9 @@
             "title": "AEM Assets Library",
             "environments": [
                 "edit",
-                "prod",
                 "dev"
             ],
-            "url": "https://experience.adobe.com/solutions/CQ-helix-assets-addon/static-assets/resources/asset-selector.html?rail=false",
+            "url": "https://experience.adobe.com/solutions/CQ-assets-selectors/static-assets/resources/assets-selectors.js",
             "isPalette": true,
             "passConfig": true,
             "includePaths": [
