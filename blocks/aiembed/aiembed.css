@@ -1,4 +1,5 @@
-.aiembed {
-  height: 100vh;
+.aiembed.block iframe {
   width: 100%;
+  height: 1300px;
+  border: 0;
 }
