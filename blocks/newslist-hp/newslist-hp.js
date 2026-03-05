@@ -68,18 +68,14 @@ const resultParsers = {
         rightColumnFrag.append(category);
       }
       if (result.newsTitle) {
-        // const linkWrapper = a({ href: result.newsPath, target: '_self' });
-        // const title = h4({ class: 'newslist-title' }, result.newsTitle);
-
         const linkWrapper = a(
-  { class: 'newslist-link', style: 'margin-top: 0;', href: result.newsPath, target: '_self' },
-  h4({ class: 'newslist-title' }, result.newsTitle)
-);
-
+          {
+            class: 'newslist-link', style: 'margin-top: 0;', href: result.newsPath, target: '_self',
+          },
+          h4({ class: 'newslist-title' }, result.newsTitle),
+        );
 
         rightColumnFrag.append(linkWrapper);
-
-        // rightColumnFrag.append(title);
       }
       if (result.newsPath) {
         const newsPath = a(
