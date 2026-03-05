@@ -3,6 +3,10 @@
       {
         "mimeType": "video/*",
         "value": "Video"
+      },
+      {
+        "mimeType": "audio/*",
+        "value": "Audio"
       }
     ],
     "headerStyle": [
@@ -15,12 +19,20 @@
       {
         "mimeType": "video/*",
         "value": "<table border='1' style=\"width:100%\">\n  <tr>\n        <td style=\"background-color:#f5680a;color:#fff\">${blockName}</td>\n      </tr>\n      <tr>\n        <td>\n        <img src=\"${posterUrl}\" alt=\"${name}\">\n        <br/>\n        <a href=\"${videoUrl}\">${name}</a>\n        </td>\n      </tr>   </table>"
+      },
+      {
+        "mimeType": "audio/*",
+        "value": "<a href=\"${videoUrl}\">${name}</a>"
       }
     ],
     "copyMode": [
       {
         "mimeType": "image/*",
         "value": "reference"
+      },
+      {
+        "mimeType": "audio/*",
+        "value": "link"
       }
     ],
     "assetDomainMapping": {
@@ -46,6 +58,10 @@
               {
                 "label": "PDFs",
                 "value": "application/pdf"
+              },
+              {
+                "label": "Audio",
+                "value": "audio/*"
               }
             ],
             "columns": 2
