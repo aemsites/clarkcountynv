@@ -17,6 +17,13 @@ function hideGoogleTranslateBar() {
   }
 }
 
+function hidePopularSearchTerms() {
+  const popularSearchTermsDiv = document.getElementsByClassName('search-middle-left');
+  while (popularSearchTermsDiv.length > 0) {
+    popularSearchTermsDiv[0].remove();
+  }
+}
+
 let rawkey = '';
 let searchIframe = '';
 
@@ -171,6 +178,7 @@ function handleNavTools(navWrapper) {
     });
 
     searchBox.querySelector('input').addEventListener('input', (key) => {
+      hidePopularSearchTerms();
       key.preventDefault();
       rawkey = key.target.value;
       enableTabbing(searchBox);

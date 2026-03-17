@@ -680,7 +680,7 @@ header .nav-search .search-box .search-form-wrap .search-results {
   left: 0;
   right: 0;
   background: #f3ecda;
-  box-shadow: rgba(0 0 0 0.3) 0 10px 15px 0;
+  box-shadow: 0 10px 5px 0 rgb(0 0 0 / 10%);
   z-index: 10;
  }
 
