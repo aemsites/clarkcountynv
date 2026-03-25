@@ -451,10 +451,6 @@ main div.section.desktop.short {
     }
 }
 
-.section.homepage.with-background-image {
-  position: relative;
-}
-
 .section.homepage.with-background-image.no-gradient::before {
   display: none;
 }
@@ -752,7 +748,7 @@ main .section.details-404 > .default-content-wrapper {
   }
 
   main > div.section.desktop.with-background-image {
-    height: 435px;
+    height: 330px;
   }
 
   main > div.section.desktop.with-background-image.short {
