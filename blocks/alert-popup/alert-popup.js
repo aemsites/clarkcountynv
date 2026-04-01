@@ -41,6 +41,15 @@ export default async function decorate(block) {
               icon.setAttribute('role', 'img');
               icon.setAttribute('aria-label', `Alert ${type} icon`);
             }
+
+            // select the close button on the popup modal. if clicked, set sessionStorage cookie
+            const closeBtn = modal.querySelector('.close-button');
+            if (closeBtn) {
+              closeBtn.addEventListener('click', () => {
+                sessionStorage.setItem('closed', 'true');
+              });
+            }
+
             showModal();
           }
         }
