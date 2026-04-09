@@ -16,8 +16,14 @@
   margin-bottom: 24px;
 }
 
-.modal.alert-popup.popup dialog::backdrop {
+/* .modal.alert-popup.popup dialog::backdrop {
   display: none;
+} */
+
+body:has(dialog[open]) {
+  filter: blur(4px);
+
+  /* background-color: rgba(0, 0, 0, 0.3); */
 }
 
 .modal.alert-popup .close-button {
