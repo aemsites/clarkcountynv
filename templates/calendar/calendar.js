@@ -296,20 +296,23 @@ function createEvents(eventsList) {
     }
 
     try {
-      console.log('ADDING EVENT:', fcEvent);
+      // console.log('ADDING EVENT:', fcEvent);
 
-      if (fcEvent.rrule) {
-        console.log('RRULE:', fcEvent.rrule);
+      // if (fcEvent.rrule) {
+      //   console.log('RRULE:', fcEvent.rrule);
+      // }
+
+      // if there are no excludeDates, delete the field from the fcEvent object.
+      // we used to get timeZoneOffset exceptions if we had a recurring event
+      // with no excluded dates, so this remedies that issue.
+      if (fcEvent.exdate === '0' || !fcEvent.exdate) {
+        delete fcEvent.exdate;
       }
 
       calendar.addEvent(fcEvent);
     } catch (e) {
-      console.group('❌ FAILED EVENT');
-      console.error('Title:', fcEvent?.title);
-      console.error('RRULE:', fcEvent?.rrule);
       console.error('Full Event:', fcEvent);
       console.error('Error:', e);
-      console.groupEnd();
     }
   });
   disableRightClick();
