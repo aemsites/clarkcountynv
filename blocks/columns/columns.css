@@ -379,14 +379,14 @@ main .section.rightsection.no-button .columns.alert a:any-link {
   margin: 16px 0 0;
 }
 
+.columns.two-column-image .column1 > :is(h1) {
+  font-size: var(--heading-font-size-xxl);
+  margin: 36px 0 32px;
+}
+
 .columns.two-column-image .column1 > :is(h2, h3) {
   font-size: var(--heading-font-size-xl);
   margin: 16px 0 32px;
-}
-
-.columns.two-column-image .column1 > :is(h1) {
-  font-size: var(--heading-font-size-xl);
-  margin: 36px 0 32px;
 }
 
 .columns.two-column-image .column1 p {
