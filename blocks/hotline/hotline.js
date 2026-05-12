@@ -176,4 +176,10 @@ export default async function decorate(block) {
   block.querySelectorAll('details').forEach((el) => {
     new Accordion(el);
   });
+
+  block.querySelectorAll('summary a').forEach((link) => {
+  link.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
+});
 }

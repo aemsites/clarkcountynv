@@ -209,6 +209,18 @@
   margin-right: 0;
 }
 
+.hotline.alt .business-info p:last-child {
+display: block;
+}
+
+.hotline.alt .business-info p:last-child > a {
+  margin-right: 0;
+}
+
+.hotline.alt .business-info p:last-child > a:last-child {
+  margin-right: 0;
+}
+
 .hotline.filter details[open] summary::after {
   background: url('../../icons/chevron-up-orange.svg') center center no-repeat;
 }
