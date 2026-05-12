@@ -210,7 +210,7 @@
 }
 
 .hotline.alt .business-info p:last-child {
-display: block;
+  display: block;
 }
 
 .hotline.alt .business-info p:last-child > a {
