@@ -379,7 +379,12 @@ main .section.rightsection.no-button .columns.alert a:any-link {
   margin: 16px 0 0;
 }
 
-.columns.two-column-image .column1 > :is(h1, h2, h3) {
+.columns.two-column-image .column1 > :is(h1) {
+  font-size: var(--heading-font-size-xxl);
+  margin: 36px 0 32px;
+}
+
+.columns.two-column-image .column1 > :is(h2, h3) {
   font-size: var(--heading-font-size-xl);
   margin: 16px 0 32px;
 }
@@ -402,9 +407,14 @@ main .section.rightsection.no-button .columns.alert a:any-link {
 }
 
 @media (width >= 900px) {
-  .columns.two-column-image .column1 > :is(h1, h2, h3) {
+  .columns.two-column-image .column1 > :is(h2, h3) {
     font-size: var(--heading-font-size-xxl);
     margin: 60px 0 40px;
+  }
+
+  .columns.two-column-image .column1 > :is(h1) {
+    font-size: var(--heading-font-size-xxl);
+    margin: 0 0 40px;
   }
 
   .columns.two-column-image .column1 p {
