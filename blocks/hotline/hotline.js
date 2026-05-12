@@ -178,8 +178,8 @@ export default async function decorate(block) {
   });
 
   block.querySelectorAll('summary a').forEach((link) => {
-  link.addEventListener('click', (e) => {
-    e.stopPropagation();
+    link.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
   });
-});
 }
