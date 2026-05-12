@@ -209,15 +209,15 @@
   margin-right: 0;
 }
 
-.hotline.alt .business-info p:last-child {
+.hotline.with-links .business-info p:last-child {
   display: block;
 }
 
-.hotline.alt .business-info p:last-child > a {
+.hotline.with-links .business-info p:last-child > a {
   margin-right: 0;
 }
 
-.hotline.alt .business-info p:last-child > a:last-child {
+.hotline.with-links .business-info p:last-child > a:last-child {
   margin-right: 0;
 }
 
