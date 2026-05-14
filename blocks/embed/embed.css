@@ -108,6 +108,14 @@ main .mainmenu .section.rightsection.googleform .block.embed iframe {
     max-width: unset;
 }
 
+.embed.style-full-size {
+    max-width: unset;
+}
+
+.embed.style-scrollable-horizontal {
+    overflow-x: scroll;
+}
+
 /* stylelint-disable no-descending-specificity */
 .embed.style-align-right-small {
   width: auto;

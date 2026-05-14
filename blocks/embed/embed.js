@@ -17,8 +17,10 @@ const loadScript = (url, callback, type) => {
 };
 
 function getDefaultEmbed(url, customStyles) {
-  let width = '100%'; let
-    height = '100%';
+  let width = '100%';
+  let height = '100%';
+  let containerHeight = '0';
+
   if (customStyles.some((style) => style.startsWith('style-height'))) {
     const heightStyle = customStyles.find((style) => style.startsWith('style-height'));
     height = `${heightStyle.replace('style-height-', '')}px`;
@@ -29,18 +31,45 @@ function getDefaultEmbed(url, customStyles) {
     width = `${widthStyle.replace('style-width-', '')}px`;
   }
 
-  return `<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;">
+  if (customStyles.some((style) => style.startsWith('style-container-height-vh'))) {
+    const containerHeightStyle = customStyles.find((style) => style.startsWith('style-container-height-vh'));
+    containerHeight = `${containerHeightStyle.replace('style-container-height-vh-', '')}vh`;
+  }
+
+  // If no "style-scrollable", this executes...
+  return `<div style="left: 0; width: 100%; height: ${containerHeight}; position: relative; padding-bottom: 56.25%;">
     <iframe src="${url.href}" style="border: 0; top: 0; left: 0; width: ${width}; height: ${height}; position: absolute;" allowfullscreen=""
       scrolling="no" allow="encrypted-media" title="Content from ${url.hostname}" loading="lazy">
     </iframe>
   </div>`;
 }
 
-const getFormEmbed = (url) => `<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;">
-<iframe name="mktoFormsXDIframe0.12896821644951362" id="MktoForms2XDIframe" src="${url.href}" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" allowfullscreen=""
+// If "style-scrollable" is added, this executes instead...
+const getFormEmbed = (url, customStyles) => {
+  let width = '100%';
+  let height = '100%';
+  let containerHeight = '0';
+  if (customStyles.some((style) => style.startsWith('style-height'))) {
+    const heightStyle = customStyles.find((style) => style.startsWith('style-height'));
+    height = `${heightStyle.replace('style-height-', '')}px`;
+  }
+
+  if (customStyles.some((style) => style.startsWith('style-width'))) {
+    const widthStyle = customStyles.find((style) => style.startsWith('style-width'));
+    width = `${widthStyle.replace('style-width-', '')}px`;
+  }
+
+  if (customStyles.some((style) => style.startsWith('style-container-height-vh'))) {
+    const containerHeightStyle = customStyles.find((style) => style.startsWith('style-container-height-vh'));
+    containerHeight = `${containerHeightStyle.replace('style-container-height-vh-', '')}vh`;
+  }
+
+  return `<div style="left: 0; width: 100%; height: ${containerHeight}; position: relative; padding-bottom: 56.25%;">
+<iframe name="mktoFormsXDIframe0.12896821644951362" id="MktoForms2XDIframe" src="${url.href}" style="border: 0; top: 0; left: 0; width: ${width}; height: ${height}; position: absolute;" allowfullscreen=""
   scrolling="yes" allow="encrypted-media" title="Content from ${url.hostname}" loading="lazy">
 </iframe>
 </div>`;
+};
 
 const embedYoutube = (url, autoplay) => {
   const usp = new URLSearchParams(url.search);
@@ -104,7 +133,7 @@ const loadEmbed = (block, link, autoplay, customStyles, title) => {
     block.classList.add(...customStyles);
   } else {
     if (block.parentElement.parentElement.classList.contains('googleform') || customStyles.includes('style-scrollable')) {
-      block.innerHTML = getFormEmbed(url);
+      block.innerHTML = getFormEmbed(url, customStyles);
       if (title) block.prepend(title);
     } else {
       block.innerHTML = getDefaultEmbed(url, customStyles);
