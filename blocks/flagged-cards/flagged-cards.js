@@ -1,6 +1,7 @@
 // TODO: - Fix case where there is nothing placed in the banner... its still showing a small patch
 //         yellow at the top and the card isnt the same height as everything else
 //       - Add the 3rd mockup card as well (use the 6th column to make custom styles or something)
+//       - Also make sure that normal pictures work too, we are currently using ":potholes:" etc
 
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import {
