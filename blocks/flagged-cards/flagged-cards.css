@@ -7,54 +7,43 @@
   margin-bottom: 1em;
 }
 
-.flagged-cards {
-  background: white;
-  transition: background 0.3s ease, color 0.3s ease;
-}
-
-.flagged-cards:hover {
-  background: var(--orange);
-  color: white;
-}
-
-.flagged-cards:hover .flagged-cards-button {
-  background: #fff;
-  color: var(--orange);
-      text-decoration: none;
-}
-
-.flagged-cards:hover .flagged-cards-button,
-.flagged-cards:hover .flagged-cards-button * {
-  color: var(--orange);
-
-}
-
-/* .flagged-cards:hover .flagged-cards-button {
-  background: var(--orange);
-  color: white;
+/* .flagged-cards.block {
+  display: flex;
+  margin: 20px 0;
 } */
 
-.flagged-cards.block {
-  /* display: flex; */
-  /* flex-wrap: wrap; */
-  margin: 20px 0;
-  /* padding: unset; */
+.flagged-cards {
+  margin: 32px auto;
 }
 
-.flagged-cards ul {
+.flagged-cards .flagged-cards{
+  margin: 32px auto;
+    border: 1px solid #e5e5e5;
+
+}
+
+.flagged-cards.block ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.flagged-cards {
+.flagged-cards.block ul li {
+  flex: 0 0 320px;
+  list-style: none;
+
+  /* border: 1px solid #e5e5e5; */
+}
+
+/* .flagged-cards {
   width: 320px;
-  /* border-radius: 12px; */
   overflow: hidden;
   border: 1px solid #e5e5e5;
-  /* font-family: Arial, sans-serif; */
   background: #fff;
-}
+} */
 
 .flagged-cards-banner {
   background: #f1c40f;
@@ -71,6 +60,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
   /* gap: 0px; */
 }
 
@@ -92,13 +82,14 @@
 .flagged-cards-title {
   margin: 0;
   font-size: 18px;
-  font-weight: bold;
+  font-weight: bolder;
   margin-bottom: 2px;
 }
 
 .flagged-cards-description {
   margin: 0;
   font-size: 14px;
+
   /* color: #555; */
   text-align: center;
 }
@@ -108,6 +99,7 @@
   padding: 10px 12px;
   width: 100%;
   border: none;
+
   /* border-radius: 8px; */
   background: var(--orange);
   color: white;
@@ -116,25 +108,41 @@
   text-align: center;
 }
 
-/* .flagged-cards-button a {
-
-  color: white;
-text-decoration: none;
-font-weight: bold;
-} */
-
-.flagged-cards-button a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
+li:hover .flagged-cards {
+  background: var(--orange);
+  transition: background 0.3s ease;
 }
 
-/* .flagged-cards-button:hover {
+li:hover .flagged-cards .flagged-cards-title,
+li:hover .flagged-cards .flagged-cards-description {
+  color: #fff;
+}
+
+li:hover .flagged-cards .flagged-cards-title p,
+li:hover .flagged-cards .flagged-cards-description p {
+  color: #fff;
+}
+
+.flagged-cards-button a,
+.flagged-cards-button:link,
+.flagged-cards-button:visited {
   color: white;
   text-decoration: none;
-  font-weight: bold;
-} */
+  font-weight: bold
+}
 
+li:hover .flagged-cards .flagged-cards-button {
+  background: #fff;
+  color: var(--orange);
+}
+
+li:hover .flagged-cards .flagged-cards-button a {
+  color: var(--orange);
+}
+
+.flagged-cards,
+.flagged-cards-title,
+.flagged-cards-description,
 .flagged-cards-button {
-  transition: background 0.3s ease, color 0.3s ease;
+  transition: all 0.3s ease;
 }
