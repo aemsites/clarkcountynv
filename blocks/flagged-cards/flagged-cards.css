@@ -1,0 +1,140 @@
+.flagged-cards-title p {
+  margin: 0;
+}
+
+.flagged-cards-description p {
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+.flagged-cards {
+  background: white;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.flagged-cards:hover {
+  background: var(--orange);
+  color: white;
+}
+
+.flagged-cards:hover .flagged-cards-button {
+  background: #fff;
+  color: var(--orange);
+      text-decoration: none;
+}
+
+.flagged-cards:hover .flagged-cards-button,
+.flagged-cards:hover .flagged-cards-button * {
+  color: var(--orange);
+
+}
+
+/* .flagged-cards:hover .flagged-cards-button {
+  background: var(--orange);
+  color: white;
+} */
+
+.flagged-cards.block {
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  margin: 20px 0;
+  /* padding: unset; */
+}
+
+.flagged-cards ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.flagged-cards {
+  width: 320px;
+  /* border-radius: 12px; */
+  overflow: hidden;
+  border: 1px solid #e5e5e5;
+  /* font-family: Arial, sans-serif; */
+  background: #fff;
+}
+
+.flagged-cards-banner {
+  background: #f1c40f;
+  color: #000;
+  font-weight: bold;
+  text-align: center;
+  padding: 1px 0;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+}
+
+.flagged-cards-content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* gap: 0px; */
+}
+
+.flagged-cards-img .icon {
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* .flagged-cards-img .icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+} */
+
+.flagged-cards-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+.flagged-cards-description {
+  margin: 0;
+  font-size: 14px;
+  /* color: #555; */
+  text-align: center;
+}
+
+.flagged-cards-button {
+  margin-top: 10px;
+  padding: 10px 12px;
+  width: 100%;
+  border: none;
+  /* border-radius: 8px; */
+  background: var(--orange);
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+}
+
+/* .flagged-cards-button a {
+
+  color: white;
+text-decoration: none;
+font-weight: bold;
+} */
+
+.flagged-cards-button a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* .flagged-cards-button:hover {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+} */
+
+.flagged-cards-button {
+  transition: background 0.3s ease, color 0.3s ease;
+}

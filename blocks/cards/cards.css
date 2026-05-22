@@ -926,3 +926,70 @@
     padding: 0;
     margin: 0;
 }
+
+.cards.flagged-cards.block {
+  all: unset;
+  display: block;
+}
+
+.flagged-card {
+  width: 320px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e5e5e5;
+  font-family: Arial, sans-serif;
+  background: #fff;
+}
+
+.flagged-card-banner {
+  background: #ffeb3b; /* yellow */
+  color: #000;
+  font-weight: bold;
+  text-align: center;
+  padding: 8px 0;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+.flagged-card-content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.flagged-card-icon img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.flagged-card-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.flagged-card-description {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+}
+
+.flagged-card-button {
+  margin-top: 10px;
+  padding: 10px 12px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  background: #2f6fed;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.flagged-card-button:hover {
+  background: #1f5ad6;
+}
