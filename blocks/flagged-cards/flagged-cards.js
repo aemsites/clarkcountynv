@@ -2,6 +2,8 @@
 //         yellow at the top and the card isnt the same height as everything else
 //       - Add the 3rd mockup card as well (use the 6th column to make custom styles or something)
 //       - Also make sure that normal pictures work too, we are currently using ":potholes:" etc
+//       - When you hover the invisible padding above and below the cards, it still hovers orange
+//       - Test alt style empty banner
 
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import {
@@ -13,26 +15,41 @@ export default function decorate(block) {
   const $ul = ul();
   [...block.children].forEach((row) => {
     const banner = row.children[0];
+    const hasBannerContent = banner && banner.textContent.trim();
     const iconImg = row.children[1];
     const cardTitle = row.children[2];
     const cardDesc = row.children[3];
     const cardButton = row.children.length && row.children[4] && row.children[4].querySelector('a');
+    const altStyle = row.children[5];
+    const hasAltStyle = altStyle && altStyle.textContent.trim();
 
     const { href, title } = cardButton ?? {};
 
     $ul.append(
       li(
+
         div(
-          { class: 'flagged-cards' },
+          {
+            class: hasAltStyle === 'alt'
+              ? 'flagged-cards-alt'
+              : 'flagged-cards',
+          },
 
           // Banner
-          banner
-            ? div({ class: 'flagged-cards-banner' }, banner)
-            : null,
+          div(
+            {
+              class: `flagged-cards-banner ${hasBannerContent ? '' : 'empty-banner'}`,
+            },
+            hasBannerContent ? banner : '',
+          ),
 
           // Main content
           div(
-            { class: 'flagged-cards-content' },
+            {
+              class: hasAltStyle === 'alt'
+                ? 'flagged-cards-content-alt'
+                : 'flagged-cards-content',
+            },
 
             iconImg ? div({ class: 'flagged-cards-img' }, iconImg) : null,
 

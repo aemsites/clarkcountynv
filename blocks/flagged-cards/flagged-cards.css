@@ -18,8 +18,12 @@
 
 .flagged-cards .flagged-cards{
   margin: 32px auto;
-    border: 1px solid #e5e5e5;
+  border: 1px solid #e5e5e5;
+}
 
+.flagged-cards .flagged-cards-alt {
+  margin: 32px auto;
+  border: 1px dashed var(--orange);
 }
 
 .flagged-cards.block ul {
@@ -53,6 +57,11 @@
   padding: 1px 0;
   font-size: 12px;
   letter-spacing: 1.5px;
+  min-height: 45px;
+}
+
+.flagged-cards-banner.empty-banner {
+  background: #fff;
 }
 
 .flagged-cards-content {
@@ -60,6 +69,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  /* gap: 0px; */
+}
+
+.flagged-cards-content-alt {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--neutral-black-200);
 
   /* gap: 0px; */
 }
@@ -108,18 +127,32 @@
   text-align: center;
 }
 
-li:hover .flagged-cards {
+li:hover .flagged-cards,
+li:hover .flagged-cards .flagged-cards-banner.empty-banner,
+li:hover .flagged-cards-alt,
+li:hover .flagged-cards-content-alt {
   background: var(--orange);
-  transition: background 0.3s ease;
 }
 
+/* li:hover .flagged-cards .flagged-cards-banner.empty-banner {
+  background: var(--orange);
+}
+
+li:hover .flagged-cards-alt {
+  background: var(--orange);
+} */
+
 li:hover .flagged-cards .flagged-cards-title,
-li:hover .flagged-cards .flagged-cards-description {
+li:hover .flagged-cards .flagged-cards-description,
+li:hover .flagged-cards-alt .flagged-cards-title,
+li:hover .flagged-cards-alt .flagged-cards-description {
   color: #fff;
 }
 
 li:hover .flagged-cards .flagged-cards-title p,
-li:hover .flagged-cards .flagged-cards-description p {
+li:hover .flagged-cards .flagged-cards-description p,
+li:hover .flagged-cards-alt .flagged-cards-title p,
+li:hover .flagged-cards-alt .flagged-cards-description p {
   color: #fff;
 }
 
@@ -131,18 +164,23 @@ li:hover .flagged-cards .flagged-cards-description p {
   font-weight: bold
 }
 
-li:hover .flagged-cards .flagged-cards-button {
+li:hover .flagged-cards .flagged-cards-button,
+li:hover .flagged-cards-alt .flagged-cards-button {
   background: #fff;
   color: var(--orange);
 }
 
-li:hover .flagged-cards .flagged-cards-button a {
+li:hover .flagged-cards .flagged-cards-button a,
+li:hover .flagged-cards-alt .flagged-cards-button a {
   color: var(--orange);
 }
 
 .flagged-cards,
+.flagged-cards-alt,
+.flagged-cards-banner,
 .flagged-cards-title,
 .flagged-cards-description,
-.flagged-cards-button {
+.flagged-cards-button,
+.flagged-cards-content-alt {
   transition: all 0.3s ease;
 }
