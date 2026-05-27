@@ -1,9 +1,5 @@
-// TODO: - Fix case where there is nothing placed in the banner... its still showing a small patch
-//         yellow at the top and the card isnt the same height as everything else
-//       - Add the 3rd mockup card as well (use the 6th column to make custom styles or something)
-//       - Also make sure that normal pictures work too, we are currently using ":potholes:" etc
-//       - When you hover the invisible padding above and below the cards, it still hovers orange
-//       - Test alt style empty banner
+// TODO: - Ask about how we should handle images... actual images are taller/wider
+//         than the icons, so the cards/image content becomes larger
 
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import {
@@ -27,7 +23,6 @@ export default function decorate(block) {
 
     $ul.append(
       li(
-
         div(
           {
             class: hasAltStyle === 'alt'
@@ -38,9 +33,25 @@ export default function decorate(block) {
           // Banner
           div(
             {
-              class: `flagged-cards-banner ${hasBannerContent ? '' : 'empty-banner'}`,
+              class: `
+      ${hasAltStyle === 'alt'
+    ? 'flagged-cards-banner-alt'
+    : 'flagged-cards-banner'}
+      ${hasBannerContent ? '' : 'empty-banner'}
+    `,
             },
-            hasBannerContent ? banner : '',
+
+            // eslint-disable-next-line no-nested-ternary
+            hasBannerContent
+              ? (
+                hasAltStyle === 'alt'
+                  ? div(
+                    { class: 'flagged-cards-banner-alt-inner' },
+                    banner,
+                  )
+                  : banner
+              )
+              : '',
           ),
 
           // Main content

@@ -12,6 +12,11 @@
   margin: 20px 0;
 } */
 
+.flagged-cards.block {
+  display: flex;
+  justify-content: center;
+}
+
 .flagged-cards {
   margin: 32px auto;
 }
@@ -33,6 +38,8 @@
   list-style: none;
   padding: 0;
   margin: 0;
+
+  /* justify-content: center; */
 }
 
 .flagged-cards.block ul li {
@@ -54,10 +61,35 @@
   color: #000;
   font-weight: bold;
   text-align: center;
-  padding: 1px 0;
   font-size: 12px;
   letter-spacing: 1.5px;
-  min-height: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flagged-cards-banner-alt {
+  background: var(--neutral-black-200);
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flagged-cards-banner-alt-inner {
+  background: var(--neutral-black-200);
+  color: var(--orange);
+  border: 1px solid var(--orange);
+  font-weight: bold;
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  text-align: center;
+  padding: 4px 16px;
+  line-height: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .flagged-cards-banner.empty-banner {
@@ -130,7 +162,8 @@
 li:hover .flagged-cards,
 li:hover .flagged-cards .flagged-cards-banner.empty-banner,
 li:hover .flagged-cards-alt,
-li:hover .flagged-cards-content-alt {
+li:hover .flagged-cards-content-alt,
+li:hover .flagged-cards-banner-alt {
   background: var(--orange);
 }
 
@@ -181,6 +214,7 @@ li:hover .flagged-cards-alt .flagged-cards-button a {
 .flagged-cards-title,
 .flagged-cards-description,
 .flagged-cards-button,
-.flagged-cards-content-alt {
+.flagged-cards-content-alt,
+.flagged-cards-banner-alt {
   transition: all 0.3s ease;
 }
