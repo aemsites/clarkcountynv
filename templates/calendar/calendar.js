@@ -235,10 +235,14 @@ function getbyweekday(daysOfWeek) {
   }).filter(Boolean);
 }
 
+// TODO: - Prune out successful logs, consolidate error to instead show the "path" from events.xlsx
+//       instead of the title for easier lookup
+//       - Also test to make sure that this new function does not break old events
 function createEvents(eventsList) {
   disableSpinner();
   let eventDuration = '';
   eventsList.forEach((event) => {
+    let fcEvent;
     if (event.freq.toLowerCase() === 'daily') {
       event.daysOfWeek = 'mo,tu,we,th,fr,sa,su';
     }
@@ -251,48 +255,34 @@ function createEvents(eventsList) {
       }
       if (event.excludeDates && event.excludeDates.length > 1) {
         if (typeof event.excludeDates === 'string') {
-          event.excludeDates = event.excludeDates.split(',').map((date) => `${date}T${event.startTime}`).filter((content) => content.includes('-'));
+          event.excludeDates = event.excludeDates
+            .split(',')
+            .map((date) => `${date}T${event.startTime}`)
+            .filter((content) => content.includes('-'));
         }
-        const eventbyweekday = getbyweekday(event.daysOfWeek);
-        /* Converting String into array to leverage map function */
-        calendar.addEvent({
-          title: event.title,
-          allDay: event.allDay,
-          rrule: {
-            freq: event.freq,
-            byweekday: eventbyweekday,
-            dtstart: event.start,
-            until: event.end,
-          },
-          duration: eventDuration,
-          exdate: event.excludeDates,
-          url: event.url,
-          classNames: event.classNames,
-          groupId: event.divisionid,
-          extendedProps: { readMore: event.readMore },
-          id: `${event.divisionid}-${event.title.length}${event.start.length}`,
-        });
-      } else {
-        const eventbyweekday = getbyweekday(event.daysOfWeek);
-        calendar.addEvent({
-          title: event.title,
-          allDay: event.allDay,
-          rrule: {
-            freq: event.freq,
-            byweekday: eventbyweekday,
-            dtstart: event.start,
-            until: event.end,
-          },
-          duration: eventDuration,
-          url: event.url,
-          classNames: event.classNames,
-          groupId: event.divisionid,
-          extendedProps: { readMore: event.readMore },
-          id: `${event.divisionid}-${event.title.length}${event.start.length}`,
-        });
       }
+
+      const eventbyweekday = getbyweekday(event.daysOfWeek);
+
+      fcEvent = {
+        title: event.title,
+        allDay: event.allDay,
+        rrule: {
+          freq: event.freq,
+          byweekday: eventbyweekday,
+          dtstart: event.start,
+          until: event.end,
+        },
+        duration: eventDuration,
+        exdate: event.excludeDates,
+        url: event.url,
+        classNames: event.classNames,
+        groupId: event.divisionid,
+        extendedProps: { readMore: event.readMore },
+        id: `${event.divisionid}-${event.title.length}${event.start.length}`,
+      };
     } else {
-      calendar.addEvent({
+      fcEvent = {
         title: event.title,
         start: event.start,
         end: event.end,
@@ -302,7 +292,23 @@ function createEvents(eventsList) {
         groupId: event.divisionid,
         extendedProps: { readMore: event.readMore },
         id: `${event.divisionid}-${event.title.length}${event.start.length}`,
-      });
+      };
+    }
+
+    try {
+      // if there are no excludeDates, delete the field from the fcEvent object.
+      // we used to get timeZoneOffset exceptions if we had a recurring event
+      // with no excluded dates, so this remedies that issue.
+      if (fcEvent.exdate === '0' || !fcEvent.exdate) {
+        delete fcEvent.exdate;
+      }
+
+      calendar.addEvent(fcEvent);
+    } catch (e) {
+      console.group('Error processing calendar event');
+      console.error(fcEvent);
+      console.error('Reason:', e);
+      console.groupEnd();
     }
   });
   disableRightClick();
