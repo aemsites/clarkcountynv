@@ -1,5 +1,4 @@
-// TODO: - Ask about how we should handle images... actual images are taller/wider
-//         than the icons, so the cards/image content becomes larger
+// TODO: - Fix the Newsletter and Quick Links text... something to do with the :not rule
 
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import {
