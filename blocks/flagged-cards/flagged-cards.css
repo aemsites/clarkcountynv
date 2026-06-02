@@ -121,9 +121,12 @@
 .flagged-cards-description {
   margin: 0;
   font-size: 14px;
-
-  /* color: #555; */
   text-align: center;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .flagged-cards-button {
