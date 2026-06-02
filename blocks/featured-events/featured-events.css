@@ -118,6 +118,11 @@
   }
 
   .featured-events.block .event {
+    height: 240px;
     flex-flow: row wrap;
+  }
+
+    .featured-events.block .event-body {
+    align-self: stretch;
   }
 }
