@@ -49,7 +49,6 @@ export default async function decorate(block) {
             if (closeBtn) {
               closeBtn.addEventListener('click', () => {
                 if (block.classList.contains('session-cookie')) {
-                  // set sessionStorage cookie when user closes a full-width popup
                   sessionStorage.setItem('closed', 'true');
                 }
               });
