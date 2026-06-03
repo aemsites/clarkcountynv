@@ -2,14 +2,16 @@ import { createModal } from '../modal/modal.js';
 import { button, img, div } from '../../scripts/dom-helpers.js';
 
 // Closes Full Width Popup
-const handleClose = (e) => {
+const handleClose = (e, sessionCookieFlag) => {
   const currPopup = e.target.closest('.alert-popup.popup.full-width');
   if (currPopup) {
     currPopup.classList.add('hide');
   }
 
+  if (sessionCookieFlag) {
   // set sessionStorage cookie when user closes a full-width popup
-  sessionStorage.setItem('closed', 'true');
+    sessionStorage.setItem('closed', 'true');
+  }
 
   setTimeout(() => {
     // get next popup and focus close button
@@ -22,7 +24,7 @@ const handleClose = (e) => {
 
 export default async function decorate(block) {
   if (sessionStorage.getItem('closed') === 'true') {
-    // if alert-popup (full width) has been closed, do not render it again
+    // if alert-popup (full width) / modal has been closed, do not render it again
     block.innerHTML = '';
   } else {
     // otherwise, render it normally.
@@ -46,7 +48,10 @@ export default async function decorate(block) {
             const closeBtn = modal.querySelector('.close-button');
             if (closeBtn) {
               closeBtn.addEventListener('click', () => {
-                sessionStorage.setItem('closed', 'true');
+                if (block.classList.contains('session-cookie')) {
+                  // set sessionStorage cookie when user closes a full-width popup
+                  sessionStorage.setItem('closed', 'true');
+                }
               });
             }
 
@@ -55,8 +60,9 @@ export default async function decorate(block) {
         }
       } else {
         const closeBtnColor = (block.classList.contains('high') || block.classList.contains('low')) ? 'black' : 'white';
+        const sessionCookieFlag = block.classList.contains('session-cookie');
         const closeBtn = button(
-          { class: 'close-button', type: 'button', onclick: (e) => handleClose(e) },
+          { class: 'close-button', type: 'button', onclick: (e) => handleClose(e, sessionCookieFlag) },
           img(
             { src: `/icons/close-icon-${closeBtnColor}.svg`, alt: 'Close alert popup' },
           ),
