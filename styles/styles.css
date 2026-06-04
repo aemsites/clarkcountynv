@@ -207,18 +207,18 @@ main pre {
 }
 
 /* links */
-a:any-link:not(.flagged-cards a) {
+a:any-link {
   color: var(--primary-orange-600);
   text-decoration: underline;
   text-decoration-thickness: 6%;
   text-underline-offset: 12%;
 }
 
-a:hover:not(.flagged-cards a) {
+a:hover {
   color: var(--primary-orange-900);
 }
 
-a:focus:not(.flagged-cards a) {
+a:focus {
   color: var(--primary-orange-900);
   background-color: transparent;
   border: 1px solid var(--primary-blue-900);
