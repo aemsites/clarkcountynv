@@ -208,7 +208,6 @@ main pre {
 
 /* links */
 a:any-link:not(.flagged-cards a) {
-  color: var(--primary-orange-600);
   text-decoration: underline;
   text-decoration-thickness: 6%;
   text-underline-offset: 12%;
