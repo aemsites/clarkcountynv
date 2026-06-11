@@ -1,0 +1,204 @@
+.flagged-cards-title p {
+  margin: 0;
+}
+
+.flagged-cards-description p {
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+.flagged-cards {
+  margin: 32px auto;
+}
+
+.flagged-cards .flagged-cards{
+  margin: 32px auto;
+  border: 1px solid #e5e5e5;
+}
+
+.flagged-cards .flagged-cards-alt {
+  margin: 32px auto;
+  border: 1px dashed var(--orange);
+}
+
+.flagged-cards.block ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 320px));
+  gap: 24px;
+  justify-content: center;
+  list-style: none;
+
+}
+
+.flagged-cards.block ul li {
+  list-style: none;
+}
+
+.flagged-cards-banner {
+  background: #f1c40f;
+  color: #000;
+  font-weight: bold;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flagged-cards-banner-alt {
+  background: var(--neutral-black-200);
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flagged-cards-banner-alt-inner {
+  background: var(--neutral-black-200);
+  color: var(--orange);
+  border: 1px solid var(--orange);
+  font-weight: bold;
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  text-align: center;
+  padding: 4px 16px;
+  line-height: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flagged-cards-banner.empty-banner {
+  background: #fff;
+}
+
+.flagged-cards-content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* gap: 0px; */
+}
+
+.flagged-cards-content-alt {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--neutral-black-200);
+
+  /* gap: 0px; */
+}
+
+.flagged-cards-img .icon {
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flagged-cards-img picture,
+.flagged-cards-img img {
+  max-width: 750px;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.flagged-cards-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bolder;
+  margin-bottom: 2px;
+}
+
+.flagged-cards-description {
+  margin: 0;
+  font-size: 14px;
+  text-align: center;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.flagged-cards-button {
+  margin-top: 10px;
+  padding: 10px 12px;
+  width: 100%;
+  border: none;
+
+  /* border-radius: 8px; */
+  background: var(--orange);
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+}
+
+li:hover .flagged-cards,
+li:hover .flagged-cards .flagged-cards-banner.empty-banner,
+li:hover .flagged-cards-alt,
+li:hover .flagged-cards-content-alt,
+li:hover .flagged-cards-banner-alt {
+  background: var(--orange);
+}
+
+/* li:hover .flagged-cards .flagged-cards-banner.empty-banner {
+  background: var(--orange);
+}
+
+li:hover .flagged-cards-alt {
+  background: var(--orange);
+} */
+
+li:hover .flagged-cards .flagged-cards-title,
+li:hover .flagged-cards .flagged-cards-description,
+li:hover .flagged-cards-alt .flagged-cards-title,
+li:hover .flagged-cards-alt .flagged-cards-description {
+  color: #fff;
+}
+
+li:hover .flagged-cards .flagged-cards-title p,
+li:hover .flagged-cards .flagged-cards-description p,
+li:hover .flagged-cards-alt .flagged-cards-title p,
+li:hover .flagged-cards-alt .flagged-cards-description p {
+  color: #fff;
+}
+
+.flagged-cards-button a,
+.flagged-cards-button:link,
+.flagged-cards-button:visited {
+  color: white;
+  text-decoration: none;
+  font-weight: bold
+}
+
+li:hover .flagged-cards .flagged-cards-button,
+li:hover .flagged-cards-alt .flagged-cards-button {
+  background: #fff;
+  color: var(--orange);
+}
+
+li:hover .flagged-cards .flagged-cards-button a,
+li:hover .flagged-cards-alt .flagged-cards-button a {
+  color: var(--orange);
+}
+
+.flagged-cards,
+.flagged-cards-alt,
+.flagged-cards-banner,
+.flagged-cards-title,
+.flagged-cards-description,
+.flagged-cards-button,
+.flagged-cards-content-alt,
+.flagged-cards-banner-alt {
+  transition: all 0.3s ease;
+}
