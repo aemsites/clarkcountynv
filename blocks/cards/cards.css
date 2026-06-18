@@ -260,13 +260,17 @@
     background-color: var(--neutral-black-200);
 }
 
+.cards.staff .staff-tile-img-box {
+    display: flex;
+    justify-content: center;
+}
+
 .cards.staff .staff-tile-img-box img {
-    display: inline-block;
     width: 136px;
     height: 136px;
     border-radius: 50%;
     object-fit: cover;
-    margin: 24px 50px;
+    margin: 24px;
 }
 
 .cards.staff .staff-tile-name {
