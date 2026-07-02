@@ -118,11 +118,7 @@
 @media (width >= 900px) {
   .featured-events.block .event-image img {
     width: 240px;
-  }
-
-  .featured-events.block .columns.block {
-    grid-template-columns: repeat(2, minmax(300px, 649px));
-    justify-content: center;
+    height: 240px;
   }
 
   .featured-events.block .event {
@@ -130,7 +126,14 @@
     flex-flow: row wrap;
   }
 
-    .featured-events.block .event-body {
+  .featured-events.block .event-body {
     align-self: stretch;
+  }
+}
+
+@media (width >= 1400px) {
+  .featured-events.block .columns.block {
+    grid-template-columns: repeat(2, minmax(300px, 649px));
+    justify-content: center;
   }
 }
