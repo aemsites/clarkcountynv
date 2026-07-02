@@ -115,15 +115,16 @@
   display: none;
 }
 
-@media (width >= 900px) {
-  .featured-events.block .event-image img {
-    width: 240px;
-    height: 240px;
-  }
-
+@media (width >= 1200px) {
   .featured-events.block .event {
     height: 240px;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
+  }
+
+  .featured-events.block .event-image img {
+    width: 240px;
+    height: 100%;
+    object-fit: cover;
   }
 
   .featured-events.block .event-body {
