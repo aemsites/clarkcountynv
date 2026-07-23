@@ -23,13 +23,15 @@ const resultParsers = {
     results.forEach((result) => {
       const row = [];
       const divLeft = div({ class: 'event-image' });
-      if (result.image.length > 1) {
-        const columnImage = createOptimizedPicture(result.image);
-        divLeft.appendChild(columnImage);
-      } else {
-        const columnImage = createOptimizedPicture(CLARKLOGO);
-        divLeft.appendChild(columnImage);
-      }
+      const columnImage = createOptimizedPicture(
+        result.image?.length > 1 ? result.image : CLARKLOGO,
+      );
+      const imgEl = columnImage.querySelector('img');
+      // if image fails to load, replace it with the Clark County logo
+      imgEl.addEventListener('error', () => {
+        columnImage.replaceWith(createOptimizedPicture(CLARKLOGO));
+      });
+      divLeft.appendChild(columnImage);
       const divRight = div({ class: 'event-body' });
       if (result.start.length === 0) {
         sourceDate = result.startRecur;
@@ -109,7 +111,7 @@ export async function fetchPlaceholders() {
 function priorDate(date) {
   const today = new Date();
   const eventDate = new Date(date);
-  return eventDate < today;
+  return eventDate > today;
 }
 
 export default async function decorate(block) {
@@ -118,7 +120,7 @@ export default async function decorate(block) {
   // Sort via dates
   yesArray.sort((x, y) => new Date(x.start) - new Date(y.start));
   divisions = placeholders.divisions.data;
-  const blockContents = resultParsers.columns(yesArray.slice(0, 4));
+  const blockContents = resultParsers.columns(yesArray);
   const builtBlock = buildBlock('columns', blockContents);
   block.appendChild(builtBlock);
   const seeMoreButton = div(
