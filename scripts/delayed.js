@@ -24,7 +24,7 @@ function googleTranslate() {
 
 googleTranslate();
 
-// Script for Accessibility Widget
+// ReciteMe
 async function loadWidget() {
   const searchPath = '/search';
   if (!window.location.pathname.includes(searchPath)) {
@@ -36,21 +36,33 @@ if (isDesktop.matches) {
   loadWidget();
 }
 
-function resizeAction() {
-  if (!isDesktop.matches) {
-    const div = document.querySelector('.userway_buttons_wrapper .uai.userway_dark');
-    if (div) div.style.setProperty('display', 'none');
-  } else {
-    const div = document.querySelector('.userway_buttons_wrapper .uai.userway_dark');
-    if (div) {
-      div.style.setProperty('display', 'block');
-    } else {
-      loadWidget();
-    }
-  }
-}
+// // Script for Accessibility Widget
+// async function loadWidget() {
+//   const searchPath = '/search';
+//   if (!window.location.pathname.includes(searchPath)) {
+//     await loadScript('/widgets/accessibility/accessibility.js');
+//   }
+// }
 
-window.addEventListener('resize', resizeAction);
+// if (isDesktop.matches) {
+//   loadWidget();
+// }
+
+// function resizeAction() {
+//   if (!isDesktop.matches) {
+//     const div = document.querySelector('.userway_buttons_wrapper .uai.userway_dark');
+//     if (div) div.style.setProperty('display', 'none');
+//   } else {
+//     const div = document.querySelector('.userway_buttons_wrapper .uai.userway_dark');
+//     if (div) {
+//       div.style.setProperty('display', 'block');
+//     } else {
+//       loadWidget();
+//     }
+//   }
+// }
+
+// window.addEventListener('resize', resizeAction);
 
 // Script for Full Calendar
 // check if windows location contains calendar
