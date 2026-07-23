@@ -111,7 +111,7 @@ export async function fetchPlaceholders() {
 function priorDate(date) {
   const today = new Date();
   const eventDate = new Date(date);
-  return eventDate > today;
+  return eventDate < today;
 }
 
 export default async function decorate(block) {
@@ -120,7 +120,7 @@ export default async function decorate(block) {
   // Sort via dates
   yesArray.sort((x, y) => new Date(x.start) - new Date(y.start));
   divisions = placeholders.divisions.data;
-  const blockContents = resultParsers.columns(yesArray);
+  const blockContents = resultParsers.columns(yesArray.slice(0, 4));
   const builtBlock = buildBlock('columns', blockContents);
   block.appendChild(builtBlock);
   const seeMoreButton = div(

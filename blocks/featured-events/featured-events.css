@@ -117,7 +117,7 @@
 
 @media (width >= 1200px) {
   .featured-events.block .event {
-    height: 240px;
+    height: 193px;
     flex-flow: row nowrap;
   }
 
