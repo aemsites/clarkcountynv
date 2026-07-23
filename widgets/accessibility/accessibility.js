@@ -1,6 +1,6 @@
 function widget() {
-const style = document.createElement('style');
-style.textContent = `
+  const style = document.createElement('style');
+  style.textContent = `
   #reciteme-button {
     background: #00344c;
     width: 100px;
@@ -27,9 +27,9 @@ style.textContent = `
   }
 `;
 
-document.head.appendChild(style);
+  document.head.appendChild(style);
 
-  const script = document.createElement("script");
+  const script = document.createElement('script');
   script.text = `
         var serviceUrl = "//api.reciteme.com/asset/js?key=";
         var serviceKey = "a696e66d543f67c74745b5d644a1daa7c6ee137c";
