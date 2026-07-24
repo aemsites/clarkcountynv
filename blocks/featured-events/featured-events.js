@@ -23,13 +23,15 @@ const resultParsers = {
     results.forEach((result) => {
       const row = [];
       const divLeft = div({ class: 'event-image' });
-      if (result.image.length > 1) {
-        const columnImage = createOptimizedPicture(result.image);
-        divLeft.appendChild(columnImage);
-      } else {
-        const columnImage = createOptimizedPicture(CLARKLOGO);
-        divLeft.appendChild(columnImage);
-      }
+      const columnImage = createOptimizedPicture(
+        result.image?.length > 1 ? result.image : CLARKLOGO,
+      );
+      const imgEl = columnImage.querySelector('img');
+      // if image fails to load, replace it with the Clark County logo
+      imgEl.addEventListener('error', () => {
+        columnImage.replaceWith(createOptimizedPicture(CLARKLOGO));
+      });
+      divLeft.appendChild(columnImage);
       const divRight = div({ class: 'event-body' });
       if (result.start.length === 0) {
         sourceDate = result.startRecur;
