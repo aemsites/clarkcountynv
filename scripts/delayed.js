@@ -75,6 +75,15 @@ async function loadAnalyticsScripts() {
   }
 }
 
+/* SiteImprove */
+
+async function loadSiteImproveScript() {
+  const script = document.createElement('script');
+  script.src = 'https://siteimproveanalytics.com/js/siteanalyze_6295639.js';
+  script.async = true;
+  document.body.appendChild(script);
+}
+
 async function loadPodcastStreamingAudio() {
   const uniquePaths = '/residents/family_services/divisions/foster_care/';
   if (window.location.pathname.endsWith(uniquePaths)) {
@@ -85,4 +94,5 @@ async function loadPodcastStreamingAudio() {
 }
 
 loadAnalyticsScripts();
+loadSiteImproveScript();
 loadPodcastStreamingAudio();
