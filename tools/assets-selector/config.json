@@ -28,7 +28,7 @@
     "copyMode": [
       {
         "mimeType": "image/*",
-        "value": "reference"
+        "value": "link"
       },
       {
         "mimeType": "audio/*",
