@@ -2,7 +2,7 @@ function widget() {
   const style = document.createElement('style');
   style.textContent = `
   #reciteme-button {
-    background: #00344c;
+    background: #963721;
     width: 100px;
     height: 100px;
     bottom: 14px;
