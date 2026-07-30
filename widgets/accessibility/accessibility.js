@@ -1,34 +1,4 @@
 function widget() {
-  const style = document.createElement('style');
-  style.textContent = `
-  #reciteme-button {
-    background: #963721;
-    width: 100px;
-    height: 100px;
-    bottom: 14px;
-    right: 14px;
-    position: fixed;
-    border-radius: 50%;
-    z-index: 100;
-    cursor: pointer;
-  }
-
-  #reciteme-button:hover {
-    background: #e9322e;
-  }
-
-  #reciteme-button img {
-    width: 70px;
-    height: 70px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-`;
-
-  document.head.appendChild(style);
-
   const script = document.createElement('script');
   script.text = `
         var serviceUrl = "//api.reciteme.com/asset/js?key=";
