@@ -1046,3 +1046,28 @@ main > div.section.newsdetail > .default-content-wrapper > p {
   white-space: nowrap;
   border: 0;
 }
+
+#reciteme-button {
+  background: #963721;
+  width: 100px;
+  height: 100px;
+  bottom: 14px;
+  right: 14px;
+  position: fixed;
+  border-radius: 50%;
+  z-index: 100;
+  cursor: pointer;
+}
+
+#reciteme-button:hover {
+  background: #722922;
+}
+
+#reciteme-button img {
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

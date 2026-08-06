@@ -6,8 +6,6 @@ import { loadrrule } from '../templates/calendar/calendar.js';
 // Core Web Vitals RUM collection
 sampleRUM('cwv');
 
-const isDesktop = window.matchMedia('(min-width: 900px)');
-
 // Scripts for Google Translate
 function googleTranslate() {
   const s1 = document.createElement('script');
@@ -24,33 +22,13 @@ function googleTranslate() {
 
 googleTranslate();
 
-// Script for Accessibility Widget
+// ReciteMe
 async function loadWidget() {
   const searchPath = '/search';
   if (!window.location.pathname.includes(searchPath)) {
     await loadScript('/widgets/accessibility/accessibility.js');
   }
 }
-
-if (isDesktop.matches) {
-  loadWidget();
-}
-
-function resizeAction() {
-  if (!isDesktop.matches) {
-    const div = document.querySelector('.userway_buttons_wrapper .uai.userway_dark');
-    if (div) div.style.setProperty('display', 'none');
-  } else {
-    const div = document.querySelector('.userway_buttons_wrapper .uai.userway_dark');
-    if (div) {
-      div.style.setProperty('display', 'block');
-    } else {
-      loadWidget();
-    }
-  }
-}
-
-window.addEventListener('resize', resizeAction);
 
 // Script for Full Calendar
 // check if windows location contains calendar
@@ -93,6 +71,7 @@ async function loadPodcastStreamingAudio() {
   }
 }
 
+loadWidget();
 loadAnalyticsScripts();
 loadSiteImproveScript();
 loadPodcastStreamingAudio();
