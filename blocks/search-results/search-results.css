@@ -1,1 +1,4 @@
 /* eslint-disable */
+main:has(.search-results) > .alert-popup-container {
+  display: none;
+}
