@@ -1,0 +1,14 @@
+html, body {
+    height: 500px;
+    width: 100%;
+    margin: 0;
+}
+
+#onemind-widget {
+    height: 500px;
+    width: 100%;
+}
+
+.pace-launcher  {
+    height: 500px;
+}

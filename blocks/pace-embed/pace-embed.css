@@ -1,0 +1,421 @@
+    /* .pace-embed body { background: transparent;
+      font-family: 'Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      overflow-x: hidden;
+    } */
+
+    .pace-embed h1 {
+      color: #333;
+    }
+
+    .pace-embed form {
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 20px;
+      max-width: 1200px;
+      width: 95%;
+      margin: 0 auto;
+      box-shadow: 0 2px 5px rgb(0 0 0 / 10%);
+      position: relative;
+      z-index: 1;
+
+      /* max-height: calc(100vh - 40px); */
+      overflow-y: auto;
+    }
+
+    .pace-embed .form-row {
+      margin-bottom: 15px;
+    }
+
+    .pace-embed .form-row.center {
+      text-align: center;
+    }
+
+    .pace-embed .form-row.two-columns {
+      margin-bottom: 0;
+    }
+
+    .pace-embed .form-row.two-columns .column {
+      margin-bottom: 15px;
+    }
+
+    .pace-embed .form-row.inline {
+      display: flex;
+      gap: 20px;
+      justify-content: flex-start;
+    }
+
+    .pace-embed .form-row.inline .column {
+      flex: 0 0 auto;
+    }
+
+    .pace-embed label {
+      display: inline-block;
+      margin-bottom: 5px;
+    }
+
+    /* Make specific form field labels bold */
+    .pace-embed label[for="first_name"],
+    .pace-embed label[for="last_name"],
+    .pace-embed label[for="applicant_email"],
+    .pace-embed label[for="applicant_phone"],
+    .pace-embed label[for="event_start"],
+    .pace-embed label[for="event_end"],
+    .pace-embed label[for="indoor_attendance"],
+    .pace-embed label[for="outdoor_attendance"] {
+      font-weight: bold;
+    }
+
+    /* Bold address block labels */
+    .pace-embed .address-block label {
+      font-weight: bold;
+    }
+
+    /* Remove bold from radio group labels */
+    .pace-embed .column > label:not([for]) {
+      font-weight: normal;
+    }
+
+    /* Keep radio option labels normal weight */
+    .pace-embed .radio-group label {
+      font-weight: normal;
+    }
+
+    .pace-embed input[type="text"],
+    .pace-embed input[type="email"],
+    .pace-embed input[type="date"] {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    .pace-embed .radio-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 5px;
+    }
+
+    /* stylelint-disable-next-line no-duplicate-selectors */
+    .pace-embed .radio-group label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .pace-embed button {
+      padding: 10px 15px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      background-color: #0072bc;
+      color: #fff;
+      border-radius: 5px;
+    }
+
+    .pace-embed button:hover {
+      background-color: #005a94;
+    }
+
+    /* For address verify icons */
+    .pace-embed .status-icon {
+      margin-left: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .pace-embed .valid-address {
+      color: green;
+    }
+
+    .pace-embed .invalid-address {
+      color: red;
+    }
+
+    .pace-embed .lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgb(0 0 0 / 50%);
+      justify-content: center;
+      align-items: flex-start;
+      z-index: 2;
+      padding: 40px 20px 20px;
+      box-sizing: border-box;
+    }
+
+    .lightbox-content {
+      background: white;
+      padding: 25px;
+      border-radius: 8px;
+      text-align: center;
+      width: 90%;
+      max-width: 500px;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+    }
+
+    .pace-embed .lightbox-content p {
+      margin: 0 0 20px;
+      font-size: 16px;
+      line-height: 1.5;
+      color: #333;
+    }
+
+    .pace-embed .lightbox-content button {
+      width: 100%;
+      max-width: 200px;
+      padding: 12px 20px;
+      font-size: 16px;
+    }
+
+    @media (width <= 480px) {
+      .pace-embed .lightbox {
+        padding: 15px;
+      }
+
+      .pace-embed .lightbox-content {
+        padding: 20px;
+        width: 100%;
+      }
+
+      .pace-embed .lightbox-content p {
+        font-size: 15px;
+      }
+    }
+
+    /* Add new wrapper style */
+    .pace-embed .radio-questions-wrapper,
+    .pace-embed .contact-info-wrapper {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-bottom: 15px;
+    }
+
+    @media (width >= 1200px) {
+      .pace-embed .radio-questions-wrapper,
+      .pace-embed .contact-info-wrapper {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (width <= 767px) {
+      .pace-embed .radio-questions-wrapper,
+      .pace-embed .contact-info-wrapper {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Add styles for the new select elements */
+    .pace-embed select {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .pace-embed select:focus {
+      outline: none;
+      border-color: #0072bc;
+    }
+
+    /* Add new class for half-width selects */
+    .pace-embed .select-half-width {
+      width: 70%;
+    }
+
+    /* Date input width */
+    .pace-embed input[type="date"] {
+      width: 100%;
+    }
+
+    /* Address blocks container */
+    .pace-embed .addresses-container {
+      margin-bottom: 15px;
+    }
+
+    .pace-embed .address-block {
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 15px;
+      margin-bottom: 12px;
+      background: #fafafa;
+      position: relative;
+    }
+
+    .pace-embed .address-block-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .pace-embed .address-block-header h3 {
+      margin: 0;
+      font-size: 15px;
+      color: #333;
+    }
+
+    .pace-embed .address-block .remove-address-btn {
+      background: #dc3545;
+      color: #fff;
+      border: none;
+      padding: 5px 12px;
+      font-size: 13px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .pace-embed .address-block .remove-address-btn:hover {
+      background: #c82333;
+    }
+
+    .pace-embed .address-fields-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .pace-embed .address-fields-grid .full-width {
+      grid-column: 1 / -1;
+    }
+
+    .pace-embed .address-field {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pace-embed .address-field label {
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
+
+    .pace-embed .address-city-state-zip {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 10px;
+    }
+
+    .pace-embed .address-verify-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .pace-embed .add-address-btn {
+      background: #28a745;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      font-size: 14px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
+
+    .pace-embed .add-address-btn:hover {
+      background: #218838;
+    }
+
+    .pace-embed .add-address-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    /* Date section alongside addresses */
+    .pace-embed .date-section-standalone {
+      margin-bottom: 15px;
+    }
+
+    .pace-embed .date-fields {
+      display: flex;
+      gap: 15px;
+      justify-content: flex-start;
+      width: 100%;
+    }
+
+    .pace-embed .date-field {
+      flex: 0 0 auto;
+      display: flex;
+      flex-direction: column;
+      width: 185px;
+    }
+
+    .pace-embed .date-field label {
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    /* stylelint-disable-next-line no-duplicate-selectors */
+    .pace-embed input[type="date"] {
+      width: 100%;
+      min-width: 0;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    /* State select in address block */
+    .pace-embed .address-block select {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    @media (width <= 767px) {
+      .pace-embed .address-fields-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pace-embed .address-city-state-zip {
+        grid-template-columns: 1fr;
+      }
+    }
+
+/* Prevent horizontal wiggle */
+.pace-embed html { overflow-x: hidden; }
+
+/* Lightbox content should respect padding without overflow */
+.pace-embed .lightbox-content { box-sizing: border-box; }
+
+/* Mobile fixes */
+@media (width <= 600px) {
+  .pace-embed form { max-height: none; }
+  /* stylelint-disable-next-line declaration-block-single-line-max-declarations */
+  .pace-embed .date-field { min-width: 0 !important; width: 100% !important; }
+  /* stylelint-disable-next-line declaration-block-single-line-max-declarations */
+  .pace-embed .date-fields { flex-direction: column; gap: 10px; }
+}
+
+/* Extra small screens */
+@media (width <= 400px) {
+  .pace-embed .date-field { width: 100% !important; }
+}
+
+
+/* Center form with equal padding left/right on mobile */
+@media (width <= 600px) {
+  .pace-embed form {
+    margin: 0 auto;
+    padding-left: 12px;
+    padding-right: 12px;
+    box-sizing: border-box;
+    width: 100% !important;
+  }
+
+  .pace-embed .lightbox-content {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
