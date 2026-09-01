@@ -8,8 +8,6 @@ export default async function decorate(block) {
   // The 1mind team will configure the conversation to use these query parameters.
   const container = document.createElement('div');
   container.id = 'onemind-widget';
-  container.setAttribute('microphone', 'https://customer.1mind.cloud');
-  container.setAttribute('camera', 'https://customer.1mind.cloud');
   block.append(container);
 
   // Create script element for the 1mind launcher and attach it to the block
