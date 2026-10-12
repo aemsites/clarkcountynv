@@ -284,8 +284,6 @@ main .section.rightsection.no-button .columns.alert a:any-link {
 }
 
 .columns.contact-card .column2 a {
-  color: var(--neutral-black);
-  text-decoration-color: var(--neutral-black);
   word-break: break-all;
 }
 
