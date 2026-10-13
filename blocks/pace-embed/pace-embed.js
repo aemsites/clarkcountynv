@@ -1,15 +1,18 @@
+/* eslint-disable no-use-before-define */
+/* eslint-disable no-plusplus */
+/* eslint-disable prefer-destructuring */
+/* eslint-disable prefer-const */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable radix */
+/* eslint-disable no-await-in-loop */
+
 export default async function decorate(block2) {
   block2.innerHTML = `  <form id="specialEventsForm">
-    <!-- Submission date (hidden) -->
     <input type="hidden" id="submission_date" name="submission_date" />
 
-    <!-- Event Addresses -->
-    <div class="addresses-container" id="addressesContainer">
-      <!-- Address blocks will be inserted here by JS -->
-    </div>
+    <div class="addresses-container" id="addressesContainer"></div>
     <button type="button" class="add-address-btn" id="addAddressBtn">+ Add Another Address</button>
 
-    <!-- Date fields -->
     <div class="date-section-standalone">
       <div class="date-fields">
         <div class="date-field">
@@ -17,8 +20,20 @@ export default async function decorate(block2) {
           <input type="date" id="event_start" name="event_start" required />
         </div>
         <div class="date-field">
+          <label for="event_start_time">*Start Time</label>
+          <select id="event_start_time" name="event_start_time" required>
+            <option value="" disabled selected>Select time</option>
+          </select>
+        </div>
+        <div class="date-field">
           <label for="event_end">*End Date</label>
           <input type="date" id="event_end" name="event_end" required />
+        </div>
+        <div class="date-field">
+          <label for="event_end_time">*End Time</label>
+          <select id="event_end_time" name="event_end_time" required>
+            <option value="" disabled selected>Select time</option>
+          </select>
         </div>
       </div>
     </div>
@@ -47,9 +62,7 @@ export default async function decorate(block2) {
       </div>
     </div>
 
-    <!-- Wrap all radio button groups in the new container -->
     <div class="radio-questions-wrapper">
-      <!-- Replace first two radio groups with new dropdowns -->
       <div class="column">
         <label for="indoor_attendance">*Indoor attendance (if any):</label>
         <select id="indoor_attendance" name="indoor_attendance" class="select-half-width" required>
@@ -76,223 +89,221 @@ export default async function decorate(block2) {
 
       <div class="column">
         <label>Will you charge for admission?</label>
-        <div class="radio-group">
-          <label>
-            <input type="radio" name="event_charge" value="will not charge" checked required />
-            No
-          </label>
-          <label>
-            <input type="radio" name="event_charge" value="will charge" required />
-            Yes
-          </label>
+        <input type="radio" name="event_charge" value="will not charge" checked required class="radio-hidden" />
+        <input type="radio" name="event_charge" value="will charge" required class="radio-hidden" />
+        <div class="yn-group">
+          <button type="button" class="yn-btn" data-name="event_charge" data-value="will not charge" data-yn="no">No</button>
+          <button type="button" class="yn-btn" data-name="event_charge" data-value="will charge" data-yn="yes">Yes</button>
         </div>
       </div>
 
       <div class="column">
         <label>Are you a Resort or Hotel/Casino?</label>
-        <div class="radio-group">
-          <label>
-            <input type="radio" name="event_resort" value="is not a resort" checked required />
-            No
-          </label>
-          <label>
-            <input type="radio" name="event_resort" value="is a resort" required />
-            Yes
-          </label>
+        <input type="radio" name="event_resort" value="is not a resort" checked required class="radio-hidden" />
+        <input type="radio" name="event_resort" value="is a resort" required class="radio-hidden" />
+        <div class="yn-group">
+          <button type="button" class="yn-btn" data-name="event_resort" data-value="is not a resort" data-yn="no">No</button>
+          <button type="button" class="yn-btn" data-name="event_resort" data-value="is a resort" data-yn="yes">Yes</button>
         </div>
       </div>
 
       <div class="column">
         <label>Will there be live music or other performances?</label>
-        <div class="radio-group">
-          <label>
-            <input type="radio" name="event_performances" value="no live performances" checked required />
-            No
-          </label>
-          <label>
-            <input type="radio" name="event_performances" value="live performances" required />
-            Yes
-          </label>
+        <input type="radio" name="event_performances" value="no live performances" checked required class="radio-hidden" />
+        <input type="radio" name="event_performances" value="live performances" required class="radio-hidden" />
+        <div class="yn-group">
+          <button type="button" class="yn-btn" data-name="event_performances" data-value="no live performances" data-yn="no">No</button>
+          <button type="button" class="yn-btn" data-name="event_performances" data-value="live performances" data-yn="yes">Yes</button>
         </div>
       </div>
 
       <div class="column">
         <label>Will there be rides or attractions?</label>
-        <div class="radio-group">
-          <label>
-            <input type="radio" name="event_rides" value="no rides" checked required />
-            No
-          </label>
-          <label>
-            <input type="radio" name="event_rides" value="rides" required />
-            Yes
-          </label>
+        <input type="radio" name="event_rides" value="no rides" checked required class="radio-hidden" />
+        <input type="radio" name="event_rides" value="rides" required class="radio-hidden" />
+        <div class="yn-group">
+          <button type="button" class="yn-btn" data-name="event_rides" data-value="no rides" data-yn="no">No</button>
+          <button type="button" class="yn-btn" data-name="event_rides" data-value="rides" data-yn="yes">Yes</button>
+        </div>
+      </div>
+
+      <div class="column">
+        <label>Is street closure required?</label>
+        <input type="radio" name="paceadm_streetclosure" value="no street closure" checked required class="radio-hidden" />
+        <input type="radio" name="paceadm_streetclosure" value="street closure" required class="radio-hidden" />
+        <div class="yn-group">
+          <button type="button" class="yn-btn" data-name="paceadm_streetclosure" data-value="no street closure" data-yn="no">No</button>
+          <button type="button" class="yn-btn" data-name="paceadm_streetclosure" data-value="street closure" data-yn="yes">Yes</button>
+        </div>
+      </div>
+
+      <div class="column">
+        <label>Is sidewalk closure required?</label>
+        <input type="radio" name="paceadm_sidewalkclosure" value="no sidewalk closure" checked required class="radio-hidden" />
+        <input type="radio" name="paceadm_sidewalkclosure" value="sidewalk closure" required class="radio-hidden" />
+        <div class="yn-group">
+          <button type="button" class="yn-btn" data-name="paceadm_sidewalkclosure" data-value="no sidewalk closure" data-yn="no">No</button>
+          <button type="button" class="yn-btn" data-name="paceadm_sidewalkclosure" data-value="sidewalk closure" data-yn="yes">Yes</button>
         </div>
       </div>
 
       <div class="column">
         <label>Is this a seasonal event?</label>
-        <div class="radio-group">
-          <label>
-            <input type="radio" name="event_seasonal" value="not seasonal" checked required />
-            No
-          </label>
-          <label>
-            <input type="radio" name="event_seasonal" value="seasonal" required />
-            Yes
-          </label>
+        <input type="radio" name="event_seasonal" value="not seasonal" checked required class="radio-hidden" />
+        <input type="radio" name="event_seasonal" value="seasonal" required class="radio-hidden" />
+        <div class="yn-group">
+          <button type="button" class="yn-btn" data-name="event_seasonal" data-value="not seasonal" data-yn="no">No</button>
+          <button type="button" class="yn-btn" data-name="event_seasonal" data-value="seasonal" data-yn="yes">Yes</button>
         </div>
       </div>
 
       <div class="column">
         <label>Is this a holiday event?</label>
-        <div class="radio-group">
-          <label>
-            <input type="radio" name="event_holiday" value="not holiday" checked required />
-            No
-          </label>
-          <label>
-            <input type="radio" name="event_holiday" value="holiday" required />
-            Yes
-          </label>
+        <input type="radio" name="event_holiday" value="not holiday" checked required class="radio-hidden" />
+        <input type="radio" name="event_holiday" value="holiday" required class="radio-hidden" />
+        <div class="yn-group">
+          <button type="button" class="yn-btn" data-name="event_holiday" data-value="not holiday" data-yn="no">No</button>
+          <button type="button" class="yn-btn" data-name="event_holiday" data-value="holiday" data-yn="yes">Yes</button>
         </div>
       </div>
 
       <div class="column">
         <label>Will there be merchandise or other retail sales?</label>
-        <div class="radio-group">
-          <label>
-            <input type="radio" name="event_merchandise" value="no merchandise" checked required />
-            No
-          </label>
-          <label>
-            <input type="radio" name="event_merchandise" value="merchandise" required />
-            Yes
-          </label>
+        <input type="radio" name="event_merchandise" value="no merchandise" checked required class="radio-hidden" />
+        <input type="radio" name="event_merchandise" value="merchandise" required class="radio-hidden" />
+        <div class="yn-group">
+          <button type="button" class="yn-btn" data-name="event_merchandise" data-value="no merchandise" data-yn="no">No</button>
+          <button type="button" class="yn-btn" data-name="event_merchandise" data-value="merchandise" data-yn="yes">Yes</button>
+        </div>
+      </div>
+
+      <div class="column">
+        <label>Will services be sold?</label>
+        <input type="radio" name="paceadm_servicessold" value="no services sold" checked required class="radio-hidden" />
+        <input type="radio" name="paceadm_servicessold" value="services sold" required class="radio-hidden" />
+        <div class="yn-group">
+          <button type="button" class="yn-btn" data-name="paceadm_servicessold" data-value="no services sold" data-yn="no">No</button>
+          <button type="button" class="yn-btn" data-name="paceadm_servicessold" data-value="services sold" data-yn="yes">Yes</button>
         </div>
       </div>
 
       <div class="column">
         <label>Will there be alcohol at the event?</label>
-        <div class="radio-group">
-          <label>
-            <input type="radio" name="event_alcohol" value="no alcohol" checked required />
-            No
-          </label>
-          <label>
-            <input type="radio" name="event_alcohol" value="alcohol" required />
-            Yes
-          </label>
+        <input type="radio" name="event_alcohol" value="no alcohol" checked required class="radio-hidden" />
+        <input type="radio" name="event_alcohol" value="alcohol" required class="radio-hidden" />
+        <div class="yn-group">
+          <button type="button" class="yn-btn" data-name="event_alcohol" data-value="no alcohol" data-yn="no">No</button>
+          <button type="button" class="yn-btn" data-name="event_alcohol" data-value="alcohol" data-yn="yes">Yes</button>
         </div>
       </div>
 
       <div class="column">
         <label>Are you applying for a rodeo permit?</label>
-        <div class="radio-group">
-          <label>
-            <input type="radio" name="event_rodeo" value="no rodeo" checked required />
-            No
-          </label>
-          <label>
-            <input type="radio" name="event_rodeo" value="a rodeo" required />
-            Yes
-          </label>
+        <input type="radio" name="event_rodeo" value="no rodeo" checked required class="radio-hidden" />
+        <input type="radio" name="event_rodeo" value="a rodeo" required class="radio-hidden" />
+        <div class="yn-group">
+          <button type="button" class="yn-btn" data-name="event_rodeo" data-value="no rodeo" data-yn="no">No</button>
+          <button type="button" class="yn-btn" data-name="event_rodeo" data-value="a rodeo" data-yn="yes">Yes</button>
         </div>
       </div>
 
       <div class="column">
         <label>Are you hosting an auction?</label>
-        <div class="radio-group">
-          <label>
-            <input type="radio" name="event_auction" value="no auction" checked required />
-            No
-          </label>
-          <label>
-            <input type="radio" name="event_auction" value="auction" required />
-            Yes
-          </label>
-        </div>
-      </div>
-      <div class="column">
-        <label>Will there be commercial filming or photography?</label>
-        <div class="radio-group">
-          <label>
-            <input type="radio" name="event_filming" value="no filming" checked required />
-            No
-          </label>
-          <label>
-            <input type="radio" name="event_filming" value="filming" required />
-            Yes
-          </label>
+        <input type="radio" name="event_auction" value="no auction" checked required class="radio-hidden" />
+        <input type="radio" name="event_auction" value="auction" required class="radio-hidden" />
+        <div class="yn-group">
+          <button type="button" class="yn-btn" data-name="event_auction" data-value="no auction" data-yn="no">No</button>
+          <button type="button" class="yn-btn" data-name="event_auction" data-value="auction" data-yn="yes">Yes</button>
         </div>
       </div>
 
       <div class="column">
-        <label>Will there be snacks, meals, treats, or beverages?</label>
-        <div class="radio-group">
-          <label>
-            <input type="radio" name="event_food" value="no food" checked required />
-            No
-          </label>
-          <label>
-            <input type="radio" name="event_food" value="food" required />
-            Yes
-          </label>
+        <label>Will there be commercial filming or photography?</label>
+        <input type="radio" name="event_filming" value="no filming" checked required class="radio-hidden" />
+        <input type="radio" name="event_filming" value="filming" required class="radio-hidden" />
+        <div class="yn-group">
+          <button type="button" class="yn-btn" data-name="event_filming" data-value="no filming" data-yn="no">No</button>
+          <button type="button" class="yn-btn" data-name="event_filming" data-value="filming" data-yn="yes">Yes</button>
         </div>
       </div>
+
+      <div class="column">
+        <label>Will there be snacks, meals, or treats?</label>
+        <input type="radio" name="event_food" value="no food" checked required class="radio-hidden" />
+        <input type="radio" name="event_food" value="food" required class="radio-hidden" />
+        <div class="yn-group">
+          <button type="button" class="yn-btn" data-name="event_food" data-value="no food" data-yn="no">No</button>
+          <button type="button" class="yn-btn" data-name="event_food" data-value="food" data-yn="yes">Yes</button>
+        </div>
+      </div>
+
+      <div class="column">
+        <label>Will there be non-alcoholic beverages?</label>
+        <input type="radio" name="paceadm_nonalcoholicbeverages" value="no non-alcoholic beverages" checked required class="radio-hidden" />
+        <input type="radio" name="paceadm_nonalcoholicbeverages" value="non-alcoholic beverages" required class="radio-hidden" />
+        <div class="yn-group">
+          <button type="button" class="yn-btn" data-name="paceadm_nonalcoholicbeverages" data-value="no non-alcoholic beverages" data-yn="no">No</button>
+          <button type="button" class="yn-btn" data-name="paceadm_nonalcoholicbeverages" data-value="non-alcoholic beverages" data-yn="yes">Yes</button>
+        </div>
+      </div>
+
       <div class="column">
         <label>Will there be any pyrotechnics?</label>
-        <div class="radio-group">
-          <label>
-            <input type="radio" name="event_pyrotechnics" value="no pyrotechnics" checked required />
-            No
-          </label>
-          <label>
-            <input type="radio" name="event_pyrotechnics" value="pyrotechnics" required />
-            Yes
-          </label>
+        <input type="radio" name="event_pyrotechnics" value="no pyrotechnics" checked required class="radio-hidden" />
+        <input type="radio" name="event_pyrotechnics" value="pyrotechnics" required class="radio-hidden" />
+        <div class="yn-group">
+          <button type="button" class="yn-btn" data-name="event_pyrotechnics" data-value="no pyrotechnics" data-yn="no">No</button>
+          <button type="button" class="yn-btn" data-name="event_pyrotechnics" data-value="pyrotechnics" data-yn="yes">Yes</button>
+        </div>
+      </div>
+
+      <div class="column">
+        <label>Will there be fireworks?</label>
+        <input type="radio" name="paceadm_pyrotechfireworks" value="no fireworks" checked required class="radio-hidden" />
+        <input type="radio" name="paceadm_pyrotechfireworks" value="fireworks" required class="radio-hidden" />
+        <div class="yn-group">
+          <button type="button" class="yn-btn" data-name="paceadm_pyrotechfireworks" data-value="no fireworks" data-yn="no">No</button>
+          <button type="button" class="yn-btn" data-name="paceadm_pyrotechfireworks" data-value="fireworks" data-yn="yes">Yes</button>
+        </div>
+      </div>
+
+      <div class="column">
+        <label>Will there be special effects?</label>
+        <input type="radio" name="paceadm_specialeffects" value="no special effects" checked required class="radio-hidden" />
+        <input type="radio" name="paceadm_specialeffects" value="special effects" required class="radio-hidden" />
+        <div class="yn-group">
+          <button type="button" class="yn-btn" data-name="paceadm_specialeffects" data-value="no special effects" data-yn="no">No</button>
+          <button type="button" class="yn-btn" data-name="paceadm_specialeffects" data-value="special effects" data-yn="yes">Yes</button>
         </div>
       </div>
 
       <div class="column">
         <label>Will there be animals?</label>
-        <div class="radio-group">
-          <label>
-            <input type="radio" name="event_animals" value="no animals" checked required />
-            No
-          </label>
-          <label>
-            <input type="radio" name="event_animals" value="animals" required />
-            Yes
-          </label>
+        <input type="radio" name="event_animals" value="no animals" checked required class="radio-hidden" />
+        <input type="radio" name="event_animals" value="animals" required class="radio-hidden" />
+        <div class="yn-group">
+          <button type="button" class="yn-btn" data-name="event_animals" data-value="no animals" data-yn="no">No</button>
+          <button type="button" class="yn-btn" data-name="event_animals" data-value="animals" data-yn="yes">Yes</button>
         </div>
       </div>
 
       <div class="column">
         <label>Will you have Tents (Canopies) and/or Temporary Structures (Stage(s)/Platform(s))?</label>
-        <div class="radio-group">
-          <label>
-            <input type="radio" name="event_tents" value="no tents" checked required />
-            No
-          </label>
-          <label>
-            <input type="radio" name="event_tents" value="tents" required />
-            Yes
-          </label>
+        <input type="radio" name="event_tents" value="no tents" checked required class="radio-hidden" />
+        <input type="radio" name="event_tents" value="tents" required class="radio-hidden" />
+        <div class="yn-group">
+          <button type="button" class="yn-btn" data-name="event_tents" data-value="no tents" data-yn="no">No</button>
+          <button type="button" class="yn-btn" data-name="event_tents" data-value="tents" data-yn="yes">Yes</button>
         </div>
       </div>
 
       <div class="column">
         <label>Will you have generators?</label>
-        <div class="radio-group">
-          <label>
-            <input type="radio" name="event_generators" value="no generators" checked required />
-            No
-          </label>
-          <label>
-            <input type="radio" name="event_generators" value="generators" required />
-            Yes
-          </label>
+        <input type="radio" name="event_generators" value="no generators" checked required class="radio-hidden" />
+        <input type="radio" name="event_generators" value="generators" required class="radio-hidden" />
+        <div class="yn-group">
+          <button type="button" class="yn-btn" data-name="event_generators" data-value="no generators" data-yn="no">No</button>
+          <button type="button" class="yn-btn" data-name="event_generators" data-value="generators" data-yn="yes">Yes</button>
         </div>
       </div>
     </div>
@@ -301,7 +312,7 @@ export default async function decorate(block2) {
       <button type="submit" id="launchAssistantBtn">Submit</button>
     </div>
   </form>
-  
+
   <div class="lightbox" id="lightbox">
     <div class="lightbox-content">
       <p id="lightbox-message"></p>
@@ -319,10 +330,9 @@ export default async function decorate(block2) {
     'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY', 'DC',
   ];
 
-  // ── Address block management ──
   const MAX_ADDRESSES = 6;
   let addressCount = 0;
-  const addressData = {}; // keyed by index, stores verification data
+  const addressData = {};
 
   const addressesContainer = document.getElementById('addressesContainer');
   const addAddressBtn = document.getElementById('addAddressBtn');
@@ -375,24 +385,23 @@ export default async function decorate(block2) {
         </div>
       `;
 
-    // Listen for changes to reset verification status
     block.querySelectorAll('input, select').forEach((el) => {
-      // eslint-disable-next-line no-use-before-define
       el.addEventListener('input', () => resetAddressStatus(index));
     });
+
+    const street1Input = block.querySelector(`#addr_${index}_street1`);
+    street1Input.addEventListener('input', () => unlockAddressFields(index));
 
     return block;
   }
 
   function addAddressBlock() {
-    // eslint-disable-next-line no-plusplus
     addressCount++;
     const block = createAddressBlock(addressCount);
     addressesContainer.appendChild(block);
     addressData[addressCount] = {
       verified: false, lastVerified: '', xCoord: '', yCoord: '', mapLink: '', parcel: '',
     };
-    // eslint-disable-next-line no-use-before-define
     updateAddButton();
   }
 
@@ -401,20 +410,16 @@ export default async function decorate(block2) {
     if (block) {
       block.remove();
       delete addressData[index];
-      // eslint-disable-next-line no-use-before-define
       renumberAddressBlocks();
-      // eslint-disable-next-line no-use-before-define
       updateAddButton();
     }
   }
 
   function renumberAddressBlocks() {
     const blocks = addressesContainer.querySelectorAll('.address-block');
-    // We don't renumber IDs/names (which would break references), just update visible headers
     let num = 1;
     blocks.forEach((block) => {
       block.querySelector('h3').textContent = `*Event Address ${num}`;
-      // eslint-disable-next-line no-plusplus
       num++;
     });
   }
@@ -455,21 +460,16 @@ export default async function decorate(block2) {
     const statusEl = document.getElementById(`addrStatus_${index}`);
     const fullAddress = getFullAddress(index);
 
-    // Check cache
     if (addressData[index] && fullAddress === addressData[index].lastVerified) {
       return addressData[index].verified;
     }
 
     if (!fullAddress || !document.getElementById(`addr_${index}_street1`)?.value.trim()) {
-      if (showMessages) {
-        // eslint-disable-next-line no-use-before-define
-        showLightbox(`Please enter a street address for Event Address ${index}.`);
-      }
+      if (showMessages) showLightbox(`Please enter a street address for Event Address ${index}.`);
       return false;
     }
 
     try {
-      // Geocode
       const street1 = document.getElementById(`addr_${index}_street1`)?.value.trim() || '';
       const street2 = document.getElementById(`addr_${index}_street2`)?.value.trim() || '';
       const city = document.getElementById(`addr_${index}_city`)?.value.trim() || '';
@@ -486,7 +486,6 @@ export default async function decorate(block2) {
           statusEl.classList.add('invalid-address');
           statusEl.href = '#';
           statusEl.style.pointerEvents = 'none';
-          // eslint-disable-next-line no-use-before-define
           showLightbox(`Unable to find Event Address ${index}. Please enter an address in Clark County.`);
         }
         addressData[index].lastVerified = fullAddress;
@@ -498,13 +497,11 @@ export default async function decorate(block2) {
       const xCoord = firstMatch.location.x;
       const yCoord = firstMatch.location.y;
 
-      // Jurisdiction check
       const zoningUrl = `https://maps.clarkcountynv.gov/gismo/webservice/GISDataWCF/GISDataService.svc/jsonep/getZoning?Xcoordinate=${xCoord}&Ycoordinate=${yCoord}`;
       const zoningResponse = await fetch(zoningUrl);
       const zoningData = await zoningResponse.json();
       const isInClarkCounty = zoningData.jurisdiction === 'Clark County';
 
-      // Parcel lookup
       const parcelUrl = `https://maps.clarkcountynv.gov/gismo/webservice/GISDataWCF/GISDataService.svc/jsonep/PointToParcel?method=gismo&xcoordinate=${xCoord}&ycoordinate=${yCoord}`;
       const parcelResponse = await fetch(parcelUrl);
       const parcelData = await parcelResponse.json();
@@ -529,18 +526,17 @@ export default async function decorate(block2) {
           statusEl.style.pointerEvents = 'none';
         }
         if (!isInClarkCounty) {
-          // eslint-disable-next-line no-use-before-define
           showLightbox(`Event Address ${index} is in ${zoningData.jurisdiction}. This experience is only for addresses in Clark County.`);
         }
       }
 
-      // Store data
       addressData[index].xCoord = xCoord;
       addressData[index].yCoord = yCoord;
       addressData[index].mapLink = mapLink;
       addressData[index].parcel = parcelNumber;
       addressData[index].lastVerified = fullAddress;
       addressData[index].verified = isInClarkCounty;
+      if (isInClarkCounty) lockAddressFields(index);
       addressData[index].jurisdiction = zoningData.jurisdiction;
       addressData[index].resolvedAddress = firstMatch.address;
 
@@ -552,7 +548,6 @@ export default async function decorate(block2) {
         statusEl.classList.add('invalid-address');
         statusEl.href = '#';
         statusEl.style.pointerEvents = 'none';
-        // eslint-disable-next-line no-use-before-define
         showLightbox(`There was an error verifying Event Address ${index}. Please try again.`);
       }
       addressData[index].lastVerified = '';
@@ -561,18 +556,41 @@ export default async function decorate(block2) {
     }
   }
 
-  // Expose to onclick handlers
   window.removeAddressBlock = removeAddressBlock;
   window.verifyAddressBlock = verifyAddressBlock;
 
-  // Initialize with one address block
   addAddressBlock();
-
   addAddressBtn.addEventListener('click', addAddressBlock);
 
-  // ── Submission date ──
-  // eslint-disable-next-line prefer-destructuring
   document.getElementById('submission_date').value = new Date().toISOString().split('T')[0];
+
+  // ── Time helpers ──
+  function timeToMinutes(timeStr) {
+    const [time, period] = timeStr.split(' ');
+    let [h, m] = time.split(':').map(Number);
+    if (period === 'PM' && h !== 12) h += 12;
+    if (period === 'AM' && h === 12) h = 0;
+    return h * 60 + m;
+  }
+
+  function populateTimeOptions(select) {
+    if (!select) return;
+    for (let h = 0; h < 24; h++) {
+      for (const m of [0, 30]) {
+        const period = h < 12 ? 'AM' : 'PM';
+        let hour12 = h % 12;
+        if (hour12 === 0) hour12 = 12;
+        const mm = m === 0 ? '00' : '30';
+        const label = `${hour12}:${mm} ${period}`;
+        const opt = document.createElement('option');
+        opt.value = label;
+        opt.textContent = label;
+        select.appendChild(opt);
+      }
+    }
+  }
+  populateTimeOptions(document.getElementById('event_start_time'));
+  populateTimeOptions(document.getElementById('event_end_time'));
 
   // ── Date logic ──
   const eventStart = document.getElementById('event_start');
@@ -584,16 +602,12 @@ export default async function decorate(block2) {
   eventStart.addEventListener('change', () => {
     const startDate = eventStart.value;
     eventEnd.min = startDate;
-    if (eventEnd.value < startDate) {
-      eventEnd.value = startDate;
-    }
+    if (eventEnd.value < startDate) eventEnd.value = startDate;
     eventEnd.value = eventStart.value;
   });
 
   eventEnd.addEventListener('change', () => {
-    if (eventEnd.value < eventStart.value) {
-      eventEnd.value = eventStart.value;
-    }
+    if (eventEnd.value < eventStart.value) eventEnd.value = eventStart.value;
   });
 
   // ── Lightbox ──
@@ -601,24 +615,78 @@ export default async function decorate(block2) {
   const lightboxMessage = document.getElementById('lightbox-message');
   const lightboxClose = document.getElementById('lightbox-close');
 
-  lightboxClose.addEventListener('click', () => {
-    lightbox.style.display = 'none';
+  lightboxClose.addEventListener('click', () => { lightbox.style.display = 'none'; });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox.style.display === 'flex') lightbox.style.display = 'none';
   });
 
   function showLightbox(message) {
     lightboxMessage.innerHTML = message;
     lightbox.style.display = 'flex';
+    setTimeout(() => { lightboxClose.focus(); }, 0);
   }
+
+  // ── Yes/No buttons → radio sync ──
+  document.querySelectorAll('.yn-group').forEach((group, i) => {
+    const firstBtn = group.querySelector('.yn-btn');
+    const name = firstBtn ? firstBtn.dataset.name : (`yn_${i}`);
+    group.setAttribute('role', 'group');
+    let labelEl = group.previousElementSibling;
+    while (labelEl && labelEl.tagName !== 'LABEL') labelEl = labelEl.previousElementSibling;
+    if (labelEl) {
+      if (!labelEl.id) labelEl.id = `q_${name}`;
+      group.setAttribute('aria-labelledby', labelEl.id);
+    }
+    group.querySelectorAll('.yn-btn').forEach((b) => b.setAttribute('aria-pressed', 'false'));
+  });
+
+  document.querySelectorAll('.yn-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const { name } = btn.dataset;
+      const { value } = btn.dataset;
+      const { yn } = btn.dataset;
+      document.querySelector(`input[name="${name}"][value="${value}"]`).checked = true;
+      document.querySelectorAll(`.yn-btn[data-name="${name}"]`).forEach((b) => {
+        b.classList.remove('selected-yes', 'selected-no');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      btn.classList.add(yn === 'yes' ? 'selected-yes' : 'selected-no');
+      btn.setAttribute('aria-pressed', 'true');
+      const grp = btn.closest('.yn-group');
+      if (grp) {
+        grp.classList.remove('yn-unanswered');
+        grp.querySelectorAll('.yn-btn').forEach((b) => b.removeAttribute('aria-invalid'));
+      }
+    });
+  });
 
   // ── Phone validation ──
   const phoneInput = document.getElementById('applicant_phone');
   phoneInput.addEventListener('input', (e) => {
     const { value } = e.target;
     const sanitized = value.replace(/[^0-9+().\s-]/g, '');
-    if (value !== sanitized) {
-      e.target.value = sanitized;
-    }
+    if (value !== sanitized) e.target.value = sanitized;
   });
+
+  // ── Address field locking ──
+  function lockAddressFields(index) {
+    const cityEl = document.getElementById(`addr_${index}_city`);
+    const stateEl = document.getElementById(`addr_${index}_state`);
+    const zipEl = document.getElementById(`addr_${index}_zip`);
+    if (cityEl) cityEl.setAttribute('readonly', '');
+    if (stateEl) stateEl.disabled = true;
+    if (zipEl) zipEl.setAttribute('readonly', '');
+  }
+
+  function unlockAddressFields(index) {
+    const cityEl = document.getElementById(`addr_${index}_city`);
+    const stateEl = document.getElementById(`addr_${index}_state`);
+    const zipEl = document.getElementById(`addr_${index}_zip`);
+    if (cityEl) cityEl.removeAttribute('readonly');
+    if (stateEl) stateEl.disabled = false;
+    if (zipEl) zipEl.removeAttribute('readonly');
+  }
 
   // ── Form submission ──
   const form = document.getElementById('specialEventsForm');
@@ -628,18 +696,50 @@ export default async function decorate(block2) {
     const firstName = document.getElementById('first_name').value.trim();
     const lastName = document.getElementById('last_name').value.trim();
 
-    // Validate phone number
     const phone = phoneInput.value;
     if (!/^[0-9+().\s-]+$/.test(phone)) {
       showLightbox('Please enter a valid phone number.');
       return;
     }
 
-    // Validate all zip codes before verification
+    // Validate date/time: if same day, end time must be after start time
+    const startDateVal = eventStart.value;
+    const endDateVal = eventEnd.value;
+    const startTimeVal = document.getElementById('event_start_time').value;
+    const endTimeVal = document.getElementById('event_end_time').value;
+    if (startDateVal && endDateVal && startTimeVal && endTimeVal && startDateVal === endDateVal) {
+      if (timeToMinutes(endTimeVal) <= timeToMinutes(startTimeVal)) {
+        showLightbox('End time must be after start time when the event starts and ends on the same day.');
+        return;
+      }
+    }
+
+    // Require explicit Yes/No selection for every question
+    const ynGroups = document.querySelectorAll('.yn-group');
+    let firstUnanswered = null;
+    let unansweredCount = 0;
+    ynGroups.forEach((group) => {
+      const answered = group.querySelector('.yn-btn.selected-yes, .yn-btn.selected-no');
+      if (answered) {
+        group.classList.remove('yn-unanswered');
+        group.querySelectorAll('.yn-btn').forEach((b) => b.removeAttribute('aria-invalid'));
+      } else {
+        unansweredCount++;
+        group.classList.add('yn-unanswered');
+        group.querySelectorAll('.yn-btn').forEach((b) => b.setAttribute('aria-invalid', 'true'));
+        if (!firstUnanswered) firstUnanswered = group;
+      }
+    });
+    if (unansweredCount > 0) {
+      const plural = unansweredCount === 1 ? '' : 's';
+      showLightbox(`Please answer all Yes/No questions before submitting. ${unansweredCount} question${plural} still need${unansweredCount === 1 ? 's' : ''} a Yes or No selection.`);
+      if (firstUnanswered) firstUnanswered.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    // Validate zip codes
     const blocks = addressesContainer.querySelectorAll('.address-block');
-    // eslint-disable-next-line no-restricted-syntax
     for (const block of blocks) {
-      // eslint-disable-next-line radix
       const idx = parseInt(block.dataset.index);
       const zipField = document.getElementById(`addr_${idx}_zip`);
       const zipVal = zipField?.value.trim() || '';
@@ -650,16 +750,13 @@ export default async function decorate(block2) {
       }
     }
 
-    // Verify all addresses independently
+    // Verify all addresses
     let allVerified = true;
     let anyNotInClarkCounty = false;
     let failedJurisdiction = '';
 
-    // eslint-disable-next-line no-restricted-syntax
     for (const block of blocks) {
-      // eslint-disable-next-line radix
       const idx = parseInt(block.dataset.index);
-      // eslint-disable-next-line no-await-in-loop
       const result = await verifyAddressBlock(idx, false);
       if (!result) {
         allVerified = false;
@@ -670,7 +767,6 @@ export default async function decorate(block2) {
       }
     }
 
-    // If any address is not in Clark County, show error but don't block other verifications
     if (!allVerified) {
       if (anyNotInClarkCounty) {
         showLightbox(`It appears that one or more event addresses are not within unincorporated Clark County (detected: ${failedJurisdiction}). Therefore, your event does not fall under this department's jurisdiction. If you feel this is incorrect, please contact the Sports and Special Events Team at <a href="mailto:CCSportsandSpecialEvents@ClarkCountyNV.gov">CCSportsandSpecialEvents@ClarkCountyNV.gov</a> or 702-455-3403.`);
@@ -680,29 +776,23 @@ export default async function decorate(block2) {
       return;
     }
 
-    // Build params
     const params = new URLSearchParams();
 
-    // Clark County status (all addresses verified)
     params.append('clark_county', 'is in');
-
-    // Name fields
     params.append('first_name', firstName);
     params.append('last_name', lastName);
-    params.append('applicant_name', firstName); // backward compat
-    params.append('applicant_fullname', `${firstName} ${lastName}`); // backward compat
-
-    // Contact info
+    params.append('applicant_name', firstName);
+    params.append('applicant_fullname', `${firstName} ${lastName}`);
     params.append('applicant_email', document.getElementById('applicant_email').value);
     params.append('applicant_phone', document.getElementById('applicant_phone').value);
     params.append('event_start', eventStart.value);
     params.append('event_end', eventEnd.value);
+    params.append('event_start_time', document.getElementById('event_start_time').value);
+    params.append('event_end_time', document.getElementById('event_end_time').value);
     params.append('submission_date', document.getElementById('submission_date').value);
 
-    // Build eventAddresses JSON array
     const eventAddresses = [];
     blocks.forEach((block) => {
-      // eslint-disable-next-line radix
       const idx = parseInt(block.dataset.index);
       const street1 = document.getElementById(`addr_${idx}_street1`)?.value.trim() || '';
       const street2 = document.getElementById(`addr_${idx}_street2`)?.value.trim() || '';
@@ -728,7 +818,6 @@ export default async function decorate(block2) {
     params.append('eventAddresses', JSON.stringify(eventAddresses));
     params.append('address_count', eventAddresses.length.toString());
 
-    // Also append each address as individual flat params
     eventAddresses.forEach((addr, i) => {
       const num = i + 1;
       const prefix = `event_address_${num}`;
@@ -743,36 +832,38 @@ export default async function decorate(block2) {
         params.append(`${prefix}_x_coordinate`, addr.x_coordinate);
         params.append(`${prefix}_y_coordinate`, addr.y_coordinate);
         params.append(`${prefix}_map_link`, addr.map_link);
-        if (addr.parcel) {
-          params.append(`${prefix}_parcel`, addr.parcel);
-        }
+        if (addr.parcel) params.append(`${prefix}_parcel`, addr.parcel);
       }
     });
 
-    // Attendance dropdowns
     params.append('indoor_attendance', document.getElementById('indoor_attendance').value);
     params.append('outdoor_attendance', document.getElementById('outdoor_attendance').value);
 
-    // Yes/No radio fields
     params.append('event_charge', document.querySelector('input[name="event_charge"]:checked').value);
     params.append('event_resort', document.querySelector('input[name="event_resort"]:checked').value);
     params.append('event_performances', document.querySelector('input[name="event_performances"]:checked').value);
     params.append('event_rides', document.querySelector('input[name="event_rides"]:checked').value);
+    params.append('paceadm_streetclosure', document.querySelector('input[name="paceadm_streetclosure"]:checked').value);
+    params.append('paceadm_sidewalkclosure', document.querySelector('input[name="paceadm_sidewalkclosure"]:checked').value);
     params.append('event_seasonal', document.querySelector('input[name="event_seasonal"]:checked').value);
     params.append('event_holiday', document.querySelector('input[name="event_holiday"]:checked').value);
     params.append('event_merchandise', document.querySelector('input[name="event_merchandise"]:checked').value);
+    params.append('paceadm_servicessold', document.querySelector('input[name="paceadm_servicessold"]:checked').value);
     params.append('event_alcohol', document.querySelector('input[name="event_alcohol"]:checked').value);
     params.append('event_rodeo', document.querySelector('input[name="event_rodeo"]:checked').value);
     params.append('event_auction', document.querySelector('input[name="event_auction"]:checked').value);
     params.append('event_filming', document.querySelector('input[name="event_filming"]:checked').value);
     params.append('event_food', document.querySelector('input[name="event_food"]:checked').value);
+    params.append('paceadm_nonalcoholicbeverages', document.querySelector('input[name="paceadm_nonalcoholicbeverages"]:checked').value);
     params.append('event_pyrotechnics', document.querySelector('input[name="event_pyrotechnics"]:checked').value);
+    params.append('paceadm_pyrotechfireworks', document.querySelector('input[name="paceadm_pyrotechfireworks"]:checked').value);
+    params.append('paceadm_specialeffects', document.querySelector('input[name="paceadm_specialeffects"]:checked').value);
     params.append('event_animals', document.querySelector('input[name="event_animals"]:checked').value);
     params.append('event_tents', document.querySelector('input[name="event_tents"]:checked').value);
     params.append('event_generators', document.querySelector('input[name="event_generators"]:checked').value);
 
     // Navigate to launcher
-    // window.location.href = `clark-county-launcher-v4-prod.html?${params.toString()}`;
+    // window.location.href = "clark-county-launcher-v4-prod.html?" + params.toString();
     // temporary for testing
     window.location.href = `/drafts/jlui/development/issue1667/launcher?${params.toString()}`;
   });
