@@ -14,13 +14,13 @@ export default async function decorate(block) {
   const script = document.createElement('script');
   script.defer = true;
   // sandbox
-  script.src = "https://launcher.1mind.com/w67t9x5w2s";
+  script.src = 'https://launcher.1mind.com/w67t9x5w2s';
 
   // staging
-  // script.src = "https://launcher.1mind.com/x5ww7qtngg";
+  // script.src = 'https://launcher.1mind.com/x5ww7qtngg';
 
   // uat
-  // script.src = "https://launcher.1mind.com/ffkvwm9hdx";
+  // script.src = 'https://launcher.1mind.com/ffkvwm9hdx';
 
   // prod
   // script.src = 'https://launcher.1mind.com/qp7w8lhck8';
