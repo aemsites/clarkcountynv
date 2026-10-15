@@ -872,7 +872,7 @@ export default async function decorate(block2) {
     const container = form.closest('.block');
 
     // wipe the form UI
-    container.innerHTML = "";
+    container.innerHTML = '';
 
     // now load the launcher dynamically
     loadLauncher(container, params);
@@ -882,17 +882,17 @@ export default async function decorate(block2) {
 async function loadLauncher(container, params) {
   // create the launcher wrapper
   const launcherDiv = document.createElement('div');
-  launcherDiv.id = "onemind-widget";
+  launcherDiv.id = 'onemind-widget';
   container.appendChild(launcherDiv);
 
   // attach the launcher script
   const script = document.createElement('script');
   script.defer = true;
-  script.src = "https://launcher.1mind.com/w67t9x5w2s";
+  script.src = 'https://launcher.1mind.com/w67t9x5w2s';
 
   // expose params before 1mind loads
   window.onemindBootstrap = {
-    queryParams: Object.fromEntries(params.entries())
+    queryParams: Object.fromEntries(params.entries()),
   };
 
   container.appendChild(script);
