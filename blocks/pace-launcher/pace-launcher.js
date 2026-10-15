@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 export default async function decorate(block) {
   // clear existing input fields from the word document... not needed here
   // since the block will not have any inputs from there.
@@ -13,9 +15,9 @@ export default async function decorate(block) {
     }
 
     // Then try the 1Mind-prefixed key (AEM .page behavior)
-    const prefixed = "onemind_" + name;
+    const prefixed = `onemind_${name}`;
     if (params.has(prefixed)) {
-      return params.get(prefixed).replace(/\+/g, " ");
+      return params.get(prefixed).replace(/\+/g, ' ');
     }
 
     return null;
