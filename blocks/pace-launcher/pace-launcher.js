@@ -34,7 +34,7 @@ export default async function decorate(block) {
       return;
     }
 
-    window.onemind
+    window.onemind.v1
       .onUrlClicked((data) => {
         window.open(data.url, '_blank', 'noopener,noreferrer');
       })
