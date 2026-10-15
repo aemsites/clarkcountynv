@@ -866,34 +866,34 @@ export default async function decorate(block2) {
     // window.location.href = "clark-county-launcher-v4-prod.html?" + params.toString();
     // temporary for testing
     // window.location.href = `/drafts/jlui/development/issue1667/launcher?${params.toString()}`;
-    // window.location.href = `/drafts/jlui/development/issue1667/launcher?${params.toString()}`;
+    window.location.href = `/drafts/jlui/development/issue1667/launcher?${params.toString()}`;
 
-    // find this embed block's container
-    const container = form.closest('.block');
+    // // find this embed block's container
+    // const container = form.closest('.block');
 
-    // wipe the form UI
-    container.innerHTML = '';
+    // // wipe the form UI
+    // container.innerHTML = "";
 
-    // now load the launcher dynamically
-    loadLauncher(container, params);
+    // // now load the launcher dynamically
+    // loadLauncher(container, params);
   });
 }
 
-async function loadLauncher(container, params) {
-  // create the launcher wrapper
-  const launcherDiv = document.createElement('div');
-  launcherDiv.id = 'onemind-widget';
-  container.appendChild(launcherDiv);
+// async function loadLauncher(container, params) {
+//   // create the launcher wrapper
+//   const launcherDiv = document.createElement('div');
+//   launcherDiv.id = "onemind-widget";
+//   container.appendChild(launcherDiv);
 
-  // attach the launcher script
-  const script = document.createElement('script');
-  script.defer = true;
-  script.src = 'https://launcher.1mind.com/w67t9x5w2s';
+//   // attach the launcher script
+//   const script = document.createElement('script');
+//   script.defer = true;
+//   script.src = "https://launcher.1mind.com/w67t9x5w2s";
 
-  // expose params before 1mind loads
-  window.onemindBootstrap = {
-    queryParams: Object.fromEntries(params.entries()),
-  };
+//   // expose params before 1mind loads
+//   window.onemindBootstrap = {
+//     queryParams: Object.fromEntries(params.entries())
+//   };
 
-  container.appendChild(script);
-}
+//   container.appendChild(script);
+// }
