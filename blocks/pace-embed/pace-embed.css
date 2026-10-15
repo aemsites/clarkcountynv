@@ -22,7 +22,10 @@
     }
 
 
-
+    .pace-embed #onemind-widget {
+    height: 500px !important;
+    width: 100%;
+}
     .pace-embed h1 { color: var(--ink); }
 
     .pace-embed form {
@@ -450,3 +453,6 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { transition: none !important; animation: none !important; }
     }
+
+
+

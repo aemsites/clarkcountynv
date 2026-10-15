@@ -3,6 +3,24 @@ export default async function decorate(block) {
   // since the block will not have any inputs from there.
   block.innerHTML = '';
 
+  // Helper to read both normal params (localhost) and onemind_ params (AEM)
+  function getParam(name) {
+    const params = new URLSearchParams(window.location.search);
+
+    // First try the raw key
+    if (params.has(name)) {
+      return params.get(name);
+    }
+
+    // Then try the 1Mind-prefixed key (AEM .page behavior)
+    const prefixed = "onemind_" + name;
+    if (params.has(prefixed)) {
+      return params.get(prefixed).replace(/\+/g, " ");
+    }
+
+    return null;
+  }
+
   // 1mind’s launcher script automatically reads the query parameters in the URL.
   // e.g., ?applicantName=John&applicantEmail=john@example.com&...
   // The 1mind team will configure the conversation to use these query parameters.
