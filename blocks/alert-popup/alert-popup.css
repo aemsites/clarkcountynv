@@ -139,6 +139,13 @@ body:has(dialog[open]) {
   z-index: 1;
 }
 
+/* Let the decorated button wrap instead of forcing a single line wider than the viewport */
+.alert-popup.popup.full-width a.button {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
 .alert-popup.popup.full-width.high {
   background-color: var(--secondary-orange-600);
 }
@@ -216,19 +223,29 @@ body:has(dialog[open]) {
 }
 
 .alert-popup.popup.full-width > div {
-  padding: 24px 50px;
+  padding: 16px;
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 24px;
+  gap: 12px;
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
 }
 
+.alert-popup.popup.full-width > div > div {
+  flex-shrink: 0;
+}
+
 .alert-popup.popup.full-width > div > div:first-child {
   padding-top: 6px;
+}
+
+.alert-popup.popup.full-width > div > div:nth-child(2) {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .alert-popup.popup.full-width .close-button {
@@ -274,6 +291,28 @@ body:has(dialog[open]) {
   width: 32px;
   height: 32px;
   max-width: none;
+}
+
+/*
+ * The severity link rules above (hover/focus/visited) are meant for plain links.
+ * Restore the global button states (styles.css) for decorated buttons.
+ */
+.alert-popup.popup.full-width:not(.high) a.button:any-link {
+  color: var(--background-color);
+}
+
+.alert-popup.popup.full-width a.button:hover {
+  background-color: var(--primary-orange-300);
+}
+
+.alert-popup.popup.full-width a.button:focus {
+  background-color: var(--primary-orange-300);
+  border: 2px solid var(--primary-orange-600);
+}
+
+.alert-popup.popup.full-width a.button:active {
+  background-color: var(--primary-orange-900);
+  border-color: var(--primary-orange-900);
 }
 
 /* Banner */
@@ -398,5 +437,10 @@ body:has(dialog[open]) {
 
   .alert-popup.popup.full-width p {
     font-size: var(--body-font-size-m);
+  }
+
+  .alert-popup.popup.full-width > div {
+    padding: 24px 50px;
+    gap: 24px;
   }
 }
