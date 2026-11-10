@@ -63,7 +63,25 @@ async function loadPodcastStreamingAudio() {
   }
 }
 
+/* Qualtrics Website Feedback */
+
+function loadQualtricsScript() {
+  const script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.text = `
+    (function(){var g=function(g){
+      this.go=function(){var a=document.createElement("script");a.type="text/javascript";a.src=g;document.body&&document.body.appendChild(a)};
+      this.start=function(){var t=this;"complete"!==document.readyState?window.addEventListener?window.addEventListener("load",function(){t.go()},!1):window.attachEvent&&window.attachEvent("onload",function(){t.go()}):t.go()};};
+      try{(new g("https://zn1ociwo1stxgw4ie-clarkcounty.gov1.siteintercept.qualtrics.com/SIE/?Q_ZID=ZN_1ociwO1STXGw4ie")).start()}catch(i){}})();
+  `;
+  document.head.appendChild(script);
+  const div = document.createElement('div');
+  div.id = 'ZN_1ociwO1STXGw4ie';
+  document.body.appendChild(div);
+}
+
 loadWidget();
 loadAnalyticsScripts();
 loadSiteImproveScript();
 loadPodcastStreamingAudio();
+loadQualtricsScript();
