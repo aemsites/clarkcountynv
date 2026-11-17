@@ -154,6 +154,10 @@ body:has(dialog[open]) {
   color: var(--neutral-black);
 }
 
+.alert-popup.popup.full-width.high .button-container a {
+  color: var(--color-white);
+}
+
 .alert-popup.popup.full-width.high a:focus {
   background-color: transparent;
   text-decoration-color: var(--neutral-black);
@@ -310,10 +314,10 @@ body:has(dialog[open]) {
   border: 2px solid var(--primary-orange-600);
 }
 
-.alert-popup.popup.full-width a.button:active {
+/* .alert-popup.popup.full-width a.button:active {
   background-color: var(--primary-orange-900);
   border-color: var(--primary-orange-900);
-}
+} */
 
 /* Banner */
 .alert-popup.banner .icon {
