@@ -863,10 +863,29 @@ export default async function decorate(block2) {
     params.append('event_generators', document.querySelector('input[name="event_generators"]:checked').value);
 
     // Navigate to launcher
+
+    // uat, sandbox, staging, prod
+    if (block2.classList.contains('uat')) {
+      window.location.href = `/drafts/jlui/development/issue1667/launcheruat?${params.toString()}`;
+    }
+    if (block2.classList.contains('sandbox')) {
+      window.location.href = `/drafts/jlui/development/issue1667/launchersandbox?${params.toString()}`;
+    }
+    if (block2.classList.contains('staging')) {
+      window.location.href = `/drafts/jlui/development/issue1667/launcherstaging?${params.toString()}`;
+    }
+    if (block2.classList.contains('prod')) {
+      window.location.href = `/drafts/jlui/development/issue1667/launcherprod?${params.toString()}`;
+    } else {
+      window.location.href = `/drafts/jlui/development/issue1667/launcher?${params.toString()}`;
+    }
+
     // window.location.href = "clark-county-launcher-v4-prod.html?" + params.toString();
     // temporary for testing
     // window.location.href = `/drafts/jlui/development/issue1667/launcher?${params.toString()}`;
-    window.location.href = `/drafts/jlui/development/issue1667/launcher?${params.toString()}`;
+
+    // old code, re-enable after testing
+    // window.location.href = `/drafts/jlui/development/issue1667/launcher?${params.toString()}`;
 
     // // find this embed block's container
     // const container = form.closest('.block');

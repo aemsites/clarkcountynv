@@ -13,8 +13,38 @@ export default async function decorate(block) {
   // Create script element for the 1mind launcher and attach it to the block
   const script = document.createElement('script');
   script.defer = true;
+
+  // uat, sandbox, staging, prod
+  if (block.classList.contains('uat')) {
+    script.src = 'https://launcher.1mind.com/ffkvwm9hdx';
+  }
+  if (block.classList.contains('sandbox')) {
+    script.src = 'https://launcher.1mind.com/w67t9x5w2s';
+  }
+  if (block.classList.contains('staging')) {
+    script.src = 'https://launcher.1mind.com/x5ww7qtngg';
+  }
+  if (block.classList.contains('prod')) {
+    script.src = 'https://launcher.1mind.com/qp7w8lhck8';
+  } else {
+    // fallback, use prod
+    script.src = 'https://launcher.1mind.com/qp7w8lhck8';
+  }
+
+  // sandbox
+  // script.src = 'https://launcher.1mind.com/w67t9x5w2s';
+
+  // staging
+  // script.src = 'https://launcher.1mind.com/x5ww7qtngg';
+
+  // uat
+  // script.src = 'https://launcher.1mind.com/ffkvwm9hdx';
+
   // prod
-  script.src = 'https://launcher.1mind.com/qp7w8lhck8';
+  // script.src = 'https://launcher.1mind.com/qp7w8lhck8';
+
+  // prod
+  // script.src = 'https://launcher.1mind.com/qp7w8lhck8';
   block.appendChild(script);
 
   // Register onUrlClicked so chat links open in a new tab instead of
