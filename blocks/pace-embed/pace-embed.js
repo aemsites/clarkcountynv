@@ -876,8 +876,6 @@ export default async function decorate(block2) {
     }
     if (block2.classList.contains('prod')) {
       window.location.href = `/drafts/jlui/development/issue1667/launcherprod?${params.toString()}`;
-    } else {
-      window.location.href = `/drafts/jlui/development/issue1667/launcher?${params.toString()}`;
     }
 
     // window.location.href = "clark-county-launcher-v4-prod.html?" + params.toString();
