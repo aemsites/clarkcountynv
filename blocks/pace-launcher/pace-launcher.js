@@ -26,9 +26,6 @@ export default async function decorate(block) {
   }
   if (block.classList.contains('prod')) {
     script.src = 'https://launcher.1mind.com/qp7w8lhck8';
-  } else {
-    // fallback, use prod
-    script.src = 'https://launcher.1mind.com/qp7w8lhck8';
   }
 
   // sandbox
