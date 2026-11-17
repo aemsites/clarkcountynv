@@ -139,8 +139,8 @@ body:has(dialog[open]) {
   z-index: 1;
 }
 
-/* Let the decorated button wrap instead of forcing a single line wider than the viewport */
-.alert-popup.popup.full-width a.button {
+/* Let decorated buttons wrap instead of forcing a single line wider than the viewport */
+.alert-popup a.button {
   max-width: 100%;
   white-space: normal;
   overflow-wrap: anywhere;
@@ -426,6 +426,86 @@ body:has(dialog[open]) {
   align-items: flex-start;
   gap: 18px;
   padding: 36px 14px 28px;
+}
+
+.alert-popup.banner > div > div:first-child {
+  flex-shrink: 0;
+}
+
+.alert-popup.banner > div > div:nth-child(2) {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/*
+ * The banner severity link rules above are meant for plain links.
+ * Restore the global button styles (styles.css) for decorated buttons.
+ */
+.alert-popup.banner.block a.button:any-link {
+  color: var(--background-color);
+  background-color: var(--primary-orange-600);
+  border: 2px solid transparent;
+}
+
+.alert-popup.banner.block a.button:hover {
+  color: var(--background-color);
+  background-color: var(--primary-orange-300);
+}
+
+.alert-popup.banner.block a.button:focus {
+  color: var(--background-color);
+  background-color: var(--primary-orange-300);
+  border: 2px solid var(--primary-orange-600);
+}
+
+.alert-popup.banner.block a.button:active {
+  background-color: var(--primary-orange-900);
+  border-color: var(--primary-orange-900);
+}
+
+/* Information banner buttons: blue on the gray (low) banner, gray on the blue (high) banner */
+.alert-popup.banner.information.low a.button:any-link {
+  color: var(--background-color);
+  background-color: var(--secondary-blue-800);
+}
+
+.alert-popup.banner.information.low a.button:hover {
+  color: var(--background-color);
+  background-color: var(--secondary-blue-600);
+}
+
+.alert-popup.banner.information.low a.button:focus {
+  color: var(--background-color);
+  background-color: var(--secondary-blue-600);
+  border-color: var(--secondary-blue-800);
+}
+
+.alert-popup.banner.information.low a.button:active {
+  background-color: var(--secondary-blue-800);
+  border-color: var(--secondary-blue-800);
+}
+
+.alert-popup.banner.information.high a.button:any-link {
+  color: var(--secondary-blue-800);
+  background-color: var(--light-color);
+}
+
+.alert-popup.banner.information.high a.button:hover {
+  color: var(--secondary-blue-800);
+  background-color: var(--neutral-black-400);
+}
+
+.alert-popup.banner.information.high a.button:focus {
+  color: var(--secondary-blue-800);
+  background-color: var(--neutral-black-400);
+  border-color: var(--neutral-white);
+}
+
+.alert-popup.banner.information.high a.button:active {
+  color: var(--secondary-blue-800);
+  background-color: var(--primary-blue-300);
+  border-color: var(--primary-blue-300);
 }
 
 /* Desktop */
